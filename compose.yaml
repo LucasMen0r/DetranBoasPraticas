@@ -1,0 +1,49 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker Compose reference guide at
+# https://docs.docker.com/go/compose-spec-reference/
+
+# Here the instructions define your application as a service called "server".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
+version: '3.8'
+
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    container_name: meu_pgvector_db_compose
+    restart: always
+    environment:
+      POSTGRES_DB: DetranNorma
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: abc321
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./setup_inicial.sql/sql/DetranNorma.sql:/docker-entrypoint-initdb.d/DetranNorma.sql
+    networks:
+      - app_network
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama_service
+    restart: always
+    ports:
+      - "11435:11435"
+    volumes:
+      - ollama_models:/root/.ollama
+    networks:
+      - app_network
+    environment: 
+      - OLLAMA_TLS_INSECURE=1 
+      - OLLAMA_ADD_REGISTRY=registry.ollama.ai 
+
+volumes: 
+  postgres_data:
+  ollama_models:
+
+networks:
+  app_network:
+    driver: bridge
