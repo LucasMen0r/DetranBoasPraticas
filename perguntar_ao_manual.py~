@@ -6,15 +6,16 @@ import json
 import pgvector.psycopg2
 from datetime import datetime
 
+# CONFIGURAÇÕES DO AMBIENTE (GANDALF)
 db_name = 'DetranNorma'
 db_user = 'postgres'
 db_pass = 'abc321'
-db_host = 'localhost'     
-db_port = '5432'          
+db_host = 'localhost'     # Correto para o servidor local
+db_port = '5432'          # Porta do Postgres
 
 ollama_chat_model = "qwen2.5:1.5b"
 ollama_embed_model = "nomic-embed-text:latest"
-ollama_base_url = f"http://{db_host}:11434" 
+ollama_base_url = f"http://{db_host}:11434" # Porta padrão do Ollama (11434)
 ollama_api_embed = f"{ollama_base_url}/api/embeddings"
 ollama_api_chat = f"{ollama_base_url}/api/chat"
 
@@ -35,147 +36,111 @@ def conectadb():
         return None
     
 def embedtext(text): 
-    print(f"[DEBUG] Vetorizando pergunta...") 
+    print(f"[DEBUG] Tentando vetorizar com Ollama em: {ollama_api_embed}") 
     try: 
         resposta = requests.post( 
             ollama_api_embed, 
             json={"model": ollama_embed_model, "prompt": text} 
         ) 
         resposta.raise_for_status() 
+        print("[DEBUG] Vetorização bem-sucedida.") 
         return resposta.json()['embedding'] 
     except requests.RequestException as e: 
-        print(f"[ERRO OLLAMA] Falha ao vetorizar: {e}") 
+        print(f"[ERRO DE REDE/OLLAMA] Falha ao vetorizar: {e}") 
         return None
 
 def classificarpergunta(pergunta):
-    """Agente Vertical: Classifica a intenção com validação rígida."""
-    categorias_validas = [
-        "Nomenclatura de Objetos", 
-        "Boas Práticas", 
-        "Tipos de Dados", 
-        "Regras Gerais"
-    ]
+    """
+    Agente Vertical: Classifica a intenção técnica do desenvolvedor.
+    """
+    prompt_classificador = f"""
+    Você é um Tech Lead sênior do Detran.
+    Classifique a pergunta técnica do desenvolvedor em uma das categorias abaixo.
     
-    prompt = f"""
-    Analise a pergunta e responda APENAS com uma das categorias abaixo:
-    - Nomenclatura de Objetos
-    - Boas Práticas
-    - Tipos de Dados
-    - Regras Gerais
+    CATEGORIAS DISPONÍVEIS:
+    - 'Nomenclatura de Objetos': Dúvidas sobre nomes de tabelas, colunas, prefixos (tb, vw, pk), sufixos.
+    - 'Boas Práticas': Dúvidas sobre performance, uso de JOINs, cursores, procedures, integridade.
+    - 'Tipos de Dados': Dúvidas sobre int, varchar, numeric, tamanhos de colunas.
+    - 'Regras Gerais': Formatação, uso de acentos, caracteres especiais, maiúsculas/minúsculas.
     
     Pergunta: "{pergunta}"
-    Resposta (apenas o nome):
+    
+    Responda APENAS com o nome exato da categoria (ex: Nomenclatura de Objetos).
+    Caso não se encaixe, responda: GERAL
     """
     try:
         resposta = requests.post(
             ollama_api_chat,
             json={
                 "model": ollama_chat_model, 
-                "messages": [{"role": "user", "content": prompt}],
+                "messages": [
+                    {"role": "user", "content": prompt_classificador} 
+                ],
                 "stream": False,
                 "options": {"temperature": 0}
             }
         )
         resposta.raise_for_status() 
-        conteudo = resposta.json()['message']['content'].strip()
-        
-        for cat in categorias_validas:
-            if cat.lower() in conteudo.lower():
-                return cat
-        
-        print(f"[AVISO] Categoria '{conteudo}' inválida. Usando GERAL.")
+        # CORREÇÃO AQUI: As chaves do JSON são em inglês
+        categoria = resposta.json()['message']['content'].strip()
+        # CORREÇÃO AQUI: Sintaxe do replace corrigida
+        return categoria.replace("'", "").replace('"', "")
+    except Exception as e:
+        print(f"[AVISO] Falha ao classificar (usando GERAL): {e}")
         return "GERAL"
 
-    except Exception:
-        return "GERAL"
-
-def extrairfoco(pergunta):
-    """Extrai o objeto técnico principal (Procedure, Tabela, View, etc)."""
-    prompt = f"""
-    Extraia APENAS o substantivo técnico principal da pergunta.
-    Ex: "Validar procedure X" -> Procedure
-    Ex: "Tabela temporária" -> Tabela
-    
-    Pergunta: "{pergunta}"
-    Resposta (uma palavra):
-    """
-    try:
-        resposta = requests.post(
-            ollama_api_chat,
-            json={
-                "model": ollama_chat_model, 
-                "messages": [{"role": "user", "content": prompt}],
-                "stream": False,
-                "options": {"temperature": 0}
-            }
-        )
-        resposta.raise_for_status() 
-        foco = resposta.json()['message']['content'].strip().split()[0]
-        # Limpeza básica de pontuação
-        return foco.replace(".", "").replace('"', "").replace("'", "")
-    except:
-        return ""
-
-def encontrarregras(conn, pergunta_vetor, nome_categoria, foco_usuario, top_k=5):
-    """Busca Híbrida: Vetor + Boost por Palavra-Chave"""
+def encontrarregras(conn, pergunta_vetor, nome_categoria, top_k=10):
     cursor = conn.cursor()
-    print(f"[DEBUG SQL] Categoria: '{nome_categoria}' | Foco: '{foco_usuario}'")
-
     sql_base = """
-    SELECT r.descricao_regra, r.exemplo, r.padrao_sintaxe
+    SELECT 
+    r.descricao_regra, 
+    r.exemplo, 
+    r.padrao_sintaxe
     FROM regras_nomenclatura r
     JOIN categorias_regras c ON r.id_categoria = c.id_categoria
     """
     
-    # Se o foco aparecer na descrição, a regra sobe para o topo (nota 0)
-    order_clause = """
-    ORDER BY 
-        (CASE WHEN r.descricao_regra ILIKE %s THEN 0 ELSE 1 END) ASC, 
-        r.embedding <=> %s::vector 
-    LIMIT %s;
-    """
-    
-    term_boost = f"%{foco_usuario}%"
-
+    # Normalização para evitar erros de maiúsculas/minúsculas no filtro
     if "GERAL" in nome_categoria.upper():
-        sql = sql_base + order_clause
-        parametros = (term_boost, list(pergunta_vetor), top_k)
+        sql = sql_base + " ORDER BY r.embedding <=> %s::vector LIMIT %s;"
+        parametros = (list(pergunta_vetor), top_k)
     else:
-        sql = sql_base + f" WHERE c.nome_categoria ILIKE %s " + order_clause
-        parametros = (f"%{nome_categoria}%", term_boost, list(pergunta_vetor), top_k)
+        sql = sql_base + """
+        WHERE c.nome_categoria ILIKE %s 
+        ORDER BY r.embedding <=> %s::vector 
+        LIMIT %s;
+        """
+        # Adiciona % para o ILIKE buscar partes do texto se necessário
+        parametros = (f"%{nome_categoria}%", list(pergunta_vetor), top_k)
         
     cursor.execute(sql, parametros)
     return cursor.fetchall()
 
 def perguntaollama(pergunta, contexto):
-    """Gera a resposta final com Streaming."""
+    """Envia o contexto e a pergunta com resposta em TEMPO REAL (Streaming)."""
     contexto_str = "\n".join(
         f"- Regra: {regra} | Exemplo: {exemplo} | Padrão: {sintaxe}" 
         for regra, exemplo, sintaxe in contexto
     )
-    
-    print("\n" + "="*10)
-    print(" Resposta do Gandalf:")
-    print("="*10)
+    print(f"\n[DEBUG - O QUE O BANCO ENCONTROU]:\n{contexto_str}\n")
+    print("#"*10)
+    print(" Resposta da IA:")
+    print("#"*10)
 
-    prompt_completo = f"""
-    Você é um assistente especialista no manual do DETRAN-PE.
-    Responda a pergunta baseando-se ESTRITAMENTE nas regras abaixo.
-    Se a regra proibir algo, diga claramente.
-    
-    Regras Oficiais:
-    {contexto_str}
+    prompt_completo = f"""Você é um assistente especialista no manual do DETRAN-PE.
+Use o contexto abaixo para responder a pergunta de forma direta e técnica.
+Contexto:
+{contexto_str}
 
-    Pergunta: {pergunta}
-    Resposta:"""
-    
+Pergunta: {pergunta}
+Resposta:"""
     try:
         resposta = requests.post(
             ollama_api_chat,
             json={
                 "model": ollama_chat_model,
                 "messages": [
-                    {"role": "system", "content": "Seja técnico, direto e cite as regras."},
+                    {"role": "system", "content": "Você é um assistente útil e técnico."},
                     {"role": "user", "content": prompt_completo}
                 ],
                 "stream": True
@@ -223,29 +188,34 @@ def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="historico_detran
         print(f"\n[ERRO] Não foi possível salvar o arquivo: {e}")
 
 def main():
-
     if len(sys.argv) < 2:
         print('Uso: python3 perguntar_ao_manual.py "Sua pergunta entre aspas"')
-        return 
-
+        return
     pergunta = sys.argv[1]
 
     conn = conectadb()
     if not conn: return
 
+    print(f" Analisando a pergunta...")
     categoria = classificarpergunta(pergunta)
-    foco = extrairfoco(pergunta)
-    vetor = embedtext(pergunta)
-    
-    if vetor:
-        contexto = encontrarregras(conn, vetor, categoria, foco)
-        
-        if not contexto:
-            print(" [i] Tentando busca global...")
-            contexto = encontrarregras(conn, vetor, "GERAL", foco)
+    print(f" Agente Especialista Acionado: [{categoria}]")
 
-        resposta_final = perguntaollama(pergunta, contexto)
-        salvarrespotas(pergunta, categoria, resposta_final)
+    vetor = embedtext(pergunta)
+    if not vetor:
+        print("Erro ao gerar vetor.")
+        return
+    
+    contexto = encontrarregras(conn, vetor, categoria)
+    
+    if not contexto:
+        print(" Nada encontrado na vertical. Tentando busca global...")
+        contexto = encontrarregras(conn, vetor, "GERAL")
+
+    # CORREÇÃO: Captura a resposta completa para salvar depois
+    resposta_final = perguntaollama(pergunta, contexto)
+    
+    # CORREÇÃO: Chama a função de salvar
+    salvarrespotas(pergunta, categoria, resposta_final)
     
     conn.close()
 

@@ -1,0 +1,615 @@
+========================================
+DATA: 28/11/2025 08:18:49
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: Validar procedures: BatchConsumoServicoWebA.scp / BatchConsumoServicoWebMover.scp / BatchConsumoServicoWebS.scp
+========================================
+RESPOSTA:
+Os procedimentos fornecidos são inválidos. A validação seguiu as regras do DETRAN-PE:
+1. Não há acentos ou cedilhas.
+2. Não há caracteres especiais.
+3. Primeira letra de cada palavra em maiúscula (por exemplo, "BatchConsumoServicoWebA" deve ser tratada como "BatchConsumoServicoWebA").
+4. Usando termos em português e no singular ("BatchConsumoServicoWebA", "BatchConsumoServicoWebMover", "BatchConsumoServicoWebS").
+5. Evitando preposições (nenhum "de" ou "da" foi encontrado).
+6. Máximo de 30 caracteres.
+7. Não uso palavras reservadas como "INSERT", "DELETE".
+8. Não há apenas números, verbos ou nomes próprios.
+9. Usar apenas letras (A-Z, a-z), números (0-9) e _ (underline).
+
+O procedimento "BatchConsumoServicoWebA.scp" deve ser validado de acordo com as regras do DETRAN-PE para manter sua coerência e padronização conforme solicitado.
+========================================
+
+========================================
+DATA: 28/11/2025 08:26:52
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: QUal o padrão de nomeclatura para uma tabela temporaria?
+========================================
+RESPOSTA:
+Os padrões de nomeclatura recomendados para uma tabela temporária no DETRAN-PE são os seguintes:
+
+1. **Nomes Completos:** Utilize nomes completos em português e em singular, como "TabelaTemporaria".
+
+2. **Características Específicas:**
+   - Evite uso de caracteres especiais.
+   - Preencha todas as áreas vazias com espaço vazio ("_").
+   - Use termos genéricos ou abreviações coerentes em relação à realidade do caso.
+
+3. **Sugestões de Nomeclatura:**
+   - "tbtTemporaria"
+   - "tblTempo"
+
+4. **Padrão:**
+   - Preencha a tabela temporária com informações relevantes e necessárias para o processo administrativo.
+   
+5. **Evitar Palavras Reservadas:**
+   - Evite nomes de funções ou operações (INSERT, DELETE, SELECT...) que são reservados no SQL.
+
+6. **Compliance aos Padrões de Nomenclatura:**
+   - Utilize apenas letras (A-Z, a-z), números (0-9) e o underline (_).
+   
+7. **Máximo de Caracteres:**
+   - Mantenha a tabela temporária com até 30 caracteres.
+
+8. **Evitar Palavras Ambíguas ou Incoerentes:**
+   - Use termos claros e compreensíveis para evitar ambiguidade na comunicação.
+
+9. **Formatação Legal:**
+   - Preencha a tabela temporária de acordo com as especificações legais do DETRAN-PE, evitando o uso de caracteres especiais ou palavras reservadas não autorizadas.
+
+10. **Preenchimento Completo:**
+    - Inclua todas as informações pertinentes que serão necessárias no processo administrativo, desde os dados básicos até qualquer configuração adicional.
+
+Lembre-se de que a nomeclatura precisa ser eficaz e coerente tanto em termos de lógica quanto de uso prático, para facilitar a gestão e o entendimento dos dados da tabela temporária.
+========================================
+
+========================================
+DATA: 28/11/2025 08:30:14
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: Qual o padrão das trigger?
+========================================
+RESPOSTA:
+O padrão das "trigger" no DETRAN-PE é:
+
+1. Não usar acentos, cedilha (ç), espaços.
+2. Primeira letra de cada palavra maiúscula.
+3. Usar termos em português e no singular.
+4. Usar nomes curtos, claros e sem ambiguidade.
+5. Evitar preposições.
+6. Máximo de 30 caracteres (se ultrapassar, usar abreviações coerentes).
+7. Não usar palavras reservadas ou termos técnicos específicos da TI.
+
+8. O padrão geralmente se resume a:
+
+   - Regra: Não usar acentos, cedilha (ç), espaços.
+   - Regra: Primeira letra maiúscula de cada palavra.
+   - Regra: Usar termos em português e no singular.
+   - Regra: Evitar preposições.
+   - Regra: Máximo de 30 caracteres (se necessário, usar abreviações coerentes).
+
+9. Nenhum dos padrões específicos mencionados são aplicáveis diretamente a "trigger" do DETRAN-PE.
+
+10. Portanto, o que você queria saber exatamente seria útil para uma consulta mais detalhada sobre as restrições ou exigências específicas relacionadas à criação de "triggers" no DETRAN-PE.
+========================================
+
+========================================
+DATA: 28/11/2025 08:30:50
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: QUal o padrão de nomeclatura para uma tabela temporaria?
+========================================
+RESPOSTA:
+Para nomeclatura da tabela temporária em conformidade com os padrões fornecidos, considere seguir estas regras técnicas:
+
+1. Não usar acentos, cedilha (ç), espaços.
+2. Evitar caracteres especiais (#, @, %, $, !, *, +, -, /, =).
+3. Primeira letra de cada palavra maiúscula (Ex.: ParcelaDebito).
+4. Usar termos em português e no singular.
+5. Usar nomes curtos, claros e sem ambiguidade.
+6. Evitar preposições (Ex.: "de", "da", "do").
+7. Máximo de 30 caracteres (se ultrapassar, usar abreviações coerentes).
+8. Não usar palavras reservadas (INSERT, DELETE, SELECT...).
+9. Usar apenas letras (A-Z, a-z), números (0-9) e _ (underline).
+
+Por exemplo:
+"TempoVenda"
+
+Este nome claramente respeita todas as regras tecnicamente solicitadas.
+========================================
+
+========================================
+DATA: 28/11/2025 08:39:03
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: fkEventoApiTpApi segue a norma padrão?
+========================================
+RESPOSTA:
+Sim, "fkEventoApiTpApi" seguiu as normas padrões do DETRAN-PE. Todas as regras foram atendidas:
+
+1. Não há acentos ou cedilhas no termo.
+2. Não contém caracteres especiais, números ou símbolos.
+3. A primeira letra da palavra é maiúscula.
+4. Usa apenas palavras em português e em singular.
+5. Evita preposições.
+6. Máximo de 15 caracteres (até o ponto final).
+7. Nenhum termo foi reservado por um dos padrões fornecidos.
+8. Não foram usadas números, verbos ou nomes próprios.
+
+Portanto, "fkEventoApiTpApi" está bem estruturado para seguirem as diretrizes definidas pelo DETRAN-PE.
+========================================
+
+========================================
+DATA: 28/11/2025 08:39:49
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: fkEventoApiTpApi segue a norma padrão?
+python3 perguntar_ao_manual.py fkEventoApiTpApi
+========================================
+RESPOSTA:
+A chave fkEventoApiTpApi não segue a norma padrão do DETRAN-PE. Algumas observações que podem explicar o fato:
+
+1. Não usa espaço:
+   Padrão: None
+
+2. Está contendo caracteres especiais:
+   - "f" 
+   - "k"
+
+3. A primeira letra é maiúscula (fk) ao invés de minúscula (Fk)
+
+4. Contém um número ("7") no final, embora seja considerado válido para abreviações
+
+5. Necessita de uma vírgula entre as palavras
+   - "Evento" e "Api"
+
+6. Não usa apenas letras, números ou underline: 
+   - Apenas "f", "k", "7" são alfanuméricos e o resto está fora do padrão
+
+Para que essa chave seguisse a norma:
+- Teria que ter um espaço
+- Teria que usar apenas espaços em vez de caracteres especiais ("7")
+- Teria que iniciar com uma letra minúscula 
+- Teria que adotar os padrões corretos para abreviações e palavras complexas (como Evento, Api)
+
+Alternativamente, se a norma fosse aplicada apenas em termos de tamanho máximo de 30 caracteres, essa chave certamente ultrapassaria o limite.
+
+Por isso não está seguindo as regras corretas.
+========================================
+
+========================================
+DATA: 28/11/2025 08:43:28
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: Validar nomenclaturas: EntidadeReducaoIPVAProcessar.scp / IsencaoVeiculoPcdProcessar.scp
+========================================
+RESPOSTA:
+A entidade "EntidadeReducaoIPVAProcessar" deve ser válida. Apenas os caracteres a-z, números (0-9) e _ são permitidos. A validação não está atendendo à regula de uso da palavra em português e no singular.
+
+Em relação ao segundo nome: "IsencaoVeiculoPcdProcessar", todas as regras foram seguidas, incluindo o uso da primeira letra maiúscula da segunda palavra, o padrão de não usar caracteres especiais e a validação de quebras de linha (não ultrapassando 30 caracteres).
+
+Apenas "scp" deve ser considerado como uma abreviação dentro do nome. Por fim, o nome completo foi formado por duas palavras: entidade de redução IPVA e processo para isenção de veículo.
+
+Todos os requisitos foram atendidos a menos que houvesse necessidade da utilização de termos mais concisos ou curtos em português.
+========================================
+
+========================================
+DATA: 28/11/2025 08:45:00
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: A nomenclatura: PreAtendimentoChassiOriginalS segue as normas de padronização?
+========================================
+RESPOSTA:
+Sim, a nomenclatura "PreAtendimentoChassiOriginalS" segue as normas de padronização do DETRAN-PE. Aqui está o porquê:
+
+1. Regra: Não usar caracteres especiais (#, @, %, $, !, *, +, -, /, =). - Esta nomenclatura não contém qualquer caractere especial.
+
+2. Regra: Primeira letra de cada palavra maiúscula (Ex.: ParcelaDebito). - Apenas a primeira letra da palavra "PreAtendimentoChassiOriginalS" está em maiúsculo ("P").
+
+3. Regra: Usar termos em português e no singular. - A nomenclatura usa o termo "PreAtendimento", que é um termo em português.
+
+4. Regra: Evitar preposições (Ex.: "de", "da", "do"). - Esta nomenclatura não possui preposição.
+
+5. Regra: Máximo de 30 caracteres (se ultrapassar, usar abreviações coerentes). - A palavra-chave é curtíssima, com apenas 16 caracteres, o que está dentro do padrão máximo permitido.
+
+6. Regra: Não usar palavras reservadas (INSERT, DELETE, SELECT...). - Esta nomenclatura não inclui palavras-robot, como "INSERT" ou "SELECT".
+
+7. Regra: Usar apenas letras (A-Z, a-z), números (0-9) e _ (underline). - Apenas letras, números e o underline são usados.
+
+8. Regra: Não usar somente números, verbos ou nomes próprios. - Nenhuma parte da nomenclatura é composta por apenas números, verbos ou nomes próprios.
+
+Portanto, a nomenclatura "PreAtendimentoChassiOriginalS" atende plenamente à todos os padrões de padronização estabelecidos pelo DETRAN-PE.
+========================================
+
+========================================
+DATA: 28/11/2025 08:45:41
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: Validar nomenclatura: PreAtendimentoChassiOriginalS
+========================================
+RESPOSTA:
+Não pode ser validado por este padrão. A string "PreAtendimentoChassiOriginalS" ultrapassa o limite de 30 caracteres e não consegue se adequar às regras como evitar palavras reservadas, termos em português/verbo/sim, usar apenas letras, números, ou _ (underline).
+========================================
+
+========================================
+DATA: 28/11/2025 09:00:38
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: Valide as procedures: TOM/ DBVCEN/ BatchConsumoServicoWebA.scp e TOM/ DBVCEN/ BatchConsumoServicoWebS.scp
+========================================
+RESPOSTA:
+Para validar os procedimentos `TOM/DBVCEN/BatchConsumoServicoWebA.scp` e `TOM/DBVCEN/BatchConsumoServicoWebS.scp`, seguem algumas regras importantes:
+
+1. Não usar acentos, cedilha (ç), espaços ou caracteres especiais (#, @, %, $, !, *, +, -, /, =).
+2. Primeira letra de cada palavra em maiúscula.
+3. Usar termos em português e no singular.
+4. Evitar preposições.
+5. Máximo de 30 caracteres (usar abreviações coerentes se necessário).
+6. Não usar palavras reservadas ou nomes próprios.
+7. Usar apenas letras (A-Z, a-z), números (0-9) e _ (underline).
+
+Resposta: Os procedimentos `TOM/DBVCEN/BatchConsumoServicoWebA.scp` e `TOM/DBVCEN/BatchConsumoServicoWebS.scp` foram validados conforme as regras:
+
+1. Não existem acentos, cedilha (ç), espaços ou caracteres especiais.
+2. Primeira letra de cada palavra é maiúscula.
+3. O português está sendo usado em singular.
+4. Apreensão das preposições foi realizada.
+5. Máximo de 30 caracteres foi respeitado, e não houve necessidade de uso de abreviações.
+6. Nenhum termo reservado ou nome próprio foi encontrado.
+7. Usando apenas letras (A-Z, a-z), números (0-9) e _ (underline).
+
+Portanto, os procedimentos `TOM/DBVCEN/BatchConsumoServicoWebA.scp` e `TOM/DBVCEN/BatchConsumoServicoWebS.scp` estão em conformidade com as regras solicitadas.
+========================================
+
+========================================
+DATA: 28/11/2025 09:12:17
+========================================
+CATEGORIA: Geral.
+========================================
+PERGUNTA: Eu posso fazer JOIN com 5 ou mais tabelas sem usar tabelas temporárias?
+========================================
+RESPOSTA:
+Não é recomendável realizar JOINs entre cinco ou mais tabelas sem a utilização de tabelas temporárias, pois isso pode aumentar significativamente o volume e a complexidade do processo. Isso inclui não apenas a criação de novas tabelas temporárias para armazenar os resultados dos JOINs, mas também a necessidade de ter uma estrutura para lidar com as consultas que envolvem muitos dados em várias tabelas. Além disso, essa prática pode comprometer a eficiência e a performance da consulta, aumentando o tempo necessário para executar o JOIN.
+
+Então, a resposta é: Não, você não deve realizar JOINs entre cinco ou mais tabelas sem usar tabelas temporárias. Isso seria altamente desaconselhado em termos de eficiência, performance e manutenção.
+========================================
+
+========================================
+DATA: 28/11/2025 09:26:40
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: Eu posso fazer JOIN com 5 ou mais tabelas sem usar tabelas temporárias?
+========================================
+RESPOSTA:
+Não é recomendável realizar JOINs entre mais de duas tabelas no SQL sem o uso de uma tabela temporária. A norma geral é utilizar a abreviação "JOIN" para indicar que estamos fazendo um JOIN, mas não há restrições definidas na maioria das bases de dados em relação ao número máximo de tabelas que podemos combinar diretamente. No entanto, se você precisar combinar mais de duas tabelas com muitos campos, pode ser conveniente criar uma tabela temporária para armazenar os resultados da JOIN.
+
+Porém, o uso excessivo ou inadequado das tabelas temporárias também pode levar a problemas de performance na criação e manutenção desses conjuntos de dados. Por isso, é recomendável sempre testar o código no ambiente real antes de implementar qualquer nova configuração para otimizar as operações.
+
+Recomenda-se, portanto, que você mantenha o número de JOINs dentro do padrão da API ou ferramenta utilizada na base de dados (por exemplo, PostgreSQL, SQL Server). Se você precisar combinar muitas tabelas, pode-se pensar em criar uma estrutura mais complexa, como a criação de um conjunto de queries separados para cada junção e então juntá-las no momento da execução do programa.
+========================================
+
+========================================
+DATA: 28/11/2025 09:27:18
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: Valide as procedures: TOM/ DBVCEN/ BatchConsumoServicoWebA.scp e TOM/ DBVCEN/ BatchConsumoServicoWebS.scp
+========================================
+RESPOSTA:
+O processo de validação das procedimentos TOM/ DBVCEN/ BatchConsumoServicoWebA.scp e TOM/ DBVCEN/ BatchConsumoServicoWebS.scp deve seguir os seguintes padrões:
+
+1. **Regra: Usar apenas letras (A-Z, a-z), números (0-9) e _ (underline).**
+   - **TOM/ DBVCEN/ BatchConsumoServicoWebA.scp**: Valide
+     - TOM/ DBVCEN/ BatchConsumoServicoWebS.scp: Valida
+
+2. **Regra: Não usar acentos, cedilha (ç), espaços, carateres especiais e palavras reservadas.**
+   - **TOM/ DBVCEN/ BatchConsumoServicoWebA.scp**: Valide
+     - TOM/ DBVCEN/ BatchConsumoServicoWebS.scp: Valida
+
+3. **Regra: Primeira letra de cada palavra maiúscula.**
+   - **TOM/ DBVCEN/ BatchConsumoServicoWebA.scp**: Valide
+     - **TOM/ DBVCEN/ BatchConsumoServicoWebS.scp**: Valida
+
+4. **Regra: Usar termos em português e no singular.**
+   - **TOM/ DBVCEN/ BatchConsumoServicoWebA.scp**: Validade
+     - **TOM/ DBVCEN/ BatchConsumoServicoWebS.scp**: Valida
+
+5. **Regra: Usar nomes curtos, claros e sem ambiguidades.**
+   - **TOM/ DBVCEN/ BatchConsumoServicoWebA.scp**: Valide
+     - **TOM/ DBVCEN/ BatchConsumoServicoWebS.scp**: Valida
+
+6. **Regra: Evitar preposições.**
+   - **TOM/ DBVCEN/ BatchConsumoServicoWebA.scp**: Valide
+     - **TOM/ DBVCEN/ BatchConsumoServicoWebS.scp**: Valide
+
+7. **Regra: Máximo de 30 caracteres (se ultrapassar, usar abreviações coerentes).**
+   - **TOM/ DBVCEN/ BatchConsumoServicoWebA.scp**: Valide
+     - **TOM/ DBVCEN/ BatchConsumoServicoWebS.scp**: Valida
+
+8. **Regra: Não usar palavras reservadas (INSERT, DELETE, SELECT...).**
+   - **TOM/ DBVCEN/ BatchConsumoServicoWebA.scp**: Valide
+     - **TOM/ DBVCEN/ BatchConsumoServicoWebS.scp**: Valida
+
+9. **Regra: Não usar apenas números, verbos ou nomes próprios.**
+   - **TOM/ DBVCEN/ BatchConsumoServicoWebA.scp**: Valide
+     - **TOM/ DBVCEN/ BatchConsumoServicoWebS.scp**: Valide
+
+Observação: Após validação, as procedimentos podem ser classificadas como:
+- Correto
+- Ajustar o nome do arquivo para evitar preposições ou espaços excessivos
+- Validade com todas as restrições atendidas
+
+Por favor, verifique se todos os arquivos estão em conformidade com os padrões solicitados e aplique as necessárias correções.
+========================================
+
+========================================
+DATA: 28/11/2025 09:35:07
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: É Valida nomenclatura das procedures: DadosProtocoloJariS / ProvimentoJariI / DadosJariR e posso solicitar execução em homologação?
+========================================
+RESPOSTA:
+Não é válida a nomenclatura dos procedimentos: "DadosProtocoloJariS", "ProvimentoJariI" e "DadosJariR". Além disso, não há uma alternativa para as tarefas solicitadas de realizar execução em homologação. Pode-se solicitar apenas alterações nas informações das tabelas ou aplicar as normativas necessárias sem precisar da execução em homologação.
+
+A nomenclatura dos procedimentos deve seguir padrões específicos do DETRAN-PE, onde o nome do banco deveria ser identificado e os nomes em singular claro. Além disso, a solicitação de execução em homologação é um procedimento próprio que geralmente necessitará da aprovação por meio de uma chamada para homologação específica.
+
+A recomendação é reformular o nome dos procedimentos em conformidade com os padrões estabelecidos no DETRAN-PE, conforme solicitado pelo manual. A execução em homologação requer a realização de um processo adicional que pode levar a tempo extra e gastos adiante.
+========================================
+
+========================================
+DATA: 28/11/2025 09:36:48
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Validar nomenclatura das procedures: DadosProtocoloJariS / ProvimentoJariI / DadosJariR e solicitar execução em HOMOLOGAÇÃO
+========================================
+RESPOSTA:
+Para validar a nomenclatura de procedimentos conforme as regras especificadas, segue abaixo os passos para cada procedure:
+
+1. **DadosProtocoloJariS**: 
+   - Padrão: `tipo + NomeColuna`
+   - Comentário padrão: `Tipo e nome da coluna`
+
+2. **ProvimentoJariI**:
+   - Padrão: `tipo + NomeColuna`
+   - Comentário padrão: `Tipo e nome da coluna`
+
+3. **DadosJariR**: 
+   - Padrão: `tipo + NomeColuna`
+   - Comentário padrão: `Tipo e nome da coluna`
+
+**Solicitar execução em HOMOLOGAÇÃO**:
+
+1. **Nome do banco de dados no DETRAN-PE**: Detran
+
+2. **Chave primária natural ou sequencial (pk)**:
+   - Padrão: `pk + Nome Tabela`
+   - Comentário padrão: `Número único que identifica a linha`
+
+3. **Prefixo minúsculo indicando o tipo, seguido do nome PascalCase**:
+   - Padrão: `tipo + NomeColuna`
+   - Comentário padrão: `Tipo e nome da coluna`
+
+4. **Nome das tabelas temporárias auxiliares**: 
+   - Padrão: `temp + nome tabela`
+   - Comentário padrão: `Tabelas temporárias para armazenar dados no processo interno de produção ou pré-produção`
+
+5. **Chave primária natural ou sequencial (pk)**:
+   - Padrão: `pk + Nome Tabela`
+   - Comentário padrão: `Número único que identifica a linha`
+
+6. **Prefixo minúsculo indicando o tipo, seguido do nome PascalCase**:
+   - Padrão: `tipo + NomeColuna`
+   - Comentário padrão: `Tipo e nome da coluna`
+========================================
+
+========================================
+DATA: 28/11/2025 09:42:03
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: É Valida nomenclatura das procedures: DadosProtocoloJariS / ProvimentoJariI / DadosJariR e posso solicitar execução em homologação?
+========================================
+RESPOSTA:
+Não, essa nomenclatura não está dentro dos padrões permitidos para o DETRAN-PE. Algumas correções precisariam ser feitas:
+
+1. A primeira procedure "DadosProtocoloJariS" não tem o padrao de nome PascalCase adequado (deve-se começar com letra maiúscula).
+2. As palavras-chave "I", "Jari", e "R" são muito específicas e poderiam precisar de um mais amplo padrão para procedimentos.
+3. Não há relação entre as nomenclaturas fornecidas, que podem estar confundindo a logística dos sistemas.
+
+Para solicitar execução em homologação das procedures solicitadas, é necessário verificar se todas elas estão dentro do padrão permitido e possuem os nomes adequados conforme especificado no manual do DETRAN-PE.
+========================================
+
+========================================
+DATA: 28/11/2025 09:43:11
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: É Valida nomenclatura das procedures: DadosProtocoloJariS / ProvimentoJariI / DadosJariR?
+========================================
+RESPOSTA:
+Para verificar a validade da nomenclatura das procedures fornecidas, é necessário aplicar todos os padrões estabelecidos para o DETRAN-PE. Aqui está a análise detalhada:
+
+1. **DadosProtocoloJariS**
+   - Padrão: Nomes são separados por um sinal de igual
+   - Validade: Válido
+   - Prefixo: N/A (necessário para os nomes separados por igual)
+   - Não há problema com prefixos/minúsculos, nome PascalCase ou colunas usadas como parâmetro.
+
+2. **ProvimentoJariI**
+   - Padrão: Nomes são minúsculos
+   - Validade: Válido
+   - Prefixo: N/A (necessário para os nomes separados por igual)
+   - Não há problema com prefixos/minúsculos, nome PascalCase ou colunas usadas como parâmetro.
+
+3. **DadosJariR**
+   - Padrão: Nome é minúsculo
+   - Validade: Válido
+   - Prefixo: N/A (necessário para os nomes separados por igual)
+   - Não há problema com prefixos/minúsculos, nome PascalCase ou colunas usadas como parâmetro.
+
+Todos esses nomenclaturas seguem o padrão definido pelo DETRAN-PE. Portanto, todas as procedures fornecidas estão validas.
+========================================
+
+========================================
+DATA: 28/11/2025 11:01:07
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: Eu posso fazer JOIN com 5 ou mais tabelas sem usar tabelas temporárias?
+========================================
+RESPOSTA:
+Não é recomendável realizar JOINs entre mais de três tabelas em uma única sentença SQL, pois pode resultar em consultas extremamente lentas e complicadas. A abreviação "JOIN" deve ser evitada se possível, principalmente quando trabalhando com muitos conjuntos de dados.
+
+Além disso, não é recomendável usar tabelas temporárias no DETRAN-PE para evitar problemas de concorrência e persistência de informações. Se necessário fazer uma pesquisa associativa em várias bases de dados, considerar a utilização de views ou procedimentos armazenados pode ser mais eficiente e segura.
+
+Por fim, evite o uso de JOIN se possível. Isso não apenas simplificaria as consultas mas também melhoraria significativamente a performance da aplicação do DETRAN-PE.
+========================================
+
+========================================
+DATA: 28/11/2025 11:03:28
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: É Valida nomenclatura das procedures: DadosProtocoloJariS / ProvimentoJariI / DadosJariR?
+========================================
+RESPOSTA:
+Não é válida. O procedimento provimento deve ser PascalCase, não caseSensitive.
+
+Por exemplo:
+- Exemplo válido: ProvisaoJari
+- Exemplo inválido: ProcissaoJari
+
+Recomenda-se o uso de uma padronização para as palavras-chave das tabelas e procedimentos em SQL.
+========================================
+
+========================================
+DATA: 28/11/2025 11:06:32
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: É Valida nomenclatura da procedure: DadosProtocoloJariS?
+========================================
+RESPOSTA:
+Não é válida.
+
+A nomenclatura "DadosProtocoloJariS" não segue os padrões e regras específicos para o DETRAN-PE. 
+
+- O nome deve ser no singular, claro, sem abreviação.
+- Deve seguir a Notação Pascal (título maiúsculo).
+- Exemplo válido seria "DadosProtocoloJuridico".
+
+Portanto, "DadosProtocoloJariS" é uma possível nomenclatura errada para essa procedure.
+========================================
+
+DATA: 28/11/2025 11:41:03
+CATEGORIA: Nomenclatura de Objetos
+PERGUNTA: Como nomear chaves primárias?
+RESPOSTA:
+Como nomear chaves primárias, siga as regras abaixo:
+
+1. Use o prefixo "pk" seguido pelo nome da tabela.
+2. Exemplo: pkVeiculo
+3. Não use abreviações de mais de 30 caracteres.
+
+Portanto, a chave primária deve ser chamada "pkVeiculo".
+========================================
+========================================
+DATA: 28/11/2025 11:46:00
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Como nomear chaves primárias?
+========================================
+RESPOSTA:
+Primeiramente, as chaves primárias devem ser naturais ou sequenciais para facilitar a navegação e manuseio. Porém, as tabelas de log devem ter o prefixo "Log" e todas as tabelas temporárias auxiliares devem começar com "temp". As tabelas que serão excluídas do banco de dados precisam ser nomeadas conforme: "z + login + objetivo". 
+
+É importante lembrar, a seguir regras importantes para garantir clareza no nome dos registros:
+
+1. O nome deve ser o mais breve possível (menos de 30 caracteres), sem abreviações.
+2. Use sempre a Notação Pascal (Singular).
+3. As tabelas temporárias auxiliares devem começar com "temp", como por exemplo: tempVeiculol.
+4. As tabelas que são excluídas do banco de dados devem ter o formato "z + login + objetivo", como zkrmlduplicidadedebitoLimpar.
+
+Por fim, as chaves primárias devem ser nomeadas em singular e claro, sem abreviações. Por exemplo: Veiculo para a tabela Veiculos, ou ParcelaDebito para a tabela Parcelas de Dívidas.
+
+Além das regras acima, é importante lembrar que o nome da chave primária deve não apenas ser definido pelo valor lógico da coluna, mas também o propósito da coluna dentro do banco de dados. Por exemplo: A chave primária "FK" para uma tabela "Veiculos" não deveria ser chamada "VeiculoFK", pois isso poderia desorganizar a leitura e manuseio das informações.
+
+Regras adicionais são necessárias para garantir eficiência, clareza e organização do banco de dados.
+========================================
+
+========================================
+DATA: 28/11/2025 11:53:23
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Como nomear chaves primárias?
+========================================
+RESPOSTA:
+Como nomear chaves primárias, siga as regras abaixo:
+
+1. Use a chave primária natural ou sequencial se possível.
+2. Se não for possível, use a forma pk + nome da tabela (Exemplo: pkVeiculo).
+3. Não esqueça o prefixo Log para tabelas de log (LogParcelaDebito).
+4. As tabelas temporárias auxiliares devem ter o prefixo temp + nome da tabela (tempVeiculol).
+5. Evite nomes muito longos, mantendo no máximo 30 caracteres.
+6. O nome deve ser singular, claro e sem abreviações (Exemplo: Veiculo, ParcelaDebito).
+
+Por exemplo:
+- Chave primária natural ou sequencial: pkVeiculo
+- Tabela de log: LogParcelaDebito
+
+Neste cenário específico:
+
+Resposta: Use a chave primária natural ou sequencial se possível. Se não for, considere usar a forma pk + nome da tabela (Exemplo: pkVeiculo). Evite nomes muito longos, mantendo no máximo 30 caracteres.
+
+Observação: As chaves primárias são necessárias para identificar um registro único em sua tabela e são obrigatórias para realizar operações como consulta, atualização ou exclusão de dados.
+========================================
+
+========================================
+DATA: 28/11/2025 11:55:49
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Como nomear chaves primárias?
+========================================
+RESPOSTA:
+Como nomear chaves primárias de forma correta em uma tabela no banco de dados do DETRAN-PE, segue os padrões descritos nas regras:
+
+1. Chave primária natural ou sequencial:
+   - Exemplo: pkVeiculo, pkFeriado | Padrão: pk + Nome Tabela
+
+2. Tabelas de log devem ter o prefixo Log:
+   - Exemplo: LogParcelaDebito | Padrão: Log + nome da tabela
+
+3. Tabela temporária auxiliar:
+   - Exemplo: tmpVeiculo | Padrão: temp + nome tabela
+
+4. Tabelas que serão excluídas do banco de dados devem ter o prefixo z:
+   - Exemplo: zkrmlduplicidadedebitoLimpar | Padrão: z + login + objetivo
+
+5. Nome no singular, claro, sem abreviação (exceto se >30 chars):
+   - Exemplo: Veiculo, ParcelaDebito | Padrão: Singular, Notação Pascal (ParcelaDebito)
+
+Uma chave primária deve ser nomeada de forma a melhor representar sua funcionalidade ou atributo. Por exemplo:
+
+- Chave Primária Logística:
+  - pkVeiculo
+- Tabela temporária auxiliar para armazenamento transito:
+  - tmpVeiculo
+
+O prefixo Log (para tabelas de log) e o login + objetivo (para tabelas temporárias excluídas) são úteis para facilitar a identificação e administração das chaves primárias.
+========================================
+
