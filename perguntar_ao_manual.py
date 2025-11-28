@@ -9,12 +9,12 @@ from datetime import datetime
 db_name = 'DetranNorma'
 db_user = 'postgres'
 db_pass = 'abc321'
-db_host = '172.30.151.166'
+db_host = 'localhost'
 db_port = '5432'
 
 ollama_chat_model = "qwen2.5:1.5b"
 ollama_embed_model = "nomic-embed-text:latest"
-ollama_base_url = f"http://{db_host}:11435"
+ollama_base_url = f"http://{db_host}:11434"
 ollama_api_embed = f"{ollama_base_url}/api/embeddings"
 ollama_api_chat = f"{ollama_base_url}/api/chat"
 
@@ -119,11 +119,9 @@ def classificarpergunta(pergunta):
     """
     Agente Vertical: Classifica a intenção técnica do desenvolvedor.
     """
-    # Mapeamento exato das categorias do seu INSERT INTO categorias_regras
     prompt_classificador = f"""
     Você é um Tech Lead sênior do Detran.
     Classifique a pergunta técnica do desenvolvedor em uma das categorias abaixo.
-    
     CATEGORIAS DISPONÍVEIS:
     - 'Nomenclatura de Objetos': Dúvidas sobre nomes de tabelas, colunas, prefixos (tb, vw, pk), sufixos.
     - 'Boas Práticas': Dúvidas sobre performance, uso de JOINs, cursores, procedures, integridade.
@@ -203,7 +201,7 @@ def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="historico_detran
 
 def main():
     if len(sys.argv) < 2:
-        print('Uso: python perguntar.py "Sua pergunta entre aspas"')
+        print('Uso: python3 perguntar.py "Sua pergunta entre aspas"')
         return
     pergunta = sys.argv[1]
 
@@ -215,16 +213,16 @@ def main():
     print(f" Agente Especialista Acionado: [{categoria}]")
 
     vetor = embedtext(pergunta)
-    
+
     contexto = encontrarregras(conn, vetor, categoria)
-    
+
     if not contexto:
-        
+
         print(" Nada encontrado na vertical. Tentando busca global...")
         contexto = encontrarregras(conn, vetor, "GERAL")
 
-    perguntaollama(pergunta, contexto)
+    resposta =  perguntaollama(pergunta, contexto)
     conn.close()
-
+    salvarrespotas(pergunta, categoria, resposta, nome_arquivo="historico_detran.txt")
 if __name__ == "__main__":
     main()
