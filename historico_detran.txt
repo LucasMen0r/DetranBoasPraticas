@@ -1,0 +1,26 @@
+========================================
+DATA: 01/12/2025 09:50:55
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Como nomear chaves primárias?
+========================================
+RESPOSTA:
+**Regra de nomeação de chaves primárias no DETRAN-PE:**
+
+1. **Padrão recomendado:**  
+   - Use `id_{tabela}` como padrão (ex: `id_motorista`, `id_veiculo`).  
+   - Se houver convênio ou regras específicas do órgão, siga-as.
+
+2. **Requisitos técnicos:**  
+   - O nome da coluna da chave primária deve ser único no banco de dados.  
+   - Não utilize prefixos ou sufixos não relacionados ao contexto (ex: `codigo_unico_motorista` não é recomendado).
+
+3. **Exemplo prático:**  
+   - Tabela: `tb_motorista` → Coluna: `id_motorista` (PK).  
+   - Tabela: `tb_veiculo` → Coluna: `id_veiculo` (PK).
+
+**Observação:**  
+Embora as regras do DETRAN-PE não especifiquem diretamente a nomeação de chaves primárias, siga padrões comuns e mantenha coerência no esquema do banco de dados.
+========================================
+

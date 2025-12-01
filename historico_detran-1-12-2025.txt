@@ -1,0 +1,150 @@
+========================================
+DATA: 01/12/2025 09:55:00
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Devo usar 'ç' para nomear chaves estrangeiras?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Não é permitido usar o caractere 'ç' para nomear chaves estrangeiras, conforme as regras oficiais do DETRAN-PE.
+
+Embora não haja uma regra específica proibindo explicitamente o uso do 'ç' em chaves estrangeiras, as regras gerais estabelecem que os nomes devem ser claros, no singular e seguir a notação Pascal (exemplo: `ParcelaDebito`). O caractere 'ç' é considerado um caractere especial e pode causar problemas em sistemas ou ferramentas que não suportam bem caracteres acentuados ou especiais.
+
+Portanto, para garantir a conformidade e evitar possíveis erros, é recomendável **não usar** o 'ç' em nomes de qualquer estrutura do banco de dados, incluindo chaves estrangeiras. Use apenas caracteres alfanuméricos (letras e números) e, se necessário, utilize letras maiúsculas ou minúsculas conforme o padrão Pascal.
+========================================
+
+========================================
+DATA: 01/12/2025 10:04:10
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de nomear uma procedure?
+========================================
+RESPOSTA:
+A forma correta de nomear uma procedure é no singular, claro, sem abreviação (exceto se >30 chars), utilizando Notação Pascal. Exemplo: `Veiculo`, `ParcelaDebito`. **Não há regra específica mencionada para procedures**, mas o padrão geral é usar nome no singular, claro, sem abreviação (exceto se >30 chars), com Notação Pascal.
+========================================
+
+========================================
+DATA: 01/12/2025 10:15:04
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: É Valida nomenclatura da procedure: DadosProtocoloJariS?
+========================================
+RESPOSTA:
+Baseando-me nas regras fornecidas, que não mencionam especificamente a validação de nomenclatura de procedures, não posso afirmar que a procedure "DadosProtocoloJariS" é válida ou não.
+
+No entanto, é importante notar que as regras do DETRAN-PE ou padrões internos podem existir para nomenclatura de objetos como procedures. Se existir uma regra específica (não mencionada aqui) que exija que os nomes de procedures devem ser em letras maiúsculas ou seguirem um padrão específico (como usar _ em vez de espaço), então "DadosProtocoloJariS" poderia ser considerado inválido.
+
+**Resposta:** As regras fornecidas não abordam diretamente a validação de nomenclatura de procedures. Portanto, não posso dizer que o nome "DadosProtocoloJariS" seja válido ou inválido com base nessas regras. Verifique se há outras regras ou padrões de nomenclatura estabelecidos pelo DETRAN-PE ou pela equipe de desenvolvimento que devem ser seguidos.
+========================================
+
+========================================
+DATA: 01/12/2025 10:40:17
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: É Valida nomenclatura das procedures: DadosProtocoloJariS / ProvimentoJariI / DadosJariR?
+========================================
+RESPOSTA:
+Não, a nomenclatura das procedures **não está válida**. Veja as violações:
+
+1. **DadosProtocoloJariS**  
+   - **Problema**: Não utiliza a convenção de parâmetros externos (underline).  
+   - **Regra violada**: Parâmetros externos devem iniciar com `_`.  
+   - **Correção sugerida**: `DadosProtocoloJariS_` ou similar.
+
+2. **ProvimentoJariI**  
+   - **Problema**: Nome contém sigla (`JariI`) sem explicação clara.  
+   - **Regra violada**: Nomes devem ser claros e evitar abreviações sem necessidade (exceto >30 chars).  
+   - **Correção sugerida**: Evitar siglas como `JariI` e usar nomes descritivos.
+
+3. **DadosJariR**  
+   - **Problema**: Nome contém sigla (`JariR`) sem explicação clara.  
+   - **Regra violada**: Nomes devem ser claros e evitar abreviações sem necessidade.  
+   - **Correção sugerida**: Evitar siglas como `JariR` e usar nomes descritivos.
+
+**Conclusão**: Todas as três procedures violam as regras de nomenclatura do DETRAN-PE.
+========================================
+
+========================================
+DATA: 01/12/2025 10:47:08
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Valide as procedures: TOM/ DBVCEN/ BatchConsumoServicoWebA.scp e TOM/ DBVCEN/ BatchConsumoServicoWebS.scp
+========================================
+RESPOSTA:
+**Requisição de Validação de Procedures**
+
+**Objetivo:**  
+Validar se as procedures `TOM/DBVCEN/BatchConsumoServicoWebA.scp` e `TOM/DBVCEN/BatchConsumoServicoWebS.scp` seguem as regras do DETRAN-PE.
+
+---
+
+**Regras a serem aplicadas:**
+
+| **Regra**                                                                 | **Observação**                                                                 |
+|---------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| 1. Comandos SQL devem ser feitos via Stored Procedure (exceto update/insert de text/image). | Deve ser verificado se todas as operações SQL são encapsuladas em procedures. |
+| 2. Integridade referencial deve ser via constraints (PK, Unique, FK).     | Deve ser verificado se as chaves estrangeiras e outras restrições estão presentes. |
+| 3. Preferencialmente não utilizar cursor.                                  | Deve ser verificado o uso de cursores nos procedimentos.                       |
+| 4. Evitar JOIN com mais de 4 tabelas (usar temporárias se necessário).     | Deve ser verificado o número de tabelas nos JOINs.                             |
+| 5. Evitar NOT EXISTS, NOT IN e NOT LIKE. Usar EXISTS, IN e LIKE.          | Deve ser verificado a ausência de negação nos predicados.                      |
+
+---
+
+**Ações a serem tomadas:**
+
+1. **Acessar o código das procedures** para realização das verificações.
+2. **Aplicar cada regra** e registrar se há conformidade ou não.
+3. **Elaborar relatório** com os resultados finais.
+
+---
+
+**Observação:**  
+Como não tenho acesso às definições das procedures em questão, não posso fornecer uma resposta definitiva. Recomendo que você compartilhe o código das procedures para que eu possa realizar a validação completa.
+========================================
+
+========================================
+DATA: 01/12/2025 10:54:15
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual o padrão das trigger?
+========================================
+RESPOSTA:
+Não foi definido no manual.
+========================================
+
+========================================
+DATA: 01/12/2025 10:57:55
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Validar procedures: BatchConsumoServicoWebA.scp / BatchConsumoServicoWebMover.scp / BatchConsumoServicoWebS.scp
+========================================
+RESPOSTA:
+**Validação das Procedures:**
+
+1. **BatchConsumoServicoWebA.scp**
+   - **Regra aplicada:** Nome no singular (Batch), Pascal Case (ConsumoServicoWebA).
+   - **Regra aplicada:** Extensão .scp.
+   - **Regra aplicada:** Não contém parâmetros com underline.
+   - **Validação:** ACEITO.
+
+2. **BatchConsumoServicoWebMover.scp**
+   - **Regra aplicada:** Nome no singular (Batch), Pascal Case (ConsumoServicoWebMover).
+   - **Regra aplicada:** Extensão .scp.
+   - **Regra aplicada:** Não contém parâmetros com underline.
+   - **Validação:** ACEITO.
+
+3. **BatchConsumoServicoWebS.scp**
+   - **Regra aplicada:** Nome no singular (Batch), Pascal Case (ConsumoServicoWebS).
+   - **Regra aplicada:** Extensão .scp.
+   - **Regra aplicada:** Não contém parâmetros com underline.
+   - **Validação:** ACEITO.
+========================================
+
