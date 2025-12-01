@@ -133,3 +133,52 @@ git config --global user.name "LucasMenor"
 git add .
 git commit -m "Upgrade: Migração para Servidor 32GB + Busca Híbrida + Correção de Portas"
 git push
+ollama pull deepseek-r1:8b
+nano perguntar_ao_manual.py
+python3 perguntar_ao_manual.py "Como nomear chaves primárias?"
+pip freeze install
+sudo systemctl enable postgresql
+sudo systemctll status postgresql
+sudo systemctl status postgresql
+sudo -u postgres psql
+pip install pgvector psycopg2-binary requests
+pip3 install pgvector psycopg2-binary requests
+sudo apt install python3-venv
+python3 -m venv venv
+source venv/bin/activate
+pip install pgvector psycopg2-binary requests
+python3 perguntar_ao_manual.py "Como nomear chaves primárias?"
+nano perguntar_ao_manual.py
+python3 perguntar_ao_manual.py "Como nomear chaves primárias?"
+nano perguntar_ao_manual.py
+python3 perguntar_ao_manual.py "Devo usar 'ç' para nomear chaves estrangeiras?"
+python3 perguntar_ao_manual.py "Qual a forma correta de nomear uma procedure?"
+python3 perguntar_ao_manual.py "É Valida nomenclatura da procedure: DadosProtocoloJariS?"
+python3 perguntar_ao_manual.py "É Valida nomenclatura das procedures: DadosProtocoloJariS / ProvimentoJariI / DadosJariR?"
+python3 perguntar_ao_manual.py "Valide as procedures: TOM/ DBVCEN/ BatchConsumoServicoWebA.scp e TOM/ DBVCEN/ BatchConsumoServicoWebS.scp"
+python3 perguntar_ao_manual.py "Qual o padrão das trigger?"
+python3 perguntar_ao_manual.py "Validar procedures: BatchConsumoServicoWebA.scp / BatchConsumoServicoWebMover.scp / BatchConsumoServicoWebS.scp"
+pip freeze > requirements.txt
+git add .
+git commit -m "feat: Migração para DeepSeek-R1 8B, ajustes de conexão DB e venv"
+git push
+git status
+git config --global user.name "LucasMenor"
+git config --global user.email "lucasmvc4@gmail.com"
+git add .
+git init
+git add .
+git commit -m "feat: Migração para DeepSeek-R1 8B, ajustes de conexão DB e venv"
+git branch -M main
+git remote add origin https://github.com/LucasMen0r/DetranBoasPraticas/tree/main
+git push -u origin main
+git remote add origin https://github.com/LucasMen0r/DetranBoasPraticas
+git push -u origin main
+git remote remove origin
+git remote add origin https://github.com/LucasMenor/DetranBoasPraticas.git
+git reset --soft HEAD~1
+git reset
+git add .
+git commit -m "feat: Commit inicial do Gandalf
+git push -u origin main
+
