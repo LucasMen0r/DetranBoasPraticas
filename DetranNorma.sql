@@ -90,7 +90,7 @@ INSERT INTO regras_nomenclatura (id_categoria, id_objeto, descricao_regra, conte
 -- 3.1 Criação da tabela de exemplos práticos
 DROP TABLE IF EXISTS exemplos_praticos;
 
-CREATE TABLE exemplos_praticos (
+CREATE TABLE exemplos_praticos (     --a ideia aqui é usar o maior nº possível de exemplos para ajudar a treinar G.A.N.D.A.L.F(Geração Automatizada de Normas do Detran-PE usando LLM para Fiscalização de boas práticas)
     id SERIAL PRIMARY KEY,
     objeto_foco VARCHAR(50),  
     exemplo_texto TEXT,       
