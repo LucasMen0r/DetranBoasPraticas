@@ -5,7 +5,7 @@ import pgvector.psycopg2
 db_params = {
     "dbname": "DetranNorma",
     "user": "postgres",
-    "password": "abc321",
+    "password": "123456",
     "host": "localhost",
     "port": "5432"
 }
@@ -34,24 +34,27 @@ def inserrirexemplo(conn, foco, texto, is_bom, explicacao):
         status = False
     print(f"Exemplo inserido com sucesso: {status} -> {texto}")
 
-##exemplos = [
-    # TABELAS
-    ("Tabela", "tbVeiculo", True, "Usa prefixo 'tb' e PascalCase."),
-    ("Tabela", "tabela_veiculos", False, "Usa snake_case e prefixo longo."),
-    ("Tabela", "Carros", False, "Sem prefixo 'tb'."),
+exemplos = [
     
-    # PROCEDURES
-    ("Procedure", "BatchProcessarMultas", True, "Inicia com verbo/ação, PascalCase."),
-    ("Procedure", "proc_calcula_juros", False, "Usa snake_case e prefixo 'proc'."),
-    
-    # VIEWS
-    ("View", "vwRelatorioDiario", True, "Prefixo 'vw' e PascalCase."),
-    ("View", "ViewUsuarios", False, "Prefixo 'View' por extenso (deve ser 'vw')."),
-    
-    # PRIMARY KEYS
-    ("PK", "pkVeiculo", True, "Prefixo 'pk' + NomeTabela."),
-    ("PK", "id", False, "Nome genérico, deve identificar a tabela."),
-##]
+    #PROCEDURES
+    ("Procedure", "BatchConsumoServicoWebS", True, "Usar sigla, em letra maiúscula, das operações básicas: Selecionar (S),Inserir (I), Excluir (E), Alterar (A), Relatório (R); Quando a procedure for executada via processamento batch, deve-se colocar no início do nome da procedure a palavra “Batch”."),
+    ("Procedure", "BatchConsumoServicoWebA", True, "Usar sigla, em letra maiúscula, das operações básicas: Selecionar (S),Inserir (I), Excluir (E), Alterar (A), Relatório (R); Quando a procedure for executada via processamento batch, deve-se colocar no início do nome da procedure a palavra “Batch”."),
+    ("Procedure", "BatchConsumoServicoWebMover", True, "Usar sigla, em letra maiúscula, das operações básicas: Selecionar (S),Inserir (I), Excluir (E), Alterar (A), Relatório (R); Quando a procedure for executada via processamento batch, deve-se colocar no início do nome da procedure a palavra “Batch”."),  
+    ("Procedure", "dbvcen..ProcEletronicoTransacaoListarS.scp", True, "No sistema de Veículos, os nomes das procedures RENAVAM e RENAINF ficarão iguais aos já existentes. Se for no banco RENAVAM todos os padrões serão mantidos, mas se for em outro banco, só se houver algum termo que indique que a procedure faz parte de um desses projetos."),
+    ("Procedure", "VeiculoRoubadoPopularSds.sco", True, "Inicia com verbo/ação, notação húngara."),
+    ("Procedure", "dbinfracao..ConsultaCancelamentoOrgaoS.scp", True, "No sistema de Veículos, os nomes das procedures RENAVAM e RENAINF ficarão iguais aos já existentes. Se for no banco RENAVAM todos os padrões serão mantidos, mas se for em outro banco, só se houver algum termo que indique que a procedure faz parte de um desses projetos."), 
+    ("Procedure", "dbinfracao..SitInfracaoE.scp", True, "o Manual pede objetivo[complemento]operacao e se as operações não for de  S, I, E, A, R o verbo deve estar no infinitivo"),
+    ("Procedure", "dbinfracao..SitInfracaoI.scp", True, "o Manual pede objetivo[complemento]operacao e se as operações não for de  S, I, E, A, R o verbo deve estar no infinitivo"),
+    ("Procedure", "dbinfracao..SitInfracaoS.scp", True, "o Manual pede objetivo[complemento]operacao e se as operações não for de  S, I, E, A, R o verbo deve estar no infinitivo"),
+    ("Procedure", "dbinfracao..SitInfracaoA.scp", True, "o Manual pede objetivo[complemento]operacao e se as operações não for de  S, I, E, A, R o verbo deve estar no infinitivo"),
+    ("Procedure", "VerificaAdvertenciaS.scp", True, "Inicia com verbo/ação, notação húngara."),   
+    ("Procedure", "dbvcen..ProcEletronicoTransacaoListarS.scp", True, "No sistema de Veículos, os nomes das procedures RENAVAM e RENAINF ficarão iguais aos já existentes. Se for no banco RENAVAM todos os padrões serão mantidos, mas se for em outro banco, só se houver algum termo que indique que a procedure faz parte de um desses projetos."),    
+    ("Procedure", "dbvcen.dbo.ProcessoEletroAberturaAnalisar ", True, "No sistema de Veículos, os nomes das procedures RENAVAM e RENAINF ficarão iguais aos já existentes. Se for no banco RENAVAM todos os padrões serão mantidos, mas se for em outro banco, só se houver algum termo que indique que a procedure faz parte de um desses projetos."),      
+    ("Procedure", "Operacao..VeiculoRoubadoAtualizarSds.scp", False, "De acordo com o manual: Nome de procedure: Objetivo[Complemento]Operacao."),
+    ("Procedure", "PopulaVeiculoRoubadoSDS", False, "o Manual pede objetivo[complemento]operacao e se as operações não for de  S, I, E, A, R o verbo deve estar no infinitivo"),
+    ("Procedure", "Operacao..VeiculoRoubadoPopularSDS.sco", False, "o Manual pede objetivo[complemento]operacao e se as operações não for de  S, I, E, A, R o verbo deve estar no infinitivo"),
+        
+]
 
 try:
     conn = psycopg2.connect(**db_params)
@@ -62,7 +65,7 @@ try:
     
     print("Iniciando carga de exemplos.")
     for item in exemplos:
-        inserir_exemplo(conn, item[0], item[1], item[2], item[3])
+        inserrirexemplo(conn, item[0], item[1], item[2], item[3])
 
     conn.close()
     print("\nSucesso! Tabela de exemplos populada.")
