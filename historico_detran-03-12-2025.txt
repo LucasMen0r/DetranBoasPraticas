@@ -1,1 +1,55 @@
-Uso: python3 perguntar_ao_manual.py "Sua pergunta entre aspas"
+========================================
+DATA: 03/12/2025 11:16:59
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: É Valida nomenclatura das procedures: DadosProtocoloJariS / ProvimentoJariI / DadosJariR e posso solicitar execução em homologação?
+========================================
+RESPOSTA:
+**Resposta:**  
+Não é válida a nomenclatura das procedures mencionadas.  
+
+**Explicação:**  
+1. **Regra de Nomenclatura:**  
+   - Procedures de negócio devem utilizar **PascalCase** (verbos + substantivos), conforme regra:  
+     > *Padrão: Verbo + Substantivo*  
+     *Exemplo: RegistrarCfc, CalcularDebito*.  
+
+   - As procedures listadas (`DadosProtocoloJariS`, `ProvimentoJariI`, `DadosJariR`) **não seguem** esse padrão, pois não estão devidamente estruturadas com um verbo no início.  
+
+2. **Solicitação de Execução:**  
+   - Procedures não validadas ou não autorizadas **não podem** ser executadas em homologação.  
+   - A execução deve ser solicitada formalmente via canal oficial do DETRAN-PE após a validação da nomenclatura e da funcionalidade.  
+
+**Conclusão:**  
+As procedures mencionadas **não são válidas** e, portanto, **não podem ser executadas**. Solicite a reavaliação da nomenclatura junto ao setor responsável do DETRAN-PE.
+========================================
+
+========================================
+DATA: 03/12/2025 11:20:22
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: As procedures: BatchConsumoServicoWebA.scp / BatchConsumoServicoWebMover.scp / BatchConsumoServicoWebS.scp estão de acordo com o manual? 
+========================================
+RESPOSTA:
+**Resposta:**
+
+As procedures listadas não estão de acordo com o manual do DETRAN-PE:
+
+1. **BatchConsumoServicoWebA.scp**  
+   - **O que está correto**: O prefixo `Batch` está de acordo com a regra `Procedures Batch (Prefixo Batch)`.  
+   - **O que está incorreto**: O sufixo `WebA` não segue o padrão `Batch + Nome`. O padrão estabelecido é `Batch + Nome`, sem abreviação ou modificação não justificada.  
+
+2. **BatchConsumoServicoWebMover.scp**  
+   - **O que está correto**: O prefixo `Batch` está de acordo com a regra.  
+   - **O que está incorreto**: O sufixo `WebMover` não segue o padrão `Batch + Nome`. O sufixo `Mover` sugere uma ação (verb) não alinhada ao padrão estabelecido.  
+
+3. **BatchConsumutoServicoWebS.scp**  
+   - **O que está correto**: O prefixo `Batch` está de acordo com a regra.  
+   - **O que está incorreto**: O sufixo `WebS` não segue o padrão `Batch + Nome`. O sufixo `S` é ambíguo e não está alinhado com as convenções.  
+
+**Conclusão**:  
+Nenhuma das três procedures está de acordo com o padrão `Batch + Nome` estabelecido pelo DETRAN-PE. O correto seria utilizar apenas o nome da funcionalidade após o prefixo `Batch`, como em `BatchConsumoServicoWeb`.
+========================================
+
