@@ -1,0 +1,1 @@
+Uso: python3 perguntar_ao_manual.py "Sua pergunta entre aspas"
