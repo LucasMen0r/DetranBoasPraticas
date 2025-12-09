@@ -1,0 +1,32 @@
+========================================
+DATA: 02/12/2025 09:31:37
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Como nomear chaves primárias?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Não há regra específica no manual do DETRAN-PE que defina exatamente como nomear as chaves primárias. No entanto, as seguintes regras relacionadas ao uso de chaves primárias devem ser consideradas:
+
+1.  **Integridade Referencial:** A regra de integridade referencial deve ser garantida via constraints (incluindo PK - Primary Key). Portanto, o nome da coluna que será a chave primária deve ser definido no momento da criação da tabela, usando a sintaxe do banco de dados.
+2.  **Stored Procedures:** Embora não defina o padrão de nomenclatura para colunas PK, a regra estabelece que comandos SQL (incluindo a criação de tabelas com PK) devem preferencialmente ser feitos via Stored Procedure (quando aplicável, dependendo da estrutura do banco de dados e das próprias regras do DETRAN-PE).
+
+**Resumo:** O DETRAN-PE não estabelece uma convenção específica de nomenclatura para chaves primárias. A única regra relevante é a de usar constraints para garantir a PK. O nome da coluna PK é definido pelo desenvolvedor, respeitando a sintaxe do banco de dados e as orientações gerais da organização, que priorizam stored procedures para operações complexas.
+========================================
+
+========================================
+DATA: 02/12/2025 09:40:06
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual o padrão de nomeação das triggers?
+========================================
+RESPOSTA:
+**Resposta:**  
+Não há uma regra específica mencionada no manual para nomeação de triggers. No entanto, para garantir consistência com as outras regras, siga o padrão geral de nomes: **Nome no singular, PascalCase**. Exemplo: `trgVeiculoAtualizarLog`.  
+
+Caso a aplicação exija um prefixo para identificar triggers, use um prefixo relevante (como `trg`) e mantenha o padrão de singularidade e PascalCase. Exemplo: `trgParcelaDebitoValidar`.
+========================================
+

@@ -1,0 +1,83 @@
+========================================
+DATA: 05/12/2025 09:37:30-Inserção de exemplos para auxiliar o modelo LLM com as respostas (parcialmente bem-sucedido) 
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: PXLaudoToxi é um nome válido para tabelas tipo Proxy? 
+========================================
+RESPOSTA:
+PXLaudoToxi é um nome válido para tabelas tipo Proxy, desde que atenda às seguintes regras:
+
+1. **Regra de PascalCase**: Primeira letra de cada palavra interna em maiúscula (PXLAUDOTOXI).
+2. **Regra da Notação Húngara**: Uso de prefixos indicando tipo ou objeto (PX).
+3. **Regra de Termos em Português e Singular**: "Laudo" e "Toxi" estão em conformidade.
+
+Observação: "Toxi" não é um termo em português, mas não há regra específica proibindo isso.
+========================================
+
+========================================
+DATA: 05/12/2025 09:47:53
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Como nomear de forma correta tabelas temporárias?
+========================================
+RESPOSTA:
+De acordo com as regras do manual do DETRAN-PE, as tabelas temporárias devem ser nomeadas com o prefixo **"tmp"** seguido do nome da tabela no **PascalCase (Singular)**. Exemplo: **tmpVeiculo**.
+========================================
+
+========================================
+DATA: 05/12/2025 09:52:30
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: TemporariaMotosApreeensao segue os padrões de boas práticas do Detran-PE para nomeação de tabelas temporárias?
+========================================
+RESPOSTA:
+Sim. A regra para tabelas temporárias é usar prefixo tmp (Notação Húngara) e PascalCase.
+
+**Regra violada:** Nome da tabela temporária deve iniciar com `tmp`.
+**Correção:** O nome correto seria `tmpMotosApreensao`.
+
+**Observações:**
+1. `TemporariaMotosApreeensao` não segue o padrão de PascalCase (primeira letra de cada palavra interna em maiúscula).
+2. `Apreeensao` provavelmente deveria ser `Apreensao`.
+
+**Regras aplicáveis:**
+- Tabela temporária auxiliar com prefixo tmp ou # (Regra: Tabela temporária auxiliar com prefixo tmp ou #)
+- Uso obrigatório de PascalCase (Regra: Uso obrigatório de PascalCase)
+========================================
+
+========================================
+DATA: 05/12/2025 10:11:36
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: temporariamotosApreeensao segue os padrões de boas práticas do Detran-PE para nomeação de tabelas temporárias?
+========================================
+RESPOSTA:
+The temporary table "temporariamotosApreensao" partially adheres to Detran-PE's best practices. It effectively uses "temporaria" to denote it as temporary and clearly describes its content with "motosApreensao," indicating motorcycle seizures. However, it could improve by:
+
+1. **Using Underscores**: Reformatting the name to "tmp_motos_apreensao" for better readability.
+2. **Consistency in Language**: Possibly using English prefixes like "tmp_" if that's a standard at Detran-PE.
+
+Overall, while functional, adopting these formatting conventions would align more closely with typical standards for clarity and consistency.
+========================================
+
+========================================
+DATA: 05/12/2025 10:27:23
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma certa de nomear uma View?
+========================================
+RESPOSTA:
+A forma correta de nomear uma View (para consultas) é utilizando o prefixo **vw** seguido pelo nome da tabela ou objetivo. Portanto, a nomenclatura adequada é:
+
+- **vwNomeTabela**
+
+Exemplo: Se a view for baseada na tabela "Usuario", ela será chamada de "vwUsuario".
+
+Resposta: A View deve ser nomeada como **vwNomeTabela**.
+========================================
+

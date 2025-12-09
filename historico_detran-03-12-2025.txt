@@ -1,0 +1,76 @@
+========================================
+DATA: 03/12/2025 10:21:33-Substituição do modelo LLM por um mais robusto (parcialmente bem-sucedido)
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: As procedures: BatchConsumoServicoWebA.scp / BatchConsumoServicoWebMover.scp / BatchConsumoServicoWebS.scp estão de acordo com o manual? 
+========================================
+RESPOSTA:
+Sim, as procedures estão de acordo com o manual:
+
+1. **Regra: Procedures Batch (Prefixo Batch).**  
+   - **Exemplo:** `BatchProcessarMultas`  
+   - **Padrão:** `Batch + Nome`  
+   - As procedures `BatchConsumoServicoWebA.scp`, `BatchConsumoServicoWebMover.scp` e `BatchConsumoServicoWebS.scp` seguem esse padrão, pois começam com "Batch" e o resto do nome está em PascalCase.
+
+2. **Sufixo `.scp`**  
+   - Embora o sufixo `.scp` não esteja explicitamente mencionado nas regras, ele não viola nenhuma regra específica. Portanto, é considerado válido.
+
+**Resposta:** As procedures estão de acordo com o manual do DETRAN-PE.
+========================================
+
+========================================
+DATA: 03/12/2025 10:31:32
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Valide as procedures: TOM/ DBVCEN/ BatchConsumoServicoWebA.scp e TOM/ DBVCEN/ BatchConsumoServicoWebS.scp
+========================================
+RESPOSTA:
+Não é possível validar as procedures `TOM/DBVCEN/BatchConsumoServicoWebA.scp` e `TOM/DBVCEN/BatchConsumoServicoWebS.scp` sem acesso ao código fonte ou descrição técnica detalhada.
+
+**Regras aplicáveis em uma validação hipotética:**
+
+1.  **Comando SQL**: Se essas procedures forem definidas como stored procedures, seus comandos internos **deveriam** ser validados para seguir a regra de **serem todos feitos via Stored Procedure** (auto-referente).
+2.  **Integridade referencial**: Se elas contêm lógica de INSERT/UPDATE/DELETE, **deveriam** garantir que a integridade referencial seja feita via constraints (PK, Unique, FK) nos objetos que operam.
+3.  **Cursor**: **Preferencialmente** não deveria ser utilizado cursor dentro do código das procedures, a menos que seja demonstravelmente necessário e otimizado.
+4.  **JOIN**: Qualquer consulta contida na procedure **deveria** evitar JOINs com mais de 4 tabelas. Se necessário, deveriam ser usadas tabelas temporárias.
+
+**Para uma validação efetiva, é necessário:**
+
+*   Acesso ao código fonte das procedures.
+*   Conhecimento da estrutura das tabelas relacionadas e suas constraints.
+
+**Sugestão:** Forneça os scripts das procedures ou detalhes específicos da sua lógica para uma análise mais precisa.
+========================================
+
+========================================
+DATA: 03/12/2025 10:40:40
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: É Valida nomenclatura das procedures: DadosProtocoloJariS / ProvimentoJariI / DadosJariR e posso solicitar execução em homologação?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Não é válida a nomenclatura das procedures mencionadas. Veja as inconsistências:
+
+1. **DadosProtocoloJariS**  
+   - **Regra violada:** Deveria seguir PascalCase com verbo inicial (ex.: `InserirProtocolo`).  
+   - **Correção:** O nome deve iniciar com um verbo (ação) em PascalCase.
+
+2. **ProvimentoJariI**  
+   - **Regra violada:** Nome não segue padrão PascalCase (ex.: `DesignarResponsavel`).  
+   - **Correção:** Deve ser um verbo + substantivo (ex.: `CriarAcesso`).  
+
+3. **DadosJariR**  
+   - **Regra violada:** Ausência de verbo no nome (ex.: `ConsultarRegistro`).  
+   - **Correção:** Adicione um verbo no início (ex.: `BuscarDados`).
+
+---
+
+**Solicitação de execução em homologação:**  
+Não posso autorizar a execução. Isso depende do ambiente de homologação e da aprovação da equipe responsável. Você deve solicitar formalmente por meio da área de TI/Qualidade.
+========================================
+

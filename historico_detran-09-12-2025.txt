@@ -1,0 +1,36 @@
+========================================
+DATA: 09/12/2025 09:45:07
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma certa de nomear uma View?
+========================================
+RESPOSTA:
+**Regras para Nomear View:**
+
+1. **View Materializada**: Utilize o prefixo "vm" seguido pelo objetivo ou finalidade da view.  
+   - Exemplo: `vmProcessoUsuario` (onde "ProcessoUsuario" descreve a funcionalidade).
+
+2. **View para Consultas**: Utilize o prefixo "vw" seguido pelo nome da tabela relacionada.  
+   - Exemplo: `vwUsuarioProcesso` (onde "UsuarioProcesso" identifica a tabela ou entidade associada).
+
+**Exemplos Aprovados:**
+- `vmProcessoUsuario`  
+- `vwUsuarioProcesso`
+
+**Importante:** Evite nomes plurais e mantenha-se fiel aos prefixos estabelecidos.
+========================================
+
+========================================
+DATA: 09/12/2025 09:50:05
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: PKveiculoservicos é um nome apropriado para uma chave primária?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Não. O nome da chave primária deve seguir o padrão "pk" (em minúsculo) + NomeTabela. Portanto, "PKveiculoservicos" está incorreto; a forma correta seria "pkVeiculoServicos".
+========================================
+
