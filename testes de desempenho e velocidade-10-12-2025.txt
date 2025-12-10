@@ -1,0 +1,94 @@
+========================================
+DATA: 10/12/2025 08:21:59
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de nomear uma tabela temporária?
+========================================
+RESPOSTA:
+A forma correta de nomear uma tabela temporária é usando o prefixo **`tmp`** ou **`#`**, conforme as regras do manual do DETRAN-PE. 
+
+Exemplo: `tmpVeiculo`.
+
+Padrão: `tmp` + NomeTabela.
+
+Portanto, a nomenclatura correta para uma tabela temporária auxiliar é:
+
+**`tmpNomeDaTabela`**
+========================================
+
+========================================
+DATA: 10/12/2025 08:37:32
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: TMPservicos é uma nomenclatura válida para tabelas temporárias?
+========================================
+RESPOSTA:
+A nomenclatura TMPservicos para tabelas temporárias não é totalmente válida. 
+
+**Motivos:**
+1. **Prefixo:** Deve ser usado "tmp" (minúsculo), não "TMP". Portanto, o prefixo correto seria "tmp".
+2. **Nome da Tabela:** O nome deve estar em camelCase, ou seja, TMPservicos deveria ser tmpServiços.
+
+**Conclusão:** A nomenclatura correta seria "tmpServiços", seguindo os padrões estabelecidos.
+========================================
+
+========================================
+DATA: 10/12/2025 08:42:39
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma certa de nomear uma View?
+========================================
+RESPOSTA:
+A forma correta de nomear uma view depende do tipo dela:
+
+1. **View Materializada**: Use o prefixo `vm` seguido pelo objetivo ou nome da view.  
+   Exemplo: `vmProcessoUsuario`.
+
+2. **View para Consultas**: Utilize o prefixo `vw`, acompanhado pelo nome da tabela ou entidade associada.  
+   Exemplo: `vwUsuarioProcesso`.
+
+Evite usar plurais ou outros prefixos não padrão, como no exemplo proibido `ViewUsuarios`.
+========================================
+
+========================================
+DATA: 10/12/2025 08:47:07
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: PKveiculoservicos é um nome apropriado para uma chave primária?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Não. O nome correto deve ser **pkVeiculoServicos**, onde:
+
+- O prefixo é "pk" em minúsculo, conforme a regra.
+- Cada palavra significativa no nome da tabela deve começar com uma letra maiúscula.
+
+Portanto, "PKveiculoservicos" está incorreto por duas razões: o prefixo "PK" deveria estar em minúsculo e a divisão das palavras não segue a formatação correta.
+========================================
+
+========================================
+DATA: 10/12/2025 08:53:35
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: PXLaudoToxi é um nome válido para tabelas tipo Proxy? 
+========================================
+RESPOSTA:
+**Resposta:**
+
+Não, "PXLaudoToxi" não é um nome válido para tabelas tipo Proxy. 
+
+**Motivos:**
+1. **Prefixo Errado:** O prefixo correto deve ser "px" em minúsculas, não "PX".
+2. ** Estrutura Incompleta:** Deve seguir o padrão "px + Origem + NomeObjeto". No exemplo fornecido, falta a identificação da origem após "px".
+
+Nome correto: `pxProtLaudoToxicologico` (exemplo do manual).
+
+Portanto, recomenda-se corrigir o nome para atender às regras estabelecidas.
+========================================
+

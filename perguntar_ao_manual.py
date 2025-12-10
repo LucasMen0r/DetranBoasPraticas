@@ -7,6 +7,7 @@ import pgvector.psycopg2
 from datetime import datetime
 import re
 
+# --- CONFIGURAÇÕES ---
 db_name = 'DetranNorma'
 db_user = 'postgres'
 db_pass = '654321'        
@@ -170,7 +171,9 @@ def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=3):
         return []
     
 def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
-    """Gera a resposta final com Streaming, usando Regras + Exemplos Práticos."""
+    """
+    Gera a resposta final com Streaming e mede performance.
+    """
     contexto_str = "\n".join(
         f"- Regra: {regra} | Exemplo: {exemplo} | Padrão: {sintaxe}" 
         for regra, exemplo, sintaxe in contexto_regras
@@ -199,6 +202,9 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
     Pergunta: {pergunta}
     Resposta:"""
     
+    # --- CRONÔMETRO INICIAL ---
+    inicio_real = datetime.now()
+
     try:
         resposta = requests.post(
             ollama_api_chat,
@@ -216,32 +222,65 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
         resposta_completa = ""
 
         dentro_think = False 
+        metrics = {} # Armazena estatísticas do Ollama
 
         for line in resposta.iter_lines():
             if line:
                 try:
                     json_data = json.loads(line.decode('utf-8'))
+                    
+                    # 1. Processa Texto
                     if 'message' in json_data:
                         content = json_data['message']['content']
 
                         if "<think>" in content: dentro_think = True
-                        if "</think>" in content: 
-                            dentro_think = False
+                        if "</think>" in content: dentro_think = False
 
-                        if not dentro_think:
+                        # Só imprime no terminal se NÃO estiver pensando
+                        if not dentro_think and "<think>" not in content and "</think>" not in content:
                             print(content, end='', flush=True) 
                         
                         resposta_completa += content
+                    
+                    # 2. Captura estatísticas finais (quando done: true)
+                    if json_data.get('done') is True:
+                        metrics = {
+                            'total_duration': json_data.get('total_duration', 0),
+                            'load_duration': json_data.get('load_duration', 0),
+                            'eval_count': json_data.get('eval_count', 0),
+                            'eval_duration': json_data.get('eval_duration', 0)
+                        }
+
                 except ValueError:
                     pass
         print("\n") 
+
+        
+        fim_real = datetime.now()
+        tempo_total_sec = (fim_real - inicio_real).total_seconds()
+        
+        
+        ollama_eval  = metrics.get('eval_duration', 0) / 1e9
+        tokens_gerados = metrics.get('eval_count', 0)
+        tps = tokens_gerados / ollama_eval if ollama_eval > 0 else 0
+
+        print("-" *10)
+        print(f"Diagnóstico de velocidade:")
+        print(f"Tempo Total (Relógio):   {tempo_total_sec:.2f}s")
+        print(f"Tokens Gerados:          {tokens_gerados}")
+        print(f"Velocidade de Escrita:   {tps:.2f} tokens/s")
+        
+        if tps < 5 and tps > 0:
+            print(" geração está lenta (GPU sobrecarregada ou rodando na CPU).")
+        print("-" * 40)
 
         return limparrespostadeepseek(resposta_completa)
         
     except Exception as e:
         return f"\n Erro técnico: {e}"
+    
 
-def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="primeiro teste do projeto com rust-09-12-2025.txt"):
+def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="testes de desempenho e velocidade-10-12-2025.txt"):
     """Salva a interação em um arquivo de texto."""
     timestamp  = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     conteudo = (

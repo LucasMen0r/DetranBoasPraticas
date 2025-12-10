@@ -1,0 +1,21 @@
+========================================
+DATA: 10/12/2025 07:57:53
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de nomear uma tabela temporária?
+========================================
+RESPOSTA:
+A forma correta de nomear uma tabela temporária é utilizando o prefixo "tmp" seguido pelo nome da tabela em PascalCase (singular). Exemplo: tmpVeiculo.
+
+Alternativamente, pode-se usar "#" como prefixo. 
+
+Exemplos aprovados:
+- tmpRestricaoVeiculo
+- #Veiculo
+
+Importante evitar:
+- Uso de snake_case (como tabela_veiculos)
+- Nomes plurais (ex.: tabelas_de_vículos)
+========================================
+
