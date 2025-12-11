@@ -7,10 +7,9 @@ import pgvector.psycopg2
 from datetime import datetime
 import re
 
-# --- CONFIGURAÇÕES ---
 db_name = 'DetranNorma'
 db_user = 'postgres'
-db_pass = '654321'        
+db_pass = 'abc321'        
 db_host = 'localhost'     
 db_port = '5432'          
 
@@ -255,24 +254,24 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
                     pass
         print("\n") 
 
-        
+        # --- RELATÓRIO DE PERFORMANCE ---
         fim_real = datetime.now()
         tempo_total_sec = (fim_real - inicio_real).total_seconds()
         
-        
+        # Conversão de nanosegundos para segundos
         ollama_eval  = metrics.get('eval_duration', 0) / 1e9
         tokens_gerados = metrics.get('eval_count', 0)
         tps = tokens_gerados / ollama_eval if ollama_eval > 0 else 0
 
-        print("-" *10)
-        print(f"Diagnóstico de velocidade:")
+        print("-" * 40)
+        print(f"DIAGNÓSTICO DE VELOCIDADE:")
         print(f"Tempo Total (Relógio):   {tempo_total_sec:.2f}s")
         print(f"Tokens Gerados:          {tokens_gerados}")
         print(f"Velocidade de Escrita:   {tps:.2f} tokens/s")
         
         if tps < 5 and tps > 0:
-            print(" geração está lenta (GPU sobrecarregada ou rodando na CPU).")
-        print("-" * 40)
+            print("A geração está lenta (GPU sobrecarregada ou rodando na CPU).")
+        print("-" * 10)
 
         return limparrespostadeepseek(resposta_completa)
         
@@ -280,7 +279,7 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
         return f"\n Erro técnico: {e}"
     
 
-def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="ajustes no db e no script em python-11-12-2025.txt"):
+def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="continuação dos testes com rust-11-12-2025.txt"):
     """Salva a interação em um arquivo de texto."""
     timestamp  = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     conteudo = (

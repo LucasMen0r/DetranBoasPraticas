@@ -1,0 +1,59 @@
+========================================
+DATA: 11/12/2025 10:01:11
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: FKveiculoservicos é um nome apropriado para uma chave primária?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Não. O nome adequado para uma chave primária deve começar com "PK_", seguido pelo nome da tabela ou entidade relacionada. Portanto, o nome correto seria **"PK_veiculoservicos"**, em vez de "FKveiculoServicos". 
+
+Isso atende à regra de integridade referencial que exige o uso de constraints corretamente identificadas como PK para chaves primárias e FK para chaves estrangeiras.
+========================================
+
+========================================
+DATA: 11/12/2025 10:08:58
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: FKveiculoservicos, TMPveiculostem, PROXYtrasnporte e pkVeiculo estão nomeados de acordo com as melhores práticas do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+**Evaluation of Database Object Names Against DETRAN-PE Guidelines**
+
+1. **FKveiculoservicos**: 
+   - **Compliance**: Complies with guidelines. Uses appropriate abbreviation for foreign key (FK) and a descriptive base in Portuguese ("veículoserviços").
+
+2. **TMPveiculostem**:
+   - **Compliance**: Does not comply. The base name is unclear, and the prefix TMP is vague. It should be more descriptive, such as "veiculos_temp".
+
+3. **PROXYtransporte**:
+   - **Compliance**: Complies with guidelines. Uses appropriate abbreviation (PROXY) and a clear Portuguese term ("transporte").
+
+4. **pkVeiculo**:
+   - **Compliance**: Complies with guidelines. Uses standard abbreviation (PK) and a clear base word ("veículo").
+
+**Summary**: FKveiculoservicos, PROXYtransporte, and pkVeiculo adhere to the DETRAN-PE naming conventions. TMPveiculostem does not, as it lacks clarity and appropriate suffixing for temporary tables.
+========================================
+
+========================================
+DATA: 11/12/2025 10:27:11
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: FKveiculoservicos, TMPveiculostem, PROXYtrasnporte e pkVeiculo estão nomeados de acordo com as melhores práticas do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+The names FKveiculoservicos and pkVeiculo adhere to the DETRAN-PE manual's best practices. 
+
+FKveiculoservicos correctly uses the "FK" prefix for foreign keys, indicating the relationship between veiculo and servicos tables.
+
+pkVeiculo properly denotes a primary key using the "PK" prefix, which is standard.
+
+However, TMPveiculostem and PROXYtransnporte may not conform to the manual's guidelines. Temporary tables should avoid such prefixes unless necessary, and proxy tables typically don't use "PROXY" in their names without specific reasons.
+
+**Conclusion: FKveiculoservicos and pkVeiculo follow the best practices; TMPveiculostem and PROXYtransnporte may not align with the manual's standards.**
+========================================
+

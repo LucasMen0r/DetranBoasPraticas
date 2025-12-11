@@ -1,0 +1,79 @@
+========================================
+DATA: 11/12/2025 11:14:26
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: a chave estrangeira FKveiculoservicos, a tabela temporária TMPveiculostem, a tabela proxy PROXYtrasnporte, a chave primária pkVeiculo e a tabela Veiculoss estão nomeados de acordo com as melhores práticas do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Nenhum dos elementos nomeados segue adequadamente as regras do manual do DETRAN-PE:
+
+1. **FKveiculoservicos**: Não cumpre a regra de FK, pois falta identificar tabelas filha e pai.
+
+2. **TMPveiculostem**: Utiliza "TMP" ao invés do prefixo correto "tmp".
+
+3. **ProxyTransporte**: Sem regras específicas no manual.
+
+4. **PKVeiculo**: Não mencionado na regra, mas pode usar "pk".
+
+5. **Veiculoss**: Usa plural e não inclui prefixo correto.
+
+**Conclusão:** Nenhum dos nomes está de acordo com as melhores práticas do DETRAN-PE.
+========================================
+
+========================================
+DATA: 11/12/2025 11:41:30
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: a chave estrangeira FKveiculoservicos, a tabela temporária TMPveiculos, a tabela proxy PROXYtrasnporte, a chave primária pkVeiculo e a tabela Veiculoss estão nomeados de acordo com as melhores práticas do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Os nomes das entidades analisadas não seguem integralmente as melhores práticas do manual de boas práticas do DETRAN-PE. Abaixo está a avaliação detalhada de cada uma:
+
+1. **Chave Estrangeira FKveiculoservicos**:  
+   - **Regra Aplicável**: Padrão para Foreign Key (FK): Usar o prefixo fk mais os nomes das tabelas filha e pai. | Exemplo: fkProcessoUsuario | Padrão: fk + TabelaFilha + TabelaPai
+   - **Problemas Identificados**:
+     - O prefixo está em letras maiúsculas (FK) ao invés de minúsculas (fk).
+     - Faltam os nomes das tabelas filha e pai no nome da chave estrangeira.
+   - **Conclusão**: Não está de acordo com as regras.
+
+2. **Tabela Temporária TMPveiculos**:
+   - **Regra Aplicável**: Tabelas temporárias auxiliar | Exemplo: tmpVeiculol | Padrão: temp + nome tabela
+   - **Problemas Identificados**:
+     - O prefixo está em letras maiúsculas (TMP) ao invés de minúsculas (tmp).
+   - **Conclusão**: Quase conforme as regras, mas aconselhável mudar para tmp.
+
+3. **Tabela Proxy PROXYtransporte**:
+   - **Regra Aplicável**: Não há regra específica mencionada no manual para prefixos de proxy.
+   - **Problemas Identificados**:
+     - O prefixo "proxy" não está listado nas regras fornecidas, o que pode indicar que ele não é recomendado ou usual no contexto do DETRAN-PE.
+   - **Conclusão**: Não está de acordo com as melhores práticas.
+
+4. **Chave Primária pkVeiculo**:
+   - **Regra Aplicável**: As regras fornecidas não tratam explicitamente de chaves primárias, mas o padrão usual inclui o prefixo "pk" para identificar chaves primárias.
+   - **Problemas Identificados**:
+     - Não há objeção clara à nomenclatura, mas a consistência com as letras minúsculas seria preferível (pkVeiculo em vez de PKveiculo).
+   - **Conclusão**: Aceitável, mas recomenda-se ajustar para "pk".
+
+5. **Tabela Veiculoss**:
+   - **Regra Aplicável**: Tabelas devem evitar o plural e não usar prefixos como "tb" ou "tabelas de referência externa". | Exemplo: tbVeiculo (proibido), tabela_veiculos (proibido)
+   - **Problemas Identificados**:
+     - O nome da tabela inclui "s" no final, indicando plural.
+     - Não há prefixo adequado como "tmp" ou "log".
+   - **Conclusão**: Não está de acordo com as regras.
+
+**Sugestões para Correção:**
+- **FKveiculoservicos**: Alterar para `fkTabelaFilhaTabelaPai`, onde "TabelaFilha" e "TabelaPai" são os nomes das tabelas envolvidas.
+- **TMPveiculos**: Alterar para `tmpVeiculos`.
+- **PROXYtransporte**: Remover o prefixo "proxy" ou substituí-lo por um adequado, conforme as regras.
+- **pkVeiculo**: Mantê-lo em minúsculas como `pkveiculo` para consistência.
+- **Veiculoss**: Alterar para `Veiculo`, removendo o "s".
+
+Essas alterações garantirão que as entidades estejam de acordo com as melhores práticas estabelecidas pelo DETRAN-PE.
+========================================
+
