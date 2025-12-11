@@ -280,7 +280,7 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
         return f"\n Erro técnico: {e}"
     
 
-def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="testes de desempenho e velocidade-10-12-2025.txt"):
+def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="ajustes no db e no script em python-11-12-2025.txt"):
     """Salva a interação em um arquivo de texto."""
     timestamp  = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     conteudo = (
