@@ -1,0 +1,57 @@
+========================================
+DATA: 12/12/2025 09:54:43
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA:  create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+); será necessária alguma alteração na nomenclatura ou está tudo de acordo com o manual de boas prática do Detran? 
+========================================
+RESPOSTA:
+**Resposta:**
+
+O nome da tabela "EventoCdt" está adequado, conforme as regras do manual do DETRAN-PE. O prefixo "Evento" é claro e descreve a funcionalidade da tabela.
+
+As colunas também seguem a nomenclatura correta:
+
+- **nCpf**: Representa um número de CPF.
+- **nSequencia**: Indica uma sequência numérica.
+- **sNome**, **sEmail**, **sTelefone**: Usam 's' para indicar que são strings, conforme a notação húngara.
+- **sTipoEvento** e **sCodigoEvento**: Descrevem o tipo e código do evento, respectivamente.
+
+A chave primária (pkEventoCdt) combina nCpf e nSequencia de forma adequada para identificar os registros rigidamente.
+
+Nenhuma regra foi violada. Tudo está em conformidade com as boas práticas estabelecidas.
+========================================
+
+========================================
+DATA: 12/12/2025 10:13:57
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA:  as colunas: nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null, estão de acordo com o manual de boas práticas do Detran  
+========================================
+RESPOSTA:
+**Resposta:**
+
+As colunas nCpf, nSequencia, sNome e sEmail estão em conformidade com o manual de boas práticas do DETRAN-PE:
+
+1. **nCpf**: Tipo numeric(11) adequado para armazenar CPFs (11 dígitos). Coluna NOT NULL, conforme exigido.
+2. **nSequencia**: smallint apropriado para sequências numéricas. Coluna NOT NULL, cumprindo as regras.
+3. **sNome**: char(44) razoável, considerando o tamanho máximo usual dos nomes. Coluna NOT NULL, necessário.
+4. **sEmail**: char(60) suficiente para emails variáveis. Coluna NOT NULL, conforme as diretrizes.
+
+Nenhuma violação identificada.
+========================================
+

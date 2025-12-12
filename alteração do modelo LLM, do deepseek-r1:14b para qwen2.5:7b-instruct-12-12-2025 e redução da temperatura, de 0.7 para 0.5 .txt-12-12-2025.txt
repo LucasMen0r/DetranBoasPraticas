@@ -1,0 +1,32 @@
+========================================
+DATA: 12/12/2025 08:59:05
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: a chave estrangeira FKveiculoservicos, a tabela temporária TMPveiculos, a tabela proxy PROXYtrasnporte, a chave primária pkVeiculo, a tabela Veiculoss e a procedure BatchConsumoServicoWebA estão nomeados de acordo com as melhores práticas do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+**Resposta:**
+
+- **FKveiculoservicos**: RUIM/PROIBIDO. A regra não especifica diretamente como um nome de chave estrangeira deve ser formatado, mas a utilização de camelCase (sem prefixo 'fk') é considerada inadequada e não segue as melhores práticas.
+
+- **TMPveiculos**: BOM/APROVADO. O nome segue o padrão `tmp + nome da tabela` indicando que se trata de uma tabela temporária auxiliar.
+
+- **PROXYtrasnporte**: RUIM/PROIBIDO. O nome usa snake_case (`_`) e está em minúsculas, além do uso de "proxy" que não é um prefixo recomendado. Além disso, a palavra "transporte" está no singular.
+
+- **pkVeiculo**: BOM/APROVADO. A notação `pk` para chave primária é amplamente aceita e segue as melhores práticas. O nome é direto e conciso.
+
+- **Veiculoss**: RUIM/PROIBIDO. O uso de snake_case (`_`) e a palavra "veiculos" no plural são contrários às boas práticas recomendadas.
+
+- **BatchConsumoServicoWebA**: BOM/APROVADO. Embora não haja uma regra específica, nomes compostos como este são aceitáveis desde que estejam bem formatados. No entanto, poderia ser mais claro se fosse escrito em camelCase: `batchConsumoServicoWebA`.
+
+**Resumo das Respostas:**
+
+- TMPveiculos: APROVADO
+- FKveiculoservicos: PROIBIDO
+- PROXYtrasnporte: PROIBIDO
+- pkVeiculo: APROVADO
+- Veiculoss: PROIBIDO
+- BatchConsumoServicoWebA: APROVADO (mas recomendado em camelCase)
+========================================
+

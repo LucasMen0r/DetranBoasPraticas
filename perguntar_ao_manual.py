@@ -13,7 +13,7 @@ db_pass = 'abc321'
 db_host = 'localhost'     
 db_port = '5432'          
 
-ollama_chat_model = "deepseek-r1:14b"
+ollama_chat_model = "deepseek-r1:14b" ##possivelmente mudar isso
 ollama_embed_model = "nomic-embed-text:latest"
 ollama_base_url = f"http://{db_host}:11434" 
 ollama_api_embed = f"{ollama_base_url}/api/embeddings"
@@ -279,7 +279,7 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
         return f"\n Erro técnico: {e}"
     
 
-def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="continuação dos testes com rust-11-12-2025.txt"):
+def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="teste com scripts reais após ajustes no modelo de LLM e temperaturta-12-12-2025.txt"):
     """Salva a interação em um arquivo de texto."""
     timestamp  = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     conteudo = (

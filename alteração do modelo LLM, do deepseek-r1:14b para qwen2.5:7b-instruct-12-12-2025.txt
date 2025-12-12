@@ -1,0 +1,65 @@
+========================================
+DATA: 12/12/2025 09:37:13
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA:  create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+); os dados desta tabela estão de acordo com o manual de boas práticas do Detran? 
+========================================
+RESPOSTA:
+The table "EventoCdt" does not adhere to the DETRAN-PE's guidelines for the following reasons:
+
+1. **Table Name**: The name "EventoCdt" uses an abbreviation ('Cdt'), which is unclear and violates the rule of using full terms for clarity. It should be renamed to something like "EventoCadastro".
+
+2. **Column Lengths**:
+   - sNome (char(44)): This length may be excessive. A shorter length, such as char(60), would be more appropriate.
+   - sTelefone (char(15)): While acceptable for some contexts, it might be better to standardize based on specific DETRAN-PE guidelines if available.
+
+3. **Column Types**:
+   - sTipoEvento and sCodigoEvento are too short. Increasing their lengths to varchar(2) and varchar(4), respectively, would allow more flexibility.
+
+There are no issues related to constraints, as the primary key is correctly set up with nCpf and nSequencia. The table structure should be revised to address these points for clarity and compliance.
+========================================
+
+========================================
+DATA: 12/12/2025 09:46:41
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA:  create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+); será necessária alguma alteração na nomenclatura ou está tudo de acordo com o manual de boas prática do Detran? 
+========================================
+RESPOSTA:
+A tabela "EventoCdt" foi criada de acordo com as regras estabelecidas no manual do DETRAN-PE. Abaixo estão os detalhes:
+
+1. **Nome da Tabela**: "EventoCdt" segue a notação húngara, onde o substantivo está no singular e o adjetivo está no plural. O nome também não contém espaços ou caracteres especiais.
+
+2. **Colunas**:
+   - nCpf: Utiliza o prefixo adequado para números (n).
+   - nSequencia: Mesma regra do prefixo.
+   - sNome, sEmail, sTelefone: Usam o prefixo "s" para strings.
+   - sTipoEvento, sCodigoEvento, sEvento: Seguem a mesma convenção de nomes.
+
+3. **Chaves Primárias**: A chave primária composta por nCpf e nSequencia está definida corretamente com uma constraint (pkEventoCdt), o que atende à regra de integridade referencial via constraints.
+
+Nenhuma alteração é necessária na nomenclatura da tabela ou das colunas, pois tudo está em conformidade com as boas práticas do DETRAN-PE.
+========================================
+
