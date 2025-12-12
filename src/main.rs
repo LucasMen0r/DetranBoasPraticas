@@ -42,7 +42,7 @@ async fn inserir_exemplo(
 
     sqlx::query(
         r#"
-        INSERT INTO exemplos_praticos (objeto_foco, exemplo_texto, is_bom_exemplo, explicacao, embedding)
+        INSERT INTO exemplos_praticos (ObjetoFoco, ExemploTexto, isBomExemplo, Explicacao, embedding)
         VALUES ($1, $2, $3, $4, $5)
         "#
     )
@@ -71,11 +71,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     println!("Limpando tabela antiga.");
     // Cria a tabela se não existir
-    sqlx::query("CREATE TABLE IF NOT EXISTS exemplos_praticos (id SERIAL PRIMARY KEY, objeto_foco TEXT, exemplo_texto TEXT, is_bom_exemplo BOOLEAN, explicacao TEXT, embedding vector(768));")
+    sqlx::query("CREATE TABLE IF NOT EXISTS ExemplosPratico (id SERIAL PRIMARY KEY, ObjetoFoco TEXT, ExemploTexto TEXT, isBomExemplo BOOLEAN, Explicacao TEXT, embedding vector(768));")
         .execute(&pool)
         .await?;
         
-    sqlx::query("TRUNCATE TABLE exemplos_praticos RESTART IDENTITY;")
+    sqlx::query("TRUNCATE TABLE ExemploPratico RESTART IDENTITY;")
         .execute(&pool)
         .await?;
 
