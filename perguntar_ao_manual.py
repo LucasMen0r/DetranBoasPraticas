@@ -62,7 +62,7 @@ def classificarpergunta(pergunta):
     ]
     prompt = f"""
     Analise a pergunta e responda APENAS com uma das categorias abaixo:
-    - Os exemplos práticos que estão no arquivo Exemplo.py
+    - Os exemplos práticos que estão no arquivo boa_pratica_exempl.rs
     - Nomenclatura de Objetos
     - Boas Práticas
     - Tipos de Dados
@@ -78,7 +78,7 @@ def classificarpergunta(pergunta):
                 "model": ollama_chat_model, 
                 "messages": [{"role": "user", "content": prompt}],
                 "stream": False,
-                "options": {"temperature": 0}
+                "options": {"temperature": 0.15}
             }
         )
         resposta.raise_for_status() 
@@ -152,15 +152,15 @@ def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=3):
     try:
         cursor = conn.cursor()
 
-        cursor.execute("SELECT to_regclass('public.exemplos_praticos');")
+        cursor.execute("SELECT to_regclass('public.ExemploPratico');")
         if not cursor.fetchone()[0]:
-            print("[AVISO] Tabela 'exemplos_praticos' ainda não existe.")
+            print("[AVISO] Tabela 'ExemploPratico' ainda não existe.")
             return []
 
         print(f"[DEBUG SQL] Buscando exemplos práticos similares...")
         sql = """
-        SELECT is_bom_exemplo, exemplo_texto, explicacao
-        FROM exemplos_praticos
+        SELECT isBomExemplo, ExemploTexto, Explicacao
+        FROM ExemploPratico
         ORDER BY (CASE WHEN objeto_foco ILIKE %s THEN 0 ELSE 1 END) ASC, embedding <=> %s::vector LIMIT %s;
         """
         cursor.execute(sql, (f"%{foco_usuario}%", list(pergunta_vetor), top_k))
@@ -169,7 +169,7 @@ def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=3):
         print(f"[ERRO SQL] Falha ao buscar exemplos: {e}")
         return []
     
-def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
+def perguntaollama(pergunta, contexto_regras, ExemploPratico):
     """
     Gera a resposta final com Streaming e mede performance.
     """
@@ -178,11 +178,11 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
         for regra, exemplo, sintaxe in contexto_regras
     )
     exemplos_str = ""
-    if exemplos_praticos:
+    if ExemploPratico:
         exemplos_str = "\nExemplos de referência (Use como guia absoluto):\n"
-        for is_bom, texto, explicacao in exemplos_praticos:
+        for is_bom, texto, Explicacao in ExemploPratico:
             tipo_txt = "BOM/APROVADO" if is_bom else "RUIM/PROIBIDO"
-            exemplos_str += f"[{tipo_txt}]: {texto} ({explicacao})\n"
+            exemplos_str += f"[{tipo_txt}]: {texto} ({Explicacao})\n"
 
     print("\n" + "="*10)
     print(" RESPOSTA DO G.A.N.D.A.L.F:") 
@@ -279,7 +279,7 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
         return f"\n Erro técnico: {e}"
     
 
-def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="teste com scripts reais após ajustes no modelo de LLM e temperaturta-12-12-2025.txt"):
+def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="Últimos ajustes no SQL e nos scripts-15-12-2025.txt"):
     """Salva a interação em um arquivo de texto."""
     timestamp  = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     conteudo = (
@@ -321,14 +321,14 @@ def main():
         contexto_regras = encontrarregras(conn, vetor, categoria, foco)
         
         if not contexto_regras:
-            print(" [i] Tentando busca global nas regras...")
+            print(" [i] Tentando busca global nas regras.")
             contexto_regras = encontrarregras(conn, vetor, "GERAL", foco)
 
         # Busca de EXEMPLOS (Prática)
-        exemplos_praticos = buscarexemplos(conn, vetor, foco)
+        ExemploPratico = buscarexemplos(conn, vetor, foco)
 
         # Geração
-        resposta_final = perguntaollama(pergunta, contexto_regras, exemplos_praticos)
+        resposta_final = perguntaollama(pergunta, contexto_regras, ExemploPratico)
         
         salvarrespotas(pergunta, categoria, resposta_final)
     
