@@ -42,7 +42,7 @@ async fn inserir_exemplo(
 
     sqlx::query(
         r#"
-        INSERT INTO ExemploPratico (ObjetoFoco, ExemploTexto, isBomExemplo, Explicacao, embedding)
+        INSERT INTO ExemploPratico (ObjetoFoco, ExemploTexto, is_BomExemplo, Explicacao, embedding)
         VALUES ($1, $2, $3, $4, $5)
         "#
     )

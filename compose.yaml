@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    container_name: meu_pgvector_db_compose
+    restart: always
+    environment:
+      POSTGRES_DB: DetranNorma
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: abc321
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./DetranNorma.sql:/docker-entrypoint-initdb.d/DetranNorma.sql
+    networks:
+      - app_network
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama_service
+    restart: always
+    ports:
+      - "11436:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    networks:
+      - app_network
+    environment: 
+      - OLLAMA_TLS_INSECURE=1 
+      - OLLAMA_ADD_REGISTRY=registry.ollama.ai 
+
+volumes: 
+  postgres_data:
+  ollama_models:
+
+networks:
+  app_network:
+    driver: bridge

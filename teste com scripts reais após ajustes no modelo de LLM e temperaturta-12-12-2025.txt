@@ -55,3 +55,79 @@ As colunas nCpf, nSequencia, sNome e sEmail estão em conformidade com o manual 
 Nenhuma violação identificada.
 ========================================
 
+========================================
+DATA: 16/12/2025 08:35:10
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA:  As colunas sNome char(44) not null, sEmail char(60) not null, sTelefone char(15) not null e sTipoEvento varchar(1) not null estão de acordo com as normas padrão do Detran?
+========================================
+RESPOSTA:
+As colunas sNome, sEmail, sTelefone e sTipoEvento estão de acordo com as normas padrão do Detran-PE, exceto pelo fato de que, se forem usadas como parâmetros em Procedures externas, deveriam iniciar com um underline.
+========================================
+
+========================================
+DATA: 16/12/2025 08:44:37
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: A seguinte tabela e suas respectivas colunas seguem o manual de boas práticas do Detran: /* Table: EventoCdt */
+/*==============================================================*/
+create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+)?
+========================================
+RESPOSTA:
+**Resposta:**
+
+A tabela `EventoCdt`segue as regras estabelecidas no manual do DETRAN-PE. Análise detalhada:
+
+1. **Uso de Stored Procedures:** A criação da tabela não utiliza comandos SQL que necessitem de Stored Procedures, exceto para operações de insert/update de dados grandes, conforme permitido.
+2. **Integridade Referencial:** Define uma chave primária (PK) usando a cláusula `constraint pkEventoCdt primary key`, o que atende à regra.
+3. **Evitar Cursor:** Não há uso de cursor na definição da tabela.
+4. **Joins e Temporárias:** A tabela em si não envolve operações complexas que exijam joins múltiplos ou tabelas temporárias.
+5. **Comandos Restringidos:** Nenhuma cláusula proibida (NOT EXISTS, NOT IN, NOT LIKE) foi utilizada.
+
+**Conclusão:** A tabela está de acordo com as regras. Recomendamos adicionar restrições de integridade se houver necessidade futura.
+========================================
+
+========================================
+DATA: 16/12/2025 08:55:27
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: As procedures:EntidadeReducaoIpvaProcessar / IsencaoVeiculoPcdProcessar / LiberarLicenciamentoA / LiminarJudicialProcessar estão de acordo com o manual?
+========================================
+RESPOSTA:
+**Resposta:**
+
+As procedures fornecidas seguem parcialmente as regras estabelecidas no manual do DETRAN-PE. Abaixo, estão detalhadas as observações:
+
+1. **EntidadeReducaoIpvaProcessar**:  
+   - Nome singular e claro, seguindo a notação húngara (exemplo: ParcelaDebito).  
+   - Não viola nenhuma regra.
+
+2. **IsencaoVeiculoPcdProcessar**:  
+   - Nome singular e claro, embora contenha "Pcd", que pode ser uma abreviação.  
+   - Se "Pcd" for considerado uma sigla oficial, está em conformidade; caso contrário, poderia violar a regra das abreviações.
+
+3. **LiberarLicenciamentoA**:  
+   - Contém a letra 'A' no final, que pode ser uma abreviação ou parte de um nome mais longo.  
+   - Pode violar a regra se não houver necessidade da abreviação.
+
+4. **LiminarJudicialProcessar**:  
+   - Nome singular e claro, seguindo a notação húngara.  
+   - Não viola nenhuma regra.
+
+**Conclusão:**  
+As procedures "EntidadeReducaoIpvaProcessar", "IsencaoVeiculoPcdProcessar" e "LiminarJudicialProcessar" estão em conformidade com as regras do manual, exceto por possíveis abreviações não necessárias. A procedure "LiberarLicenciamentoA" deve ser revisada devido à presença da letra 'A' no final.
+========================================
+
