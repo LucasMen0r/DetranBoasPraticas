@@ -1,0 +1,36 @@
+
+PostgreSQL Database directory appears to contain a database; Skipping initialization
+
+2025-12-16 10:47:45.332 UTC [1] LOG:  starting PostgreSQL 17.7 (Debian 17.7-3.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2025-12-16 10:47:45.332 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2025-12-16 10:47:45.332 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2025-12-16 10:47:45.333 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-16 10:47:45.335 UTC [28] LOG:  database system was shut down at 2025-12-16 10:47:38 UTC
+2025-12-16 10:47:45.337 UTC [1] LOG:  database system is ready to accept connections
+2025-12-16 10:52:45.435 UTC [26] LOG:  checkpoint starting: time
+2025-12-16 10:52:45.445 UTC [26] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.011 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1972160, redo lsn=0/1972108
+2025-12-16 10:56:47.747 UTC [26] LOG:  checkpoint starting: immediate force wait
+2025-12-16 10:56:47.751 UTC [26] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.005 s; sync files=1, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=1 kB; lsn=0/19725E8, redo lsn=0/1972590
+2025-12-16 11:01:47.852 UTC [26] LOG:  checkpoint starting: time
+2025-12-16 11:03:27.753 UTC [26] LOG:  checkpoint complete: wrote 1000 buffers (6.1%); 1 WAL file(s) added, 0 removed, 0 recycled; write=99.857 s, sync=0.019 s, total=99.902 s; sync files=346, longest=0.007 s, average=0.001 s; distance=4774 kB, estimate=4774 kB; lsn=0/1E1C138, redo lsn=0/1E1C0A8
+2025-12-16 11:15:36.761 UTC [87] FATAL:  password authentication failed for user " Ollama_trainer "
+2025-12-16 11:15:36.761 UTC [87] DETAIL:  Role " Ollama_trainer " does not exist.
+	Connection matched file "/var/lib/postgresql/data/pg_hba.conf" line 128: "host all all all scram-sha-256"
+2025-12-16 11:31:48.212 UTC [26] LOG:  checkpoint starting: time
+2025-12-16 11:31:48.528 UTC [26] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.301 s, sync=0.007 s, total=0.317 s; sync files=3, longest=0.007 s, average=0.003 s; distance=3 kB, estimate=4297 kB; lsn=0/1E1D060, redo lsn=0/1E1D008
+2025-12-16 12:32:06.370 UTC [1] LOG:  received fast shutdown request
+2025-12-16 12:32:06.371 UTC [1] LOG:  aborting any active transactions
+2025-12-16 12:32:06.372 UTC [1] LOG:  background worker "logical replication launcher" (PID 31) exited with exit code 1
+2025-12-16 12:32:06.372 UTC [26] LOG:  shutting down
+2025-12-16 12:32:06.373 UTC [26] LOG:  checkpoint starting: shutdown immediate
+2025-12-16 12:32:06.376 UTC [26] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.004 s; sync files=5, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=3867 kB; lsn=0/1E1D110, redo lsn=0/1E1D110
+2025-12-16 12:32:06.379 UTC [1] LOG:  database system is shut down
+
+PostgreSQL Database directory appears to contain a database; Skipping initialization
+
+2025-12-16 12:32:06 UTC [1]: [1-1] user=,db=,app=,client= LOG:  starting PostgreSQL 17.7 (Debian 17.7-3.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2025-12-16 12:32:06 UTC [1]: [2-1] user=,db=,app=,client= LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2025-12-16 12:32:06 UTC [1]: [3-1] user=,db=,app=,client= LOG:  listening on IPv6 address "::", port 5432
+2025-12-16 12:32:06 UTC [1]: [4-1] user=,db=,app=,client= LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-16 12:32:06 UTC [29]: [1-1] user=,db=,app=,client= LOG:  database system was shut down at 2025-12-16 12:32:06 UTC
+2025-12-16 12:32:06 UTC [1]: [5-1] user=,db=,app=,client= LOG:  database system is ready to accept connections
