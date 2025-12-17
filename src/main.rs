@@ -120,7 +120,37 @@ async fn main() -> Result<(), Box<dyn Error>> {
             is_bom: false,
             explicacao: "Nome genérico, deve identificar a tabela e a sigla 'pk' deve estar escrita em letras minúsculas",
         },
-
+	//Índices
+        ExemploInput{
+            foco: "Índices",
+            texto: "Usuario_nCpf",
+            is_bom: true,
+            explicacao: "Nome da tabela mais underline seguido do nome da primeira coluna que compõe o índice. Usar abreviações se o nome do campo for muito grande."
+        },
+        ExemploInput{
+            foco: "índices",
+            texto: "UsuarioSetor_Usuario1.",
+            is_bom: true,
+            explicacao: "Nome da tabela mais underline seguido do nome da primeira coluna que compõe o índice. Usar abreviações se o nome do campo for muito grande. Quando existir mais de um “índice” com o mesmo campo, deve-se usar um número sequencial no final do nome do “índice”."
+        },
+        ExemploInput{
+            foco: "índices",
+            texto: "NotificacaoPA_nProtocolo.",
+            is_bom: true,
+            explicacao: "Nome da tabela mais underline seguido do nome da primeira coluna que compõe o índice. Usar abreviações se o nome do campo for muito grande."
+        },
+        ExemploInput{
+            foco: "Índices.",
+            texto: "UsuarionCpf",
+            is_bom: false,
+            explicacao: "Ausência do underline seguido do nome da primeira coluna que compõe o índice. Usar abreviações se o nome do campo for muito grande."
+        },
+        ExemploInput{
+        foco: "Índices",
+        texto: "UsuarioSetor_Usuario.",
+        is_bom: false,
+        explicacao: "Quando existir mais de um “índice” com o mesmo campo, deve-se usar um número sequencial no final do nome do “índice”, o que está ausente nesse exeplo."
+        },
         // FOREIGN KEYS
         ExemploInput {
             foco: "FK",
@@ -136,6 +166,18 @@ async fn main() -> Result<(), Box<dyn Error>> {
         },
 
         // PROCEDURES
+	ExemploInput{
+            foco: "Procedure",
+            texto: "@nTaxa",
+            is_bom: true,
+            explicacao: "Regulamenta os nomes das variáveis na procedure que está conectada com a aplicação web, recebendo por padrão o '@' no início."
+        },
+        ExemploInput{
+            foco: "Procedure.",
+            texto: "iLicenciamentoProcessar.",
+            is_bom: true,
+            explicacao: "Regulamenta o nome da procedure que pode ser acessada chamada por aplicações web, e apenas para aplicações Web, o nome da procedure será iniciado pela letra 'i', minúscula para deixar claro que a procedure está relacionada a uma aplicação web."
+        },
         ExemploInput {
             foco: "Procedure",
             texto: "BatchConsumoServicoWebS",
@@ -189,6 +231,18 @@ async fn main() -> Result<(), Box<dyn Error>> {
             texto: "dbvcen.dbo.ProcessoEletroAberturaAnalisar",
             is_bom: true,
             explicacao: "No sistema de Veículos, os nomes das procedures RENAVAM e RENAINF ficarão iguais aos já existentes. Se for no banco RENAVAM todos os padrões serão mantidos, mas se for em outro banco, só se houver algum termo que indique que a procedure faz parte de um desses projetos.",
+        },
+	ExemploInput{
+            foco: "Procedure.",
+            texto: "@valorTaxa",
+	    is_bom: false,
+            explicacao: "Apesar do '@' estar correto, a nomenclatura da variável viola as regras do Manual de Boas Práticas do Detran-PE, o correto deveria ser '@nTaxa'."
+        },
+        ExemploInput{
+            foco: "Procedure"
+            texto: "ILicenciamentoProcessar.",
+	    is_bom: false,
+            explicacao: "A procedure viola a regra ao iniciar com 'I', em maiúsculo, quando o correto é iniciar com 'i', em minúsculo, quando se tratar de uma procedure que se conecta com aplicações web."
         },
         ExemploInput {
             foco: "Procedure",

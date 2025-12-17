@@ -89,7 +89,7 @@ def classificarpergunta(pergunta):
             if cat.lower() in conteudo.lower():
                 return cat
         
-        print(f"[AVISO] Categoria '{conteudo}' inválida. Usando GERAL.")
+       ## print(f"[AVISO] Categoria '{conteudo}' inválida. Usando GERAL.")
         return "GERAL"
 
     except Exception:

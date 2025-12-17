@@ -1,0 +1,101 @@
+========================================
+DATA: 17/12/2025 09:23:26
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: As procedures:EntidadeReducaoIpvaProcessar / IsencaoVeiculoPcdProcessar / LiberarLicenciamentoA / LiminarJudicialProcessar estão de acordo com o manual?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Analisando as procedures fornecidas em conformidade com as regras do manual do DETRAN-PE:
+
+1. **EntidadeReducaoIpvaProcessar**:  
+   - Segue a regra do singular e da notação húngara.  
+   - Observação: Pode ser simplificada para "ReducaoIpvaProcessar" para maior clareza.
+
+2. **IsencaoVeiculoPcdProcessar**:  
+   - Nome em singular, sem abreviações e cumprindo a notação húngara.  
+   - Adequado conforme as regras.
+
+3. **LiberarLicenciamentoA**:  
+   - Contém a letra "A" no final, possivelmente uma abreviação para "Autorização".  
+   - Recomenda-se substituir por "LiberarLicenciamentoAutorizacaoProcessar" para cumprir integralmente a regra contra abreviações.
+
+4. **LiminarJudicialProcessar**:  
+   - Nome em singular, sem abreviações e cumprindo a notação húngara.  
+   - Adequado conforme as regras.
+
+**Conclusão:** Três procedures seguem as regras (IsencaoVeiculoPcdProcessar, LiminarJudicialProcessar) com necessidade de ajuste na "LiberarLicenciamentoA". A "EntidadeReducaoIpvaProcessar" pode ser simplificada para maior clareza.
+========================================
+
+========================================
+DATA: 17/12/2025 09:42:59
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: A procedure IVeiculoConsultar é uma procedure que se conecta com uma aplicação web, o seu nome está de acordo com as regras do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+A procedure "IVeiculoConsultar" não está de acordo com as regras do manual do DETRAN-PE. Isso ocorre porque o nome inclui a letra 'I' no início, um prefixo que geralmente é proibido, enquanto a regra recomenda nomes claros e no singular sem prefixos adicionais.
+========================================
+
+========================================
+DATA: 17/12/2025 09:51:27
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: A procedure IVeiculoConsultar é uma procedure que se conecta com uma aplicação web,como poderia ser feito o ajuste no nomenclatura para ficar de acordo com as regras do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+A procedure foi renomeada para **IVC_VeiculoConsultar**:
+
+- **Remoção da preposição**: Retirou-se o "de", resultando em um nome mais curto e direto.
+- **Abreviação coerente**: Utilizou-se "IVC" como abreviação para "Interface Veículo Consultar".
+- **Sigla adequada**: Mantido "I" com a primeira letra maiúscula, conforme as regras.
+
+**Resposta:** IVC_VeiculoConsultar
+========================================
+
+========================================
+DATA: 17/12/2025 09:59:00
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: A procedure iVeiculoConsultar é uma procedure que se conecta com uma aplicação web,como poderia ser feito o ajuste no nomenclatura para ficar de acordo com as regras do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+The adjusted name for the stored procedure should be:
+
+**VeiculoConsulta**
+
+Explanation:
+- Removed the 'i' prefix as it's unclear and potentially a reserved word.
+- Replaced "Consultar" with "Consulta" to avoid using a verb and make it a noun, adhering to the rules.
+- The new name is clear, concise, within 30 characters, and follows official abbreviation standards.
+========================================
+
+========================================
+DATA: 17/12/2025 10:10:43
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: A procedure IServicoConsultar é uma procedure que se conecta com uma aplicação web,como poderia ser feito o ajuste no nomenclatura para ficar de acordo com as regras do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+The procedure name should be adjusted according to the first rule, which requires singular names without abbreviations unless they exceed 30 characters. Therefore, the procedure "IServicoConsultar" would be renamed to "ServicoConsultar". 
+
+Answer: ServicoConsultar
+========================================
+
+========================================
+DATA: 17/12/2025 10:17:11
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: A procedure IServicoConsulta é uma procedure que se conecta com uma aplicação web,como poderia ser feito o ajuste no nomenclatura para ficar de acordo com as regras do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+O nome adequado para a procedure, conforme as regras do DETRAN-PE, é **ServicoConsulta**.
+========================================
+

@@ -280,3 +280,68 @@ As procedures EntidadeReducaoIpvaProcessar, IpvaProporcionalVerificar e IsencaoV
 Portanto, as procedures estão em conformidade com as regras estabelecidas.
 ========================================
 
+========================================
+DATA: 17/12/2025 10:48:50
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: A procedure iInfracaoConsultar é uma procedure que se conecta com uma aplicação web,como poderia ser feito o ajuste no nomenclatura para ficar de acordo com as regras do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+A procedure iInfracaoConsultar pode ser ajustada para "DETRAN-INFRAÇÃO-CONSULTAR" de acordo com as regras. Isso mantém o significado e cumpre as normas estabelecidas, evitando palavras reservadas e preposições.
+========================================
+
+========================================
+DATA: 17/12/2025 10:53:53
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: A procedure IServicoConsultar é uma procedure que se conecta com uma aplicação web,como poderia ser feito o ajuste no nomenclatura para ficar de acordo com as regras do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+O nome da Procedure deve seguir o padrão de nomenclatura do manual de boas práticas do DETRAN-PE. Ajustando "IServicoConsultar" para "uspConsultarServico". Isso atende às regras de singularidade, clareza e conformação com a estrutura em português, evitando abreviações. Para tabelas temporárias auxiliares, utilize tmpConsultarServico.
+
+**Resposta:**
+
+Aprocedure "IServicoConsultar" deve ser renomeada para "uspConsultarServico", seguindo as regras de nomenclatura do manual do DETRAN-PE.
+========================================
+
+========================================
+DATA: 17/12/2025 10:58:58
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: As procedures:EntidadeReducaoIpvaProcessar / IsencaoVeiculoPcdProcessar / LiberarLicenciamentoA / LiminarJudicialProcessar estão de acordo com o manual?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Analisando as procedures fornecidas em conformidade com o manual do DETRAN-PE:
+
+1. **EntidadeReducaoIpvaProcessar**: Em conformidade. Nome em singular, sem abreviações.
+
+2. **IsencaoVeiculoPcdProcessar**: Não está de acordo. Contém a abreviação "Pcd".
+
+3. **LiberarLicenciamentoA**: Não está de acordo. Contém a abreviação "A".
+
+4. **LiminarJudicialProcessar**: Em conformidade. Nome em singular, sem abreviações.
+
+**Conclusão:** As procedures "IsencaoVeiculoPcdProcessar" e "LiberarLicenciamentoA" não estão de acordo com o manual do DETRAN-PE devido ao uso de abreviações.
+========================================
+
+========================================
+DATA: 17/12/2025 11:04:03
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA:  As colunas: sNome char(44) not null, sEmail char(60) not null, sTelefone char(15) not null e sTipoEvento varchar(1) not null estão de acordo com as normas padrão do Detran?
+========================================
+RESPOSTA:
+The columns sNome, sEmail, sTelefone, and sTipoEvento do NOT comply with DETRAN-PE standards because:
+
+1. They use lowercase 's' at the beginning, which violates the rule against using PascalCase or terms like "string".
+2. The prefix 's' is not allowed as per the given rules.
+
+To meet the standards, remove the 's' prefix and capitalize each word without using PascalCase. For example: Nome, Email, Telefone, TipoEvento.
+========================================
+

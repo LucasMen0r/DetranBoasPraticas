@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS regras_nomenclatura (
     id_objeto INT REFERENCES objetos_db(id_objeto), -- NULL se for regra geral
     descricao_regra TEXT NOT NULL,
     padrao_sintaxe TEXT,
-    exemplo TEXT,
     contexto_adicional TEXT,
     fonte_pagina INT,
     embedding vector(768) -- Coluna onde o Python salvará os vetores
@@ -56,31 +55,31 @@ INSERT INTO regras_nomenclatura (id_categoria, id_objeto, descricao_regra, conte
 ( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Regras Gerais'), NULL, 'Não usar apenas números, verbos ou nomes próprios.', 'Restrições', 4),
 ( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Regras Gerais'), NULL, 'Siglas oficiais: primeira letra maiúscula e demais minúsculas.', 'Ex.: Ipva, Cnh', 4);
 -- >>> REGRAS DE OBJETOS
-INSERT INTO regras_nomenclatura (id_categoria, id_objeto, descricao_regra, padrao_sintaxe, exemplo, fonte_pagina) VALUES
+INSERT INTO regras_nomenclatura (id_categoria, id_objeto, descricao_regra, padrao_sintaxe, fonte_pagina) VALUES
 -- Banco e Tabelas
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Banco'), 'O nome do banco deve identificar o negócio ou a sigla da aplicação.', 'db + área (até 5 posições) + seq', 'dbhbio01, dbhpop01', 6),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Tabela'), 'Nome no singular, claro, sem abreviação (exceto se >30 chars).', 'Singular, Notação húngara (ParcelaDebito)', 'Veiculo, ParcelaDebito', 5),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Tabela Log'), 'Tabelas de log devem ter o prefixo Log.', 'Log + nome da tabela', 'LogParcelaDebito', 7),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Banco'), 'O nome do banco deve identificar o negócio ou a sigla da aplicação.', 6),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Tabela'), 'Nome no singular, claro, sem abreviação (exceto se >30 chars).', 5),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Tabela Log'), 'Tabelas de log devem ter o prefixo Log.', 'Log + nome da tabela', 7),
 ( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Tabela Temp'), 'Tabela temporária auxiliar.', 'temp + nome tabela', 'tmpVeiculol', 7),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Tabela "z"'), 'Tabelas que serão excluídas do banco de dados.', 'z + login + objetivo', 'zkrmlduplicidadedebitoLimpar', 7),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Proxy Table'), 'Tabelas espelho ou de referência externa.', 'px + Origem + NomeObjeto', 'pxProtLaudoToxicologico', 8),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Tabela "z"'), 'Tabelas que serão excluídas do banco de dados.', 'z + login + objetivo', 7),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Proxy Table'), 'Tabelas espelho ou de referência externa.', 'px + Origem + NomeObjeto', 8),
 -- Colunas
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Coluna'), 'Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.', 'tipo + NomeColuna', 'nValorPagar, nCpf, sChassi', 8),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Coluna'), 'Colunas usadas como parâmetro em procedures externas iniciam com underline.', '_ + NomeColuna', '_sNome, _Nome', 9),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Coluna'), 'Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.', 8),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Coluna'), 'Colunas usadas como parâmetro em procedures externas iniciam com underline.', 9),
 -- Constraints 
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'PK (Primary Key)'), 'Chave primária natural ou sequencial.', 'pk + Nome Tabela', 'pkVeiculo, pkFeriado', 10),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'FK (Foreign Key)'), 'Padrão para Foreign Key (FK): Usar o prefixo fk mais os nomes das tabelas filha e pai.', 'fk + TabelaFilha + TabelaPai', 'fkProcessoUsuario', 11),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Unique'), 'Restrição de unicidade.', 'u + NomeTabela + Coluna', 'uUsuarioEmail', 11),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Check'), 'Restrição de checagem.', 'chk + NomeTabela + Coluna', 'chkUsuarioSexo', 11),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'PK (Primary Key)'), 'Chave primária natural ou sequencial.', 10),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'FK (Foreign Key)'), 'Padrão para Foreign Key (FK): Usar o prefixo fk mais os nomes das tabelas filha e pai.', 11),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Unique'), 'Restrição de unicidade.', 'u + NomeTabela + Coluna', 11),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Check'), 'Restrição de checagem.', 'chk + NomeTabela + Coluna', 11),
 -- Views e Índices
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'View comum'), 'View para consultas (SELECT apenas).', 'vw + Nome Tabela', 'vwUsuarioProcesso', 12),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'View materializada'), 'View que armazena dados fisicamente.', 'vm + Objetivo[Complemento]', 'vmProcessoUsuario', 12),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Índice'), 'Nome da tabela seguido do nome da primeira coluna do índice.', 'Tabela + _ + Coluna', 'Usuario_nCpf', 12),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'View comum'), 'View para consultas (SELECT apenas).', 'vw + Nome Tabela', 12),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'View materializada'), 'View que armazena dados fisicamente.', 'vm + Objetivo[Complemento]', 12),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Índice'), 'Nome da tabela seguido do nome da primeira coluna do índice.', 'Tabela + _ + Coluna', 12),
 -- Procedures & Triggers
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Procedure'), 'Objetivo + Complemento + Operação (S, I, E, A, R).', 'Objetivo + [Complemento] + Operação', 'RegistroCfcCategoriaA, AtendimentoE', 13),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Procedure'), 'Se executada via batch, iniciar com Batch.', 'Batch + Nomeprocedure', 'BatchNomeprocedure', 14),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Procedure'), 'Se acesso via internet, iniciar com i.', 'i + Nomeprocedure', 'iNomeprocedure', 14),
-( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Trigger'), 'Prefixo tg + tabela + sigla evento (I, A, E).', 'tg + Tabela + Operação', 'tgTabelal, tgTabelaA', 16);
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Procedure'), 'Objetivo + Complemento + Operação (S, I, E, A, R).', 'Objetivo + [Complemento] + Operação', 13),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Procedure'), 'Se executada via batch, iniciar com Batch.', 'Batch + Nomeprocedure', 14),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Procedure'), 'Se acesso via internet, iniciar com i.', 'i + Nomeprocedure', 14),
+( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Nomenclatura de Objetos'), (SELECT id_objeto FROM objetos_db WHERE nome_objeto = 'Trigger'), 'Prefixo tg + tabela + sigla evento (I, A, E).', 16);
 -- >>> BOAS PRÁTICAS
 INSERT INTO regras_nomenclatura (id_categoria, id_objeto, descricao_regra, contexto_adicional, fonte_pagina) VALUES
 ( (SELECT id_categoria FROM categorias_regras WHERE nome_categoria = 'Boas Práticas'), NULL, 'Todo comando SQL deve ser feito via Stored Procedure (exceto update/insert de text/image).', 'Programação', 18),
