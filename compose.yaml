@@ -1,3 +1,12 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker Compose reference guide at
+# https://docs.docker.com/go/compose-spec-reference/
+
+# Here the instructions define your application as a service called "server".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
 version: '3.8'
 
 services:
@@ -10,10 +19,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: abc321
     ports:
-      - "5433:5432"
+      - "5435:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./DetranNorma.sql:/docker-entrypoint-initdb.d/DetranNorma.sql
+      - ./setup_inicial.sql/sql/DetranNorma.sql:/docker-entrypoint-initdb.d/DetranNorma.sql
     networks:
       - app_network
 
@@ -30,6 +39,39 @@ services:
     environment: 
       - OLLAMA_TLS_INSECURE=1 
       - OLLAMA_ADD_REGISTRY=registry.ollama.ai 
+
+  app_python:
+    build: ./app_python
+    container_name: gandalf_interface
+    depends_on:
+      - db
+      - ollama
+    environment:
+      DB_HOST: db
+      DB_NAME: DetranNorma
+      DB_USER: postgres
+      DB_PASSWORD: abc321
+      OLLAMA_HOST: http://ollama:11434
+    volumes:
+      - ./app_python:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - app_network
+    command: python3 perguntar_ao_manual.py
+
+  app_rust:
+    build: ./core_rust
+    container_name: gandalf_heavy_lifter
+    depends_on:
+      - db
+      - ollama
+    environment:
+      DATABASE_URL: postgres://postgres:abc321@db:5432/DetranNorma
+      OLLAMA_HOST: http://ollama:11434
+    networks:
+      - app_network
+    restart: "no"
 
 volumes: 
   postgres_data:

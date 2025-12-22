@@ -11,11 +11,11 @@ db_name = 'DetranNorma'
 db_user = 'postgres'
 db_pass = 'abc321'        
 db_host = 'localhost'     
-db_port = '5433'    
+db_port = '5432'          
 
-ollama_chat_model = "deepseek-r1:14b" ##possivelmente mudar isso
+ollama_chat_model = "deepseek-r1:8b" ##o modelo anterior, o 14b, foi removido por ser muito pesado; o 8b pode fazer as suas funções sem muitos problemas.
 ollama_embed_model = "nomic-embed-text:latest"
-ollama_base_url = f"http://{db_host}:11434" 
+ollama_base_url = f"http://{db_host}:11436" 
 ollama_api_embed = f"{ollama_base_url}/api/embeddings"
 ollama_api_chat = f"{ollama_base_url}/api/chat"
 
@@ -43,7 +43,7 @@ def conectadb():
         return None
     
 def embedtext(text): 
-    print(f"[DEBUG] Vetorizando pergunta.") 
+
     try: 
         resposta = requests.post( 
             ollama_api_embed, 
@@ -62,7 +62,6 @@ def classificarpergunta(pergunta):
     ]
     prompt = f"""
     Analise a pergunta e responda APENAS com uma das categorias abaixo:
-    - Os exemplos práticos que estão no arquivo Exemplo.py
     - Nomenclatura de Objetos
     - Boas Práticas
     - Tipos de Dados
@@ -78,7 +77,7 @@ def classificarpergunta(pergunta):
                 "model": ollama_chat_model, 
                 "messages": [{"role": "user", "content": prompt}],
                 "stream": False,
-                "options": {"temperature": 0}
+                "options": {"temperature": 0.15}
             }
         )
         resposta.raise_for_status() 
@@ -88,8 +87,6 @@ def classificarpergunta(pergunta):
         for cat in categorias_validas:
             if cat.lower() in conteudo.lower():
                 return cat
-        
-       ## print(f"[AVISO] Categoria '{conteudo}' inválida. Usando GERAL.")
         return "GERAL"
 
     except Exception:
@@ -125,12 +122,12 @@ def extrairfoco(pergunta):
 def encontrarregras(conn, pergunta_vetor, nome_categoria, foco_usuario, top_k=5):
     """Busca Regras Teóricas."""
     cursor = conn.cursor()
-    print(f"[DEBUG SQL] Buscando regras. Categoria: '{nome_categoria}' | Foco: '{foco_usuario}'")
+    print(f"Buscando regras. Categoria: '{nomecategoria}' | Foco: '{foco_usuario}'")
 
     sql_base = """
-    SELECT r.descricao_regra, r.exemplo, r.padrao_sintaxe
-    FROM regras_nomenclatura r
-    JOIN categorias_regras c ON r.id_categoria = c.id_categoria
+    SELECT r.DescricaoRegra, r.ContextoAdicional, r.PadraoSintaxe 
+    FROM RegraNomenclatura r
+    JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
     """
     order_clause = """
     ORDER BY (CASE WHEN r.descricao_regra ILIKE %s THEN 0 ELSE 1 END) ASC, r.embedding <=> %s::vector LIMIT %s;
@@ -147,59 +144,88 @@ def encontrarregras(conn, pergunta_vetor, nome_categoria, foco_usuario, top_k=5)
     cursor.execute(sql, parametros)
     return cursor.fetchall()
 
-def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=3):
+def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=4):
     """Busca Exemplos homologados ou rejeitados na tabela nova."""
     try:
         cursor = conn.cursor()
 
-        cursor.execute("SELECT to_regclass('public.exemplos_praticos');")
+        cursor.execute("SELECT to_regclass('public.ExemploPratico');")
         if not cursor.fetchone()[0]:
-            print("[AVISO] Tabela 'exemplos_praticos' ainda não existe.")
+            print("[AVISO] Tabela 'ExemploPratico' ainda não existe.")
             return []
 
-        print(f"[DEBUG SQL] Buscando exemplos práticos similares...")
+        print(f"Buscando exemplos práticos similares.")
         sql = """
-        SELECT is_bom_exemplo, exemplo_texto, explicacao
-        FROM exemplos_praticos
-        ORDER BY (CASE WHEN objeto_foco ILIKE %s THEN 0 ELSE 1 END) ASC, embedding <=> %s::vector LIMIT %s;
-        """
+    SELECT is_BomExemplo, ExemploTexto, Explicacao
+    FROM ExemploPratico
+    ORDER BY (CASE WHEN ObjetoFoco ILIKE %s THEN 0 ELSE 1 END) ASC, embedding <=> %s::vector LIMIT %s;
+    """
         cursor.execute(sql, (f"%{foco_usuario}%", list(pergunta_vetor), top_k))
         return cursor.fetchall()
     except Exception as e:
         print(f"[ERRO SQL] Falha ao buscar exemplos: {e}")
         return []
     
-def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
+def perguntaollama(pergunta, contexto_regras, ExemploPratico):
     """
-    Gera a resposta final com Streaming e mede performance.
+    Gera a resposta final com Streaming, usando Regras + Exemplos Práticos.
+    Versão aprimorada com Debug de Contexto e Prompt de Auditoria.
     """
-    contexto_str = "\n".join(
-        f"- Regra: {regra} | Exemplo: {exemplo} | Padrão: {sintaxe}" 
-        for regra, exemplo, sintaxe in contexto_regras
-    )
-    exemplos_str = ""
-    if exemplos_praticos:
-        exemplos_str = "\nExemplos de referência (Use como guia absoluto):\n"
-        for is_bom, texto, explicacao in exemplos_praticos:
-            tipo_txt = "BOM/APROVADO" if is_bom else "RUIM/PROIBIDO"
-            exemplos_str += f"[{tipo_txt}]: {texto} ({explicacao})\n"
-
+    # --- 1. DEBUG VISUAL (Para você ver o que o Gandalf está "lendo") ---
     print("\n" + "="*10)
-    print(" RESPOSTA DO G.A.N.D.A.L.F:") 
-    print("="*10)
-
-    prompt_completo = f"""
-    Você é um assistente especialista no manual do DETRAN-PE.
-    Responda a pergunta baseando-se ESTRITAMENTE nas regras e exemplos abaixo.
-    Se a regra proibir algo, diga claramente.
+    print(f"[DEBUG] Regras recuperadas do Banco: {len(contexto_regras)}")
     
-    Regras Oficiais:
-    {contexto_str}
+    if not contexto_regras:
+        print("[ALERTA] O Retrieval retornou lista vazia! O contexto será nulo.")
+    else:
+        # Mostra uma prévia das primeiras 3 regras para conferência
+        for i, (regra, ctx, sintaxe) in enumerate(contexto_regras[:3]):
+            regra_curta = (regra[:60] + '..') if regra else "N/A"
+            print(f"   {i+1}. {regra_curta}")
+    print("="*10 + "\n")
+    # Montagem do Contexto de Regras (Tratando None como string vazia)
+    contexto_str = ""
+    if contexto_regras:
+        contexto_str = "\n".join(
+            f"- Regra: {str(regra or '')} | Detalhes: {str(ctx or '')} | Sintaxe Obrigatória: {str(sintaxe or '')}" 
+            for regra, ctx, sintaxe in contexto_regras
+        )
+    
+    # Montagem do Contexto de Exemplos
+    exemplos_str = ""
+    if ExemploPratico:
+        exemplos_str = "\n[[ EXEMPLOS DE REFERÊNCIA (USE COMO GABARITO) ]]\n"
+        for is_bom, texto, explicacao in ExemploPratico:
+            tipo_txt = "APROVADO (Seguir este modelo)" if is_bom else "REPROVADO (Evitar este modelo)"
+            exemplos_str += f"[{tipo_txt}]: {texto} -> Motivo: {explicacao}\n"
+
+    print(" RESPOSTA DO G.A.N.D.A.L.F:") 
+    print("#"*15)
+
+    # --- 2. PROMPT DE AUDITORIA (Engenharia de Prompt Refinada) ---
+    prompt_sistema = """
+    Você é o G.A.N.D.A.L.F (Gerenciador de Análise de Normas do Detran).
+    Sua função é atuar como um AUDITOR RÍGIDO.
+    
+    INSTRUÇÃO MESTRA:
+    Você deve responder baseando-se EXCLUSIVAMENTE nos trechos de regras e exemplos fornecidos abaixo.
+    Considere que o contexto fornecido contém TODA a verdade necessária.
+    NÃO assuma que faltam informações. Trabalhe com o que tem.
+    NÃO recomende consultar manuais externos.
+    """
+
+    prompt_usuario = f"""
+    [[ REGRAS VIGENTES RECUPERADAS ]]
+    {contexto_str if contexto_str.strip() else "NENHUMA REGRA ESPECÍFICA FOI ENCONTRADA NO BANCO DE DADOS PARA ESTE TERMO."}
     
     {exemplos_str}
 
-    Pergunta: {pergunta}
-    Resposta:"""
+    [[ SOLICITAÇÃO DO DESENVOLVEDOR ]]
+    {pergunta}
+    
+    Se houver regras acima, valide a solicitação contra elas.
+    Se NÃO houver regras acima, responda apenas: "Não localizei regras específicas no meu banco de conhecimento para validar este objeto."
+    """
     
     # --- CRONÔMETRO INICIAL ---
     inicio_real = datetime.now()
@@ -210,10 +236,14 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
             json={
                 "model": ollama_chat_model,
                 "messages": [
-                    {"role": "system", "content": "Seja técnico, direto e cite as regras."},
-                    {"role": "user", "content": prompt_completo}
+                    {"role": "system", "content": prompt_sistema},
+                    {"role": "user", "content": prompt_usuario}
                 ],
-                "stream": True
+                "stream": True,
+                "options": {
+                    "temperature": 0.2, # Baixa temperatura para ser mais fiel aos dados
+                    "num_ctx": 4096     # Garante janela de contexto suficiente
+                }
             },
             stream=True
         )
@@ -221,31 +251,29 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
         resposta_completa = ""
 
         dentro_think = False 
-        metrics = {} # Armazena estatísticas do Ollama
+        metrics = {} 
 
         for line in resposta.iter_lines():
             if line:
                 try:
                     json_data = json.loads(line.decode('utf-8'))
                     
-                    # 1. Processa Texto
                     if 'message' in json_data:
                         content = json_data['message']['content']
 
+                        # Lógica para ocultar o <think> do DeepSeek R1 no terminal
                         if "<think>" in content: dentro_think = True
-                        if "</think>" in content: dentro_think = False
-
-                        # Só imprime no terminal se NÃO estiver pensando
+                        
                         if not dentro_think and "<think>" not in content and "</think>" not in content:
                             print(content, end='', flush=True) 
                         
+                        if "</think>" in content: dentro_think = False
+                        
                         resposta_completa += content
                     
-                    # 2. Captura estatísticas finais (quando done: true)
                     if json_data.get('done') is True:
                         metrics = {
                             'total_duration': json_data.get('total_duration', 0),
-                            'load_duration': json_data.get('load_duration', 0),
                             'eval_count': json_data.get('eval_count', 0),
                             'eval_duration': json_data.get('eval_duration', 0)
                         }
@@ -258,7 +286,6 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
         fim_real = datetime.now()
         tempo_total_sec = (fim_real - inicio_real).total_seconds()
         
-        # Conversão de nanosegundos para segundos
         ollama_eval  = metrics.get('eval_duration', 0) / 1e9
         tokens_gerados = metrics.get('eval_count', 0)
         tps = tokens_gerados / ollama_eval if ollama_eval > 0 else 0
@@ -268,18 +295,15 @@ def perguntaollama(pergunta, contexto_regras, exemplos_praticos):
         print(f"Tempo Total (Relógio):   {tempo_total_sec:.2f}s")
         print(f"Tokens Gerados:          {tokens_gerados}")
         print(f"Velocidade de Escrita:   {tps:.2f} tokens/s")
-        
-        if tps < 5 and tps > 0:
-            print("A geração está lenta (GPU sobrecarregada ou rodando na CPU).")
         print("-" * 10)
 
         return limparrespostadeepseek(resposta_completa)
         
     except Exception as e:
-        return f"\n Erro técnico: {e}"
-    
+        print(f"\n[ERRO NA GERAÇÃO]: {e}")
+        return f"Erro técnico ao consultar LLM: {e}"
 
-def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="teste com scripts reais após ajustes no modelo de LLM e temperaturta-12-12-2025.txt"):
+def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="continuação dos testes e inserção de mais exemplos reais-19-12-2025.txt"):
     """Salva a interação em um arquivo de texto."""
     timestamp  = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     conteudo = (
@@ -310,8 +334,6 @@ def main():
     conn = conectadb()
     if not conn: return
 
-    print(f" Analisando a pergunta.")
-
     categoria = classificarpergunta(pergunta)
     foco = extrairfoco(pergunta) 
     vetor = embedtext(pergunta)
@@ -321,14 +343,13 @@ def main():
         contexto_regras = encontrarregras(conn, vetor, categoria, foco)
         
         if not contexto_regras:
-            print(" [i] Tentando busca global nas regras...")
             contexto_regras = encontrarregras(conn, vetor, "GERAL", foco)
 
         # Busca de EXEMPLOS (Prática)
-        exemplos_praticos = buscarexemplos(conn, vetor, foco)
+        ExemploPratico = buscarexemplos(conn, vetor, foco)
 
         # Geração
-        resposta_final = perguntaollama(pergunta, contexto_regras, exemplos_praticos)
+        resposta_final = perguntaollama(pergunta, contexto_regras, ExemploPratico)
         
         salvarrespotas(pergunta, categoria, resposta_final)
     

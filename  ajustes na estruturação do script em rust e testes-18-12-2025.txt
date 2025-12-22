@@ -1,0 +1,111 @@
+========================================
+DATA: 18/12/2025 08:16:50
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: A procedure IServicoConsultar é uma procedure que se conecta com uma aplicação web,como poderia ser feito o ajuste no nomenclatura para ficar de acordo com as regras do manual de boas práticas do Detran?
+========================================
+RESPOSTA:
+The adjusted name of the procedure IServicoConsultar, following the DETRAN-PE naming conventions, would be:
+
+**ServiçoConsultar**
+
+This change adheres to the rule of using singular form and avoiding unnecessary abbreviations.
+========================================
+
+========================================
+DATA: 18/12/2025 08:21:16
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: As procedures:EntidadeReducaoIpvaProcessar / IsencaoVeiculoPcdProcessar / LiberarLicenciamentoA / LiminarJudicialProcessar estão de acordo com o manual de boas práticas do Detran-PE?
+========================================
+RESPOSTA:
+**Resposta:** Sim, as procedures **EntidadeReducaoIpvaProcessar**, **IsencaoVeiculoPcdProcessar**, **LiberarLicenciamentoA** e **LiminarJudicialProcessar** estão de acordo com o manual de boas práticas do DETRAN-PE. Nenhuma das regras foi violada, conforme verificação baseada nas diretrizes fornecidas.
+========================================
+
+========================================
+DATA: 18/12/2025 08:29:04
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: /* Table: EventoCdt                                             */
+/*==============================================================*/
+create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+) a tabela EventoCdt e suas colunas estão de acordo com o manula de  boas práticas do Detran ou precisam de ajustes?
+========================================
+RESPOSTA:
+A tabela EventoCdt apresenta algumas observações que merecem ajustes para melhorar a conformidade com as práticas recomendadas:
+
+1. **Tipagem de Dados**:
+   - `sNome` e `sEmail` são definidas como `char`, mas podem ser mais eficientemente armazenadas em `varchar` para economizar espaço.
+   
+2. **Chaves Primárias e Únicas**:
+   - A coluna `nSequencia` participa de uma chave primária composta, mas não possui uma restrição de unicidade individual. Considerar a adição de uma cláusula UNIQUE ou CHECK.
+
+3. **Integridade Referencial**:
+   - Verificar se há relacionamentos necessários com outras tabelas e definir chaves estrangeiras (FK) conforme as regras.
+
+4. **Otimização**:
+   - Evitar JOINs complexos usando temporárias se necessário, mas a estrutura atual parece adequada.
+   
+5. **Procedimentos Armazenados**:
+   - As operações SQL devem ser encapsuladas em Stored Procedures, exceto para UPDATE e INSERT de campos com tipos text/image.
+
+6. **Evitar Certas Cláusulas**:
+   - Não usar NOT EXISTS, NOT IN ou NOT LIKE. Em caso de necessidade, substituir por EXISTS, IN ou LIKE.
+
+**Conclusão**: Ajustar os tipos de dados para `sNome` e `sEmail`, considerar a adição de restrições apropriadas para `nSequencia` e garantir que todas as regras de integridade e procedimentos armazenados sejam seguidas.
+========================================
+
+========================================
+DATA: 18/12/2025 08:51:57
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: /* Table: EventoCdt                                             */
+/*==============================================================*/
+create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+) a tabela EventoCdt e suas colunas estão de acordo com o manula de  boas práticas do Detran ou precisam de ajustes?
+========================================
+RESPOSTA:
+A tabela `EventoCdt` está **de acordo** com as regras do manual de boas práticas do DETRAN-PE, conforme analisadas:
+
+1. **Regra: Todo comando SQL deve ser feito via Stored Procedure**  
+   A tabela é uma estrutura de banco de dados, não contém comandos SQL diretamente. Portanto, está **conforme**.
+
+2. **Regras: Integridade referencial deve ser via constraints (PK, Unique, FK)**  
+   A tabela possui uma **constraint primária (PK)** (`pkEventoCdt`), o que é **recomendado**.  
+   **Observação:** Se houver dependência com outra tabela (ex.: FK), isso também estaria **conforme**.
+
+3. **Regra: Preferencialmente não utilizar cursor**  
+   A tabela é uma estrutura, não contém código com cursor. Portanto, está **conforme**.
+
+4. **Regra: Evitar JOIN com mais de 4 tabelas**  
+   Não há JOIN na tabela. Portanto, está **conforme**.
+
+5. **Regra: Evitar NOT EXISTS, NOT IN e NOT LIKE. Usar EXISTS, IN e LIKE**  
+   Não há cláusulas nesta tabela. Portanto, está **conforme**.
+
+**Conclusão:**  
+A tabela `EventoCdt` está **conforme** com as regras do DETRAN-PE.
+========================================
+
