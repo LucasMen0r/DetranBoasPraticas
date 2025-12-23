@@ -85,3 +85,14 @@ Regras do DETRAN-PE exigem:
 Apenas procedures com especificação técnica completa e padronização formal no manual serão consideradas atendendo ao prescrito.
 ========================================
 
+========================================
+DATA: 23/12/2025 08:30:28
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: As seguintes procedures atendem ao prescrito no manual de padronização de normas do Detran-PE:EntidadeReducaoIpvaProcessar / IsencaoVeiculoPcdProcessar / LiberarLicenciamentoAltera / LiminarJudicialProceso 
+========================================
+RESPOSTA:
+As procedures mencionadas atendem às regras fornecidas, especialmente a regra de "Nome no singular, claro, sem abreviação (exceto se >30 chars)", pois todos os nomes parecem seguir esse princípio. No entanto, outras regras, como a referente a colunas de parâmetro ou tabelas, não podem ser verificadas sem detalhes adicionais sobre a implementação.
+========================================
+

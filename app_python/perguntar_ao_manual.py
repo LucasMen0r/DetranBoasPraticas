@@ -11,7 +11,7 @@ db_name = 'DetranNorma'
 db_user = 'postgres'
 db_pass = 'abc321'        
 db_host = 'localhost'     
-db_port = '5432'          
+db_port = '5433'          
 
 ollama_chat_model = "deepseek-r1:8b" ##o modelo anterior, o 14b, foi removido por ser muito pesado; o 8b pode fazer as suas funções sem muitos problemas.
 ollama_embed_model = "nomic-embed-text:latest"
@@ -119,27 +119,27 @@ def extrairfoco(pergunta):
     except:
         return ""
     
-def encontrarregras(conn, pergunta_vetor, nome_categoria, foco_usuario, top_k=5):
+def encontrarregras(conn, pergunta_vetor, Nomecategoria, foco_usuario, top_k=5):
     """Busca Regras Teóricas."""
     cursor = conn.cursor()
-    print(f"Buscando regras. Categoria: '{nomecategoria}' | Foco: '{foco_usuario}'")
+    print(f"Buscando regras. Categoria: '{Nomecategoria}' | Foco: '{foco_usuario}'")
 
     sql_base = """
-    SELECT r.DescricaoRegra, r.ContextoAdicional, r.PadraoSintaxe 
+    SELECT r.DescricaoRegra
     FROM RegraNomenclatura r
     JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
     """
     order_clause = """
-    ORDER BY (CASE WHEN r.descricao_regra ILIKE %s THEN 0 ELSE 1 END) ASC, r.embedding <=> %s::vector LIMIT %s;
+    ORDER BY (CASE WHEN r.DescricaoRegra ILIKE %s THEN 0 ELSE 1 END) ASC, r.embedding <=> %s::vector LIMIT %s;
     """
     term_boost = f"%{foco_usuario}%"
 
-    if "GERAL" in nome_categoria.upper():
+    if "GERAL" in Nomecategoria.upper():
         sql = sql_base + order_clause
         parametros = (term_boost, list(pergunta_vetor), top_k)
     else:
-        sql = sql_base + f" WHERE c.nome_categoria ILIKE %s " + order_clause
-        parametros = (f"%{nome_categoria}%", term_boost, list(pergunta_vetor), top_k)
+        sql = sql_base + f" WHERE c.Nomecategoria ILIKE %s " + order_clause
+        parametros = (f"%{Nomecategoria}%", term_boost, list(pergunta_vetor), top_k)
         
     cursor.execute(sql, parametros)
     return cursor.fetchall()
@@ -169,7 +169,7 @@ def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=4):
 def perguntaollama(pergunta, contexto_regras, ExemploPratico):
     """
     Gera a resposta final com Streaming, usando Regras + Exemplos Práticos.
-    Versão aprimorada com Debug de Contexto e Prompt de Auditoria.
+    Versão ajustada para estrutura enxuta do banco (apenas Regra, sem contexto/sintaxe na tupla).
     """
     # --- 1. DEBUG VISUAL (Para você ver o que o Gandalf está "lendo") ---
     print("\n" + "="*10)
@@ -179,16 +179,20 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico):
         print("[ALERTA] O Retrieval retornou lista vazia! O contexto será nulo.")
     else:
         # Mostra uma prévia das primeiras 3 regras para conferência
-        for i, (regra, ctx, sintaxe) in enumerate(contexto_regras[:3]):
+        # ALTERAÇÃO: Lemos a tupla como um item só e pegamos o índice [0]
+        for i, dados_regra in enumerate(contexto_regras[:3]):
+            regra = dados_regra[0]
             regra_curta = (regra[:60] + '..') if regra else "N/A"
             print(f"   {i+1}. {regra_curta}")
     print("="*10 + "\n")
+
     # Montagem do Contexto de Regras (Tratando None como string vazia)
     contexto_str = ""
     if contexto_regras:
+        # ALTERAÇÃO: Simplificado para ler apenas a regra da tupla
         contexto_str = "\n".join(
-            f"- Regra: {str(regra or '')} | Detalhes: {str(ctx or '')} | Sintaxe Obrigatória: {str(sintaxe or '')}" 
-            for regra, ctx, sintaxe in contexto_regras
+            f"- Regra: {str(dados_regra[0] or '')}" 
+            for dados_regra in contexto_regras
         )
     
     # Montagem do Contexto de Exemplos
@@ -201,7 +205,6 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico):
 
     print(" RESPOSTA DO G.A.N.D.A.L.F:") 
     print("#"*15)
-
     # --- 2. PROMPT DE AUDITORIA (Engenharia de Prompt Refinada) ---
     prompt_sistema = """
     Você é o G.A.N.D.A.L.F (Gerenciador de Análise de Normas do Detran).
@@ -226,10 +229,8 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico):
     Se houver regras acima, valide a solicitação contra elas.
     Se NÃO houver regras acima, responda apenas: "Não localizei regras específicas no meu banco de conhecimento para validar este objeto."
     """
-    
     # --- CRONÔMETRO INICIAL ---
     inicio_real = datetime.now()
-
     try:
         resposta = requests.post(
             ollama_api_chat,
@@ -277,11 +278,9 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico):
                             'eval_count': json_data.get('eval_count', 0),
                             'eval_duration': json_data.get('eval_duration', 0)
                         }
-
                 except ValueError:
                     pass
         print("\n") 
-
         # --- RELATÓRIO DE PERFORMANCE ---
         fim_real = datetime.now()
         tempo_total_sec = (fim_real - inicio_real).total_seconds()
@@ -296,14 +295,13 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico):
         print(f"Tokens Gerados:          {tokens_gerados}")
         print(f"Velocidade de Escrita:   {tps:.2f} tokens/s")
         print("-" * 10)
-
         return limparrespostadeepseek(resposta_completa)
         
     except Exception as e:
         print(f"\n[ERRO NA GERAÇÃO]: {e}")
         return f"Erro técnico ao consultar LLM: {e}"
 
-def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="continuação dos testes e inserção de mais exemplos reais-19-12-2025.txt"):
+def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="continuação dos testes do 'modelo de exportação' do Gandalf após mudanças no script em python-23-12-2025.txt"):
     """Salva a interação em um arquivo de texto."""
     timestamp  = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     conteudo = (
@@ -326,11 +324,10 @@ def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="continuação do
 
 def main():
     if len(sys.argv) < 2:
-        print('Uso: python3 perguntar_ao_manual.py "Sua pergunta entre aspas"')
+        print('Uso: python3 perguntar_ao_manual.py "Sua pergunta"')
         return 
 
     pergunta = sys.argv[1]
-
     conn = conectadb()
     if not conn: return
 
@@ -339,17 +336,27 @@ def main():
     vetor = embedtext(pergunta)
     
     if vetor:
-        # Busca de REGRAS (Teoria)
-        contexto_regras = encontrarregras(conn, vetor, categoria, foco)
-        
-        if not contexto_regras:
-            contexto_regras = encontrarregras(conn, vetor, "GERAL", foco)
+        # 1. Busca Principal (O que o usuário pediu)
+        regras_principais = encontrarregras(conn, vetor, categoria, foco)
+        # 2. REDE DE SEGURANÇA:
+        # Se o assunto for Tabela ou Coluna, SEMPRE traga as regras de Tipos de Dados e Nomenclatura
+        # Isso impede que a categoria "Boas Práticas" cegue o modelo.
+        regras_extras = []
+        if foco in ['Tabela', 'Coluna', 'Table', 'Column']:
+            print("[INFO] Ativando busca cruzada para validação de estrutura...")
+            regras_extras = encontrarregras(conn, vetor, "Tipos de Dados", foco)
+            regras_extras += encontrarregras(conn, vetor, "Nomenclatura de Objetos", foco)
+        # 3. Unir tudo e remover duplicatas
+        # A sintaxe set() remove repetições se a mesma regra vier de dois lugares
+        todas_regras = list(set(regras_principais + regras_extras))
+        # Se mesmo com a rede de segurança não vier nada, tenta o GERAL
+        if not todas_regras:
+            todas_regras = encontrarregras(conn, vetor, "GERAL", foco)
 
-        # Busca de EXEMPLOS (Prática)
         ExemploPratico = buscarexemplos(conn, vetor, foco)
-
-        # Geração
-        resposta_final = perguntaollama(pergunta, contexto_regras, ExemploPratico)
+        
+        # Manda o pacote completo para o LLM
+        resposta_final = perguntaollama(pergunta, todas_regras, ExemploPratico)
         
         salvarrespotas(pergunta, categoria, resposta_final)
     

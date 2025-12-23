@@ -1,0 +1,81 @@
+========================================
+DATA: 23/12/2025 10:00:44
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: a seguinte table e suas colunas atende ao que diz o manual de boas práticas do detran: Table: EventoCdt
+create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+)?
+========================================
+RESPOSTA:
+A solicitação do desenvolvedor deve ser validada contra as regras fornecidas. A seguir, a análise detalhada:
+
+---
+
+### **1. Regra: Integridade referencial deve ser via constraints (pk, Unique, pk).**
+- **Validação:** A tabela `EventoCdt` possui uma constraint de chave primária (`pkEventoCdt`) definida sobre as colunas `nCpf` e `nSequencia`.  
+- **Resultado:** **Atende.**
+
+---
+
+### **2. Regra: Tabelas que serão excluídas do banco de dados.**
+- **Validação:** Não há regras listando tabelas excluídas.  
+- **Resultado:** **Não aplicável.**
+
+---
+
+### **3. Regra: Todo comando SQL deve ser feito via Stored Procedure (exceto update/insert de text/image).**
+- **Validação:** A criação da tabela (`CREATE TABLE`) não é um comando a ser executado via Stored Procedure.  
+- **Resultado:** **Não atende.**  
+  *(A regra se aplica a comandos como `INSERT`, `UPDATE`, etc., mas a criação de tabelas geralmente é feita fora de stored procedures.)*
+
+---
+
+### **4. Regra: Nome no singular, claro, sem abreviação (exceto se >30 chars).**
+- **Validação:** O nome da tabela `EventoCdt` é um substantivo no singular, mas contém a abreviação `Cdt` (provavelmente sigla para "Código de Transação" ou similar).  
+- **Resultado:** **Não atende.**  
+  *(A regra exige evitar abreviações, a menos que o nome ultrapasse 30 caracteres. `EventoCdt` tem 11 caracteres e é considerado ambíguo sem contexto adicional.)*
+
+---
+
+### **5. Regra: Tabela temporária auxiliar.**
+- **Validação:** Não há menção de que a tabela deve ser temporária.  
+- **Resultado:** **Não aplicável.**
+
+---
+
+### **6. Regra: Evitar NOT EXISTS, NOT IN e NOT LIKE. Usar EXISTS, IN e LIKE.**
+- **Validação:** A regra se refere a cláusulas em queries, não à estruturação de tabelas.  
+- **Resultado:** **Não aplicável.**
+
+---
+
+### **7. Regra: Evitar JOIN com mais de 4 tabelas (usar temporárias se necessário).**
+- **Validação:** A regra se refere a operações em queries, não à criação de tabelas.  
+- **Resultado:** **Não aplicável.**
+
+---
+
+### **8. Regra: Preferencialmente não utilizar cursor.**
+- **Validação:** A regra se refere a operações em queries, não à estruturação de tabelas.  
+- **Resultado:** **Não aplicável.**
+
+---
+
+### **Conclusão:**
+A tabela `EventoCdt` **não atende** às regras do manual de boas práticas do Detran, conforme validação acima.  
+Os principais problemas estão na **regra de nomes** (abreviação em `EventoCdt`) e na **regra de comandos SQL** (criação de tabela não feita via stored procedure).  
+
+**Recomendação:**  
+O desenvolvedor deve renomear a tabela para algo mais descritivo (ex: `EventoCdtLog` ou `EventoCdtRegistro`) e verificar se a criação da tabela está alinhada às práticas recomendadas do Detran.
+========================================
+
