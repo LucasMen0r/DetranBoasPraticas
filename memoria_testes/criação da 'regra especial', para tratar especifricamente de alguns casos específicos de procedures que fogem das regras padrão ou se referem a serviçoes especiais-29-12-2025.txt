@@ -1,0 +1,44 @@
+========================================
+DATA: 29/12/2025 08:27:53
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de nomear uma procedure que se conecta à internet?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 29/12/2025 08:31:39
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Como nomear uma tabela?Posso usar snake_case?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 29/12/2025 08:58:32
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Como nomear uma tabela?Posso usar snake_case?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 29/12/2025 09:13:42
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: Como nomear uma tabela?Posso usar snake_case?
+========================================
+RESPOSTA:
+Erro técnico ao consultar LLM: 404 Client Error: Not Found for url: http://localhost:11436/api/chat
+========================================
+

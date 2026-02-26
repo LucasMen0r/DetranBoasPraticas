@@ -1,0 +1,121 @@
+========================================
+DATA: 30/12/2025 09:37:28
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: a tabela create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+) e suas colunas atendem ao manual de boas práticas do detran?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 30/12/2025 09:50:43
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: a tabela create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+) e suas colunas atendem ao manual de boas práticas do detran?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 30/12/2025 10:25:51
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: a tabela create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+) e suas colunas atendem ao manual de boas práticas do detran?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 30/12/2025 10:43:43
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: a tabela create table EventoCdt (
+   nCpf                 numeric(11)                    not null,
+   nSequencia           smallint                       not null,
+   sNome                char(44)                       not null,
+   sEmail               char(60)                       not null,
+   sTelefone            char(15)                       not null,
+   sTipoEvento          varchar(1)                     not null,
+   sCodigoEvento        varchar(2)                     not null,
+   sEvento              varchar(255)                   not null,
+   constraint pkEventoCdt primary key (nCpf, nSequencia)
+) e suas colunas atendem ao manual de boas práticas do detran?
+========================================
+RESPOSTA:
+A tabela `EventoCdt` e suas colunas atendem às regras fornecidas:
+
+1. **Regra: Preferencialmente não utilizar cursor.**  
+   - A tabela não utiliza cursor, conforme a regra.
+
+2. **Regra: Evitar NOT EXISTS, NOT IN e NOT LIKE. Usar EXISTS, IN e LIKE.**  
+   - A tabela não contém cláusulas com `NOT`, então está alinhada.
+
+3. **Regra: Todo comando SQL deve ser feito via Stored Procedure (exceto update/insert de text/image).**  
+   - A tabela não possui comandos SQL diretos, então está alinhada.
+
+4. **Regra: Integridade referencial deve ser via constraints (pk, Unique, pk).**  
+   - A tabela possui uma chave primária (`pkEventoCdt`), então está alinhada.
+
+**Resposta:**  
+A tabela `EventoCdt` e suas colunas atendem às regras fornecidas.
+========================================
+
+========================================
+DATA: 07/01/2026 11:38:01
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de normear uma chave estrangeira?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 07/01/2026 11:50:30
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de normear uma chave estrangeira?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+

@@ -1,0 +1,33 @@
+========================================
+DATA: 30/12/2025 08:20:15
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de normear uma chave estrangeira?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 30/12/2025 08:29:24
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de normear uma chave estrangeira?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 30/12/2025 08:49:56
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de normear uma chave estrangeira?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+

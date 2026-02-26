@@ -1,0 +1,698 @@
+========================================
+DATA: 30/12/2025 11:10:28
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: A criação de tabelas em sistemas de banco de dados geralmente segue regras específicas para nomes de objetos, que podem variar conforme o sistema de gerenciamento de banco de dados (SGBD) utilizado. No entanto, considerando o **MySQL** como exemplo comum, nomes de tabelas devem seguir estas diretrizes:
+
+1. **Caracteres permitidos**:
+   - Letras (a-z, A-Z).
+   - Dígitos (0-9), mas não podem começar com dígitos para evitar confusão com nomes de colunas ou valores.
+   - Caractere de sublinhado (`_`) para separar partes do nome.
+   - Nomes podem ser compostos por letras, números e sublinhados, com um máximo de 64 caracteres (no MySQL).
+
+2. **Nomes não permitidos**:
+   - Caracteres especiais como `@`, `#`, `$`, `%`, `&`, `*`, `(`, `)`, `[`, `]`, `{`, `}`, `<`, `>`, `~`, `^`, etc., conforme definido pelo SGBD.
+   - Palavras reservadas pelo SGBD (ex.: `CREATE`, `TABLE`, `SELECT`).
+
+3. **Exemplos válidos** (no MySQL):
+   - `Minha_Tabela`
+   - `Tabela2023`
+   - `ClienteID` (começa com letra, contém números e letras).
+
+4. **Exemplos inválidos**:
+   - `Minha@Tabela` (contém `@`, não permitido no MySQL).
+   - `DROP TABLE` (palavra reservada).
+
+**Recomendação**:  
+Verifique a documentação específica do seu SGBD (ex.: MySQL, PostgreSQL, SQL Server) para as regras exatas de nomes de tabelas, pois elas podem variar. Sempre use nomes descritivos e sem caracteres especiais para garantir compatibilidade.
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 30/12/2025 13:43:35
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso usar um campo de texto como chave primária natural?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Não, não é permitido usar um campo de texto como chave primária natural conforme a regra estabelecida:
+
+> **Regra:** Chave primária natural ou sequencial.
+
+Uma chave primária natural deve ser baseada em um valor descritivo e identificador único, como um código de identificação (ex: "S001", "C002"). Um campo de texto, por si só, não atende a essa definição, pois é uma string genérica e não necessariamente identificadora ou sequencial.
+
+**Exemplo de conformidade:**
+```sql
+-- Nome da tabela: Veiculo
+-- Chave primária natural: Placa (exemplo de código identificador único)
+CREATE TABLE Veiculo (
+    Placa VARCHAR(10) PRIMARY KEY,
+    ...
+);
+```
+
+Se você deseja usar uma chave primária natural, ela deve ser um campo com valor único e identificador, como um código alfanumérico específico (ex: "S001", "C002"). Um campo de texto livre não é considerado natural ou sequencial.
+========================================
+
+========================================
+DATA: 30/12/2025 18:13:10
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso usar o nome RENAVAM para o procedimento de consulta ao sistema?
+========================================
+RESPOSTA:
+Não é permitido usar apenas nomes próprios como RENAVAM para o procedimento de consulta, conforme a regra: "Não usar apenas números, verbos ou nomes próprios."
+========================================
+
+========================================
+DATA: 30/12/2025 22:45:09
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar um script batch que não inicia com Batch?
+========================================
+RESPOSTA:
+A solicitação não está alinhada com a regra que exige que scripts executados via batch iniciem com "Batch". Portanto, não é permitido criar um script batch que não inicia com "Batch".
+========================================
+
+========================================
+DATA: 31/12/2025 04:12:36
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma tabela com nome 'usuarios'?
+========================================
+RESPOSTA:
+Não.
+========================================
+
+========================================
+DATA: 31/12/2025 10:07:43
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome "Clientes"?
+========================================
+RESPOSTA:
+Não é permitido criar a tabela com nome "Clientes", pois:
+
+1. A regra estabelece que o nome da tabela deve ser composto pelo nome da tabela seguido do nome da primeira coluna do índice. O nome "Clientes" não atende a essa estrutura.
+========================================
+
+========================================
+DATA: 31/12/2025 13:54:13
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma tabela temporária com o nome "nome_ABC"?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 31/12/2025 17:39:00
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma coluna única com restrição de unicidade?
+========================================
+RESPOSTA:
+Sim, é permitido criar uma coluna com restrição de unicidade, conforme a regra existente que especifica "Restrição de unicidade". Isso está alinhado às diretrizes fornecidas, e não há conflito com outras regras mencionadas.
+========================================
+
+========================================
+DATA: 31/12/2025 22:31:52
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso usar cursor para isso?
+========================================
+RESPOSTA:
+Preferencialmente não utilizar cursor.
+========================================
+
+========================================
+DATA: 01/01/2026 02:58:48
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso renomear esse banco de dados para Y, em vez de X?
+========================================
+RESPOSTA:
+**Resposta:**
+
+A solicitação de renomear o banco de dados para "Y" NÃO é válida, pois viola as seguintes regras:
+
+1. **Regra: O nome do banco deve identificar o negócio ou a sigla da aplicação.**  
+   O nome "Y" não identifica qualquer negócio ou aplicação específica.
+
+2. **Regra: Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo "PascalCase".**  
+   O nome "Y" não segue essa regra, pois não utiliza iniciais maiúsculas.
+
+**Conclusão:** O renomeação para "Y" é inválida de acordo com as regras fornecidas.
+========================================
+
+========================================
+DATA: 01/01/2026 05:18:40
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso usar listas no código?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 01/01/2026 07:29:46
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma variável com nome API?
+========================================
+RESPOSTA:
+A solicitação não é válida de acordo com as regras:
+    - Regra: Não usar apenas números, verbos ou nomes próprios.
+    - Regra: O nome do banco deve identificar o negócio ou a sigla da aplicação.
+    - Regra: Usar nomes curtos, claros e sem ambiguidade.
+
+    A palavra "API" é um nome próprio e não identifica claramente um negócio ou sigla da aplicação. Portanto, não é permitido.
+========================================
+
+========================================
+DATA: 01/01/2026 09:49:52
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma variável com símbolo matemático, como 'x'?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 01/01/2026 12:56:52
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma tabela que será excluída do banco de dados?
+========================================
+RESPOSTA:
+A solicitação de criar uma tabela que será excluída do banco de dados está de acordo com a regra existente que menciona "Tabelas que serão excluídas do banco de dados", pois não há regras específicas que proíbam essa ação. Portanto, a criação é permitida, desde que siga as outras regras, como o nome do banco identificando o negócio ou sigla, e outras especificações técnicas.
+========================================
+
+========================================
+DATA: 01/01/2026 16:07:35
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome X?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 01/01/2026 20:13:59
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso usar sigla longa no nome?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 02/01/2026 00:40:42
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com o nome @nome_tabela e usar iDentificador como chave primária?
+========================================
+RESPOSTA:
+A solicitação de criar uma tabela com o nome @nome_tabela e usar iDentificador como chave primária viola as seguintes regras:
+
+- **Regra: Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.**  
+  O nome @nome_tabela não segue o padrão de prefixo tipo e notação húngara. Além disso, "iDentificador" não atende ao padrão de nomes, pois pode ser considerado um nome próprio ou verbo, violando a regra de evitar apenas números, verbos ou nomes próprios.
+
+**Recomendação:** Use um nome de tabela com prefixo tipo e siga a notação húngara, como "tabela_nome_da_tabela". Para a chave primária, adote um nome que siga o padrão estabelecido.
+========================================
+
+========================================
+DATA: 02/01/2026 04:34:54
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome X?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 02/01/2026 08:42:10
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma tabela com nome diferente da primeira coluna do índice?
+========================================
+RESPOSTA:
+A solicitação não é válida. De acordo com a regra especificada, o nome da tabela deve ser seguido do nome da primeira coluna do índice, o que implica que não pode ser diferente. Qualquer desvio dessa estrutura viola a regra estabelecida.
+========================================
+
+========================================
+DATA: 02/01/2026 14:51:25
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso executar este script sem o prefixo Batch?
+========================================
+RESPOSTA:
+ 
+========================================
+
+========================================
+DATA: 02/01/2026 20:51:21
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome no plural?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 03/01/2026 00:22:04
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome "DadosClientes"?
+========================================
+RESPOSTA:
+A solicitação para criar a tabela "DadosClientes" deve ser validada conforme as regras fornecidas:
+
+1. **Regra: Nome da tabela seguido do nome da primeira coluna do índice**  
+   A tabela "DadosClientes" não segue essa regra, pois não contém o nome da primeira coluna do índice.
+
+2. **Regra: Uso de Iniciais Maiúsculas em cada palavra**  
+   A tabela "DadosClientes" utiliza letras maiúsculas para cada palavra, mas o nome está em português, o que não está alinhado com a notação em inglês exigida.
+
+3. **Regra: Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara**  
+   A tabela "DadosClientes" não possui um prefixo minúsculo indicando o tipo de dado, nem segue a notação húngara.
+
+4. **Regra: Padrão para Foreign Key (FK): Usar o prefixo fk mais os nomes das tabelas filha e pai**  
+   Essa regra não se aplica diretamente à criação do nome da tabela.
+
+5. **Regra: Não usar apenas números, verbos ou nomes próprios**  
+   O nome "DadosClientes" não utiliza apenas números, verbos ou nomes próprios, mas segue a estrutura de um nome de tabela descritivo.
+
+**Conclusão:**  
+A tabela "DadosClientes" **não** segue todas as regras fornecidas.
+========================================
+
+========================================
+DATA: 03/01/2026 04:52:49
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso violar a regra de iniciar com Batch quando executado via batch?
+========================================
+RESPOSTA:
+A solicitação viola a regra, pois a regra estabelece que, quando executada via batch, deve iniciar com 'Batch'. Portanto, não é permitido violar essa regra.
+========================================
+
+========================================
+DATA: 03/01/2026 10:47:50
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome X?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 03/01/2026 15:25:59
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome X?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 03/01/2026 20:20:04
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma tabela espelho?
+========================================
+RESPOSTA:
+De acordo com as regras fornecidas, a solicitação pode ser validada com base na regra "Regra: Tabelas espelho ou de referência externa". Essa regra menciona explicitamente tabelas espelho, indicando que há uma diretriz relacionada à sua utilização no contexto do Detran. Portanto, a criação de uma tabela espelho deve ser considerada conforme essa regra, mas é necessário verificar os detalhes específicos para garantir conformidade.
+========================================
+
+========================================
+DATA: 04/01/2026 00:05:50
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar um procedimento RENAVAM com nome diferente do estabelecido?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 04/01/2026 02:35:45
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome 'ClientesVIP'?
+Posso usar 'Usuarios_Tab' como nome da tabela?
+Posso chamar a coluna de 'ID_Cliente' mesmo sendo muito longo?
+Posso usar 'cli' como atalho para a tabela de clientes?
+Posso chamar uma tabela de 'Tabela123' se for muito longa?
+Posso usar 'V' como nome de uma coluna de valor numérico?
+Posso criar uma tabela com nome de 'Cliente' mesmo sendo muito curto?
+========================================
+RESPOSTA:
+**Resposta para cada solicitação:**
+
+1. **Solicitação:** "Posso criar a tabela com nome 'ClientesVIP'?"  
+   **Resposta:** Não, pois o nome da tabela deve seguir a regra: "Nome da tabela seguido do nome da primeira coluna do índice". Além disso, o uso de iniciais maiúsculas em cada palavra é obrigatório, conforme a regra: "Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo 'PascalCase'".
+
+2. **Solicitação:** "Posso usar 'Usuarios_Tab' como nome da tabela?"  
+   **Resposta:** Não, pois o nome da tabela deve seguir a regra: "Nome da tabela seguido do nome da primeira coluna do índice". Além disso, o uso de iniciais maiúsculas em cada palavra é obrigatório, conforme a regra: "Uso de Iniciações Maiúsculas em cada palavra, sem utilizar o termo 'PascalCase'".
+
+3. **Solicitação:** "Posso chamar a coluna de 'ID_Cliente' mesmo sendo muito longo?"  
+   **Resposta:** Não, pois a regra estabelece: "Não usar apenas números, verbos ou nomes próprios". Além disso, o nome da coluna deve seguir a notação húngara, conforme a regra: "Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara".
+
+4. **Solicitação:** "Posso usar 'cli' como atalho para a tabela de clientes?"  
+   **Resposta:** Não, pois o nome da tabela deve seguir a regra: "Nome da tabela seguido do nome da primeira coluna do índice". Além disso, o uso de iniciais maiúsculas em cada palavra é obrigatório, conforme a regra: "Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo 'PascalCase'".
+
+5. **Solicitação:** "Posso chamar uma tabela de 'Tabela123' se for muito longa?"  
+   **Resposta:** Não, pois a regra estabelece: "Não usar apenas números, verbos ou nomes próprios". Além disso, o nome da tabela deve seguir a regra: "Nome da tabela seguido do nome da primeira coluna do índice".
+
+6. **Solicitação:** "Posso usar 'V' como nome de uma coluna de valor numérico?"  
+   **Resposta:** Não, pois o nome da coluna deve seguir a regra: "Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara". Além disso, o uso de iniciais maiúsculas em cada palavra é obrigatório, conforme a regra: "Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo 'PascalCase'".
+
+7. **Solicitação:** "Posso criar uma tabela com nome de 'Cliente' mesmo sendo muito curto?"  
+   **Resposta:** Não, pois o nome da tabela deve seguir a regra: "Nome da tabela seguido do nome da primeira coluna do índice". Além disso, o uso de iniciais maiúsculas em cada palavra é obrigatório, conforme a regra: "Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo 'PascalCase'".
+
+**Conclusão:** Todas as solicitações violam pelo menos uma das regras fornecidas. Portanto, nenhuma das alterações solicitadas é permitida.
+========================================
+
+========================================
+DATA: 04/01/2026 06:39:44
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar um procedimento com nome Y nos sistemas RENAVAM e RENAINF?
+========================================
+RESPOSTA:
+Não é permitido criar um procedimento com nome "Y" nos sistemas RENAVAM e RENAINF, pois o nome "Y" viola a regra de não usar apenas números, verbos ou nomes próprios. O nome deve ser composto, incluir um prefixo minúsculo indicando o tipo, seguir a notação húngara, ser curto, claro, sem ambiguidade, usar termos em português e no singular.
+========================================
+
+========================================
+DATA: 04/01/2026 11:04:07
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma tabela com nome TABELA?
+========================================
+RESPOSTA:
+**AUDITOR RÍGIDO - G.A.N.D.A.L.F**
+
+**Solicitação:** "Posso criar uma tabela com nome TABELA?"
+
+**Validação contra regras:**
+
+1. **Regra: Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.**  
+   - O nome "TABELA" não possui prefixo minúsculo indicando o tipo (ex: "tb_" para tabela) e não segue a notação húngara, que exige um estilo descritivo e iniciado por um modificador.  
+   - **Resultado:** INVALIDO.
+
+2. **Regra: Nome da tabela seguido do nome da primeira coluna do índice.**  
+   - O nome "TABELA" é genérico e não inclui referência à primeira coluna do índice, conforme exigido.  
+   - **Resultado:** INVALIDO.
+
+**Conclusão:**  
+A solicitação viola as regras de nomenclatura. O nome "TABELA" não é permitido. Recomendo usar um nome que siga o padrão estabelecido, como "tb_usuarios_codigo" (exemplo hipotético).
+========================================
+
+========================================
+DATA: 04/01/2026 15:10:05
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso verificar se dois conjuntos de dados são iguais usando NOT ALL?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 04/01/2026 21:02:01
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma tabela com um nome já existente?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 05/01/2026 02:21:31
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela temporária 'temp_usuarios' para armazenar dados de pesquisa?
+========================================
+RESPOSTA:
+**AUDITOR RÍGIDO - DECISÃO:**
+
+**Não é permitido.**
+
+**Justificativa:**
+
+1.  **Regra 1:** "View que armazena dados fisicamente." - A regra estabelece claramente que a forma recomendada de armazenar dados fisicamente é através de uma View.
+2.  **Objeto Solicitado:** A tabela temporária (`temp_usuarios`) é um objeto de armazenamento físico diferente de uma View.
+3.  **Conformidade:** A criação de uma tabela temporária para armazenar dados fisicamente viola a Regra 1, que especifica o uso de Views para esse propósito.
+
+Portanto, a solicitação de criação da tabela temporária `temp_usuarios` para armazenar dados fisicamente não está de acordo com a Regra 1.
+========================================
+
+========================================
+DATA: 05/01/2026 05:05:48
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso fazer um UPDATE via view?
+========================================
+RESPOSTA:
+**AUDITOR RÍGIDO:**
+
+**Não é permitido realizar UPDATE via view.**
+
+**Justificativa:**
+
+1.  **Regra 3:** "View para consultas (SELECT apenas)."
+    *   Esta regra estabelece explicitamente que views devem ser utilizadas *exclusivamente* para consultas (comando SELECT).
+    *   Permitir UPDATE via view viola essa regra, pois views não são estruturas projetadas para permitir operações de modificação de dados (INSERT, UPDATE, DELETE).
+
+Portanto, a solicitação de fazer um UPDATE via view é **incompatível** com a regra de uso de views.
+========================================
+
+========================================
+DATA: 05/01/2026 09:34:58
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso usar Stored Procedure para um comando SELECT?
+========================================
+RESPOSTA:
+ 
+========================================
+
+========================================
+DATA: 05/01/2026 15:22:30
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso inserir um valor duplicado em uma coluna com restrição de unicidade?
+========================================
+RESPOSTA:
+Não é permitido inserir valores duplicados em uma coluna com restrição de unicidade, pois a regra "Restrição de unicidade" especifica que valores únicos são obrigatórios.
+========================================
+
+========================================
+DATA: 05/01/2026 20:47:52
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome tg_usuarios_I?
+========================================
+RESPOSTA:
+A solicitação de criar a tabela com nome "tg_usuarios_I" deve ser validada contra as regras fornecidas:
+
+- **Regra 5**: "Prefixo tg + tabela + sigla evento (I, A, E)."  
+  O nome "tg_usuarios_I" atende a essa regra, pois:  
+  - "tg" é o prefixo especificado.  
+  - "usuarios" parece ser o nome da tabela.  
+  - "I" é a sigla do evento.  
+
+Portanto, a criação da tabela está alinhada com a regra.
+========================================
+
+========================================
+DATA: 06/01/2026 02:17:49
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma chave estrangeira violando a regra de integridade referencial?
+========================================
+RESPOSTA:
+**Resposta:**
+
+Não é permitido criar uma chave estrangeira violando a regra de integridade referencial. A regra estabelece claramente que a integridade referencial deve ser garantida via constraints, incluindo a criação adequada de chaves estrangeiras (fk). Qualquer violação a essa regra é inaceitável e deve ser evitada.
+
+**Métodos permitidos para criar chave estrangeira:**
+
+1.  `CREATE TABLE ... FOREIGN KEY (...) REFERENCES ...`
+2.  `ALTER TABLE ... ADD CONSTRAINT ... FOREIGN KEY (...) REFERENCES ...`
+========================================
+
+========================================
+DATA: 06/01/2026 06:49:43
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma tabela com uma coluna que será a chave primária natural?
+========================================
+RESPOSTA:
+**Validação da Solicitação:**
+
+Sim, é permitido criar uma tabela com uma coluna que será a chave primária natural, conforme a regra:  
+*"Regra: Chave primária natural ou sequencial."*  
+
+Esta regra autoriza explicitamente o uso de uma chave primária natural, desde que atenda aos requisitos de ser única e não nula para identificar registros de forma inequívoca.  
+
+**Observação:**  
+Certifique-se de que a coluna utilizada como chave primária natural atende aos critérios de unicidade e integridade, conforme exigido pelo contexto do banco de dados.
+========================================
+
+========================================
+DATA: 06/01/2026 10:17:09
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar um arquivo começando com Batch?
+========================================
+RESPOSTA:
+**AUDITOR RÍGIDO:**
+
+    **Rejeição da solicitação:**
+
+    - **Regra violada:** Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.
+    - **Explicação:** O termo "Batch" não atende à regra de prefixo minúsculo. A notação húngara exige um prefixo minúsculo seguido do nome do objeto. Portanto, "Batch" não é permitido como início do nome do arquivo.
+
+    **Resposta final:**  
+    **NÃO é permitido** criar um arquivo começando com "Batch".
+========================================
+
+========================================
+DATA: 06/01/2026 13:57:35
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com um nome muito longo?
+========================================
+RESPOSTA:
+A solicitação de criar um nome de tabela muito longo é inválida, pois viola a regra: "Usar nomes curtos, claros e sem ambiguidade." Esta regra exige que os nomes de tabela sejam breves e inequívocos, tornando um nome excessivamente longo incompatível com as diretrizes estabelecidas.
+========================================
+
+========================================
+DATA: 06/01/2026 17:31:21
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: "Posso executar algo via batch sem iniciar com Batch?"
+========================================
+RESPOSTA:
+A solicitação viola a regra: **"Se executada via batch, iniciar com Batch".** Portanto, não é permitido executar algo via batch sem iniciar com Batch.
+========================================
+
+========================================
+DATA: 06/01/2026 22:27:04
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma tabela espelho?
+========================================
+RESPOSTA:
+Sim, é permitido criar uma tabela espelho, conforme a regra "Tabelas espelho ou de referência externa" mencionada acima.
+========================================
+
+========================================
+DATA: 07/01/2026 02:18:58
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar uma tabela com nome Minha-Tabela?
+========================================
+RESPOSTA:
+A solicitação de criar uma tabela com nome "Minha-Tabela" deve ser rejeitada, pois viola as seguintes regras:
+
+- **Regra: Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.**  
+  O nome "Minha-Tabela" não inclui um prefixo minúsculo (como "btn" para botão ou "tbl" para tabela) e não segue a notação húngara, que exige que o nome comece com um prefixo descritivo.
+
+- **Regra: Nome da tabela seguido do nome da primeira coluna do índice.**  
+  O padrão não foi atendido, pois o nome deve estruturar-se como "Tabela_ColunaInicial" ou similar, conforme especificado.
+
+Além disso, o uso de caracteres especiais como hífen pode ser considerado inadequado, embora não esteja explicitamente proibido. Recomendo revisar o nome para alinhar com os padrões estabelecidos.
+========================================
+
+========================================
+DATA: 07/01/2026 04:34:48
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome 'X'?"
+========================================
+RESPOSTA:
+Não. O nome da tabela 'X' viola as seguintes regras:
+
+1.  **Regra: Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo "PascalCase".**  
+    O nome 'X' não segue essa convenção, pois não utiliza iniciais maiúsculas em palavras.
+
+2.  **Regra: Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.**  
+    O nome 'X' não contém um prefixo minúsculo indicando o tipo.
+
+3.  **Regra: Não usar apenas números, verbos ou nomes próprios.**  
+    O nome 'X' é apenas um nome próprio (um único caractere).
+========================================
+
+========================================
+DATA: 07/01/2026 08:29:19
+========================================
+CATEGORIA: AUDITORIA_AUTOMATICA
+========================================
+PERGUNTA: Posso criar a tabela com nome "categoria"?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+

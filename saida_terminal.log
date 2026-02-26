@@ -1,0 +1,1624 @@
+nohup: ignoring input
+>>> INICIANDO MODO FÉRIAS <<<
+As respostas serão salvas em: LOG_FERIAS_GANDALF.txt
+
+--- CICLO 1 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: A criação de tabelas em sistemas de banco de dados geralmente segue regras específicas para nomes de objetos, que podem variar conforme o sistema de gerenciamento de banco de dados (SGBD) utilizado. No entanto, considerando o **MySQL** como exemplo comum, nomes de tabelas devem seguir estas diretrizes:
+
+1. **Caracteres permitidos**:
+   - Letras (a-z, A-Z).
+   - Dígitos (0-9), mas não podem começar com dígitos para evitar confusão com nomes de colunas ou valores.
+   - Caractere de sublinhado (`_`) para separar partes do nome.
+   - Nomes podem ser compostos por letras, números e sublinhados, com um máximo de 64 caracteres (no MySQL).
+
+2. **Nomes não permitidos**:
+   - Caracteres especiais como `@`, `#`, `$`, `%`, `&`, `*`, `(`, `)`, `[`, `]`, `{`, `}`, `<`, `>`, `~`, `^`, etc., conforme definido pelo SGBD.
+   - Palavras reservadas pelo SGBD (ex.: `CREATE`, `TABLE`, `SELECT`).
+
+3. **Exemplos válidos** (no MySQL):
+   - `Minha_Tabela`
+   - `Tabela2023`
+   - `ClienteID` (começa com letra, contém números e letras).
+
+4. **Exemplos inválidos**:
+   - `Minha@Tabela` (contém `@`, não permitido no MySQL).
+   - `DROP TABLE` (palavra reservada).
+
+**Recomendação**:  
+Verifique a documentação específica do seu SGBD (ex.: MySQL, PostgreSQL, SQL Server) para as regras exatas de nomes de tabelas, pois elas podem variar. Sempre use nomes descritivos e sem caracteres especiais para garantir compatibilidade.
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. O nome do banco deve identificar o negócio ou a sigla da apl..
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   100.17s
+Tokens Gerados:          529
+Velocidade de Escrita:   8.11 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 2.5 horas.
+[AGENDADO] Próximo teste: 30/12 13:41
+
+--- CICLO 2 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso usar um campo de texto como chave primária natural?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Chave primária natural ou sequencial...
+   2. Não usar apenas números, verbos ou nomes próprios...
+   3. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+**Resposta:**
+
+Não, não é permitido usar um campo de texto como chave primária natural conforme a regra estabelecida:
+
+> **Regra:** Chave primária natural ou sequencial.
+
+Uma chave primária natural deve ser baseada em um valor descritivo e identificador único, como um código de identificação (ex: "S001", "C002"). Um campo de texto, por si só, não atende a essa definição, pois é uma string genérica e não necessariamente identificadora ou sequencial.
+
+**Exemplo de conformidade:**
+```sql
+-- Nome da tabela: Veiculo
+-- Chave primária natural: Placa (exemplo de código identificador único)
+CREATE TABLE Veiculo (
+    Placa VARCHAR(10) PRIMARY KEY,
+    ...
+);
+```
+
+Se você deseja usar uma chave primária natural, ela deve ser um campo com valor único e identificador, como um código alfanumérico específico (ex: "S001", "C002"). Um campo de texto livre não é considerado natural ou sequencial.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   81.28s
+Tokens Gerados:          565
+Velocidade de Escrita:   8.44 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.5 horas.
+[AGENDADO] Próximo teste: 30/12 18:11
+
+--- CICLO 3 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso usar o nome RENAVAM para o procedimento de consulta ao sistema?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Não usar apenas números, verbos ou nomes próprios...
+   2. View para consultas (SELECT apenas)...
+   3. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não é permitido usar apenas nomes próprios como RENAVAM para o procedimento de consulta, conforme a regra: "Não usar apenas números, verbos ou nomes próprios."
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   54.40s
+Tokens Gerados:          339
+Velocidade de Escrita:   8.53 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.5 horas.
+[AGENDADO] Próximo teste: 30/12 22:42
+
+--- CICLO 4 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar um script batch que não inicia com Batch?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Se executada via batch, iniciar com Batch...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Todo comando SQL deve ser feito via Stored Procedure (exceto..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação não está alinhada com a regra que exige que scripts executados via batch iniciem com "Batch". Portanto, não é permitido criar um script batch que não inicia com "Batch".
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   138.31s
+Tokens Gerados:          1019
+Velocidade de Escrita:   8.24 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 5.4 horas.
+[AGENDADO] Próximo teste: 31/12 04:11
+
+--- CICLO 5 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma tabela com nome 'usuarios'?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Não usar apenas números, verbos ou nomes próprios...
+   2. Nome da tabela seguido do nome da primeira coluna do índice...
+   3. Restrição de unicidade...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   46.74s
+Tokens Gerados:          283
+Velocidade de Escrita:   8.59 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 5.9 horas.
+[AGENDADO] Próximo teste: 31/12 10:06
+
+--- CICLO 6 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome "Clientes"?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+   3. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não é permitido criar a tabela com nome "Clientes", pois:
+
+1. A regra estabelece que o nome da tabela deve ser composto pelo nome da tabela seguido do nome da primeira coluna do índice. O nome "Clientes" não atende a essa estrutura.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   46.38s
+Tokens Gerados:          266
+Velocidade de Escrita:   8.56 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.7 horas.
+[AGENDADO] Próximo teste: 31/12 13:52
+
+--- CICLO 7 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma tabela temporária com o nome "nome_ABC"?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Não usar apenas números, verbos ou nomes próprios...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   68.47s
+Tokens Gerados:          457
+Velocidade de Escrita:   8.49 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.7 horas.
+[AGENDADO] Próximo teste: 31/12 17:33
+
+--- CICLO 8 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma coluna única com restrição de unicidade?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Restrição de unicidade...
+   2. Nome da tabela seguido do nome da primeira coluna do índice...
+   3. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Sim, é permitido criar uma coluna com restrição de unicidade, conforme a regra existente que especifica "Restrição de unicidade". Isso está alinhado às diretrizes fornecidas, e não há conflito com outras regras mencionadas.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   260.32s
+Tokens Gerados:          1934
+Velocidade de Escrita:   7.88 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.9 horas.
+[AGENDADO] Próximo teste: 31/12 22:30
+
+--- CICLO 9 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso usar cursor para isso?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Preferencialmente não utilizar cursor...
+   2. Não usar acentos, cedilha (ç), espaços...
+   3. Não usar apenas números, verbos ou nomes próprios...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Preferencialmente não utilizar cursor.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   62.38s
+Tokens Gerados:          419
+Velocidade de Escrita:   8.53 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.4 horas.
+[AGENDADO] Próximo teste: 01/01 02:56
+
+--- CICLO 10 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso renomear esse banco de dados para Y, em vez de X?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Tabelas que serão excluídas do banco de dados...
+   2. O nome do banco deve identificar o negócio ou a sigla da apl..
+   3. Siglas oficiais: primeira letra maiúscula e demais minúscula..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+**Resposta:**
+
+A solicitação de renomear o banco de dados para "Y" NÃO é válida, pois viola as seguintes regras:
+
+1. **Regra: O nome do banco deve identificar o negócio ou a sigla da aplicação.**  
+   O nome "Y" não identifica qualquer negócio ou aplicação específica.
+
+2. **Regra: Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo "PascalCase".**  
+   O nome "Y" não segue essa regra, pois não utiliza iniciais maiúsculas.
+
+**Conclusão:** O renomeação para "Y" é inválida de acordo com as regras fornecidas.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   75.95s
+Tokens Gerados:          521
+Velocidade de Escrita:   8.47 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 2.3 horas.
+[AGENDADO] Próximo teste: 01/01 05:16
+
+--- CICLO 11 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso usar listas no código?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Não usar apenas números, verbos ou nomes próprios...
+   2. Não usar palavras reservadas (INSERT, DELETE, SELECT...)...
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   79.46s
+Tokens Gerados:          563
+Velocidade de Escrita:   8.45 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 2.2 horas.
+[AGENDADO] Próximo teste: 01/01 07:28
+
+--- CICLO 12 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma variável com nome API?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   2. Nome da tabela seguido do nome da primeira coluna do índice...
+   3. Não usar apenas números, verbos ou nomes próprios...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação não é válida de acordo com as regras:
+    - Regra: Não usar apenas números, verbos ou nomes próprios.
+    - Regra: O nome do banco deve identificar o negócio ou a sigla da aplicação.
+    - Regra: Usar nomes curtos, claros e sem ambiguidade.
+
+    A palavra "API" é um nome próprio e não identifica claramente um negócio ou sigla da aplicação. Portanto, não é permitido.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   47.12s
+Tokens Gerados:          281
+Velocidade de Escrita:   8.58 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 2.3 horas.
+[AGENDADO] Próximo teste: 01/01 09:47
+
+--- CICLO 13 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma variável com símbolo matemático, como 'x'?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+   2. Tabelas espelho ou de referência externa...
+   3. Restrição de unicidade...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   107.53s
+Tokens Gerados:          783
+Velocidade de Escrita:   8.36 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.0 horas.
+[AGENDADO] Próximo teste: 01/01 12:49
+
+--- CICLO 14 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma tabela que será excluída do banco de dados?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Tabelas que serão excluídas do banco de dados...
+   2. O nome do banco deve identificar o negócio ou a sigla da apl..
+   3. Nome da tabela seguido do nome da primeira coluna do índice...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação de criar uma tabela que será excluída do banco de dados está de acordo com a regra existente que menciona "Tabelas que serão excluídas do banco de dados", pois não há regras específicas que proíbam essa ação. Portanto, a criação é permitida, desde que siga as outras regras, como o nome do banco identificando o negócio ou sigla, e outras especificações técnicas.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   397.23s
+Tokens Gerados:          2866
+Velocidade de Escrita:   7.51 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.1 horas.
+[AGENDADO] Próximo teste: 01/01 16:04
+
+--- CICLO 15 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome X?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   95.06s
+Tokens Gerados:          669
+Velocidade de Escrita:   8.40 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.1 horas.
+[AGENDADO] Próximo teste: 01/01 20:12
+
+--- CICLO 16 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso usar sigla longa no nome?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Não usar apenas números, verbos ou nomes próprios...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. O nome do banco deve identificar o negócio ou a sigla da apl..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   49.23s
+Tokens Gerados:          299
+Velocidade de Escrita:   8.54 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.4 horas.
+[AGENDADO] Próximo teste: 02/01 00:37
+
+--- CICLO 17 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com o nome @nome_tabela e usar iDentificador como chave primária?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+   3. Não usar apenas números, verbos ou nomes próprios...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação de criar uma tabela com o nome @nome_tabela e usar iDentificador como chave primária viola as seguintes regras:
+
+- **Regra: Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.**  
+  O nome @nome_tabela não segue o padrão de prefixo tipo e notação húngara. Além disso, "iDentificador" não atende ao padrão de nomes, pois pode ser considerado um nome próprio ou verbo, violando a regra de evitar apenas números, verbos ou nomes próprios.
+
+**Recomendação:** Use um nome de tabela com prefixo tipo e siga a notação húngara, como "tabela_nome_da_tabela". Para a chave primária, adote um nome que siga o padrão estabelecido.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   181.46s
+Tokens Gerados:          1343
+Velocidade de Escrita:   8.09 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.9 horas.
+[AGENDADO] Próximo teste: 02/01 04:32
+
+--- CICLO 18 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome X?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   116.06s
+Tokens Gerados:          841
+Velocidade de Escrita:   8.31 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.1 horas.
+[AGENDADO] Próximo teste: 02/01 08:39
+
+--- CICLO 19 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma tabela com nome diferente da primeira coluna do índice?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação não é válida. De acordo com a regra especificada, o nome da tabela deve ser seguido do nome da primeira coluna do índice, o que implica que não pode ser diferente. Qualquer desvio dessa estrutura viola a regra estabelecida.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   133.97s
+Tokens Gerados:          981
+Velocidade de Escrita:   8.27 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.4 horas.
+[AGENDADO] Próximo teste: 02/01 13:06
+
+--- CICLO 20 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso executar este script sem o prefixo Batch?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Tabelas de log devem ter o prefixo Log...
+   2. Se executada via batch, iniciar com Batch...
+   3. Nome no singular, claro, sem abreviação (exceto se >30 chars..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   6226.56s
+Tokens Gerados:          40960
+Velocidade de Escrita:   6.61 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 6.0 horas.
+[AGENDADO] Próximo teste: 02/01 20:48
+
+--- CICLO 21 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome no plural?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Usar termos em português e no singular...
+   3. Não usar apenas números, verbos ou nomes próprios...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   125.43s
+Tokens Gerados:          919
+Velocidade de Escrita:   8.27 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.4 horas.
+[AGENDADO] Próximo teste: 03/01 00:17
+
+--- CICLO 22 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome "DadosClientes"?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+   3. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação para criar a tabela "DadosClientes" deve ser validada conforme as regras fornecidas:
+
+1. **Regra: Nome da tabela seguido do nome da primeira coluna do índice**  
+   A tabela "DadosClientes" não segue essa regra, pois não contém o nome da primeira coluna do índice.
+
+2. **Regra: Uso de Iniciais Maiúsculas em cada palavra**  
+   A tabela "DadosClientes" utiliza letras maiúsculas para cada palavra, mas o nome está em português, o que não está alinhado com a notação em inglês exigida.
+
+3. **Regra: Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara**  
+   A tabela "DadosClientes" não possui um prefixo minúsculo indicando o tipo de dado, nem segue a notação húngara.
+
+4. **Regra: Padrão para Foreign Key (FK): Usar o prefixo fk mais os nomes das tabelas filha e pai**  
+   Essa regra não se aplica diretamente à criação do nome da tabela.
+
+5. **Regra: Não usar apenas números, verbos ou nomes próprios**  
+   O nome "DadosClientes" não utiliza apenas números, verbos ou nomes próprios, mas segue a estrutura de um nome de tabela descritivo.
+
+**Conclusão:**  
+A tabela "DadosClientes" **não** segue todas as regras fornecidas.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   84.17s
+Tokens Gerados:          576
+Velocidade de Escrita:   8.39 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.5 horas.
+[AGENDADO] Próximo teste: 03/01 04:49
+
+--- CICLO 23 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso violar a regra de iniciar com Batch quando executado via batch?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Se executada via batch, iniciar com Batch...
+   2. Todo comando SQL deve ser feito via Stored Procedure (exceto..
+   3. Colunas usadas como parâmetro em procedures externas iniciam..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação viola a regra, pois a regra estabelece que, quando executada via batch, deve iniciar com 'Batch'. Portanto, não é permitido violar essa regra.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   174.22s
+Tokens Gerados:          1299
+Velocidade de Escrita:   8.11 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 5.8 horas.
+[AGENDADO] Próximo teste: 03/01 10:40
+
+--- CICLO 24 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome X?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   94.18s
+Tokens Gerados:          663
+Velocidade de Escrita:   8.41 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.6 horas.
+[AGENDADO] Próximo teste: 03/01 15:23
+
+--- CICLO 25 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome X?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   95.87s
+Tokens Gerados:          678
+Velocidade de Escrita:   8.37 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.8 horas.
+[AGENDADO] Próximo teste: 03/01 20:15
+
+--- CICLO 26 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma tabela espelho?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+   3. Tabelas espelho ou de referência externa...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+De acordo com as regras fornecidas, a solicitação pode ser validada com base na regra "Regra: Tabelas espelho ou de referência externa". Essa regra menciona explicitamente tabelas espelho, indicando que há uma diretriz relacionada à sua utilização no contexto do Detran. Portanto, a criação de uma tabela espelho deve ser considerada conforme essa regra, mas é necessário verificar os detalhes específicos para garantir conformidade.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   241.32s
+Tokens Gerados:          1794
+Velocidade de Escrita:   7.92 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.7 horas.
+[AGENDADO] Próximo teste: 04/01 00:04
+
+--- CICLO 27 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar um procedimento RENAVAM com nome diferente do estabelecido?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   2. Usar nomes curtos, claros e sem ambiguidade...
+   3. Nome da tabela seguido do nome da primeira coluna do índice...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   53.27s
+Tokens Gerados:          331
+Velocidade de Escrita:   8.53 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 2.4 horas.
+[AGENDADO] Próximo teste: 04/01 02:32
+
+--- CICLO 28 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome 'ClientesVIP'?
+Posso usar 'Usuarios_Tab' como nome da tabela?
+Posso chamar a coluna de 'ID_Cliente' mesmo sendo muito longo?
+Posso usar 'cli' como atalho para a tabela de clientes?
+Posso chamar uma tabela de 'Tabela123' se for muito longa?
+Posso usar 'V' como nome de uma coluna de valor numérico?
+Posso criar uma tabela com nome de 'Cliente' mesmo sendo muito curto?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+   3. Não usar apenas números, verbos ou nomes próprios...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+**Resposta para cada solicitação:**
+
+1. **Solicitação:** "Posso criar a tabela com nome 'ClientesVIP'?"  
+   **Resposta:** Não, pois o nome da tabela deve seguir a regra: "Nome da tabela seguido do nome da primeira coluna do índice". Além disso, o uso de iniciais maiúsculas em cada palavra é obrigatório, conforme a regra: "Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo 'PascalCase'".
+
+2. **Solicitação:** "Posso usar 'Usuarios_Tab' como nome da tabela?"  
+   **Resposta:** Não, pois o nome da tabela deve seguir a regra: "Nome da tabela seguido do nome da primeira coluna do índice". Além disso, o uso de iniciais maiúsculas em cada palavra é obrigatório, conforme a regra: "Uso de Iniciações Maiúsculas em cada palavra, sem utilizar o termo 'PascalCase'".
+
+3. **Solicitação:** "Posso chamar a coluna de 'ID_Cliente' mesmo sendo muito longo?"  
+   **Resposta:** Não, pois a regra estabelece: "Não usar apenas números, verbos ou nomes próprios". Além disso, o nome da coluna deve seguir a notação húngara, conforme a regra: "Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara".
+
+4. **Solicitação:** "Posso usar 'cli' como atalho para a tabela de clientes?"  
+   **Resposta:** Não, pois o nome da tabela deve seguir a regra: "Nome da tabela seguido do nome da primeira coluna do índice". Além disso, o uso de iniciais maiúsculas em cada palavra é obrigatório, conforme a regra: "Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo 'PascalCase'".
+
+5. **Solicitação:** "Posso chamar uma tabela de 'Tabela123' se for muito longa?"  
+   **Resposta:** Não, pois a regra estabelece: "Não usar apenas números, verbos ou nomes próprios". Além disso, o nome da tabela deve seguir a regra: "Nome da tabela seguido do nome da primeira coluna do índice".
+
+6. **Solicitação:** "Posso usar 'V' como nome de uma coluna de valor numérico?"  
+   **Resposta:** Não, pois o nome da coluna deve seguir a regra: "Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara". Além disso, o uso de iniciais maiúsculas em cada palavra é obrigatório, conforme a regra: "Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo 'PascalCase'".
+
+7. **Solicitação:** "Posso criar uma tabela com nome de 'Cliente' mesmo sendo muito curto?"  
+   **Resposta:** Não, pois o nome da tabela deve seguir a regra: "Nome da tabela seguido do nome da primeira coluna do índice". Além disso, o uso de iniciais maiúsculas em cada palavra é obrigatório, conforme a regra: "Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo 'PascalCase'".
+
+**Conclusão:** Todas as solicitações violam pelo menos uma das regras fornecidas. Portanto, nenhuma das alterações solicitadas é permitida.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   161.16s
+Tokens Gerados:          1146
+Velocidade de Escrita:   8.10 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.0 horas.
+[AGENDADO] Próximo teste: 04/01 06:37
+
+--- CICLO 29 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar um procedimento com nome Y nos sistemas RENAVAM e RENAINF?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Não usar apenas números, verbos ou nomes próprios...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Usar nomes curtos, claros e sem ambiguidade...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não é permitido criar um procedimento com nome "Y" nos sistemas RENAVAM e RENAINF, pois o nome "Y" viola a regra de não usar apenas números, verbos ou nomes próprios. O nome deve ser composto, incluir um prefixo minúsculo indicando o tipo, seguir a notação húngara, ser curto, claro, sem ambiguidade, usar termos em português e no singular.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   102.99s
+Tokens Gerados:          734
+Velocidade de Escrita:   8.37 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.4 horas.
+[AGENDADO] Próximo teste: 04/01 11:01
+
+--- CICLO 30 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma tabela com nome TABELA?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+**AUDITOR RÍGIDO - G.A.N.D.A.L.F**
+
+**Solicitação:** "Posso criar uma tabela com nome TABELA?"
+
+**Validação contra regras:**
+
+1. **Regra: Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.**  
+   - O nome "TABELA" não possui prefixo minúsculo indicando o tipo (ex: "tb_" para tabela) e não segue a notação húngara, que exige um estilo descritivo e iniciado por um modificador.  
+   - **Resultado:** INVALIDO.
+
+2. **Regra: Nome da tabela seguido do nome da primeira coluna do índice.**  
+   - O nome "TABELA" é genérico e não inclui referência à primeira coluna do índice, conforme exigido.  
+   - **Resultado:** INVALIDO.
+
+**Conclusão:**  
+A solicitação viola as regras de nomenclatura. O nome "TABELA" não é permitido. Recomendo usar um nome que siga o padrão estabelecido, como "tb_usuarios_codigo" (exemplo hipotético).
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   138.17s
+Tokens Gerados:          1028
+Velocidade de Escrita:   8.23 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.0 horas.
+[AGENDADO] Próximo teste: 04/01 15:06
+
+--- CICLO 31 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso verificar se dois conjuntos de dados são iguais usando NOT ALL?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Usar nomes curtos, claros e sem ambiguidade...
+   2. Todo comando SQL deve ser feito via Stored Procedure (exceto..
+   3. Não usar apenas números, verbos ou nomes próprios...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   152.08s
+Tokens Gerados:          1136
+Velocidade de Escrita:   8.20 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 5.8 horas.
+[AGENDADO] Próximo teste: 04/01 20:59
+
+--- CICLO 32 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma tabela com um nome já existente?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Padrão para Foreign Key (FK): Usar o prefixo fk mais os nome..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   88.18s
+Tokens Gerados:          613
+Velocidade de Escrita:   8.37 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 5.3 horas.
+[AGENDADO] Próximo teste: 05/01 02:19
+
+--- CICLO 33 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela temporária 'temp_usuarios' para armazenar dados de pesquisa?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. View que armazena dados fisicamente...
+   2. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+   3. Nome da tabela seguido do nome da primeira coluna do índice...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+**AUDITOR RÍGIDO - DECISÃO:**
+
+**Não é permitido.**
+
+**Justificativa:**
+
+1.  **Regra 1:** "View que armazena dados fisicamente." - A regra estabelece claramente que a forma recomendada de armazenar dados fisicamente é através de uma View.
+2.  **Objeto Solicitado:** A tabela temporária (`temp_usuarios`) é um objeto de armazenamento físico diferente de uma View.
+3.  **Conformidade:** A criação de uma tabela temporária para armazenar dados fisicamente viola a Regra 1, que especifica o uso de Views para esse propósito.
+
+Portanto, a solicitação de criação da tabela temporária `temp_usuarios` para armazenar dados fisicamente não está de acordo com a Regra 1.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   76.72s
+Tokens Gerados:          529
+Velocidade de Escrita:   8.47 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 2.7 horas.
+[AGENDADO] Próximo teste: 05/01 05:03
+
+--- CICLO 34 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso fazer um UPDATE via view?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Preferencialmente não utilizar cursor...
+   2. Todo comando SQL deve ser feito via Stored Procedure (exceto..
+   3. View para consultas (SELECT apenas)...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+**AUDITOR RÍGIDO:**
+
+**Não é permitido realizar UPDATE via view.**
+
+**Justificativa:**
+
+1.  **Regra 3:** "View para consultas (SELECT apenas)."
+    *   Esta regra estabelece explicitamente que views devem ser utilizadas *exclusivamente* para consultas (comando SELECT).
+    *   Permitir UPDATE via view viola essa regra, pois views não são estruturas projetadas para permitir operações de modificação de dados (INSERT, UPDATE, DELETE).
+
+Portanto, a solicitação de fazer um UPDATE via view é **incompatível** com a regra de uso de views.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   70.77s
+Tokens Gerados:          488
+Velocidade de Escrita:   8.49 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 2.8 horas.
+[AGENDADO] Próximo teste: 05/01 07:51
+
+--- CICLO 35 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso usar Stored Procedure para um comando SELECT?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Todo comando SQL deve ser feito via Stored Procedure (exceto..
+   2. Não usar apenas números, verbos ou nomes próprios...
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   6196.43s
+Tokens Gerados:          40960
+Velocidade de Escrita:   6.64 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 5.8 horas.
+[AGENDADO] Próximo teste: 05/01 15:20
+
+--- CICLO 36 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso inserir um valor duplicado em uma coluna com restrição de unicidade?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Restrição de unicidade...
+   2. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+   3. Nome da tabela seguido do nome da primeira coluna do índice...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não é permitido inserir valores duplicados em uma coluna com restrição de unicidade, pois a regra "Restrição de unicidade" especifica que valores únicos são obrigatórios.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   55.83s
+Tokens Gerados:          360
+Velocidade de Escrita:   8.56 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 5.4 horas.
+[AGENDADO] Próximo teste: 05/01 20:45
+
+--- CICLO 37 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome tg_usuarios_I?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+   3. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação de criar a tabela com nome "tg_usuarios_I" deve ser validada contra as regras fornecidas:
+
+- **Regra 5**: "Prefixo tg + tabela + sigla evento (I, A, E)."  
+  O nome "tg_usuarios_I" atende a essa regra, pois:  
+  - "tg" é o prefixo especificado.  
+  - "usuarios" parece ser o nome da tabela.  
+  - "I" é a sigla do evento.  
+
+Portanto, a criação da tabela está alinhada com a regra.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   97.91s
+Tokens Gerados:          697
+Velocidade de Escrita:   8.39 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 5.5 horas.
+[AGENDADO] Próximo teste: 06/01 02:15
+
+--- CICLO 38 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma chave estrangeira violando a regra de integridade referencial?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Integridade referencial deve ser via constraints (pk, Unique..
+   2. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+   3. Siglas oficiais: primeira letra maiúscula e demais minúscula..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+**Resposta:**
+
+Não é permitido criar uma chave estrangeira violando a regra de integridade referencial. A regra estabelece claramente que a integridade referencial deve ser garantida via constraints, incluindo a criação adequada de chaves estrangeiras (fk). Qualquer violação a essa regra é inaceitável e deve ser evitada.
+
+**Métodos permitidos para criar chave estrangeira:**
+
+1.  `CREATE TABLE ... FOREIGN KEY (...) REFERENCES ...`
+2.  `ALTER TABLE ... ADD CONSTRAINT ... FOREIGN KEY (...) REFERENCES ...`
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   66.96s
+Tokens Gerados:          435
+Velocidade de Escrita:   8.43 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.5 horas.
+[AGENDADO] Próximo teste: 06/01 06:47
+
+--- CICLO 39 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma tabela com uma coluna que será a chave primária natural?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Chave primária natural ou sequencial...
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+**Validação da Solicitação:**
+
+Sim, é permitido criar uma tabela com uma coluna que será a chave primária natural, conforme a regra:  
+*"Regra: Chave primária natural ou sequencial."*  
+
+Esta regra autoriza explicitamente o uso de uma chave primária natural, desde que atenda aos requisitos de ser única e não nula para identificar registros de forma inequívoca.  
+
+**Observação:**  
+Certifique-se de que a coluna utilizada como chave primária natural atende aos critérios de unicidade e integridade, conforme exigido pelo contexto do banco de dados.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   102.51s
+Tokens Gerados:          738
+Velocidade de Escrita:   8.38 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.4 horas.
+[AGENDADO] Próximo teste: 06/01 10:14
+
+--- CICLO 40 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar um arquivo começando com Batch?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+   2. Restrição de unicidade...
+   3. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+**AUDITOR RÍGIDO:**
+
+    **Rejeição da solicitação:**
+
+    - **Regra violada:** Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.
+    - **Explicação:** O termo "Batch" não atende à regra de prefixo minúsculo. A notação húngara exige um prefixo minúsculo seguido do nome do objeto. Portanto, "Batch" não é permitido como início do nome do arquivo.
+
+    **Resposta final:**  
+    **NÃO é permitido** criar um arquivo começando com "Batch".
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   71.14s
+Tokens Gerados:          479
+Velocidade de Escrita:   8.51 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.6 horas.
+[AGENDADO] Próximo teste: 06/01 13:54
+
+--- CICLO 41 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com um nome muito longo?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação de criar um nome de tabela muito longo é inválida, pois viola a regra: "Usar nomes curtos, claros e sem ambiguidade." Esta regra exige que os nomes de tabela sejam breves e inequívocos, tornando um nome excessivamente longo incompatível com as diretrizes estabelecidas.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   154.80s
+Tokens Gerados:          1145
+Velocidade de Escrita:   8.17 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.5 horas.
+[AGENDADO] Próximo teste: 06/01 17:26
+
+--- CICLO 42 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: "Posso executar algo via batch sem iniciar com Batch?"
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Se executada via batch, iniciar com Batch...
+   2. Todo comando SQL deve ser feito via Stored Procedure (exceto..
+   3. Colunas usadas como parâmetro em procedures externas iniciam..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação viola a regra: **"Se executada via batch, iniciar com Batch".** Portanto, não é permitido executar algo via batch sem iniciar com Batch.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   90.40s
+Tokens Gerados:          636
+Velocidade de Escrita:   8.42 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.9 horas.
+[AGENDADO] Próximo teste: 06/01 22:22
+
+--- CICLO 43 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma tabela espelho?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Evitar JOIN com mais de 4 tabelas (usar temporárias se neces..
+   3. Tabelas espelho ou de referência externa...
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Sim, é permitido criar uma tabela espelho, conforme a regra "Tabelas espelho ou de referência externa" mencionada acima.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   241.62s
+Tokens Gerados:          1803
+Velocidade de Escrita:   7.93 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.8 horas.
+[AGENDADO] Próximo teste: 07/01 02:12
+
+--- CICLO 44 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar uma tabela com nome Minha-Tabela?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+   3. Padrão para Foreign Key (FK): Usar o prefixo fk mais os nome..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+A solicitação de criar uma tabela com nome "Minha-Tabela" deve ser rejeitada, pois viola as seguintes regras:
+
+- **Regra: Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.**  
+  O nome "Minha-Tabela" não inclui um prefixo minúsculo (como "btn" para botão ou "tbl" para tabela) e não segue a notação húngara, que exige que o nome comece com um prefixo descritivo.
+
+- **Regra: Nome da tabela seguido do nome da primeira coluna do índice.**  
+  O padrão não foi atendido, pois o nome deve estruturar-se como "Tabela_ColunaInicial" ou similar, conforme especificado.
+
+Além disso, o uso de caracteres especiais como hífen pode ser considerado inadequado, embora não esteja explicitamente proibido. Recomendo revisar o nome para alinhar com os padrões estabelecidos.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   227.31s
+Tokens Gerados:          1688
+Velocidade de Escrita:   7.98 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 2.1 horas.
+[AGENDADO] Próximo teste: 07/01 04:27
+
+--- CICLO 45 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome 'X'?"
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+   3. Prefixo minúsculo indicando o tipo, seguido do nome em notaç..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não. O nome da tabela 'X' viola as seguintes regras:
+
+1.  **Regra: Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo "PascalCase".**  
+    O nome 'X' não segue essa convenção, pois não utiliza iniciais maiúsculas em palavras.
+
+2.  **Regra: Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara.**  
+    O nome 'X' não contém um prefixo minúsculo indicando o tipo.
+
+3.  **Regra: Não usar apenas números, verbos ou nomes próprios.**  
+    O nome 'X' é apenas um nome próprio (um único caractere).
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   58.08s
+Tokens Gerados:          361
+Velocidade de Escrita:   8.51 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 3.9 horas.
+[AGENDADO] Próximo teste: 07/01 08:27
+
+--- CICLO 46 INICIADO ---
+[1/4] Gerando pergunta baseada na regra...
+      Pergunta gerada: Posso criar a tabela com nome "categoria"?
+[2/4] Vetorizando...
+[3/4] Buscando regras...
+Buscando regras. Categoria: 'GERAL' | Foco: 'Auditoria'
+[4/4] Gerando resposta do Gandalf...
+
+==========
+[DEBUG] Regras recuperadas do Banco: 5
+   1. Nome da tabela seguido do nome da primeira coluna do índice...
+   2. Não usar apenas números, verbos ou nomes próprios...
+   3. Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o t..
+==========
+
+ RESPOSTA DO G.A.N.D.A.L.F:
+###############
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+
+----------------------------------------
+DIAGNÓSTICO DE VELOCIDADE:
+Tempo Total (Relógio):   62.06s
+Tokens Gerados:          400
+Velocidade de Escrita:   8.52 tokens/s
+----------
+
+[INFO] Resposta salva em 'LOG_FERIAS_GANDALF.txt'
+[SUCESSO] Interação registrada no arquivo.
+[DORMINDO] O Gandalf vai descansar por 4.4 horas.
+[AGENDADO] Próximo teste: 07/01 12:55
+
+--- CICLO 47 INICIADO ---
+Banco de regras vazio! Abortando.

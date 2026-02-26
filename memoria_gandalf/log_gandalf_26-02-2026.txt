@@ -1,0 +1,18 @@
+========================================
+DATA: 26/02/2026 11:34:54
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta dde nomear uma table?
+========================================
+RESPOSTA:
+A forma correta de nomear uma tabela é seguindo o padrão estabelecido: **Nome da tabela seguido do nome da primeira coluna do índice**.
+
+**Explicação:**  
+De acordo com a regra do Detran, o nome da tabela deve ser composto pelo nome da tabela seguido do nome da primeira coluna do índice. Isso foi validado em exemplos como:  
+- **REJEIÇÃO**: O nome `RENAVAMcadastro` foi rejeitado porque não seguiu esse padrão.  
+- **APROVAÇÃO**: O nome `BIOMETRIArenovacaoCNH` foi aprovado, pois atende ao padrão mencionado.  
+
+Portanto, qualquer tabela deve seguir esse formato para ser considerada válida.
+========================================
+

@@ -79,3 +79,36 @@ Os principais problemas estão na **regra de nomes** (abreviação em `EventoCdt
 O desenvolvedor deve renomear a tabela para algo mais descritivo (ex: `EventoCdtLog` ou `EventoCdtRegistro`) e verificar se a criação da tabela está alinhada às práticas recomendadas do Detran.
 ========================================
 
+========================================
+DATA: 23/12/2025 10:22:44
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de nomear uma tabela proxy, de acordo com o manual de padronização de dados?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 23/12/2025 10:36:08
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de nomear uma tabela?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+
+========================================
+DATA: 30/12/2025 09:12:02
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual a forma correta de normear uma chave estrangeira?
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto.
+========================================
+

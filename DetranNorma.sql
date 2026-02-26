@@ -15,8 +15,9 @@ CREATE TABLE IF NOT EXISTS ObjetoDb (
 CREATE TABLE IF NOT EXISTS RegraNomenclatura (
     pkRegraNomenclatura SERIAL PRIMARY KEY,
     pkCategoriaRegra INT REFERENCES CategoriaRegra(pkCategoriaRegra),
-    pkObjetoDb INT REFERENCES ObjetoDb(pkObjetoDb), -- NULL se for regra geral
-    embedding vector(768) -- Coluna onde o Python salvará os vetores
+    pkObjetoDb INT REFERENCES ObjetoDb(pkObjetoDb),
+    DescricaoRegra TEXT NOT NULL,
+    embedding vector(768)
 );
 -- Tabelas Auxiliares
 CREATE TABLE IF NOT EXISTS TipoDado (
@@ -33,7 +34,14 @@ CREATE TABLE IF NOT EXISTS AtributoComum (
 );
 -- 3. INSERÇÃO DOS DADOS (POPULAÇÃO)
 -- Inserindo Categorias e Objetos Básicos
-INSERT INTO CategoriaRegra (NomeCategoria) VALUES ('Regras Gerais'), ('Nomenclatura de Objetos'), ('Boas Práticas'), ('Tipos de Dados'), ('Atributos Comuns') ON CONFLICT DO NOTHING;
+INSERT INTO CategoriaRegra (NomeCategoria, DescricaoRegra) VALUES 
+    ('Regras Gerais', 'Regras aplicáveis a todos os objetos'),
+    ('Nomenclatura de Objetos', 'Padronização de nomes'),
+    ('Boas Práticas', 'Diretrizes de desenvolvimento'),
+    ('Tipos de Dados', 'Padrões de tipos'),
+    ('Atributos Comuns', 'Campos recorrentes'),
+    ('Regra especial', 'Regras específicas de sistemas (RENAVAM, etc)') 
+ON CONFLICT DO NOTHING;
 INSERT INTO ObjetoDb (NomeObjeto) VALUES ('Banco'), ('Tabela'), ('Tabela Log'), ('Tabela Temp'), ('Tabela "z"'), ('Proxy Table'), ('Coluna'), ('pk (Primary Key)'), ('fk (Foreign Key)'), ('Unique'), ('Check'), ('View comum'), ('View materializada'), ('Índice'), ('Procedure'), ('Trigger') ON CONFLICT DO NOTHING;
 -- Limpeza preventiva
 TRUNCATE TABLE RegraNomenclatura RESTART IDENTITY CASCADE;
@@ -46,10 +54,16 @@ INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra) VAL
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Usar termos em português e no singular.'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Usar nomes curtos, claros e sem ambiguidade.'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Evitar preposições (Ex.: "de", "da", "do").'),
-( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Máximo de 30 caracteres (se ultrapassar, usar abreviações coerentes).'),
+( (select pkCategoriaRegra from CategoriaRegra where NomeCategoria = 'Regras Gerais'), null, 'Tabelas temporárias (Tabela Temp) vai seguir as mesmas regras de nomenclatura aplicadas às tabelas'), 
+( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Tabelas devem ser nomeadas usando o máximo de 30 caracteres (se ultrapassar, usar abreviações coerentes).'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Não usar palavras reservadas (INSERT, DELETE, SELECT...).'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Não usar apenas números, verbos ou nomes próprios.'),
-( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Siglas oficiais: primeira letra maiúscula e demais minúsculas.');
+( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Siglas oficiais: primeira letra maiúscula e demais minúsculas.'),
+( (select pkCategoriaRegra from CategoriaRegra where NomeCategoria = 'Regra especial'), null, 'Em se tratando de sistema de Veículos, os nomes dos procedimentos RENAVAM e RENAINF ficarão iguais aos já existentes.'),
+( (select pkCategoriaRegra from CategoriaRegra where NomeCategoria = 'Regra especial'), null, 'Se executada via batch, iniciar com Batch.'),
+( (select pkCategoriaRegra from CategoriaRegra where NomeCategoria = 'Regra especial'), null, 'As procedures usadas pela FISEPE (SEFAZ) irão iniciar com as letras “FI” (maiúsculo).'),
+( (select pkCategoriaRegra from CategoriaRegra where NomeCategoria = 'Regra especial'), null, 'Quando a procedure for de Habilitação e for executada em Veículo ou o contrário, deve-se colocar no início do nome da procedure a palavra “Rpc”.'),
+( (select pkCategoriaRegra from CategoriaRegra where NomeCategoria = 'Regra especial'), null, 'Se acesso via internet, iniciar com "i", já as colunas serão nomeadas com "@" no início.');
 -- >>> REGRAS DE OBJETOS
 INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra) VALUES
 -- Banco e Tabelas
@@ -74,11 +88,14 @@ INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra) VAL
 -- Procedures & Triggers
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Nomenclatura de Objetos'), (SELECT pkObjetoDb FROM ObjetoDb WHERE NomeObjeto = 'Procedure'), 'Objetivo + Complemento + Operação (S, I, E, A, R).'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Nomenclatura de Objetos'), (SELECT pkObjetoDb FROM ObjetoDb WHERE NomeObjeto = 'Procedure'), 'Se executada via batch, iniciar com Batch.'),
-( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Nomenclatura de Objetos'), (SELECT pkObjetoDb FROM ObjetoDb WHERE NomeObjeto = 'Procedure'), 'Se acesso via internet, iniciar com i.'),
-( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Nomenclatura de Objetos'), (SELECT pkObjetoDb FROM ObjetoDb WHERE NomeObjeto = 'Trigger'), 'Prefixo tg + tabela + sigla evento (I, A, E).');
+( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Nomenclatura de Objetos'), (SELECT pkObjetoDb FROM ObjetoDb WHERE NomeObjeto = 'Procedure'), 'Se acesso via internet, iniciar com i; as colunas irão iniciar com @.'),
+( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Nomenclatura de Objetos'), (SELECT pkObjetoDb FROM ObjetoDb WHERE NomeObjeto = 'Trigger'), 'Prefixo tg + tabela + sigla evento (I, A, E).'),
+( (select pkCategoriaRegra from CategoriaRegra where NomeCategoria = 'Nomenclatura de objetos'), (select pkObjetoDb from ObjetoDb where NomeObjeto = 'Procedure'), 'Em se tratando de sistema de Veículos, os nomes dos procedimentos RENAVAM e RENAINF ficarão iguais aos já existentes. Caso sejam banco RENAVAM todos os padrões serão mantidos, mas caso sejam em outro banco, só se houver algum termo que indique que a procedure faz parte de um desses projetos.'),
+( (select pkCategoriaRegra from CategoriaRegra where NomeCategoria = 'Nomenclatura de objetos'), (select pkObjetoDb from ObjetoDb where NomeObjeto = 'Procedure'), 'As procedures usadas pela FISEPE (SEFAZ) irão iniciar com as letras “FI” (maiúsculo).'),
+( (select pkCategoriaRegra from CategoriaRegra where NomeCategoria = 'Nomenclatura de objetos'), (select pkObjetoDb from ObjetoDb where NomeObjeto = 'Procedure'), 'Quando a procedure for de Habilitação e for executada em Veículo ou o contrário, deve-se colocar no início do nome da procedure a palavra “Rpc”.');
 -- >>> BOAS PRÁTICAS
 INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra) VALUES
-( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Boas Práticas'), NULL, 'Todo comando SQL deve ser feito via Stored Procedure (exceto update/insert de text/image).'),
+( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Boas Práticas'), NULL, 'Todo comando sql deve ser feito via Stored Procedure (exceto update/insert de text/image).'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Boas Práticas'), NULL, 'Integridade referencial deve ser via constraints (pk, Unique, pk).'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Boas Práticas'), NULL, 'Preferencialmente não utilizar cursor.'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Boas Práticas'), NULL, 'Evitar JOIN com mais de 4 tabelas (usar temporárias se necessário).'),

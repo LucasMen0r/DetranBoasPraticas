@@ -1,5 +1,6 @@
 import pgvector
 import psycopg2
+import os
 import requests
 import sys
 import json
@@ -11,7 +12,7 @@ db_name = 'DetranNorma'
 db_user = 'postgres'
 db_pass = 'abc321'        
 db_host = 'localhost'     
-db_port = '5433'          
+db_port = '5435'          
 
 ollama_chat_model = "deepseek-r1:8b" ##o modelo anterior, o 14b, foi removido por ser muito pesado; o 8b pode fazer as suas funções sem muitos problemas.
 ollama_embed_model = "nomic-embed-text:latest"
@@ -54,7 +55,47 @@ def embedtext(text):
     except requests.RequestException as e: 
         print(f"[ERRO OLLAMA] Falha ao vetorizar: {e}") 
         return None
-    
+
+def buscar_historico(conn, pergunta_vetor, top_k=3):
+    """Busca no histórico de testes e aprendizados (Memória)."""
+    try:
+        cursor = conn.cursor()
+        
+        # Verifica se a tabela existe para evitar erros
+        cursor.execute("SELECT to_regclass('public.ConhecimentoHistorico');")
+        if not cursor.fetchone()[0]:
+            return []
+
+        print(f"Buscando na memória de testes do Gandalf...")
+        
+        # Busca os chunks mais parecidos com a pergunta atual
+        sql = """
+        SELECT nome_arquivo, conteudo_texto
+        FROM ConhecimentoHistorico
+        ORDER BY embedding <=> %s::vector
+        LIMIT %s;
+        """
+        cursor.execute(sql, (list(pergunta_vetor), top_k))
+        return cursor.fetchall()
+        
+    except Exception as e:
+        print(f"[ERRO SQL] Falha ao buscar histórico: {e}")
+        return []
+
+def criar_chunks(texto, tamanho_maximo=1000, sobreposicao=100):
+    """
+    Divide o texto em blocos menores (chunks) para não estourar o limite de tokens do modelo de embedding.
+    Usa sobreposicao (overlap) para não perder o contexto entre os cortes.
+    """
+    palavras = texto.split()
+    chunks = []
+    i = 0
+    while i < len(palavras):
+        chunk = " ".join(palavras[i:i + tamanho_maximo])
+        chunks.append(chunk)
+        i += tamanho_maximo - sobreposicao
+    return chunks
+
 def classificarpergunta(pergunta):
     """Agente Vertical: Classifica a intenção com validação rígida."""
     categorias_validas = [
@@ -66,7 +107,7 @@ def classificarpergunta(pergunta):
     - Boas Práticas
     - Tipos de Dados
     - Regras Gerais
-    
+    - Regras especiais
     Pergunta: "{pergunta}"
     Resposta (apenas o nome):
     """
@@ -77,7 +118,7 @@ def classificarpergunta(pergunta):
                 "model": ollama_chat_model, 
                 "messages": [{"role": "user", "content": prompt}],
                 "stream": False,
-                "options": {"temperature": 0.15}
+                "options": {"temperature": 0}
             }
         )
         resposta.raise_for_status() 
@@ -93,14 +134,24 @@ def classificarpergunta(pergunta):
         return "GERAL"
 
 def extrairfoco(pergunta):
-    """Extrai o objeto técnico principal (Procedure, Tabela, View, etc)."""
+    """Extrai o objeto técnico e PADRONIZA para o vocabulário do banco (Português)."""
     prompt = f"""
-    Extraia APENAS o substantivo técnico principal da pergunta.
-    Ex: "Validar procedure X" -> Procedure
-    Ex: "Tabela temporária" -> Tabela
+    Aja como um classificador de banco de dados.
+    Sua tarefa: Identificar o objeto principal da pergunta e converter para o termo padrão do Detran.
+    
+    TABELA DE CONVERSÃO (Use isto como guia):
+    - "table", "tabelas", "entidade" -> Tabela
+    - "column", "field", "atributo", "campo" -> Coluna
+    - "proc", "procedure", "stored procedure" -> Procedure
+    - "view", "visao" -> View comum
+    - "index", "indice" -> Índice
+    - "fk", "foreign key", "chave estrangeira" -> fk (Foreign Key)
+    - "pk", "primary key", "chave primaria" -> pk (Primary Key)
+    
+    Se não for nenhum desses, retorne apenas o substantivo principal em português.
     
     Pergunta: "{pergunta}"
-    Resposta (uma palavra):
+    Resposta (apenas uma palavra/termo):
     """
     try:
         resposta = requests.post(
@@ -109,13 +160,14 @@ def extrairfoco(pergunta):
                 "model": ollama_chat_model, 
                 "messages": [{"role": "user", "content": prompt}],
                 "stream": False,
-                "options": {"temperature": 0}
+                "options": {"temperature": 0} # Temperatura 0 para ser robótico e preciso
             }
         )
         resposta.raise_for_status() 
         texto_limpo = limparrespostadeepseek(resposta.json()['message']['content'])
-        foco = texto_limpo.strip().split()[0]
-        return foco.replace(".", "").replace('"', "").replace("'", "")
+        # Remove pontuações extras que o LLM possa colocar
+        foco = texto_limpo.strip().split('\n')[0].replace(".", "").replace('"', "").replace("'", "")
+        return foco
     except:
         return ""
     
@@ -165,8 +217,60 @@ def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=4):
     except Exception as e:
         print(f"[ERRO SQL] Falha ao buscar exemplos: {e}")
         return []
+
+def processar_diretorio(conn):
+    """Lê, limpa, vetoriza e salva todos os arquivos .txt do diretório."""
+    if not os.path.exists(DIRETORIO_TESTES):
+        print(f"[ERRO] O diretório '{DIRETORIO_TESTES}' não foi encontrado.")
+        return
+
+    arquivos = [f for f in os.listdir(DIRETORIO_TESTES) if f.endswith('.txt')]
     
-def perguntaollama(pergunta, contexto_regras, ExemploPratico):
+    if not arquivos:
+        print(f"[INFO] Nenhum arquivo .txt encontrado em '{DIRETORIO_TESTES}'.")
+        return
+
+    cursor = conn.cursor()
+    total_inseridos = 0
+
+    for arquivo in arquivos:
+        caminho_completo = os.path.join(DIRETORIO_TESTES, arquivo)
+        print(f"Processando arquivo: {arquivo}...")
+        
+        try:
+            with open(caminho_completo, 'r', encoding='utf-8') as f:
+                conteudo_bruto = f.read()
+                
+            texto_limpo = sanitizar_texto(conteudo_bruto)
+            
+            if not texto_limpo:
+                print(f"  -> Arquivo vazio ou continha apenas ruído. Ignorado.")
+                continue
+
+            chunks = criar_chunks(texto_limpo, tamanho_maximo=400, sobreposicao=50)
+            
+            for chunk in chunks:
+                vetor = gerar_embedding(chunk)
+                if vetor:
+                    query = """
+                    INSERT INTO ConhecimentoHistorico (nome_arquivo, conteudo_texto, embedding)
+                    VALUES (%s, %s, %s)
+                    """
+                    cursor.execute(query, (arquivo, chunk, vetor))
+                    total_inseridos += 1
+                    
+            conn.commit()
+            print(f"  -> Sucesso. Chunks inseridos: {len(chunks)}")
+            
+        except Exception as e:
+            conn.rollback()
+            print(f"  -> [ERRO] Falha ao processar o arquivo {arquivo}: {e}")
+
+    cursor.close()
+    print("-" * 40)
+    print(f"Processamento concluído. Total de registros inseridos no banco: {total_inseridos}")
+
+def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     """
     Gera a resposta final com Streaming, usando Regras + Exemplos Práticos.
     Versão ajustada para estrutura enxuta do banco (apenas Regra, sem contexto/sintaxe na tupla).
@@ -187,15 +291,16 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico):
     print("="*10 + "\n")
 
     # Montagem do Contexto de Regras (Tratando None como string vazia)
+
+# 1. Montagem do Contexto de Regras
     contexto_str = ""
     if contexto_regras:
-        # ALTERAÇÃO: Simplificado para ler apenas a regra da tupla
         contexto_str = "\n".join(
             f"- Regra: {str(dados_regra[0] or '')}" 
             for dados_regra in contexto_regras
         )
     
-    # Montagem do Contexto de Exemplos
+    # 2. Montagem do Contexto de Exemplos
     exemplos_str = ""
     if ExemploPratico:
         exemplos_str = "\n[[ EXEMPLOS DE REFERÊNCIA (USE COMO GABARITO) ]]\n"
@@ -203,9 +308,17 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico):
             tipo_txt = "APROVADO (Seguir este modelo)" if is_bom else "REPROVADO (Evitar este modelo)"
             exemplos_str += f"[{tipo_txt}]: {texto} -> Motivo: {explicacao}\n"
 
+    # 3. Montagem do Contexto Histórico
+    historico_str = ""
+    if historico_testes:
+        historico_str = "\n[[ CONHECIMENTO ADQUIRIDO EM TESTES ANTERIORES ]]\n"
+        for nome_arquivo, texto in historico_testes:
+            historico_str += f"- (Referência: {nome_arquivo}): {texto}\n"
+
     print(" RESPOSTA DO G.A.N.D.A.L.F:") 
     print("#"*15)
-    # --- 2. PROMPT DE AUDITORIA (Engenharia de Prompt Refinada) ---
+
+    # 4. Prompts do LLM
     prompt_sistema = """
     Você é o G.A.N.D.A.L.F (Gerenciador de Análise de Normas do Detran).
     Sua função é atuar como um AUDITOR RÍGIDO.
@@ -222,13 +335,16 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico):
     {contexto_str if contexto_str.strip() else "NENHUMA REGRA ESPECÍFICA FOI ENCONTRADA NO BANCO DE DADOS PARA ESTE TERMO."}
     
     {exemplos_str}
+    
+    {historico_str}
 
     [[ SOLICITAÇÃO DO DESENVOLVEDOR ]]
     {pergunta}
-    
-    Se houver regras acima, valide a solicitação contra elas.
+    Responder somente com base nas informações presentes no banco de dados.
+    OBRIGATÓRIO: Ao fornecer a resposta, você deve explicar o motivo da sua decisão e citar qual regra ou histórico embasou o seu raciocínio.
     Se NÃO houver regras acima, responda apenas: "Não localizei regras específicas no meu banco de conhecimento para validar este objeto."
     """
+
     # --- CRONÔMETRO INICIAL ---
     inicio_real = datetime.now()
     try:
@@ -242,7 +358,7 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico):
                 ],
                 "stream": True,
                 "options": {
-                    "temperature": 0.2, # Baixa temperatura para ser mais fiel aos dados
+                    "temperature": 0, # Baixa temperatura para ser mais fiel aos dados
                     "num_ctx": 4096     # Garante janela de contexto suficiente
                 }
             },
@@ -301,9 +417,20 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico):
         print(f"\n[ERRO NA GERAÇÃO]: {e}")
         return f"Erro técnico ao consultar LLM: {e}"
 
-def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="continuação dos testes do 'modelo de exportação' do Gandalf após mudanças no script em python-23-12-2025.txt"):
-    """Salva a interação em um arquivo de texto."""
-    timestamp  = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+def salvarrespostas(pergunta, categoria, resposta):
+    timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    data_arquivo = datetime.now().strftime("%d-%m-%Y")
+    nome_arquivo = f"log_gandalf_{data_arquivo}.txt"
+    
+    # Define o diretório alvo
+    diretorio_destino = "memoria_gandalf"
+    
+    # Prática de segurança: cria o diretório automaticamente caso ele não exista
+    os.makedirs(diretorio_destino, exist_ok=True)
+    
+    # Constrói o caminho completo de forma segura para qualquer sistema operacional
+    caminho_completo = os.path.join(diretorio_destino, nome_arquivo)
+    
     conteudo = (
         f"========================================\n"
         f"DATA: {timestamp}\n"
@@ -315,12 +442,55 @@ def salvarrespotas(pergunta, categoria, resposta, nome_arquivo="continuação do
         f"RESPOSTA:\n{resposta}\n"
         f"========================================\n\n"
     )
+    
     try:
-        with open(nome_arquivo, "a", encoding= "utf-8") as f:
+        with open(caminho_completo, "a", encoding="utf-8") as f:
             f.write(conteudo)
-        print(f"\n[INFO] Resposta salva em '{nome_arquivo}'")
+        print(f"\n[INFO] Resposta salva no log diário em: '{caminho_completo}'")
     except Exception as e:
-        print(f"\n[ERRO] Não foi possível salvar o arquivo: {e}")
+        print(f"\n[ERRO] Não foi possível salvar o arquivo de log: {e}")
+
+def autotreinar(conn):
+    """
+    Verifica se existem dados sem memória (embedding NULL) e corrige automaticamente.
+    """
+    cursor = conn.cursor()
+    
+    # --- 1. Verificar Regras de Nomenclatura ---
+    cursor.execute("SELECT pkRegraNomenclatura, DescricaoRegra FROM RegraNomenclatura WHERE embedding IS NULL")
+    regras_pendentes = cursor.fetchall()
+    
+    if regras_pendentes:
+        print(f"\n[AUTO-TREINO] Detectadas {len(regras_pendentes)} regras sem memória. Processando...")
+        for pk, texto in regras_pendentes:
+            vetor = embedtext(texto) # Reusa sua função existente
+            if vetor:
+                cursor.execute(
+                    "UPDATE RegraNomenclatura SET embedding = %s WHERE pkRegraNomenclatura = %s",
+                    (vetor, pk)
+                )
+        conn.commit()
+        print("[AUTO-TREINO] Regras atualizadas com sucesso.")
+
+    # --- 2. Verificar Exemplos Práticos ---
+    # Verifica se a tabela existe antes de tentar ler
+    cursor.execute("SELECT to_regclass('public.ExemploPratico');")
+    if cursor.fetchone()[0]:
+        cursor.execute("SELECT pkExemploPratico, ExemploTexto, Explicacao FROM ExemploPratico WHERE embedding IS NULL")
+        exemplos_pendentes = cursor.fetchall()
+        
+        if exemplos_pendentes:
+            print(f"[AUTO-TREINO] Detectados {len(exemplos_pendentes)} exemplos sem memória. Processando...")
+            for pk, texto, explicacao in exemplos_pendentes:
+                texto_completo = f"Exemplo: {texto}. Explicação: {explicacao}"
+                vetor = embedtext(texto_completo)
+                if vetor:
+                    cursor.execute(
+                        "UPDATE ExemploPratico SET embedding = %s WHERE pkExemploPratico = %s",
+                        (vetor, pk)
+                    )
+            conn.commit()
+
 
 def main():
     if len(sys.argv) < 2:
@@ -330,6 +500,7 @@ def main():
     pergunta = sys.argv[1]
     conn = conectadb()
     if not conn: return
+    autotreinar(conn)
 
     categoria = classificarpergunta(pergunta)
     foco = extrairfoco(pergunta) 
@@ -354,11 +525,12 @@ def main():
             todas_regras = encontrarregras(conn, vetor, "GERAL", foco)
 
         ExemploPratico = buscarexemplos(conn, vetor, foco)
+
+        historico_testes = buscar_historico(conn, vetor)
+
+        resposta_final = perguntaollama(pergunta, todas_regras, ExemploPratico, historico_testes)
         
-        # Manda o pacote completo para o LLM
-        resposta_final = perguntaollama(pergunta, todas_regras, ExemploPratico)
-        
-        salvarrespotas(pergunta, categoria, resposta_final)
+        salvarrespostas(pergunta, categoria, resposta_final)
     
     conn.close()
 
