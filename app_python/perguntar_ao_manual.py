@@ -8,11 +8,13 @@ import pgvector.psycopg2
 from datetime import datetime
 import re
 
-db_name = 'DetranNorma'
-db_user = 'postgres'
-db_pass = 'abc321'        
-db_host = 'localhost'     
-db_port = '5435'          
+# Configurações com fallback para variáveis de ambiente (Segurança)
+db_name = os.getenv('DB_NAME', 'DetranNorma')
+db_user = os.getenv('DB_USER', 'postgres')
+db_pass = os.getenv('DB_PASS', 'abc321')        
+db_host = os.getenv('DB_HOST', 'localhost')     
+db_port = os.getenv('DB_PORT', '5435')    
+DIRETORIO_TESTES = "arquivos_teste" 
 
 ollama_chat_model = "deepseek-r1:8b" ##o modelo anterior, o 14b, foi removido por ser muito pesado; o 8b pode fazer as suas funções sem muitos problemas.
 ollama_embed_model = "nomic-embed-text:latest"
@@ -66,7 +68,7 @@ def buscar_historico(conn, pergunta_vetor, top_k=3):
         if not cursor.fetchone()[0]:
             return []
 
-        print(f"Buscando na memória de testes do Gandalf...")
+        print(f"Buscando na memória de testes do Gandalf.")
         
         # Busca os chunks mais parecidos com a pergunta atual
         sql = """
@@ -79,8 +81,11 @@ def buscar_historico(conn, pergunta_vetor, top_k=3):
         return cursor.fetchall()
         
     except Exception as e:
+        conn.rollback()
         print(f"[ERRO SQL] Falha ao buscar histórico: {e}")
         return []
+    finally:
+        cursor.close()
 
 def criar_chunks(texto, tamanho_maximo=1000, sobreposicao=100):
     """
@@ -172,54 +177,62 @@ def extrairfoco(pergunta):
         return ""
     
 def encontrarregras(conn, pergunta_vetor, Nomecategoria, foco_usuario, top_k=5):
-    """Busca Regras Teóricas."""
     cursor = conn.cursor()
     print(f"Buscando regras. Categoria: '{Nomecategoria}' | Foco: '{foco_usuario}'")
+    try:
+        sql_base = """
+        SELECT r.DescricaoRegra
+        FROM RegraNomenclatura r
+        JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
+        """
+        order_clause = """
+        ORDER BY (CASE WHEN r.DescricaoRegra ILIKE %s THEN 0 ELSE 1 END) ASC, r.embedding <=> %s::vector LIMIT %s;
+        """
+        term_boost = f"%{foco_usuario}%"
 
-    sql_base = """
-    SELECT r.DescricaoRegra
-    FROM RegraNomenclatura r
-    JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
-    """
-    order_clause = """
-    ORDER BY (CASE WHEN r.DescricaoRegra ILIKE %s THEN 0 ELSE 1 END) ASC, r.embedding <=> %s::vector LIMIT %s;
-    """
-    term_boost = f"%{foco_usuario}%"
-
-    if "GERAL" in Nomecategoria.upper():
-        sql = sql_base + order_clause
-        parametros = (term_boost, list(pergunta_vetor), top_k)
-    else:
-        sql = sql_base + f" WHERE c.Nomecategoria ILIKE %s " + order_clause
-        parametros = (f"%{Nomecategoria}%", term_boost, list(pergunta_vetor), top_k)
-        
-    cursor.execute(sql, parametros)
-    return cursor.fetchall()
+        if "GERAL" in Nomecategoria.upper():
+            sql = sql_base + order_clause
+            parametros = (term_boost, list(pergunta_vetor), top_k)
+        else:
+            sql = sql_base + f" WHERE c.Nomecategoria ILIKE %s " + order_clause
+            parametros = (f"%{Nomecategoria}%", term_boost, list(pergunta_vetor), top_k)
+            
+        cursor.execute(sql, parametros)
+        return cursor.fetchall()
+    except Exception as e:
+        conn.rollback()
+        print(f"[ERRO SQL] Falha ao encontrar regras: {e}")
+        return []
+    finally:
+        cursor.close()
 
 def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=4):
-    """Busca Exemplos homologados ou rejeitados na tabela nova."""
+    cursor = conn.cursor()
     try:
-        cursor = conn.cursor()
-
         cursor.execute("SELECT to_regclass('public.ExemploPratico');")
         if not cursor.fetchone()[0]:
-            print("[AVISO] Tabela 'ExemploPratico' ainda não existe.")
             return []
 
-        print(f"Buscando exemplos práticos similares.")
+        print(f"Buscando exemplos praticos similares.")
         sql = """
-    SELECT is_BomExemplo, ExemploTexto, Explicacao
-    FROM ExemploPratico
-    ORDER BY (CASE WHEN ObjetoFoco ILIKE %s THEN 0 ELSE 1 END) ASC, embedding <=> %s::vector LIMIT %s;
-    """
+        SELECT is_BomExemplo, ExemploTexto, Explicacao
+        FROM ExemploPratico
+        ORDER BY (CASE WHEN ObjetoFoco ILIKE %s THEN 0 ELSE 1 END) ASC, embedding <=> %s::vector LIMIT %s;
+        """
         cursor.execute(sql, (f"%{foco_usuario}%", list(pergunta_vetor), top_k))
         return cursor.fetchall()
     except Exception as e:
+        conn.rollback()
         print(f"[ERRO SQL] Falha ao buscar exemplos: {e}")
         return []
+    finally:
+        cursor.close()
 
-def processar_diretorio(conn):
+def processar_diretorio(conn, sanitizar_texto, gerar_embedding):
     """Lê, limpa, vetoriza e salva todos os arquivos .txt do diretório."""
+    
+    os.makedirs(DIRETORIO_TESTES, exist_ok=True) #cria o diretório automaticamente caso ele não exista, para evitar erros de caminho
+    
     if not os.path.exists(DIRETORIO_TESTES):
         print(f"[ERRO] O diretório '{DIRETORIO_TESTES}' não foi encontrado.")
         return
@@ -328,6 +341,9 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     Considere que o contexto fornecido contém TODA a verdade necessária.
     NÃO assuma que faltam informações. Trabalhe com o que tem.
     NÃO recomende consultar manuais externos.
+    Cada resposta deve ser JUSTIFICADA com base em uma regra ou exemplo específico do contexto.
+    Caso seja necessário, indique ao usuário que tire qualquer dúvida consultando o manual do Detran, mas SEM NUNCA USAR ISSO COMO DESCULPA PARA NÃO RESPONDER.
+    Se houver dúvidas, sugira ao usuário que consulte a equipe de Administração de Dados, mas SEM NUNCA USAR ISSO COMO DESCULPA PARA NÃO RESPONDER.
     """
 
     prompt_usuario = f"""
@@ -450,48 +466,6 @@ def salvarrespostas(pergunta, categoria, resposta):
     except Exception as e:
         print(f"\n[ERRO] Não foi possível salvar o arquivo de log: {e}")
 
-def autotreinar(conn):
-    """
-    Verifica se existem dados sem memória (embedding NULL) e corrige automaticamente.
-    """
-    cursor = conn.cursor()
-    
-    # --- 1. Verificar Regras de Nomenclatura ---
-    cursor.execute("SELECT pkRegraNomenclatura, DescricaoRegra FROM RegraNomenclatura WHERE embedding IS NULL")
-    regras_pendentes = cursor.fetchall()
-    
-    if regras_pendentes:
-        print(f"\n[AUTO-TREINO] Detectadas {len(regras_pendentes)} regras sem memória. Processando...")
-        for pk, texto in regras_pendentes:
-            vetor = embedtext(texto) # Reusa sua função existente
-            if vetor:
-                cursor.execute(
-                    "UPDATE RegraNomenclatura SET embedding = %s WHERE pkRegraNomenclatura = %s",
-                    (vetor, pk)
-                )
-        conn.commit()
-        print("[AUTO-TREINO] Regras atualizadas com sucesso.")
-
-    # --- 2. Verificar Exemplos Práticos ---
-    # Verifica se a tabela existe antes de tentar ler
-    cursor.execute("SELECT to_regclass('public.ExemploPratico');")
-    if cursor.fetchone()[0]:
-        cursor.execute("SELECT pkExemploPratico, ExemploTexto, Explicacao FROM ExemploPratico WHERE embedding IS NULL")
-        exemplos_pendentes = cursor.fetchall()
-        
-        if exemplos_pendentes:
-            print(f"[AUTO-TREINO] Detectados {len(exemplos_pendentes)} exemplos sem memória. Processando...")
-            for pk, texto, explicacao in exemplos_pendentes:
-                texto_completo = f"Exemplo: {texto}. Explicação: {explicacao}"
-                vetor = embedtext(texto_completo)
-                if vetor:
-                    cursor.execute(
-                        "UPDATE ExemploPratico SET embedding = %s WHERE pkExemploPratico = %s",
-                        (vetor, pk)
-                    )
-            conn.commit()
-
-
 def main():
     if len(sys.argv) < 2:
         print('Uso: python3 perguntar_ao_manual.py "Sua pergunta"')
@@ -500,7 +474,6 @@ def main():
     pergunta = sys.argv[1]
     conn = conectadb()
     if not conn: return
-    autotreinar(conn)
 
     categoria = classificarpergunta(pergunta)
     foco = extrairfoco(pergunta) 

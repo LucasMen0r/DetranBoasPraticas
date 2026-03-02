@@ -1,0 +1,118 @@
+========================================
+DATA: 02/03/2026 08:31:33
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: a Procedure: dbfisc01..FolhaPontoEscalaS.scp é válida?
+========================================
+RESPOSTA:
+A procedure **dbfisc01..FolhaPontoEscalaS.scp** é válida.
+
+**Motivo:**  
+1. **Regra de Nomenclatura:** O nome da procedure segue o padrão **Objetivo[Complemento]Operação**, onde:  
+   - `FolhaPontoEscala` atua como objetivo ou complemento.  
+   - `S` corresponde à operação **Selecionar** (sigla permitida).  
+2. **Prefixo e Formato:**  
+   - Não há prefixo "Rpc" (indicativo de chamada cruzada), o que é válido para procedures locais.  
+   - O sufixo `.scp` está conforme o padrão estabelecido.  
+3. **Histórico de Referência:**  
+   - O exemplo `RegistroCfcCategoriaA` (Objetivo + Complemento + Operação) segue o mesmo padrão, reforçando a validade.  
+
+**Regra aplicada:** *Regra: Nome de procedure: Objetivo[Complemento]Operacao. Operação deve usar sigla: S (Selecionar).*
+========================================
+
+========================================
+DATA: 02/03/2026 09:02:12
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Posso nomear uma table iniciando com um caractere especial?
+========================================
+RESPOSTA:
+REPROVADO  
+**Motivo:** O nome da tabela não segue o padrão estabelecido. A regra de nomenclatura exige que o nome da tabela seja composto pelo nome da tabela seguido do nome da primeira coluna do índice. O exemplo 'tmpVeiculoI' foi aprovado porque o prefixo 'tmp' indica tabela temporária e segue o padrão geral. No entanto, a solicitação atual não especifica qual caractere especial será utilizado ou qual a finalidade dele, o que viola a regra de nomenclatura. Além disso, os exemplos históricos mostram que nomes como 'RENAVAMcadastro' foram rejeitados por não seguir o padrão estabelecido.
+========================================
+
+========================================
+DATA: 02/03/2026 09:12:27
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  as procedure dbfisc01..EscalaA.scp, dbfisc01..EscalaI.scp e dbfisc01..EscalaS.scp estão de acordo com o padrão?  
+========================================
+RESPOSTA:
+[APROVADO (Seguir este modelo)]: EscalaA.scp -> Motivo: **Rejeitado**. A procedure não segue o padrão estabelecido pelo DETRAN-PE. **Regras violadas:**  
+1. **Formato de Nomenclatura:** A regra principal exige que o nome da procedure siga o padrão **Objetivo[Complemento]Operação**. O prefixo "Escala" não está alinhado com nenhuma das regras conhecidas (ex.: Batch, Rpc).  
+2. **Sufixos não permitidos:** O sufixo ".A" viola a regra de nomenclatura, conforme visto em exemplos anteriores (ex.: BatchConsumoServicoWebA.scp foi rejeitado por conter sufixos como ".A").  
+**Fonte:** Histórico de validação DETRAN-PE (04/12/2025) - Rejeição de procedimentos com sufixos não convencionais.  
+
+[APROVADO (Seguir este modelo)]: EscalaI.scp -> Motivo: **Rejeitado**. **Regras violadas:**  
+1. **Formato de Nomenclatura:** Ausência de prefixo reconhecido (Batch, Rpc) e não atende ao padrão **Objetivo[Complemento]Operação**.  
+2. **Sufixo indesejável:** O sufixo ".I" não é permitido, conforme regras de nomenclatura aplicadas a procedimentos similares.  
+**Fonte:** Manual DETRAN-PE - Regra: Procedures Batch (Prefixo Batch) e exemplos de rejeição de sufixos não padrão.  
+
+[APROVADO (Seguir este modelo)]: EscalaS.scp -> Motivo: **Rejeitado**. **Regras violadas:**  
+1. **Formato de Nomenclatura:** Não possui prefixo válido e o sufixo ".S" viola a regra de nomenclatura, conforme histórico de validação.  
+2. **Regra de PascalCase:** O nome "EscalaS" não segue o padrão de PascalCase, conforme regras aplicadas a outros procedimentos.  
+**Fonte:** Histórico DETRAN-PE (04/12/2025) - Rejeição de procedimentos com sufixos como ".S" e ausência de prefixos.  
+
+**Conclusão:** Todas as três procedures **não estão de acordo** com o manual DETRAN-PE. O motivo é a ausência de prefixos válidos (Batch, Rpc) e o uso de sufixos não permitidos (ex.: .A, .I, .S), conforme regras e exemplos consolidados no histórico de validação.
+========================================
+
+========================================
+DATA: 02/03/2026 09:34:16
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  a procedure dbfisc01..EscalaA.scp está de acordo com o padrão?  
+========================================
+RESPOSTA:
+[NÃO APROVADO]  
+**Motivo:** A procedure `dbfisc01..EscalaA.scp` viola a regra de nomenclatura estabelecida pelo DETRAN-PE.  
+**Regra violada:**  
+1. **Regra de prefixo obrigatório:** As procedures devem seguir o padrão `Objetivo[Complemento]Operacao`, conforme definido no manual. O prefixo `dbfisc01..` não está alinhado com os exemplos válidos, como `BatchConsumoServicoWebMover.scp`, que inicia com `Batch`.  
+2. **Regra de PascalCase:** O nome `EscalaA` não segue o padrão de PascalCase, pois contém um número (`A`) que não está formatado corretamente.  
+3. **Regra de extensão:** Embora a extensão `.scp` seja permitida, o nome da procedure não atende ao padrão estabelecido, que exige um prefixo descritivo como `Batch` ou `AutoS_`.  
+
+**Evidência:**  
+- No histórico de testes, procedures sem o prefixo `Batch` foram rejeitadas (ex.: `PopulaVeiculoRoubadoSDS`).  
+- Os exemplos válidos sempre começam com um prefixo descritivo (ex.: `Batch`, `AutoS_`).  
+
+**Conclusão:** A procedure não está de acordo com as regras do DETRAN-PE.
+========================================
+
+========================================
+DATA: 02/03/2026 10:21:27
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  as procedure dbfisc01..EscalaA.scp, dbfisc01..EscalaI.scp e dbfisc01..EscalaS.scp estão de acordo com o padrão?
+========================================
+RESPOSTA:
+Não, as procedures **dbfisc01..EscalaA.scp**, **dbfisc01..EscalaI.scp** e **dbfisc01..EscalaS.scp** **não estão de acordo** com o padrão estabelecido.
+
+**Motivo:** As regras e exemplos fornecidos exigem que os nomes das procedures sigam um padrão específico, como o uso do prefixo "Batch" para procedures em lote ou "i" para procedures de internet (exemplos: `BatchNomeprocedure`, `iNomeprocedure`). As procedures em questão (`EscalaA.scp`, `EscalaI.scp`, `EscalaS.scp`) não possuem nenhum desses prefixos obrigatórios e não seguem o formato estabelecido de `Objetivo[Complemento]Operacao`. Além disso, não há regras ou exemplos no contexto que permitam considerar o uso de prefixos como "Escala" como válido.
+
+**Regra aplicada:**  
+- **Regra de PascalCase e Prefixos Obrigatórios:** As procedures devem começar com prefixos específicos como "Batch" ou "i", conforme demonstrado nos exemplos válidos. A ausência desses prefixos invalida os nomes.
+========================================
+
+========================================
+DATA: 02/03/2026 10:36:48
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  as procedure dbfisc01..EscalaA.scp, dbfisc01..EscalaI.scp e dbfisc01..EscalaS.scp estão de acordo com o padrão?
+========================================
+RESPOSTA:
+**REPROVADO**: As procedures **`dbfisc01..EscalaA.scp`**, **`dbfisc01..EscalaI.scp`** e **`dbfisc01..EscalaS.scp`** **não estão de acordo** com o manual do DETRAN-PE.
+
+**Motivo:**  
+1. **Regra de Nomenclatura para Procedures Batch (Prefixo Batch):** Embora a regra não defina explicitamente o padrão para procedures sem o prefixo "Batch", os exemplos de referência (como `BatchConsumoServicoWebS.scp`) demonstram que sufixos como `.S`, `.A` ou `.I` são considerados violações, pois não seguem o padrão estabelecido de terminar com a sigla da operação (ex.: `.S` para Select, conforme exemplo `VerificaAdvertenciaS`).  
+2. **Histórico de Validação:** No dia 04/12/2025, foi verificado que procedures com sufixos não convencionais (como `.S`) foram reprovadas (ex.: `BatchConsumoServicoWebS.scp`). O mesmo critério se aplica a `EscalaS.scp`, `.A` e `.I`, pois não correspondem aos padrões de sigla de operação estabelecidos.  
+
+**Regra/Origem:**  
+- Histórico DETRAN-PE: 04/12/2025 (exemplos de rejeição por sufixos não padrão).  
+- Regra implícita de nomenclatura: procedures devem terminar com sigla de operação (ex.: `.S`, `.I`, `.E`, `.A`, `.R`), conforme validação em exemplos como `VerificaAdvertenciaS`.
+========================================
+

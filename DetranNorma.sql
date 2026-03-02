@@ -151,5 +151,8 @@ BEGIN
    END IF;
 END
 $do$;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO Ollama_trainer;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO Ollama_trainer;
+
 -- 6. CRIAÇÃO DE ÍNDICES VETORIAIS (Este comando estava no seu script)
 CREATE INDEX ON RegraNomenclatura USING hnsw (embedding vector_cosine_ops);
