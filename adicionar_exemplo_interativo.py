@@ -45,7 +45,7 @@ def main():
     print("Utilize esta interface para cadastrar exemplos homologados.\n")
 
     while True:
-        foco = input("1. Objeto Foco (ex: Tabela, Procedure, PK, Coluna): ").strip()
+        foco = input("1. Objeto Foco (ex: Tabela, Procedure, PK, Coluna, etc.): ").strip()
         if not foco:
             print("O foco nao pode ser vazio. Tente novamente.\n")
             continue
@@ -57,8 +57,8 @@ def main():
 
         while True:
             is_bom_input = input("3. Este e um BOM exemplo a ser seguido? (S/N): ").strip().upper()
-            if is_bom_input in ['S', 'N']:
-                is_bom = True if is_bom_input == 'S' else False
+            if is_bom_input in ['S', 's', 'N', 'n']:
+                is_bom = True if is_bom_input == 'S' or is_bom_input == 's' else False
                 break
             print("Por favor, digite apenas 'S' para Sim ou 'N' para Nao.")
 
@@ -67,7 +67,7 @@ def main():
             print("A explicacao e obrigatoria para o treinamento. Tente novamente.\n")
             continue
 
-        print("\nProcessando vetorizacao...")
+        print("\nProcessando vetorizacao.")
         prompt_composto = f"{foco} : {texto}"
         embedding = get_embedding(prompt_composto)
 

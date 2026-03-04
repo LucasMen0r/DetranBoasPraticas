@@ -50,7 +50,7 @@ INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra) VAL
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Usar apenas letras (A-Z, a-z), números (0-9) e _ (underline).'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Não usar acentos, cedilha (ç), espaços.'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Não usar caracteres especiais (#, @, %, $, !, *, +, -, /, =).'),
-( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Uso de Iniciais Maiúsculas em cada palavra, sem utilizar o termo "PascalCase".'),
+( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Uso de Iniciais Maiúsculas em cada palavra [notação húngara.]".'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Usar termos em português e no singular.'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Usar nomes curtos, claros e sem ambiguidade.'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Regras Gerais'), NULL, 'Evitar preposições (Ex.: "de", "da", "do").'),

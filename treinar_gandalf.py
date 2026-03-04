@@ -1,5 +1,6 @@
 import pgvector
 import psycopg2
+from datetime import datetime
 import os
 import requests
 import pgvector.psycopg2
@@ -41,6 +42,8 @@ def embedtext(text):
         return None
 
 def criar_chunks(texto, tamanho_maximo=1000, sobreposicao=100):
+    if sobreposicao >= tamanho_maximo:
+        raise ValueError("A sobreposicao deve ser estritamente menor que o tamanho maximo do chunk.")
     palavras = texto.split()
     chunks = []
     i = 0
@@ -50,7 +53,7 @@ def criar_chunks(texto, tamanho_maximo=1000, sobreposicao=100):
         i += tamanho_maximo - sobreposicao
     return chunks
 
-def sanitizar_texto(texto_bruto):
+def sanitizartexto(texto_bruto):
     """Limpeza basica para evitar ruidos de formatacao nos arquivos txt."""
     if not texto_bruto:
         return ""
@@ -59,7 +62,7 @@ def sanitizar_texto(texto_bruto):
     return " ".join(linhas_limpas)
 
 def processar_diretorio(conn):
-    """Le, limpa, vetoriza e salva todos os arquivos .txt do diretorio."""
+    """Lê, limpa, vetoriza e salva todos os arquivos .txt do diretorio."""
     os.makedirs(DIRETORIO_TESTES, exist_ok=True)
     
     arquivos = [f for f in os.listdir(DIRETORIO_TESTES) if f.endswith('.txt')]
@@ -78,7 +81,7 @@ def processar_diretorio(conn):
             with open(caminho_completo, 'r', encoding='utf-8') as f:
                 conteudo_bruto = f.read()
                 
-            texto_limpo = sanitizar_texto(conteudo_bruto)
+            texto_limpo = sanitizartexto(conteudo_bruto)
             if not texto_limpo:
                 continue
 
@@ -141,8 +144,51 @@ def autotreinar(conn):
     finally:
         cursor.close()
 
+def salvarrespostas(pergunta, categoria, resposta):
+    timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    data_arquivo = datetime.now().strftime("%d-%m-%Y")
+    nome_arquivo = f"log_gandalf_{data_arquivo}.txt"
+    
+    # Define o diretório alvo
+    diretorio_destino = "memoria_gandalf"
+    
+    # Prática de segurança: cria o diretório automaticamente caso ele não exista.
+    os.makedirs(diretorio_destino, exist_ok=True)
+    
+    # Constrói o caminho completo de forma segura para qualquer sistema operacional.
+    caminho_completo = os.path.join(diretorio_destino, nome_arquivo)
+    
+    conteudo = (
+        f"========================================\n"
+        f"DATA: {timestamp}\n"
+        f"========================================\n"
+        f"CATEGORIA: {categoria}\n"
+        f"========================================\n"
+        f"PERGUNTA: {pergunta}\n"
+        f"========================================\n"
+        f"RESPOSTA:\n{resposta}\n"
+        f"========================================\n\n"
+    )
+    try:
+        with open(caminho_completo, "a", encoding="utf-8") as f:
+            f.write(conteudo)
+        print(f"\n[INFO] Resposta salva no log diário em: '{caminho_completo}'")
+    except Exception as e:
+        print(f"\n[ERRO] Não foi possível salvar o arquivo de log no caminho principal: {e}")
+        
+        # Fallback corrigido: cria o diretório e efetivamente grava o arquivo
+        diretorio_fallback = os.path.join(os.getcwd(), "memoria_teste_n_supervisionado")
+        os.makedirs(diretorio_fallback, exist_ok=True)
+        caminho_fallback = os.path.join(diretorio_fallback, nome_arquivo)
+        
+        try:
+            with open(caminho_fallback, "a", encoding="utf-8") as f:
+                f.write(conteudo)
+            print(f"[INFO] Resposta salva com sucesso no diretório de fallback: '{caminho_fallback}'")
+        except Exception as ex:
+            print(f"[ERRO CRITICO] Falha total ao tentar salvar log no fallback: {ex}")
 def main():
-    print("Iniciando rotina de manutencao da base de conhecimento do Gandalf...")
+    print("Iniciando rotina de manutencao da base de conhecimento do Gandalf.")
     conn = conectadb()
     if not conn: return
     

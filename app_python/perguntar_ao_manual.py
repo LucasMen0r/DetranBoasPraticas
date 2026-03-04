@@ -342,8 +342,8 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     NÃO assuma que faltam informações. Trabalhe com o que tem.
     NÃO recomende consultar manuais externos.
     Cada resposta deve ser JUSTIFICADA com base em uma regra ou exemplo específico do contexto.
-    Caso seja necessário, indique ao usuário que tire qualquer dúvida consultando o manual do Detran, mas SEM NUNCA USAR ISSO COMO DESCULPA PARA NÃO RESPONDER.
-    Se houver dúvidas, sugira ao usuário que consulte a equipe de Administração de Dados, mas SEM NUNCA USAR ISSO COMO DESCULPA PARA NÃO RESPONDER.
+    Caso seja necessário, indique ao usuário que tire qualquer dúvida consultando o manual do Detran, mas NUNCA USAR ISSO COMO DESCULPA PARA NÃO RESPONDER.
+    Se houver dúvidas, sugira ao usuário que consulte a equipe de Administração de Dados, mas NUNCA USAR ISSO COMO DESCULPA PARA NÃO RESPONDER.
     """
 
     prompt_usuario = f"""
@@ -358,7 +358,7 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     {pergunta}
     Responder somente com base nas informações presentes no banco de dados.
     OBRIGATÓRIO: Ao fornecer a resposta, você deve explicar o motivo da sua decisão e citar qual regra ou histórico embasou o seu raciocínio.
-    Se NÃO houver regras acima, responda apenas: "Não localizei regras específicas no meu banco de conhecimento para validar este objeto."
+    Se NÃO houver regras acima, responda apenas: "Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados."
     """
 
     # --- CRONÔMETRO INICIAL ---
@@ -468,10 +468,12 @@ def salvarrespostas(pergunta, categoria, resposta):
 
 def main():
     if len(sys.argv) < 2:
-        print('Uso: python3 perguntar_ao_manual.py "Sua pergunta"')
-        return 
+        print('Uso:python3 perguntar_ao_manual.py "Sua pergunta"')
+        print('\nInsira a pergunta aqui:')
+        pergunta = input("Pergunta: ")
+    else:
+        pergunta = sys.argv[1]
 
-    pergunta = sys.argv[1]
     conn = conectadb()
     if not conn: return
 
@@ -492,7 +494,7 @@ def main():
             regras_extras += encontrarregras(conn, vetor, "Nomenclatura de Objetos", foco)
         # 3. Unir tudo e remover duplicatas
         # A sintaxe set() remove repetições se a mesma regra vier de dois lugares
-        todas_regras = list(set(regras_principais + regras_extras))
+        todas_regras = list(dict.fromkeys(regras_principais + regras_extras))
         # Se mesmo com a rede de segurança não vier nada, tenta o GERAL
         if not todas_regras:
             todas_regras = encontrarregras(conn, vetor, "GERAL", foco)
