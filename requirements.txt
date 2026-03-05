@@ -12,6 +12,7 @@ pgvector==0.4.2
 psycopg2-binary==2.9.11
 pydantic==2.12.5
 pydantic_core==2.41.5
+PyPDF2==3.0.1
 requests==2.32.5
 typing-inspection==0.4.2
 typing_extensions==4.15.0
