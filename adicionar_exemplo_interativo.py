@@ -2,6 +2,7 @@ import os
 import requests
 import psycopg2
 import pgvector.psycopg2
+from PyPDF2 import PdfReader
 
 db_name = os.getenv('DB_NAME', 'DetranNorma')
 db_user = os.getenv('DB_USER', 'postgres')
@@ -26,6 +27,26 @@ def get_embedding(texto):
 
 def limpar_tela():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+def processarpdf(caminho_pdf):
+    """Extrai texto do PDF e divide em chunks para evitar estouro de contexto."""
+    if not os.path.exists(caminho_pdf):
+        print(f"[ERRO] Arquivo não encontrado: {caminho_pdf}")
+        return []
+
+    try:
+        reader = PdfReader(caminho_pdf)
+        texto_completo = ""
+        for page in reader.pages:
+            texto_completo += page.extract_text() + "\n"
+        
+        # Estratégia de Chunking Simples (ex: cada 1000 caracteres)
+        # Em produção, recomenda-se RecursiveCharacterTextSplitter
+        tamanho_chunk = 1000
+        return [texto_completo[i:i + tamanho_chunk] for i in range(0, len(texto_completo), tamanho_chunk)]
+    except Exception as e:
+        print(f"[ERRO PDF] Falha ao ler arquivo: {e}")
+        return []
 
 def main():
     try:
