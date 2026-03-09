@@ -161,3 +161,7 @@ ALTER TABLE ExemploPratico ADD CONSTRAINT ukObjetoExemplo UNIQUE (ObjetoFoco, Ex
 
 ALTER TABLE CategoriaRegra 
 ADD COLUMN IF NOT EXISTS DescricaoRegra TEXT;
+
+
+select * from exemplopratico;
+select * from regranomenclatura;

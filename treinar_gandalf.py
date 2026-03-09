@@ -200,5 +200,7 @@ def main():
     conn.close()
     print("Rotina finalizada.")
 
+
+
 if __name__ == "__main__":
     main()

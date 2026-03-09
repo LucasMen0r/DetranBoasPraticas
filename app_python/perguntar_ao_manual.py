@@ -60,49 +60,6 @@ def embedtext(text):
         print(f"[ERRO OLLAMA] Falha ao vetorizar: {e}") 
         return None
 
-def buscar_historico(conn, pergunta_vetor, top_k=3):
-    """Busca no histórico de testes e aprendizados (Memória)."""
-    try:
-        cursor = conn.cursor()
-        
-        # Verifica se a tabela existe para evitar erros
-        cursor.execute("SELECT to_regclass('public.ConhecimentoHistorico');")
-        if not cursor.fetchone()[0]:
-            return []
-
-        print(f"Buscando na memória de testes do Gandalf.")
-        
-        # Busca os chunks mais parecidos com a pergunta atual
-        sql = """
-        SELECT nome_arquivo, conteudo_texto
-        FROM ConhecimentoHistorico
-        ORDER BY embedding <=> %s::vector
-        LIMIT %s;
-        """
-        cursor.execute(sql, (list(pergunta_vetor), top_k))
-        return cursor.fetchall()
-        
-    except Exception as e:
-        conn.rollback()
-        print(f"[ERRO SQL] Falha ao buscar histórico: {e}")
-        return []
-    finally:
-        cursor.close()
-
-def criar_chunks(texto, tamanho_maximo=1000, sobreposicao=100):
-    """
-    Divide o texto em blocos menores (chunks) para não estourar o limite de tokens do modelo de embedding.
-    Usa sobreposicao (overlap) para não perder o contexto entre os cortes.
-    """
-    palavras = texto.split()
-    chunks = []
-    i = 0
-    while i < len(palavras):
-        chunk = " ".join(palavras[i:i + tamanho_maximo])
-        chunks.append(chunk)
-        i += tamanho_maximo - sobreposicao
-    return chunks
-
 def classificarpergunta(pergunta):
     """Agente Vertical: Classifica a intenção com validação rígida."""
     categorias_validas = [
@@ -182,31 +139,62 @@ def encontrarregras(conn, pergunta_vetor, Nomecategoria, foco_usuario, top_k=5):
     cursor = conn.cursor()
     print(f"Buscando regras. Categoria: '{Nomecategoria}' | Foco: '{foco_usuario}'")
     try:
-        # Adicionado o LEFT JOIN com a tabela ObjetoDb para filtrar pelo objeto real
         sql_base = """
         SELECT r.DescricaoRegra
         FROM RegraNomenclatura r
         JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
         LEFT JOIN ObjetoDb o ON r.pkObjetoDb = o.pkObjetoDb
         """
-        # A prioridade agora é dada pela correspondência com o NomeObjeto, não com o texto da regra
+        # A trava de segurança que barra regras muito distantes do contexto
+        filtro_distancia = " r.embedding <=> %s::vector < 0.45 "
+        
         order_clause = """
         ORDER BY (CASE WHEN o.NomeObjeto ILIKE %s THEN 0 ELSE 1 END) ASC, r.embedding <=> %s::vector LIMIT %s;
         """
         term_boost = f"%{foco_usuario}%"
 
         if "GERAL" in Nomecategoria.upper():
-            sql = sql_base + order_clause
-            parametros = (term_boost, list(pergunta_vetor), top_k)
+            sql = sql_base + " WHERE " + filtro_distancia + order_clause
+            # O vetor é passado duas vezes para preencher os dois %s (do WHERE e do ORDER BY)
+            parametros = (list(pergunta_vetor), term_boost, list(pergunta_vetor), top_k)
         else:
-            sql = sql_base + " WHERE c.NomeCategoria ILIKE %s " + order_clause
-            parametros = (f"%{Nomecategoria}%", term_boost, list(pergunta_vetor), top_k)
+            sql = sql_base + " WHERE c.NomeCategoria ILIKE %s AND " + filtro_distancia + order_clause
+            # O vetor também entra duas vezes aqui, respeitando a ordem do SQL
+            parametros = (f"%{Nomecategoria}%", list(pergunta_vetor), term_boost, list(pergunta_vetor), top_k)
             
         cursor.execute(sql, parametros)
         return cursor.fetchall()
     except Exception as e:
         conn.rollback()
         print(f"[ERRO SQL] Falha ao encontrar regras: {e}")
+        return []
+    finally:
+        cursor.close()
+
+def buscar_historico(conn, pergunta_vetor, top_k=3):
+    """Busca no histórico de testes e aprendizados (Memória)."""
+    try:
+        cursor = conn.cursor()
+        
+        cursor.execute("SELECT to_regclass('public.ConhecimentoHistorico');")
+        if not cursor.fetchone()[0]:
+            return []
+
+        print("Buscando na memória de testes do Gandalf.")
+        sql = """
+        SELECT nome_arquivo, conteudo_texto
+        FROM ConhecimentoHistorico
+        WHERE embedding <=> %s::vector < 0.45
+        ORDER BY embedding <=> %s::vector
+        LIMIT %s;
+        """
+        # O vetor é passado duas vezes: para o filtro WHERE e para a ordenação ORDER BY
+        cursor.execute(sql, (list(pergunta_vetor), list(pergunta_vetor), top_k))
+        return cursor.fetchall()
+        
+    except Exception as e:
+        conn.rollback()
+        print(f"[ERRO SQL] Falha ao buscar histórico: {e}")
         return []
     finally:
         cursor.close()
@@ -218,13 +206,16 @@ def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=4):
         if not cursor.fetchone()[0]:
             return []
 
-        print(f"Buscando exemplos praticos similares.")
+        print("Buscando exemplos praticos similares.")
+        
         sql = """
         SELECT is_BomExemplo, ExemploTexto, Explicacao
         FROM ExemploPratico
+        WHERE embedding <=> %s::vector < 0.45
         ORDER BY (CASE WHEN ObjetoFoco ILIKE %s THEN 0 ELSE 1 END) ASC, embedding <=> %s::vector LIMIT %s;
         """
-        cursor.execute(sql, (f"%{foco_usuario}%", list(pergunta_vetor), top_k))
+        # Ajuste cuidadoso na ordem da tupla para casar exatamente com os %s da query
+        cursor.execute(sql, (list(pergunta_vetor), f"%{foco_usuario}%", list(pergunta_vetor), top_k))
         return cursor.fetchall()
     except Exception as e:
         conn.rollback()
@@ -232,64 +223,6 @@ def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=4):
         return []
     finally:
         cursor.close()
-
-def processar_diretorio(conn, sanitizartexto):
-    """Lê, limpa, vetoriza e salva todos os arquivos .txt do diretorio."""
-    os.makedirs(DIRETORIO_TESTES, exist_ok=True)
-    
-    arquivos = [f for f in os.listdir(DIRETORIO_TESTES) if f.endswith('.txt')]
-    if not arquivos:
-        print(f"[INFO] Nenhum arquivo .txt encontrado em '{DIRETORIO_TESTES}'.")
-        return
-
-    cursor = conn.cursor()
-    total_inseridos = 0
-
-    try:
-        # Busca os arquivos que já foram inseridos no banco para evitar duplicidade
-        cursor.execute("SELECT DISTINCT nome_arquivo FROM ConhecimentoHistorico")
-        arquivos_processados = [row[0] for row in cursor.fetchall()]
-    except Exception as e:
-        print(f"[ERRO] Falha ao consultar histórico de arquivos: {e}")
-        arquivos_processados = []
-
-    for arquivo in arquivos:
-        if arquivo in arquivos_processados:
-            print(f"Ignorando '{arquivo}': já processado anteriormente.")
-            continue
-
-        caminho_completo = os.path.join(DIRETORIO_TESTES, arquivo)
-        print(f"Processando arquivo: {arquivo}...")
-        
-        try:
-            with open(caminho_completo, 'r', encoding='utf-8') as f:
-                conteudo_bruto = f.read()
-                
-            texto_limpo = sanitizartexto(conteudo_bruto)
-            if not texto_limpo:
-                continue
-
-            chunks = criar_chunks(texto_limpo, tamanho_maximo=400, sobreposicao=50)
-            
-            for chunk in chunks:
-                vetor = embedtext(chunk)
-                if vetor:
-                    query = """
-                    INSERT INTO ConhecimentoHistorico (nome_arquivo, conteudo_texto, embedding)
-                    VALUES (%s, %s, %s)
-                    """
-                    cursor.execute(query, (arquivo, chunk, vetor))
-                    total_inseridos += 1
-                    
-            conn.commit()
-            print(f"  -> Sucesso. Chunks inseridos: {len(chunks)}")
-            
-        except Exception as e:
-            conn.rollback()
-            print(f"  -> [ERRO] Falha ao processar o arquivo {arquivo}: {e}")
-
-    cursor.close()
-    print(f"Processamento concluido. Total inserido: {total_inseridos}")
 
 def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     """
@@ -353,6 +286,7 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     Caso seja necessário, indique ao usuário que tire qualquer dúvida consultando o manual do Detran, mas NUNCA USAR ISSO COMO DESCULPA PARA NÃO RESPONDER.
     Se houver dúvidas, sugira ao usuário que consulte a equipe de Administração de Dados, mas NUNCA USAR ISSO COMO DESCULPA PARA NÃO RESPONDER.
     Atenção rigorosa: Para Procedures, uma letra maiúscula isolada no final do nome (S, I, E, A, R) representa o tipo de operação e é um padrão válido. Não confunda isso com palavras escritas no plural (ex: terminar em 's' minúsculo).
+    Filtro de Relevância: Se o contexto fornecer regras que claramente pertencem a outros tipos de objetos (exemplo: regras de Tabela quando o usuário estiver perguntando sobre uma Procedure), IGNORE essas regras completamente. Não as mencione na sua justificativa.
     """
 
     prompt_usuario = f"""

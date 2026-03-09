@@ -89,3 +89,74 @@ RESPOSTA:
 **Conclusão:** O nome da procedure segue o padrão estabelecido pelo Detran, conforme as regras e exemplos fornecidos.
 ========================================
 
+========================================
+DATA: 09/03/2026 11:11:38
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: " a procedure dbvcen..ConsultaTotalDiasFeriasS.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+[APROVADO]: dbvcen..ConsultaTotalDiasFeriasS.scp
+
+**Motivo:**  
+O nome da procedure segue o padrão **Objetivo + Operação**, conforme regra de nomenclatura:  
+- **Objetivo:** "ConsultaTotalDiasFerias" (corresponde a uma operação de consulta/edição).  
+- **Operação:** "S" (operador de Seleção/Consulta válido, conforme exemplo de EscalaS).  
+
+Além disso, a terminação com a sigla da operação "S" é um padrão válido, como demonstrado nos exemplos de referência.
+========================================
+
+========================================
+DATA: 09/03/2026 11:18:07
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..CadastroMotivoAlteracaoEscalaS.scp está dentro dos padrões do Detran?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..CadastroMotivoAlteracaoEscalaS.scp -> Motivo: Correto: Termina com a sigla da operação 'S', conforme exemplo de EscalaS.
+========================================
+
+========================================
+DATA: 09/03/2026 11:24:35
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "a procedure dbfisc01..CadastroMotivoAlteracaoEscalaA.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+Não, a procedure **dbfisc01..CadastroMotivoAlteracaoEscalaA.scp** NÃO está de acordo com o padrão.
+
+**Justificativa:**
+
+1.  **Regra de Nomenclatura:** O padrão exige que o nome da procedure termine com a sigla da operação (um único letra maiúscula no final do nome, conforme visto nos exemplos: `EscalaS`, `NotificarToxicologicoA`, `EscalaI`, `CadastroMotivoAlteracaoEscalaA` - embora este último exemplo termine com 'A', seguindo o padrão).
+2.  **Análise do Nome:** O nome `dbfisc01..CadastroMotivoAlteracaoEscalaA.scp` termina com a extensão `.scp`. A extensão `.scp` não é uma sigla de operação no formato exigido (letra única maiúscula no final). A letra `p` do `.scp` está presente, mas não é a única letra maiúscula no final do nome prático (`CadastroMotivoAlteracaoEscalaA` termina com 'A', não com 'P' isolado).
+
+Portanto, a procedure não segue o padrão de terminar com a sigla da operação (letra única maiúscula no final).
+
+Caso precise de mais informações, recomendo consultar a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 09/03/2026 11:29:44
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "a procedure dbfisc01..CadastroMotivoAlteracaoEscalaS.scp segue o padrão do detran?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..CadastroMotivoAlteracaoEscalaS.scp -> Motivo: O nome da procedure termina com a sigla da operação 'S', conforme regra de validação de terminação com sigla de operação estabelecida em exemplos como EscalaS.
+========================================
+
+========================================
+DATA: 09/03/2026 11:37:07
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..CadastroMotivoAlteracaoEscalaS.scp está de acordo com o padrão do detran?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..CadastroMotivoAlteracaoEscalaS.scp -> Motivo: O nome da procedure termina com a sigla da operação 'S', conforme regra de nomenclatura e exemplos de referência (EscalaS, NotificarToxicologicoA). A extensão '.scp' não foi objeto de restrição específica no contexto.
+========================================
+
