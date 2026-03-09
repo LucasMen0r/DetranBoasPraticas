@@ -156,3 +156,8 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO Ollama_trainer;
 
 -- 6. CRIAÇÃO DE ÍNDICES VETORIAIS (Este comando estava no seu script)
 CREATE INDEX ON RegraNomenclatura USING hnsw (embedding vector_cosine_ops);
+
+ALTER TABLE ExemploPratico ADD CONSTRAINT ukObjetoExemplo UNIQUE (ObjetoFoco, ExemploTexto);
+
+ALTER TABLE CategoriaRegra 
+ADD COLUMN IF NOT EXISTS DescricaoRegra TEXT;

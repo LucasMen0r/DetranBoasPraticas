@@ -1,4 +1,29 @@
-app_python:
+services:
+  db:
+    image: ankane/pgvector:latest
+    container_name: gandalf_db
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: DetranNorma
+      POSTGRES_PASSWORD: abc321
+      POSTGRES_USER: postgres
+    volumes:
+      - gandalf_pgdata:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama_service
+    ports:
+      - "11436:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - app_network
+
+  app_python:
     build: ./app_python
     container_name: gandalf_interface
     depends_on:
@@ -17,4 +42,12 @@ app_python:
       - "8000:8000"
     networks:
       - app_network
-    command: python3 perguntar_ao_manual.py
+    command: tail -f /dev/null
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  gandalf_pgdata:
+  ollama_data:

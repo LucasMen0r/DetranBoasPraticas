@@ -180,13 +180,16 @@ def encontrarregras(conn, pergunta_vetor, Nomecategoria, foco_usuario, top_k=5):
     cursor = conn.cursor()
     print(f"Buscando regras. Categoria: '{Nomecategoria}' | Foco: '{foco_usuario}'")
     try:
+        # Adicionado o LEFT JOIN com a tabela ObjetoDb para filtrar pelo objeto real
         sql_base = """
         SELECT r.DescricaoRegra
         FROM RegraNomenclatura r
         JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
+        LEFT JOIN ObjetoDb o ON r.pkObjetoDb = o.pkObjetoDb
         """
+        # A prioridade agora é dada pela correspondência com o NomeObjeto, não com o texto da regra
         order_clause = """
-        ORDER BY (CASE WHEN r.DescricaoRegra ILIKE %s THEN 0 ELSE 1 END) ASC, r.embedding <=> %s::vector LIMIT %s;
+        ORDER BY (CASE WHEN o.NomeObjeto ILIKE %s THEN 0 ELSE 1 END) ASC, r.embedding <=> %s::vector LIMIT %s;
         """
         term_boost = f"%{foco_usuario}%"
 
@@ -194,7 +197,7 @@ def encontrarregras(conn, pergunta_vetor, Nomecategoria, foco_usuario, top_k=5):
             sql = sql_base + order_clause
             parametros = (term_boost, list(pergunta_vetor), top_k)
         else:
-            sql = sql_base + f" WHERE c.Nomecategoria ILIKE %s " + order_clause
+            sql = sql_base + " WHERE c.NomeCategoria ILIKE %s " + order_clause
             parametros = (f"%{Nomecategoria}%", term_boost, list(pergunta_vetor), top_k)
             
         cursor.execute(sql, parametros)
@@ -344,6 +347,7 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     Cada resposta deve ser JUSTIFICADA com base em uma regra ou exemplo específico do contexto.
     Caso seja necessário, indique ao usuário que tire qualquer dúvida consultando o manual do Detran, mas NUNCA USAR ISSO COMO DESCULPA PARA NÃO RESPONDER.
     Se houver dúvidas, sugira ao usuário que consulte a equipe de Administração de Dados, mas NUNCA USAR ISSO COMO DESCULPA PARA NÃO RESPONDER.
+    Atenção rigorosa: Para Procedures, uma letra maiúscula isolada no final do nome (S, I, E, A, R) representa o tipo de operação e é um padrão válido. Não confunda isso com palavras escritas no plural (ex: terminar em 's' minúsculo).
     """
 
     prompt_usuario = f"""

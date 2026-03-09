@@ -1,0 +1,41 @@
+========================================
+DATA: 05/03/2026 11:32:36
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "o Script: dbfisc01..NovoCampoTblTipoOperacao.scp é válido?"
+========================================
+RESPOSTA:
+Erro técnico ao consultar LLM: 404 Client Error: Not Found for url: http://localhost:11436/api/chat
+========================================
+
+========================================
+DATA: 05/03/2026 11:40:00
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "o Script: dbfisc01..NovoCampoTblTipoOperacao.scp é válido?"
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 05/03/2026 11:48:51
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "o Script: dbfisc01..NovoCampoTblTipoOperacao.scp é válido?"
+========================================
+RESPOSTA:
+O script **dbfisc01..NovoCampoTblTipoOperacao.scp** **NÃO É VÁLIDO**.
+
+**Justificativa:**  
+1. **Regra de Nomenclatura de Arquivos:** As regras estabelecidas não permitem a extensão `.scp` para scripts.  
+2. **Regra de Tabelas:** Embora o nome da tabela `TblTipoOperacao` siga a convenção (iniciando com `Tbl`), a extensão `.scp` não está alinhada com os padrões de nomenclatura permitidos.  
+3. **Falta de Referência:** Não há regras ou exemplos no contexto que validem a utilização de arquivos com a extensão `.scp`.  
+
+**Ação Recomendada:**  
+Consulte a equipe de Administração de Dados para obter orientações sobre a nomenclatura adequada de scripts.
+========================================
+

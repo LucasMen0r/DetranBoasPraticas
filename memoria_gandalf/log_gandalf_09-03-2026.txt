@@ -1,0 +1,58 @@
+========================================
+DATA: 09/03/2026 08:54:43
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: NotificarToxicologicoA.sql está de acordo com o padrão?"
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 09/03/2026 09:00:32
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: NotificarToxicologicoA.sql está de acordo com o padrão?"
+========================================
+RESPOSTA:
+[APROVADO]: NotificarToxicologicoA.sql está de acordo com o padrão.  
+**Motivo**: O nome da procedure termina com a sigla da operação 'A', conforme regra de nomenclatura estabelecida e validada nos exemplos de referência (NotificarToxicologicoA.sq e NotificarToxicologicoA.sql).  
+**Regra aplicada**: "Procedimentos externos devem terminar com a sigla da operação (A, I, S)".
+========================================
+
+========================================
+DATA: 09/03/2026 09:10:15
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "a procedure dbfisc01..ConsultaTurnoEscalaS.scp está de acordo com o padrão do banco de dados?"
+========================================
+RESPOSTA:
+**REPROVADO**: dbfisc01..ConsultaTurnoEscalaS.scp  
+**Motivo**:  
+1. **Regra de Uso de Iniciais Maiúsculas**: O nome da procedure contém "TurnoEscala", que não segue a notação húngara exigindo iniciais maiúsculas em cada palavra (ex.: "TurnoEscala" deveria ser "TurnoEscala" ou "TurnoEscala", mas a regra exige separação por espaço ou underline).  
+2. **Regra de Termos em Português e Singular**: O sufixo "S" no final do nome não está devidamente singularizado conforme o padrão (ex.: "S" deve ser substituído por um termo singular, como "Seleção" ou "Sistema").  
+3. **Regra de Extensão**: A extensão ".scp" não foi validada como permitida no padrão de nomenclatura, conforme os exemplos aprovados (ex.: ".sq" foi utilizado em "NotificarToxicologicoS.sq").  
+
+**Fonte**:  
+- Regra: Uso de Iniciais Maiúsculas em cada palavra [notação húngara].  
+- Regra: Usar termos em português e no singular.  
+- Exemplo Aprovado: "NotificarToxicologicoS.sq" (extensão válida).  
+
+Caso necessite de mais detalhes, consulte o manual do Detran ou entre em contato com a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 09/03/2026 10:09:49
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..EscalaS.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+[APROVADO (Seguir este modelo)]: dbfisc01..EscalaS.scp -> **NÃO APROVADO**  
+**Motivo**: O nome da procedure não atende à regra de nomenclatura. A regra estabelecida é que colunas usadas como parâmetro em procedures externas devem iniciar com underline (ex.: `_EscalaS.scp`). O exemplo `EscalaI` demonstra que o padrão inclui o underline antes da sigla da operação. O nome `EscalaS.scp` não possui o underline, violando a regra.
+========================================
+
