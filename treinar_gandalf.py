@@ -3,9 +3,11 @@ import psycopg2
 from datetime import datetime
 import os
 import requests
+from dotenv import load_dotenv
 import pgvector.psycopg2
 
 # Configurações com fallback para variáveis de ambiente (Segurança)
+load_dotenv()
 db_name = os.getenv('DB_NAME', 'DetranNorma')
 db_user = os.getenv('DB_USER', 'postgres')
 db_pass = os.getenv('DB_PASS', 'abc321')        

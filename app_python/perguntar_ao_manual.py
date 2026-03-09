@@ -7,8 +7,10 @@ import json
 import pgvector.psycopg2
 from datetime import datetime
 import re
+from dotenv import load_dotenv
 
 # Configurações com fallback para variáveis de ambiente (Segurança)
+load_dotenv()
 db_name = os.getenv('DB_NAME', 'DetranNorma')
 db_user = os.getenv('DB_USER', 'postgres')
 db_pass = os.getenv('DB_PASS', 'abc321')        
@@ -231,17 +233,11 @@ def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=4):
     finally:
         cursor.close()
 
-def processar_diretorio(conn, sanitizar_texto, gerar_embedding):
-    """Lê, limpa, vetoriza e salva todos os arquivos .txt do diretório."""
+def processar_diretorio(conn, sanitizartexto):
+    """Lê, limpa, vetoriza e salva todos os arquivos .txt do diretorio."""
+    os.makedirs(DIRETORIO_TESTES, exist_ok=True)
     
-    os.makedirs(DIRETORIO_TESTES, exist_ok=True) #cria o diretório automaticamente caso ele não exista, para evitar erros de caminho
-    
-    if not os.path.exists(DIRETORIO_TESTES):
-        print(f"[ERRO] O diretório '{DIRETORIO_TESTES}' não foi encontrado.")
-        return
-
     arquivos = [f for f in os.listdir(DIRETORIO_TESTES) if f.endswith('.txt')]
-    
     if not arquivos:
         print(f"[INFO] Nenhum arquivo .txt encontrado em '{DIRETORIO_TESTES}'.")
         return
@@ -249,7 +245,19 @@ def processar_diretorio(conn, sanitizar_texto, gerar_embedding):
     cursor = conn.cursor()
     total_inseridos = 0
 
+    try:
+        # Busca os arquivos que já foram inseridos no banco para evitar duplicidade
+        cursor.execute("SELECT DISTINCT nome_arquivo FROM ConhecimentoHistorico")
+        arquivos_processados = [row[0] for row in cursor.fetchall()]
+    except Exception as e:
+        print(f"[ERRO] Falha ao consultar histórico de arquivos: {e}")
+        arquivos_processados = []
+
     for arquivo in arquivos:
+        if arquivo in arquivos_processados:
+            print(f"Ignorando '{arquivo}': já processado anteriormente.")
+            continue
+
         caminho_completo = os.path.join(DIRETORIO_TESTES, arquivo)
         print(f"Processando arquivo: {arquivo}...")
         
@@ -257,16 +265,14 @@ def processar_diretorio(conn, sanitizar_texto, gerar_embedding):
             with open(caminho_completo, 'r', encoding='utf-8') as f:
                 conteudo_bruto = f.read()
                 
-            texto_limpo = sanitizar_texto(conteudo_bruto)
-            
+            texto_limpo = sanitizartexto(conteudo_bruto)
             if not texto_limpo:
-                print(f"  -> Arquivo vazio ou continha apenas ruído. Ignorado.")
                 continue
 
             chunks = criar_chunks(texto_limpo, tamanho_maximo=400, sobreposicao=50)
             
             for chunk in chunks:
-                vetor = gerar_embedding(chunk)
+                vetor = embedtext(chunk)
                 if vetor:
                     query = """
                     INSERT INTO ConhecimentoHistorico (nome_arquivo, conteudo_texto, embedding)
@@ -283,8 +289,7 @@ def processar_diretorio(conn, sanitizar_texto, gerar_embedding):
             print(f"  -> [ERRO] Falha ao processar o arquivo {arquivo}: {e}")
 
     cursor.close()
-    print("-" * 40)
-    print(f"Processamento concluído. Total de registros inseridos no banco: {total_inseridos}")
+    print(f"Processamento concluido. Total inserido: {total_inseridos}")
 
 def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     """

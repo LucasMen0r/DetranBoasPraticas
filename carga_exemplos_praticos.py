@@ -1,9 +1,11 @@
 import os
 import requests
 import psycopg2
+from dotenv import load_dotenv
 import pgvector.psycopg2
 
 # Configuracoes de Banco de Dados e Ollama
+load_dotenv()
 db_name = os.getenv('DB_NAME', 'DetranNorma')
 db_user = os.getenv('DB_USER', 'postgres')
 db_pass = os.getenv('DB_PASS', 'abc321')
@@ -126,7 +128,6 @@ def main():
                 embedding vector(768)
             );
         """)
-        cursor.execute("TRUNCATE TABLE ExemploPratico RESTART IDENTITY;")
         conn.commit()
     except Exception as e:
         conn.rollback()

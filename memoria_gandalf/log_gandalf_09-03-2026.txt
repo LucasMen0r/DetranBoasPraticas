@@ -56,3 +56,36 @@ RESPOSTA:
 **Motivo**: O nome da procedure não atende à regra de nomenclatura. A regra estabelecida é que colunas usadas como parâmetro em procedures externas devem iniciar com underline (ex.: `_EscalaS.scp`). O exemplo `EscalaI` demonstra que o padrão inclui o underline antes da sigla da operação. O nome `EscalaS.scp` não possui o underline, violando a regra.
 ========================================
 
+========================================
+DATA: 09/03/2026 10:59:12
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..EscalaI.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..EscalaI.scp está de acordo com o padrão.
+
+**Motivo:**  
+O nome da procedure segue o padrão estabelecido pela regra **Objetivo + Complemento + Operação**, terminando com a sigla da operação. Neste caso, a terminação **'I'** é válida, conforme regramos e exemplos como **EscalaI** (aprovado no histórico de referências).
+========================================
+
+========================================
+DATA: 09/03/2026 11:03:03
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..EscalaS.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..EscalaS.scp está de acordo com o padrão.
+
+**Motivo:**  
+1. **Regra 3**: O padrão é Objetivo + Complemento + Operação (S, I, E, A, R). O nome da procedure termina com a sigla da operação 'S', que é um tipo de operação válido.  
+2. **Exemplo de Referência**: O exemplo de EscalaS foi validado como correto, terminando com a sigla da operação 'S'.  
+3. **Regra 4**: Tabelas de log devem ter o prefixo Log, mas essa regra não se aplica diretamente a procedures.  
+4. **Regra 5**: A letra maiúscula isolada no final do nome (como 'S') é um padrão válido para representar o tipo de operação.  
+
+**Conclusão:** O nome da procedure segue o padrão estabelecido pelo Detran, conforme as regras e exemplos fornecidos.
+========================================
+

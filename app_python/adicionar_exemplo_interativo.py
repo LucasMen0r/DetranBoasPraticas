@@ -3,7 +3,9 @@ import requests
 import psycopg2
 import pgvector.psycopg2
 from PyPDF2 import PdfReader
+from dotenv import load_dotenv
 
+load_dotenv()
 db_name = os.getenv('DB_NAME', 'DetranNorma')
 db_user = os.getenv('DB_USER', 'postgres')
 db_pass = os.getenv('DB_PASS', 'abc321')
@@ -27,6 +29,9 @@ def get_embedding(texto):
 
 def limpar_tela():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+# TODO: Funcionalidade futura para ingestão em lote de manuais em PDF.
+# Atualmente inativa. Criada para evitar a inserção manual de regras pela equipe de AD.
 
 def processarpdf(caminho_pdf):
     """Extrai texto do PDF e divide em chunks para evitar estouro de contexto."""
