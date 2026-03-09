@@ -53,17 +53,17 @@ Caso o sistema reprove um objeto válido, alimente a base de exemplos práticos 
   `python adicionar_exemplo_interativo.py`
 4. **Imports**
 # Comunicacao HTTP com a API do Ollama
-requests
+`requests`
 
 # Conexao com o banco de dados PostgreSQL
-psycopg2-binary
+`psycopg2-binary`
 
 # Suporte aos embeddings e operacoes vetoriais no PostgreSQL
-pgvector
+`pgvector`
 
 # TODO: Biblioteca mantida como dependencia para suporte futuro. 
-# Sera utilizada na implementacao da ingestao e processamento em lote de manuais normativos em formato PDF.
-PyPDF2
+ Será utilizada na implementacao da ingestao e processamento em lote de manuais normativos em formato PDF.
+`PyPDF2`
 
 # Leitura automatica do arquivo .env
-python-dotenv
+`python-dotenv`
