@@ -24,38 +24,46 @@ A base de código é dividida nos seguintes módulos principais:
 
 1. **Dependências Python:**
 Instale as bibliotecas necessárias utilizando o gerenciador de pacotes:
-```bash
-pip install -r requirements.txt
+
+`pip install -r requirements.txt`
+
+python adicionar_exemplo_interativo.py
+Logs e Monitoramento
+Todas as requisições e diagnósticos gerados pelo G.A.N.D.A.L.F. são registrados automaticamente na pasta memoria_gandalf/, salvos em arquivos .txt datados, permitindo a rastreabilidade das análises feitas pelo modelo. 
 
 2. **Variáveis de Ambiente (.env):**
 O projeto exige a configuração de variáveis de ambiente para a conexão com o PostgreSQL e com o servidor Ollama. Crie um arquivo .env na raiz do projeto seguindo a estrutura do arquivo .env.example e preencha com as suas credenciais locais:
 
 DB_NAME
-
 DB_USER
-
 DB_PASS
-
 DB_HOST
-
 DB_PORT
-
 OLLAMA_HOST
 
-Banco de Dados:
+3. **Banco de Dados:**
 Execute o script DetranNorma.sql no seu servidor PostgreSQL para criar os schemas, a extensão vetorial e popular as regras fundamentais.
 
-3. **Como Usar**
-Para auditar um objeto (Uso Diário):
+3.1 **Para auditar um objeto (Uso Diário):**
 Execute o script principal passando a pergunta como argumento ou utilize o modo interativo:
+  `python perguntar_ao_manual.py "A procedure dbfisc01..EscalaS.scp está de acordo com o padrão?"`
 
-Bash
-python perguntar_ao_manual.py "A procedure dbfisc01..EscalaS.scp está de acordo com o padrão?"
-Para adicionar ou corrigir exceções na memória:
+3.2 **Para adicionar ou corrigir exceções na memória:**
 Caso o sistema reprove um objeto válido, alimente a base de exemplos práticos para corrigir o comportamento do modelo na próxima execução:
+  `python adicionar_exemplo_interativo.py`
+4. **Imports**
+# Comunicacao HTTP com a API do Ollama
+requests
 
-Bash
-python adicionar_exemplo_interativo.py
-Logs e Monitoramento
-Todas as requisições e diagnósticos gerados pelo G.A.N.D.A.L.F. são registrados automaticamente na pasta memoria_gandalf/, salvos em arquivos .txt datados, permitindo a rastreabilidade das análises feitas pelo modelo.
+# Conexao com o banco de dados PostgreSQL
+psycopg2-binary
 
+# Suporte aos embeddings e operacoes vetoriais no PostgreSQL
+pgvector
+
+# TODO: Biblioteca mantida como dependencia para suporte futuro. 
+# Sera utilizada na implementacao da ingestao e processamento em lote de manuais normativos em formato PDF.
+PyPDF2
+
+# Leitura automatica do arquivo .env
+python-dotenv
