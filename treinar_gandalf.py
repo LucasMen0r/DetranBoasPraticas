@@ -189,6 +189,7 @@ def salvarrespostas(pergunta, categoria, resposta):
             print(f"[INFO] Resposta salva com sucesso no diretório de fallback: '{caminho_fallback}'")
         except Exception as ex:
             print(f"[ERRO CRITICO] Falha total ao tentar salvar log no fallback: {ex}")
+            
 def main():
     print("Iniciando rotina de manutencao da base de conhecimento do Gandalf.")
     conn = conectadb()
@@ -199,8 +200,6 @@ def main():
     
     conn.close()
     print("Rotina finalizada.")
-
-
 
 if __name__ == "__main__":
     main()

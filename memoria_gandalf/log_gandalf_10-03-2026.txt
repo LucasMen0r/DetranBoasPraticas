@@ -1,0 +1,127 @@
+========================================
+DATA: 10/03/2026 08:39:14
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "a procedure: ValidarEnvio575S está de acordo com o padrão do banco de dados?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..ValidarEnvio575S.scp -> Motivo: Nome de procedure está de acordo com o padrão do Detran.  
+- **Validar**: Primeira letra maiúscula (conforme regra de notação húngara).  
+- **Envio**: Primeira letra maiúscula (conforme regra de notação húngula).  
+- **575**: Número sem regras de formatação.  
+- **S**: Sufixo válido, pois representa uma operação (como visto nos exemplos aprovados, como "EscalaS" e "NotificarToxicologicoA").  
+
+**Regras aplicadas:**  
+1. Uso de Iniciais Maiúsculas em cada palavra (notação húngara).  
+2. Não usar acentos, cedilha ou espaços.  
+3. Sufixo com letra maiúscula isolada no final é válido (ex.: "S").  
+
+**Observação:** O nome segue todas as regras do Detran, incluindo a terminação com a sigla da operação.
+========================================
+
+========================================
+DATA: 10/03/2026 08:43:39
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: Operacao..VeiculoRoubadoAtualizarSds.scp está de acordo com o manual?"
+========================================
+RESPOSTA:
+[REPROVADO]: Operacao..VeiculoRoubadoAtualizarSds.scp não está de acordo com o manual.  
+**Motivo**: O nome da procedure termina com 'sds.scp', onde a sigla da operação deve ser um único caractere maiúsculo isolado no final (como 'S', 'I', 'A'). No entanto, 'sds' contém letras minúsculas, violando a regra de terminação com a sigla da operação em maiúsculo conforme os exemplos válidos (EscalaS, NotificarToxicologicoA) e a regra geral de nomenclatura.
+========================================
+
+========================================
+DATA: 10/03/2026 08:56:38
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "a procedure: ControleIndicePresidenciaA.scp está de acordo com o padrão de nomenclatura do banco de dados?"
+========================================
+RESPOSTA:
+Não, a procedure **ControleIndicePresidenciaA.scp** não está de acordo com o padrão de nomenclatura do banco de dados.
+
+**Justificativa:**
+
+1.  **Comprimento excessivo:** A regra estabelecida exige o uso de "nomes curtos, claros e sem ambiguidade". O nome "ControleIndicePresidenciaA" é excessivamente longo, violando essa regra de concisidade.
+2.  **Forma verbal/plural:** Embora a regra exija o uso de substantivos (respondendo a "O que selecionar? O que inserir?") e não mencione explicitamente a forma verbal, a complexidade do nome sugere uma descrição muito detalhada, o que vai contra a busca por um nome curto. Além disso, a palavra "Presidencia" no nome parece estar no plural, embora isso não seja uma violação direta regras explícitas, a regra de usar substantivos claros e curtos é claramente desafiada por um nome tão extenso.
+
+Portanto, a procedure não segue o padrão devido ao seu comprimento excessivo, violando a regra de uso de nomes curtos.
+========================================
+
+========================================
+DATA: 10/03/2026 09:05:03
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: ControleIndicePresidenciaE.scp está de acordo com o padrão de nomenclatura do banco de dados?"
+========================================
+RESPOSTA:
+Sim, a procedure **ControleIndicePresidenciaE.scp** está de acordo com o padrão de nomenclatura do banco de dados.
+
+**Justificativa:**
+De acordo com a regra de nomenclatura para procedures, o sufixo que representa a operação deve ser uma letra maiúscula isolada no final do nome (como S, I, E, A, R). Neste caso, o sufixo **'E'** é válido, pois representa uma operação básica permitida pelo Detran. Além disso, o modelo de nomenclatura **Objetivo[Complemento]Operacao** foi seguido, conforme demonstrado nos exemplos aprovados como **ControleIndicePresidenciaS.scp**.
+========================================
+
+========================================
+DATA: 10/03/2026 09:29:17
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: " a tabela: create table EventoCdt ( nCpf                 numeric(11)                    not null, nSequencia           smallint                       not null, sNome                char(44)                       not null, sEmail               char(60)                       not null, sTelefone            char(15)                       not null, sTipoEvento          varchar(1)                     not null, sCodigoEvento        varchar(2)                     not null, sEvento              varchar(255)                   not null, constraint pkEventoCdt primary key (nCpf, nSequencia)) está de acordo com o padrão do Detran?"
+========================================
+RESPOSTA:
+[AUTORIZADO (Com observações)]  
+**EventoCdt** está **parcialmente** de acordo com o padrão do Detran, conforme análise das regras aplicáveis:  
+
+1. **Nome da tabela**:  
+   - **Não está de acordo** com a regra *"Nome no singular, claro, sem abreviação"* (Regra: Nome no singular, claro, sem abreviação (exceto se >30 chars)).  
+   - O nome **EventoCdt** é considerado **plural** (etimologicamente, "evento" no masculino plural termina em "os"), enquanto o padrão exige o **singular**.  
+
+2. **Índice e PK**:  
+   - **Está de acordo** com a regra *"Nome da tabela seguido do nome da primeira coluna do índice"* (Regra: Nome da tabela seguido do nome da primeira coluna do índice).  
+   - O índice `pkEventoCdt` está correto, pois segue o padrão `Tabela + primeira coluna da PK` (`EventoCdt + nCpf`).  
+
+3. **Outras verificações**:  
+   - **Não há violação** das regras de integridade referencial, JOINs, ou padrão de FK, pois a estrutura é uma tabela simples sem referências externas.  
+   - Os tipos de dados (`numeric`, `smallint`, `char`, `varchar`) não possuem restrições de conformidade no contexto.  
+
+**Justificativa**:  
+A violação no nome da tabela é a única irregularidade detectada. O Detran exige nomes no singular para garantir consistência nos metadados e facilitar auditorias. O nome `EventoCdt` deve ser reestruturado para singularizar (ex.: `EventoCdt` → `Evento` ou `EventoCd`), conforme orientação da equipe de Administração de Dados.  
+
+**Recomendação**:  
+Reestruturar o nome da tabela para singular, mantendo o prefixo `Cdt` se for um acrônimo válido (ver regra de limitação de caracteres >30).
+========================================
+
+========================================
+DATA: 10/03/2026 09:46:10
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: iFormularioServicoS.sql (DBHCEN). está de acordo com o padrão?"
+========================================
+RESPOSTA:
+A procedure: iFormularioServicoS.sql está **DE ACORDO** com o padrão.
+
+**Justificativa:**
+
+1.  **Regra de Acesso:** A regra estabelecida é: "Se acesso via internet, iniciar com i". A procedure em questão inicia com "i", atendendo a essa regra.
+2.  **Regra de Operação:** A regra estabelecida é: "Objetivo + Complemento + Operação (S, I, E, A, R)". Embora o nome completo não possa ser totalmente descomposto aqui, a parte final "S" é um exemplo válido de sigla de operação conforme demonstrado nos exemplos de referência (EscalaS, NotificarToxicologicoA). A validade da operação é suficiente para considerar o nome conforme ao padrão estabelecido.
+========================================
+
+========================================
+DATA: 10/03/2026 09:51:37
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "a nomenclatura das procedures: tmpParcelaDebitoSefazD.scp / tmpParcelaDebitoSefazI.scp está válida?"
+========================================
+RESPOSTA:
+A nomenclatura das procedures tmpParcelaDebitoSefazD.scp e tmpParcelaDebitoSefazI.scp **não é válida**.
+
+**Justificativa:**
+
+De acordo com a regra para nomenclatura de procedures, o final do nome deve representar a operação realizada, utilizando um acrônimo em letras maiúsculas (como S, I, E, A, R) conforme padrão estabelecido. As siglas "D" e "I" utilizadas nos nomes das procedures não correspondem a um acrônimo de operação básico definido como padrão (selecionar, inserir, etc.). Portanto, estas siglas não são consideradas válidas para representar a operação no final do nome da procedure.
+========================================
+
