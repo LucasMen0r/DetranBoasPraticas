@@ -165,3 +165,5 @@ ADD COLUMN IF NOT EXISTS DescricaoRegra TEXT;
 
 select * from exemplopratico;
 select * from regranomenclatura;
+
+
