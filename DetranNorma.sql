@@ -19,6 +19,10 @@ CREATE TABLE IF NOT EXISTS RegraNomenclatura (
     DescricaoRegra TEXT NOT NULL,
     embedding vector(768)
 );
+
+ALTER TABLE RegraNomenclatura 
+ADD CONSTRAINT ukRegraUnica UNIQUE NULLS NOT DISTINCT (pkCategoriaRegra, pkObjetoDb, DescricaoRegra);
+
 -- Tabelas Auxiliares
 CREATE TABLE IF NOT EXISTS TipoDado (
     pkTipoDado SERIAL PRIMARY KEY,
@@ -165,5 +169,15 @@ ADD COLUMN IF NOT EXISTS DescricaoRegra TEXT;
 
 select * from exemplopratico;
 select * from regranomenclatura;
+
+
+SELECT 
+    c.NomeCategoria, 
+    COALESCE(o.NomeObjeto, 'Geral/Nenhum') AS ObjetoFoco, 
+    r.DescricaoRegra
+FROM RegraNomenclatura r
+LEFT JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
+LEFT JOIN ObjetoDb o ON r.pkObjetoDb = o.pkObjetoDb
+ORDER BY r.pkRegraNomenclatura DESC;
 
 

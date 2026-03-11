@@ -278,6 +278,19 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     Sua função é atuar como um AUDITOR RÍGIDO.
     
     INSTRUÇÃO MESTRA:
+    Você é o auditor de banco de dados oficial do projeto Gandalf.
+    Sua missão é analisar e validar nomenclaturas de objetos de banco de dados (tabelas, procedures, colunas, etc.) baseando-se ESTRITAMENTE no contexto normativo fornecido.
+
+    Siga estas diretrizes absolutas para emitir o seu parecer:
+
+    
+    1. PRECISÃO DE REGRAS: Quando aprovar um objeto, cite a regra exata. Não confunda a regra de "Forma dos Nomes" (que trata de maiúsculas/minúsculas e Notação Húngara/PascalCase) com a regra de "Siglas" (que trata da formação de acrônimos).
+    2. CONTEXTO DO POSTGRESQL: Scripts DDL executados sem aspas duplas gerarão objetos inteiramente em minúsculas no banco. Portanto, nomes como "Cliente", "cliente" ou "CLIENTE" serão interpretados como "cliente" no PostgreSQL. Reprove nomes que não estejam em conformidade com as regras de nomenclatura, mesmo que o usuário tente usar variações de maiúsculas/minúsculas para burlar as normas.
+    3. ZERO ALUCINAÇÃO: Nunca invente, presuma ou gere exemplos práticos que não existam no contexto fornecido. Se a norma não for clara, declare que não há informações suficientes.
+    4. PRECISÃO DA JUSTIFICATIVA: Quando reprovar um objeto, transcreva a regra exata e original do contexto entre aspas, sem resumi-la ou alterá-la. 
+    5. GABARITO TÉCNICO: Utilize os modelos fornecidos na seção "[[ EXEMPLOS DE REFERÊNCIA (USE COMO GABARITO) ]]". Siga estritamente a estrutura dos exemplos marcados como [APROVADO (Seguir este modelo)] e penalize estruturas que se assemelhem aos exemplos [REPROVADO (Evitar este modelo)].
+
+    O seu parecer deve ser direto, técnico e apontar a conformidade ou as violações encontradas.
     Você deve responder baseando-se EXCLUSIVAMENTE nos trechos de regras e exemplos fornecidos abaixo.
     Considere que o contexto fornecido contém TODA a verdade necessária.
     NÃO assuma que faltam informações. Trabalhe com o que tem.
@@ -317,11 +330,12 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
                 ],
                 "stream": True,
                 "options": {
-                    "temperature": 0, # Baixa temperatura para ser mais fiel aos dados
-                    "num_ctx": 4096     # Garante janela de contexto suficiente
+                    "temperature": 0, 
+                    "num_ctx": 4096     
                 }
             },
-            stream=True
+            stream=True,
+            timeout=360 # O script desiste e avisa o erro se o Ollama travar por 3 minutos
         )
         resposta.raise_for_status()
         resposta_completa = ""
@@ -372,6 +386,12 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
         print("-" * 10)
         return limparrespostadeepseek(resposta_completa)
         
+    except requests.exceptions.Timeout:
+        return "\n[ERRO DE TIMEOUT] O modelo demorou muito para responder. Verifique se o Ollama está rodando e o uso de CPU/RAM."
+    except Exception as e:
+        print(f"\n[ERRO NA GERAÇÃO]: {e}")
+        return f"Erro técnico ao consultar LLM: {e}"
+        
     except Exception as e:
         print(f"\n[ERRO NA GERAÇÃO]: {e}")
         return f"Erro técnico ao consultar LLM: {e}"
@@ -411,8 +431,7 @@ def salvarrespostas(pergunta, categoria, resposta):
 
 def main():
     if len(sys.argv) < 2:
-        print('Uso:python3 perguntar_ao_manual.py "Sua pergunta"')
-        print('\nInsira a pergunta aqui:')
+        print('\nExemplo de uso: Pergunta: "Posso usar o nome "Cliente" para uma tabela?"')
         pergunta = input("Pergunta: ")
     else:
         pergunta = sys.argv[1]

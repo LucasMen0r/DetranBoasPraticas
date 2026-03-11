@@ -1,0 +1,439 @@
+nomecategoria,objetofoco,descricaoregra
+Boas Práticas,Geral/Nenhum,CREATE PROCEDURE AuNamesS @sName varchar(30) AS DECLARE @sCity VARCHAR(25) SELECT @sCity = sCity FROM Publishers WHERE sName = @sName EXEC ProcS @sCity CREATE PROCEDURE ProcS @sCity VARCHAR(25) AS SELECT sAuName FROM Authors WHERE sCity = @sCity Obs.: Qualquer dúvida em relação a estas dicas de programação no banco de dados conversar com o DBA.
+Boas Práticas,Geral/Nenhum,DECLARE @sCity varchar(25) SELECT @sCity = sCity FROM Publishers WHERE sName = @sName SELECT sAuName FROM Authors WHERE sCity = @sCity Split da procedure:
+Boas Práticas,Geral/Nenhum,"Algumas vezes o sybase não consegue usar as estatísticas para uma variável inicializada em tempo de execução, implicando em perda de performance. Então, a forma de resolver esse problema é fazer um split de procedure, que significa dividir a procedure em duas, como o exemplo que segue:"
+Boas Práticas,Geral/Nenhum,"Not null x null: Deve ser aplicado caso a caso também, já que o campo null é tratado como tipo variável. Lembrando que em muitas situações podemos usar um valor default, para aplicação do campo not null;"
+Boas Práticas,Geral/Nenhum,"Varchar x char: Deve ser aplicado caso a caso. Sendo o dado de tamanho fixo e not null, deve-se usar o tipo char. Outra característica que devemos analisar é se o dado sofrerá muitas atualizações. Caso seja verdade, ele é um forte candidato a ser do tipo char, para se ter ganho de performance. O tipo varchar deve ser utilizado visando economizar em área de armazenamento;"
+Boas Práticas,Geral/Nenhum,"Evitar cláusula NOT EXISTS, NOT IN e NOT LIKE. Usar se possível EXISTS, IN e LIKE;"
+Boas Práticas,Geral/Nenhum,"Dar preferência a construções do tipo: SELECT iCol, iCol2 from Table WHERE iCol >= 10 a construções do tipo: SELECT iCol, iCol2 from Table WHERE iCol > 9;"
+Boas Práticas,Geral/Nenhum,"Atributos com conteúdo alfanumérico com mais de 255 caracteres, usar tipo Varchar, preferencialmente;"
+Boas Práticas,Geral/Nenhum,"Atributos de data / hora usar SMALLDATETIME ou DATETIME dependendo da precisão necessária para o cálculo de horas, bem como da faixa de valores de cada;"
+Boas Práticas,Geral/Nenhum,"Atributos de quantidade escolher entre os tipos a seguir, dependendo da faixa de valor: TINYINT, SMALLINT, INT;"
+Boas Práticas,Geral/Nenhum,IF EXISTS (SELECT 1 FROM sysobjects WHERE name = ‘NomeProcedure') BEGIN DROP PROCEDURE NomeProcedure END GO CREATE PROCEDURE NomeProcedure IF EXISTS (SELECT 1 FROM sysobjects WHERE name = 'NomeTrigger') BEGIN DROP TRIGGER NomeTrigger END GO CREATE TRIGGER NomeTrigger Devem ser evitados tipos de dados definidos pelos usuários;
+Boas Práticas,Geral/Nenhum,"Preservar a cláusula abaixo no script, antes do cabeçalho, a fim de agilizar a criação de procedures e triggers armazenadas no repositório."
+Boas Práticas,Geral/Nenhum,"Integridade referencial deve ser implementada através de constraints (Primary Key, Unique e Foreign);"
+Boas Práticas,Geral/Nenhum,"Todos os comandos SQL utilizados por programas devem ser realizados, obrigatoriamente, através de Stored Procedure, exceto updates e inserts para colunas dos tipos texto e imagem;"
+Nomenclatura de Objetos,Procedure,"O prefixo sp é necessário para que seja possível a pesquisa da mesma, sem a indicação do banco"
+Nomenclatura de Objetos,Procedure,"Obs.: Todas as funções ficarão armazenadas no banco sybsystemprocs, que é o banco padrão de armazenamento de procedure de sistema, como por exemplo: sp_help, sp_who, etc."
+Nomenclatura de Objetos,Procedure,"Prefixo p_f_nomedobanco: identifica uma função que referencia objeto de banco (tabela, procedure, view, etc) pertencente ao respectivo banco (sugestão: retirar o prefixo db do nome do banco, ex: sp_f_arrec) Objetivo: usar um substantivo que indique a finalidade a função Complemento: Opcional. Caso o objetivo não seja suficiente para traduzir a finalidade da função, acrescenta-se um complemento / descrição para melhor definição da mesma."
+Nomenclatura de Objetos,Procedure,sp_f_Nomedobanco_Objetivo[Complemento] ➡ Roda apenas de um banco de dados específico.
+Nomenclatura de Objetos,Procedure,"Prefixo sp_f identifica uma função para manipular strings e/ou números ou objetos de sistema, que são comuns a todos os bancos."
+Nomenclatura de Objetos,Procedure,Atributos Tipos de Dados Pessoas Varchar(50) E-mail Varchar(60) Telefone Varchar(10) Fax Varchar(10) Logradouro Varchar(60) Complemento Varchar(65) CEP Numeric(8) Bairro Varchar(60) Município Varchar(60) País Varchar(60) CGC Char(14) CPF Char(11) Login Varchar(30) 4.1 Função de Usuário:
+Nomenclatura de Objetos,Procedure,"Tipos de dados Faixa de valores Espaço ocupado Bit 0 ou 1 1 byte Int - 2.147.483.648 a 2.147.483.647 4 bytes Smallint - 32.768 a 32.767 2 bytes Tinyint 0 a 255 1 byte Text Até 2.147.483.647 bytes Image Até 2.147.483.647 bytes Char(n) Range igual à página do servidor N bytes 2K = 1948 caracteres (lock allpage) e 1954 (lock datarow) Varchar(n) Range igual à página do servidor N bytes 2K = 1948 caracteres (lock allpage) e 1954 (lock datarow) Numeric(p,s) - 10E38 a 10E38 - 1 Depende da precisão (P) Datetime 1/1/1753 a 31/12/9999 8 bytes precisão: milissegundos Smalldatetime 1/1/1900 a 6/6/2079 4 bytes precisão: minutos Float Depende da máquina 4 ou 8 bytes Double precision Depende da máquina 8 bytes Real Depende da máquina 4 bytes Binary(n) Range igual à página do servidor N bytes 2K = 1948 caracteres (lock allpage) e 1954 (lock datarow) Money 922.337.203.685.477,5807 a 8 bytes 922.337.203.685.477,5807 Smallmoney 214.748.3648 a 214.748.3648 4 bytes Atributos de Uso Comum:"
+Nomenclatura de Objetos,Procedure,"Usar o prefixo “tg” seguido do nome da tabela onde está sendo disparada ação e da sigla do evento (I = Inserir, A = Alterar, E = Excluir)."
+Nomenclatura de Objetos,Procedure,"Evitar o aninhamento excessivo de comandos, o que costuma dificultar a manutenção do código. Dar preferência à codificação mais longa, porém mais clara, desde que não prejudique a performance."
+Nomenclatura de Objetos,Procedure,"Quando houver join, as colunas devem ser prefixadas de preferência com a primeira letra do nome da tabela;"
+Nomenclatura de Objetos,Procedure,"Utilização das palavras reservadas SQL em letras maiúsculas, inclusive os tipos de dados (WHERE, FROM, NUMERIC, etc...);"
+Nomenclatura de Objetos,Procedure,"Ao longo da procedure, inserir comentários sempre que necessário. Comentários adicionais que auxiliem a compreensão de problemas complexos. Não poluir o código com comentários desnecessários, que descrevem procedimentos óbvios;"
+Nomenclatura de Objetos,Procedure,"Indentar o código de modo a tornar a codificação clara e facilitar o trabalho de manutenção, pode-se usar para indentar a ferramenta SQL Expert;"
+Nomenclatura de Objetos,Procedure,"Identificar as alterações efetuadas na área apropriada, para permitir fácil localização de problemas no código;"
+Nomenclatura de Objetos,Procedure,"** *************************************************************************************/ @dAbertura smalldatetime, // Cadastramento do Processo @nProcesso numeric(13,0) = 0 // Número do Processo ..."
+Nomenclatura de Objetos,Procedure,CREATE PROCEDURE ProcessoS /*********************************************************************************** ** CRIADA POR: Nome do desenvolvedor ** DATA: 01/08/03 ** OBJETIVO: Seleciona processos cadastrados a partir de uma determinada data.
+Nomenclatura de Objetos,Procedure,"Colocar a data de criação e o responsável pela criação da procedure (quem alterar a procedure deve acrescentar o nome do responsável pela alteração, a data e o objetivo da alteração);"
+Nomenclatura de Objetos,Procedure,"Outros Bancos: dbvcen..binConsultaVeiculoS_EV02, dbvcen..Transacaobin920, dbinfracao..rnfCodRetornoS… Quando a procedure for executada via processamento batch, deve-se colocar no início do nome da procedure a palavra “Batch”."
+Nomenclatura de Objetos,Procedure,No sistema de Habilitação as procedures de envio do RENACH ficarão iguais às procedures já existentes do RENACH.
+Nomenclatura de Objetos,Procedure,"Operação: Usar sigla, em letra maiúscula, das operações básicas: Selecionar (S), Inserir (I), Excluir (E), Alterar (A), Relatório (R)."
+Nomenclatura de Objetos,Procedure,"Complemento: Opcional. Caso o objetivo não seja suficiente para traduzir a função da procedure, acrescenta-se um complemento / descrição para melhor definição da mesma."
+Nomenclatura de Objetos,Procedure,"Objetivo: Usar substantivo que responda às perguntas: O que selecionar? O que inserir? Neste caso, muitas vezes coincidirá com o nome da tabela."
+Nomenclatura de Objetos,Procedure,"Nome de procedure: Objetivo[Complemento]Operacao, Onde:"
+Nomenclatura de Objetos,Coluna,Nome da tabela mais underline seguido do nome da primeira coluna que compõe o índice. Usar abreviações se o nome do campo for muito grande.
+Nomenclatura de Objetos,Coluna,Opcional. Caso o objetivo não seja suficiente para traduzir a função da view materializada acrescenta-se um complemento / descrição para melhor definição da mesma.
+Nomenclatura de Objetos,Coluna,Objetivo: Usar substantivo que responda a pergunta: O que selecionar? Muitas vezes coincidirá com o nome da tabela.
+Nomenclatura de Objetos,Coluna,Deve-se usar a mesma semântica utilizada para as tabelas. Para views não materializadas deve ser prefixada a palavra “vw” seguido do nome da tabela.
+Nomenclatura de Objetos,Coluna,"Views devem ser utilizadas somente para consultas. As tabelas envolvidas em uma view não devem ser atualizadas indiretamente, via comandos de INSERT, UPDATE e DELETE efetuados na view."
+Nomenclatura de Objetos,Coluna,"Views também podem ser adotadas por questões de segurança, como um instrumento para conceder aos usuários permissão de acesso somente a determinados atributos e/ou a informações já consolidadas."
+Nomenclatura de Objetos,Coluna,"Views podem ser adotadas para queries complexas, envolvendo mais de uma tabela, cujo formato de saída dos dados selecionados seja considerado padrão para uma ou mais transações do sistema. O uso de view pode melhorar o tempo de resposta da consulta, pois o comando SELECT é interpretado no momento de criação da view, e não na sua execução."
+Nomenclatura de Objetos,Coluna,"nVeiculo (pk) nProcesso (pk) sPlaca (ak) (*ak - alternate key) sPlacaVeiculo (fk) Quando existir mais de uma “fk” para a mesma tabela pai, deve-se usar um número sequencial no final do nome da “fk”."
+Nomenclatura de Objetos,Coluna,"nVeiculo (pk) nProcesso (pk) nVeiculo (fk) Se o campo não for chave primária na tabela de origem, deve-se acrescentar o nome da tabela-pai ao nome do campo."
+Nomenclatura de Objetos,Coluna,"sServico (pk) sServico (pk),(fk) nTaxa (pk) nTaxa (pk),(fk) 3.3.3 Chaves Estrangeiras (fk):"
+Nomenclatura de Objetos,Coluna,"Quando a tabela for de relacionamento, os nomes dos campos que compõem a chave primária devem ser mantidos dos campos que foram trazidos das tabelas de origem."
+Nomenclatura de Objetos,Coluna,"Tabela ➡ Profissional Chave Primária ➡ nCpfProfissional Tabela ➡ Oficio Chave Primária composta ➡ AnoOficio / NumOficio Se a chave primária for um número seqüencial, deve-se utilizar o nome da tabela Exemplo: Tabela ➡ Processo então Chave Primária ➡ nProcesso;"
+Nomenclatura de Objetos,Coluna,"Utilização dos atributos considerados identificadores naturais das tabelas, acrescidos do nome da tabela;"
+Nomenclatura de Objetos,Coluna,"Se o campo for um identificador, deve-se colocar na segunda posição a letra “i” em minúsculo;"
+Nomenclatura de Objetos,Coluna,"Tipo do Dado Sigla do Tipo bit b datetime, d smalldatetime,bigdatetime, bigtime text, image, binary, long I money, smallmoney m numeric, int, smallint, n tinyint float, real, double precision char, varchar s Time T Booleano bo Exemplo: nCpf, sChassi."
+Nomenclatura de Objetos,Coluna,As tabelas de Log que são uma réplica de uma tabela do sistema já existente terão a constituição dos nomes das suas colunas idênticas aos da tabela já existente. No caso das colunas que não existam na tabela do sistema a nomenclatura dessas colunas deverá seguir o padrão já existente.
+Nomenclatura de Objetos,Coluna,"Os sistemas de Veículos e os sistemas da equipe de Infrações referentes a veículos não utilizarão o tipo do dado na frente do nome da coluna (exceto se houver a necessidade de desenvolver um sistema que use um novo banco de dados), no entanto, todas as outras regras de padronização devem ser seguidas conforme o manual."
+Nomenclatura de Objetos,Coluna,"Siglas como IPVA, CNPJ, CNH, FEBRABAN obedecerá a mesma regra sendo a primeira letra maiúscula e as demais minúsculas."
+Nomenclatura de Objetos,Coluna,"Na primeira posição deve-se utilizar, em letra minúscula, o tipo do dado, seguido pelo nome identificador da coluna com o 1º caracter de cada termo em maiúsculo;"
+Nomenclatura de Objetos,Coluna,"Seguindo o mesmo padrão utilizado para tabelas, deve-se identificar a coluna da tabela de maneira clara e descritiva."
+Nomenclatura de Objetos,Tabela,"O nome da procedure deve ser composto da seguinte forma: z + login + objetivo da procedure (não podemos colocar o nome da tabela, pois normalmente esse tipo de procedure não afeta apenas uma tabela) Exemplos: zkrmlduplicidadedebitoLimpar Tabela do tipo Proxy: As Proxy tables são tabelas “espelho” ou de referência que permite acessar dados que estão em outro banco de dados ou servidor, como se estivessem no banco local. Sua nomenclatura deverá ser composta por px<Origem><NomeDoObjeto> Exemplo: pxProtLaudoToxicologico"
+Nomenclatura de Objetos,Tabela,Obs.: Tabelas de Log não terão chave estrangeira (fk) no entanto terão chave primária(pk).
+Nomenclatura de Objetos,Tabela,"Quando a tabela for de Log, deve-se usar o nome da tabela antecedida do termo “Log”."
+Nomenclatura de Objetos,Tabela,Obs.: Notação Húngara é a diferenciação dos elementos de uma dada nomenclatura através do uso de letras maiúsculas e letras minúsculas. Tem a sua origem na codificação de programas. Para o nosso padrão de nomenclatura vamos utilizar uma versão adaptada desta notação que é o uso da letra maiúscula no início de cada elemento do nome.
+Nomenclatura de Objetos,Tabela,"Siglas como IPVA, CNPJ, CNH, FEBRABAN obedecerá a mesma regra sendo a primeira letra maiúscula e as demais minúsculas."
+Nomenclatura de Objetos,Tabela,"ControleLicencaBioCredenciado ControleLicencaBiometriaCreden O nome de uma tabela deverá ser sugestivo. Deve-se fazer o uso de nomenclatura orientado a objeto, por exemplo: se no departamento financeiro for necessário manter uma tabela de feriados, esta tabela deve ser nomeada identificando claramente seu conteúdo, isto significa que seu nome então deverá ser Feriado; O nome da tabela deve estar sempre no singular;"
+Nomenclatura de Objetos,Tabela,"Utilização dos nomes completos dos termos que compõem o nome da tabela, excetuando-se quando isto não for possível devido à limitação da quantidade de caracteres que o SGBD impõe (30 caracteres). Neste caso, os termos devem ser abreviados sem perder a coerência do entendimento;"
+Nomenclatura de Objetos,Banco,"Nome do banco: dbaaaaann, Onde: db define que é uma database;"
+Nomenclatura de Objetos,Banco,O nome do banco de dados deverá identificar o negócio que está sendo automatizado ou deverá refletir a sigla da aplicação.
+Regras Gerais,Geral/Nenhum,"2.5 Siglas ✅ Siglas oficiais: primeira letra maiúscula e demais minúsculas (Ex.: Ipva, Cnh)."
+Regras Gerais,Geral/Nenhum,"2.4 Restrições ❌ Não usar palavras reservadas (INSERT, DELETE, SELECT...)."
+Regras Gerais,Geral/Nenhum,"2.3 Limite de tamanho ✅ Máximo de 30 caracteres (se ultrapassar, usar abreviações coerentes)."
+Regras Gerais,Geral/Nenhum,2.2 Forma dos nomes ✅ Primeira letra de cada palavra maiúscula (Ex.: ParcelaDebito).
+Regras Gerais,Geral/Nenhum,"2.1 Caracteres permitidos ✅ Usar apenas letras (A–Z, a–z), números (0–9) e _ (underline)."
+Boas Práticas,Geral/Nenhum,Obs.: Por enquanto não está se utilizando o dicionário de termos para os objetos de
+Boas Práticas,Geral/Nenhum,Selecionar S Buscar
+Boas Práticas,Geral/Nenhum,Quantidade Quant Quantidades
+Boas Práticas,Geral/Nenhum,Descricao Desc Descricoes
+Boas Práticas,Geral/Nenhum,Data Data Datas
+Boas Práticas,Geral/Nenhum,Termo Abreviação Sinônimo
+Boas Práticas,Geral/Nenhum,termo ou abreviatura.
+Boas Práticas,Geral/Nenhum,"incluídos, cabendo a ela a última palavra sobre a utilização ou não de determinado"
+Boas Práticas,Geral/Nenhum,A seção de suporte ao desenvolvimento é responsável pela validação dos termos
+Boas Práticas,Geral/Nenhum,"cada termo será sempre utilizado com um, e somente um, sentido."
+Boas Práticas,Geral/Nenhum,"Os termos homógrafos (que tem a mesma grafia) não deverão ser utilizados, portanto"
+Boas Práticas,Geral/Nenhum,que dentre os termos já cadastrados não haja outro com o mesmo sentido que possa
+Boas Práticas,Geral/Nenhum,"Antes de incluir um termo, deve ser efetuada uma pesquisa, de forma a certificar-se de"
+Boas Práticas,Geral/Nenhum,terão acesso à manutenção deste catálogo.
+Boas Práticas,Geral/Nenhum,"desenvolvimento de sistemas, apenas eles e a equipe de suporte ao desenvolvimento"
+Boas Práticas,Geral/Nenhum,A inclusão dos termos deve ser feita pelos coordenadores das equipes de
+Boas Práticas,Geral/Nenhum,"contêm palavras, suas abreviaturas e remissões para o uso de sinônimos."
+Boas Práticas,Geral/Nenhum,serem utilizados para se dar nomes aos objetos de dados do ambiente do Detran-PE
+Boas Práticas,Geral/Nenhum,O dicionário de termos tem por objetivo oferecer um catálogo contendo os termos a
+Boas Práticas,Geral/Nenhum,6. Dicionário de Termos:
+Boas Práticas,Geral/Nenhum,conversar com o DBA.
+Boas Práticas,Geral/Nenhum,Obs.: Qualquer dúvida em relação a estas dicas de programação no banco de dados
+Boas Práticas,Geral/Nenhum,WHERE sCity = @sCity
+Boas Práticas,Geral/Nenhum,@sCity VARCHAR(25)
+Boas Práticas,Geral/Nenhum,CREATE PROCEDURE ProcS
+Boas Práticas,Geral/Nenhum,EXEC ProcS @sCity
+Boas Práticas,Geral/Nenhum,WHERE sName = @sName
+Boas Práticas,Geral/Nenhum,FROM Publishers
+Boas Práticas,Geral/Nenhum,DECLARE @sCity VARCHAR(25)
+Boas Práticas,Geral/Nenhum,@sName varchar(30)
+Boas Práticas,Geral/Nenhum,CREATE PROCEDURE AuNamesS
+Boas Práticas,Geral/Nenhum,Split da procedure:
+Boas Práticas,Geral/Nenhum,FROM Authors WHERE sCity = @sCity
+Boas Práticas,Geral/Nenhum,FROM Publishers WHERE sName = @sName
+Boas Práticas,Geral/Nenhum,SELECT @sCity = sCity
+Boas Práticas,Geral/Nenhum,DECLARE @sCity varchar(25)
+Boas Práticas,Geral/Nenhum,"procedure em duas, como o exemplo que segue:"
+Boas Práticas,Geral/Nenhum,"forma de resolver esse problema é fazer um split de procedure, que significa dividir a"
+Boas Práticas,Geral/Nenhum,"inicializada em tempo de execução, implicando em perda de performance. Então, a"
+Boas Práticas,Geral/Nenhum,Algumas vezes o sybase não consegue usar as estatísticas para uma variável
+Boas Práticas,Geral/Nenhum,"default, para aplicação do campo not null;"
+Boas Práticas,Geral/Nenhum,como tipo variável. Lembrando que em muitas situações podemos usar um valor
+Boas Práticas,Geral/Nenhum,"Not null x null: Deve ser aplicado caso a caso também, já que o campo null é tratado"
+Boas Práticas,Geral/Nenhum,economizar em área de armazenamento;
+Boas Práticas,Geral/Nenhum,"char, para se ter ganho de performance. O tipo varchar deve ser utilizado visando"
+Boas Práticas,Geral/Nenhum,"sofrerá muitas atualizações. Caso seja verdade, ele é um forte candidato a ser do tipo"
+Boas Práticas,Geral/Nenhum,"null, deve-se usar o tipo char. Outra característica que devemos analisar é se o dado"
+Boas Práticas,Geral/Nenhum,Varchar x char: Deve ser aplicado caso a caso. Sendo o dado de tamanho fixo e not
+Boas Práticas,Geral/Nenhum,"Evitar cláusula NOT EXISTS, NOT IN e NOT LIKE. Usar se possível EXISTS, IN e"
+Boas Práticas,Geral/Nenhum,"10 a construções do tipo: SELECT iCol, iCol2 from Table WHERE iCol > 9;"
+Boas Práticas,Geral/Nenhum,"Dar preferência a construções do tipo: SELECT iCol, iCol2 from Table WHERE iCol >="
+Boas Práticas,Geral/Nenhum,Evitar a utilização de convert na cláusula where;
+Boas Práticas,Geral/Nenhum,"Evitar join com mais de 4 tabelas, quando for necessário, utilizar tabelas temporárias;"
+Boas Práticas,Geral/Nenhum,Atributos de imagem usar tipo IMAGE;
+Boas Práticas,Geral/Nenhum,preferencialmente;
+Boas Práticas,Geral/Nenhum,"Atributos com conteúdo alfanumérico com mais de 255 caracteres, usar tipo Varchar,"
+Boas Práticas,Geral/Nenhum,"precisão necessária para o cálculo de horas, bem como da faixa de valores de cada;"
+Boas Práticas,Geral/Nenhum,Atributos de data / hora usar SMALLDATETIME ou DATETIME dependendo da
+Boas Práticas,Geral/Nenhum,"valor: TINYINT, SMALLINT, INT;"
+Boas Práticas,Geral/Nenhum,"Atributos de quantidade escolher entre os tipos a seguir, dependendo da faixa de"
+Boas Práticas,Geral/Nenhum,Devem ser evitados tipos de dados definidos pelos usuários;
+Boas Práticas,Geral/Nenhum,CREATE TRIGGER NomeTrigger
+Boas Práticas,Geral/Nenhum,DROP TRIGGER NomeTrigger
+Boas Práticas,Geral/Nenhum,IF EXISTS (SELECT 1 FROM sysobjects WHERE name = 'NomeTrigger')
+Boas Práticas,Geral/Nenhum,CREATE PROCEDURE NomeProcedure
+Boas Práticas,Geral/Nenhum,DROP PROCEDURE NomeProcedure
+Boas Práticas,Geral/Nenhum,IF EXISTS (SELECT 1 FROM sysobjects WHERE name = ‘NomeProcedure')
+Boas Práticas,Geral/Nenhum,de procedures e triggers armazenadas no repositório.
+Boas Práticas,Geral/Nenhum,"Preservar a cláusula abaixo no script, antes do cabeçalho, a fim de agilizar a criação"
+Boas Práticas,Geral/Nenhum,Preferencialmente não utilizar a estrutura de programação cursor;
+Boas Práticas,Geral/Nenhum,Unique e Foreign);
+Boas Práticas,Geral/Nenhum,"Integridade referencial deve ser implementada através de constraints (Primary Key,"
+Boas Práticas,Geral/Nenhum,dos tipos texto e imagem;
+Boas Práticas,Geral/Nenhum,"obrigatoriamente, através de Stored Procedure, exceto updates e inserts para colunas"
+Boas Práticas,Geral/Nenhum,"Todos os comandos SQL utilizados por programas devem ser realizados,"
+Boas Práticas,Geral/Nenhum,"Para programação nos objetos de dados (procedures, triggers, ...):"
+Nomenclatura de Objetos,Procedure,sem a indicação do banco
+Nomenclatura de Objetos,Procedure,"O prefixo sp é necessário para que seja possível a pesquisa da mesma,"
+Nomenclatura de Objetos,Procedure,"por exemplo: sp_help, sp_who, etc."
+Nomenclatura de Objetos,Procedure,"é o banco padrão de armazenamento de procedure de sistema, como"
+Nomenclatura de Objetos,Procedure,"Obs.: Todas as funções ficarão armazenadas no banco sybsystemprocs, que"
+Nomenclatura de Objetos,Procedure,"da função, acrescenta-se um complemento / descrição para melhor definição da"
+Nomenclatura de Objetos,Procedure,Complemento: Opcional. Caso o objetivo não seja suficiente para traduzir a finalidade
+Nomenclatura de Objetos,Procedure,Objetivo: usar um substantivo que indique a finalidade a função
+Nomenclatura de Objetos,Procedure,"prefixo db do nome do banco, ex: sp_f_arrec)"
+Nomenclatura de Objetos,Procedure,"(tabela, procedure, view, etc) pertencente ao respectivo banco (sugestão: retirar o"
+Nomenclatura de Objetos,Procedure,Prefixo p_f_nomedobanco: identifica uma função que referencia objeto de banco
+Nomenclatura de Objetos,Procedure,sp_f_Nomedobanco_Objetivo[Complemento] ➡ Roda apenas de um banco de dados
+Nomenclatura de Objetos,Procedure,"sistema, que são comuns a todos os bancos."
+Nomenclatura de Objetos,Procedure,Prefixo sp_f identifica uma função para manipular strings e/ou números ou objetos de
+Nomenclatura de Objetos,Procedure,"sp_f_Objetivo[Complemento] ➡ Função Global, ou seja roda de qualquer banco."
+Nomenclatura de Objetos,Procedure,4.1 Função de Usuário:
+Nomenclatura de Objetos,Procedure,Login Varchar(30)
+Nomenclatura de Objetos,Procedure,País Varchar(60)
+Nomenclatura de Objetos,Procedure,Município Varchar(60)
+Nomenclatura de Objetos,Procedure,Bairro Varchar(60)
+Nomenclatura de Objetos,Procedure,Complemento Varchar(65)
+Nomenclatura de Objetos,Procedure,Logradouro Varchar(60)
+Nomenclatura de Objetos,Procedure,Fax Varchar(10)
+Nomenclatura de Objetos,Procedure,Telefone Varchar(10)
+Nomenclatura de Objetos,Procedure,E-mail Varchar(60)
+Nomenclatura de Objetos,Procedure,Pessoas Varchar(50)
+Nomenclatura de Objetos,Procedure,Atributos Tipos de Dados
+Nomenclatura de Objetos,Procedure,Atributos de Uso Comum:
+Nomenclatura de Objetos,Procedure,Smallmoney 214.748.3648 a 214.748.3648 4 bytes
+Nomenclatura de Objetos,Procedure,"922.337.203.685.477,5807"
+Nomenclatura de Objetos,Procedure,"Money 922.337.203.685.477,5807 a 8 bytes"
+Nomenclatura de Objetos,Procedure,Binary(n) Range igual à página do servidor N bytes
+Nomenclatura de Objetos,Procedure,Real Depende da máquina 4 bytes
+Nomenclatura de Objetos,Procedure,Double precision Depende da máquina 8 bytes
+Nomenclatura de Objetos,Procedure,Float Depende da máquina 4 ou 8 bytes
+Nomenclatura de Objetos,Procedure,precisão: minutos
+Nomenclatura de Objetos,Procedure,Smalldatetime 1/1/1900 a 6/6/2079 4 bytes
+Nomenclatura de Objetos,Procedure,precisão: milissegundos
+Nomenclatura de Objetos,Procedure,Datetime 1/1/1753 a 31/12/9999 8 bytes
+Nomenclatura de Objetos,Procedure,"Numeric(p,s) - 10E38 a 10E38 - 1 Depende da precisão (P)"
+Nomenclatura de Objetos,Procedure,Varchar(n) Range igual à página do servidor N bytes
+Nomenclatura de Objetos,Procedure,1954 (lock datarow)
+Nomenclatura de Objetos,Procedure,2K = 1948 caracteres (lock allpage) e
+Nomenclatura de Objetos,Procedure,Char(n) Range igual à página do servidor N bytes
+Nomenclatura de Objetos,Procedure,Image Até 2.147.483.647 bytes
+Nomenclatura de Objetos,Procedure,Text Até 2.147.483.647 bytes
+Nomenclatura de Objetos,Procedure,Tinyint 0 a 255 1 byte
+Nomenclatura de Objetos,Procedure,Smallint - 32.768 a 32.767 2 bytes
+Nomenclatura de Objetos,Procedure,Int - 2.147.483.648 a 2.147.483.647 4 bytes
+Nomenclatura de Objetos,Procedure,Bit 0 ou 1 1 byte
+Nomenclatura de Objetos,Procedure,Tipos de dados Faixa de valores Espaço ocupado
+Nomenclatura de Objetos,Procedure,4. Tipos de Dados:
+Nomenclatura de Objetos,Procedure,Usar uma trigger para cada evento.
+Nomenclatura de Objetos,Procedure,"sigla do evento (I = Inserir, A = Alterar, E = Excluir)."
+Nomenclatura de Objetos,Procedure,Usar o prefixo “tg” seguido do nome da tabela onde está sendo disparada ação e da
+Nomenclatura de Objetos,Procedure,prejudique a performance.
+Nomenclatura de Objetos,Procedure,"do código. Dar preferência à codificação mais longa, porém mais clara, desde que não"
+Nomenclatura de Objetos,Procedure,"Evitar o aninhamento excessivo de comandos, o que costuma dificultar a manutenção"
+Nomenclatura de Objetos,Procedure,"Caso seja necessário, usar duas, três ou mais letras para diferenciar os alias."
+Nomenclatura de Objetos,Procedure,"Tratando-se nome de tabela composto, usar as primeiras letras das palavras;"
+Nomenclatura de Objetos,Procedure,letra do nome da tabela;
+Nomenclatura de Objetos,Procedure,"Quando houver join, as colunas devem ser prefixadas de preferência com a primeira"
+Nomenclatura de Objetos,Procedure,"dados (WHERE, FROM, NUMERIC, etc...);"
+Nomenclatura de Objetos,Procedure,"Utilização das palavras reservadas SQL em letras maiúsculas, inclusive os tipos de"
+Nomenclatura de Objetos,Procedure,"com comentários desnecessários, que descrevem procedimentos óbvios;"
+Nomenclatura de Objetos,Procedure,adicionais que auxiliem a compreensão de problemas complexos. Não poluir o código
+Nomenclatura de Objetos,Procedure,"Ao longo da procedure, inserir comentários sempre que necessário. Comentários"
+Nomenclatura de Objetos,Procedure,"manutenção, pode-se usar para indentar a ferramenta SQL Expert;"
+Nomenclatura de Objetos,Procedure,Indentar o código de modo a tornar a codificação clara e facilitar o trabalho de
+Nomenclatura de Objetos,Procedure,de problemas no código;
+Nomenclatura de Objetos,Procedure,"Identificar as alterações efetuadas na área apropriada, para permitir fácil localização"
+Nomenclatura de Objetos,Procedure,"@nProcesso numeric(13,0) = 0 // Número do Processo"
+Nomenclatura de Objetos,Procedure,"@dAbertura smalldatetime, // Cadastramento do Processo"
+Nomenclatura de Objetos,Procedure,*************************************************************************************/
+Nomenclatura de Objetos,Procedure,** OBJETIVO: Seleciona processos cadastrados a partir de uma determinada data.
+Nomenclatura de Objetos,Procedure,** DATA: 01/08/03
+Nomenclatura de Objetos,Procedure,** CRIADA POR: Nome do desenvolvedor
+Nomenclatura de Objetos,Procedure,/***********************************************************************************
+Nomenclatura de Objetos,Procedure,CREATE PROCEDURE ProcessoS
+Nomenclatura de Objetos,Procedure,"procedure deve acrescentar o nome do responsável pela alteração, a data e o objetivo"
+Nomenclatura de Objetos,Procedure,Colocar a data de criação e o responsável pela criação da procedure (quem alterar a
+Nomenclatura de Objetos,Procedure,Fazer uma descrição clara e objetiva da função da procedure;
+Nomenclatura de Objetos,Procedure,informações seguir o padrão abaixo:
+Nomenclatura de Objetos,Procedure,"Na Procedure definir uma área de identificação geral, onde deverão existir"
+Nomenclatura de Objetos,Procedure,mesmas regras utilizadas para nomeação de colunas.
+Nomenclatura de Objetos,Procedure,"Para variáveis que não são nomes de colunas, deve-se colocar o @ e seguir as"
+Nomenclatura de Objetos,Procedure,"colunas nas suas respectivas tabelas, deve ser igual ao nome da coluna antecedido"
+Nomenclatura de Objetos,Procedure,Nas procedures de acesso à Internet os nomes das variáveis que são nomes de
+Nomenclatura de Objetos,Procedure,"prefixo no nome da procedure, ou seja, só é usada pelas aplicações web."
+Nomenclatura de Objetos,Procedure,"Quando a procedure for para acesso via internet, incluir a letra i, em minúsculo, como"
+Nomenclatura de Objetos,Procedure,deve-se colocar no início do nome da procedure a palavra “Rpc”.
+Nomenclatura de Objetos,Procedure,"Quando a procedure for de Habilitação e for executada em Veículo ou o contrário,"
+Nomenclatura de Objetos,Procedure,do nome da procedure a palavra “Batch”.
+Nomenclatura de Objetos,Procedure,"Quando a procedure for executada via processamento batch, deve-se colocar no início"
+Nomenclatura de Objetos,Procedure,"dbvcen..Transacaobin920, dbinfracao..rnfCodRetornoS…"
+Nomenclatura de Objetos,Procedure,"Outros Bancos: dbvcen..binConsultaVeiculoS_EV02,"
+Nomenclatura de Objetos,Procedure,"Banco RENAVAM: DetranResp206, PartResp206, rnvDetranResp206..."
+Nomenclatura de Objetos,Procedure,parte de um desses projetos.
+Nomenclatura de Objetos,Procedure,"mas se for em outro banco, só se houver algum termo que indique que a procedure faz"
+Nomenclatura de Objetos,Procedure,"iguais aos já existentes. Se for no banco RENAVAM todos os padrões serão mantidos,"
+Nomenclatura de Objetos,Procedure,"No sistema de Veículos, os nomes das procedures RENAVAM e RENAINF ficarão"
+Nomenclatura de Objetos,Procedure,As procedures usadas pela FISEPE (SEFAZ) irão iniciar com as letras “FI” (maiúsculo).
+Nomenclatura de Objetos,Procedure,procedures já existentes do RENACH.
+Nomenclatura de Objetos,Procedure,No sistema de Habilitação as procedures de envio do RENACH ficarão iguais às
+Nomenclatura de Objetos,Procedure,regra sendo a primeira letra maiúscula e as demais minúsculas.
+Nomenclatura de Objetos,Procedure,"Siglas como IPVA, CNPJ, CNH, FEBRABAM, AutoOperacao_, obedecerá a mesma"
+Nomenclatura de Objetos,Procedure,ApreensaoVeiculoGerar
+Nomenclatura de Objetos,Procedure,Objetivo[Complemento]Operação.
+Nomenclatura de Objetos,Procedure,nome do verbo (operação) completo no infinitivo no fim do
+Nomenclatura de Objetos,Procedure,"Se a operação efetuada não for uma das citadas anteriormente, deve-se utilizar o"
+Nomenclatura de Objetos,Procedure,"Inserir (I), Excluir (E), Alterar (A), Relatório (R)."
+Nomenclatura de Objetos,Procedure,"Operação: Usar sigla, em letra maiúscula, das operações básicas: Selecionar (S),"
+Nomenclatura de Objetos,Procedure,"procedure, acrescenta-se um complemento / descrição para melhor definição da"
+Nomenclatura de Objetos,Procedure,Complemento: Opcional. Caso o objetivo não seja suficiente para traduzir a função da
+Nomenclatura de Objetos,Procedure,"inserir? Neste caso, muitas vezes coincidirá com o nome da tabela."
+Nomenclatura de Objetos,Procedure,Objetivo: Usar substantivo que responda às perguntas: O que selecionar? O que
+Nomenclatura de Objetos,Procedure,"Nome de procedure: Objetivo[Complemento]Operacao,"
+Nomenclatura de Objetos,Coluna,sequencial no final do nome do “índice”.
+Nomenclatura de Objetos,Coluna,"Quando existir mais de um “índice” com o mesmo campo, deve-se usar um número"
+Nomenclatura de Objetos,Coluna,índice. Usar abreviações se o nome do campo for muito grande.
+Nomenclatura de Objetos,Coluna,Nome da tabela mais underline seguido do nome da primeira coluna que compõe o
+Nomenclatura de Objetos,Coluna,vmProcessoUsuario
+Nomenclatura de Objetos,Coluna,melhor definição da mesma.
+Nomenclatura de Objetos,Coluna,view materializada acrescenta-se um complemento / descrição para
+Nomenclatura de Objetos,Coluna,Opcional. Caso o objetivo não seja suficiente para traduzir a função da
+Nomenclatura de Objetos,Coluna,Muitas vezes coincidirá com o nome da tabela.
+Nomenclatura de Objetos,Coluna,Objetivo: Usar substantivo que responda a pergunta: O que selecionar?
+Nomenclatura de Objetos,Coluna,vm: prefixo que identifica uma view materializada.
+Nomenclatura de Objetos,Coluna,View Materializada também deve utilizar a semântica das tabelas.
+Nomenclatura de Objetos,Coluna,materializadas deve ser prefixada a palavra “vw” seguido do nome da tabela.
+Nomenclatura de Objetos,Coluna,Deve-se usar a mesma semântica utilizada para as tabelas. Para views não
+Nomenclatura de Objetos,Coluna,DELETE efetuados na view.
+Nomenclatura de Objetos,Coluna,"view não devem ser atualizadas indiretamente, via comandos de INSERT, UPDATE e"
+Nomenclatura de Objetos,Coluna,Views devem ser utilizadas somente para consultas. As tabelas envolvidas em uma
+Nomenclatura de Objetos,Coluna,e/ou a informações já consolidadas.
+Nomenclatura de Objetos,Coluna,para conceder aos usuários permissão de acesso somente a determinados atributos
+Nomenclatura de Objetos,Coluna,"Views também podem ser adotadas por questões de segurança, como um instrumento"
+Nomenclatura de Objetos,Coluna,não na sua execução.
+Nomenclatura de Objetos,Coluna,"consulta, pois o comando SELECT é interpretado no momento de criação da view, e"
+Nomenclatura de Objetos,Coluna,mais transações do sistema. O uso de view pode melhorar o tempo de resposta da
+Nomenclatura de Objetos,Coluna,cujo formato de saída dos dados selecionados seja considerado padrão para uma ou
+Nomenclatura de Objetos,Coluna,"Views podem ser adotadas para queries complexas, envolvendo mais de uma tabela,"
+Nomenclatura de Objetos,Coluna,3.5 Nome de View:
+Nomenclatura de Objetos,Coluna,Check: Usar o prefixo “chk” mais o nome da tabela mais o nome da coluna.
+Nomenclatura de Objetos,Coluna,Unique: Usar o prefixo “u” mais o nome da tabela mais o nome da coluna.
+Nomenclatura de Objetos,Coluna,fkProcessoUsuario
+Nomenclatura de Objetos,Coluna,Foreign key: Usar o prefixo “fk” mais os nomes das tabelas filha e pai.
+Nomenclatura de Objetos,Coluna,Primary key: Usar o prefixo “pk” mais o nome da tabela.
+Nomenclatura de Objetos,Coluna,3.4 Nomes de Constraints:
+Nomenclatura de Objetos,Coluna,sequencial no final do nome da “fk”.
+Nomenclatura de Objetos,Coluna,"Quando existir mais de uma “fk” para a mesma tabela pai, deve-se usar um número"
+Nomenclatura de Objetos,Coluna,sPlaca (ak) (*ak - alternate key) sPlacaVeiculo (fk)
+Nomenclatura de Objetos,Coluna,da tabela-pai ao nome do campo.
+Nomenclatura de Objetos,Coluna,"Se o campo não for chave primária na tabela de origem, deve-se acrescentar o nome"
+Nomenclatura de Objetos,Coluna,nVeiculo (pk) nProcesso (pk)
+Nomenclatura de Objetos,Coluna,Utilização do nome do campo da Tabela Pai (nome de origem);
+Nomenclatura de Objetos,Coluna,3.3.3 Chaves Estrangeiras (fk):
+Nomenclatura de Objetos,Coluna,"nTaxa (pk),(fk)"
+Nomenclatura de Objetos,Coluna,"sServico (pk) sServico (pk),(fk) nTaxa (pk)"
+Nomenclatura de Objetos,Coluna,Esses campos serão ao mesmo tempo chaves primárias e estrangeiras;
+Nomenclatura de Objetos,Coluna,primária devem ser mantidos dos campos que foram trazidos das tabelas de origem.
+Nomenclatura de Objetos,Coluna,"Quando a tabela for de relacionamento, os nomes dos campos que compõem a chave"
+Nomenclatura de Objetos,Coluna,"Se a chave primária for um número seqüencial, deve-se utilizar o nome da tabela"
+Nomenclatura de Objetos,Coluna,Chave Primária composta ➡ AnoOficio / NumOficio
+Nomenclatura de Objetos,Coluna,Tabela ➡ Oficio
+Nomenclatura de Objetos,Coluna,Chave Primária ➡ nCpfProfissional
+Nomenclatura de Objetos,Coluna,Tabela ➡ Profissional
+Nomenclatura de Objetos,Coluna,do nome da tabela;
+Nomenclatura de Objetos,Coluna,"Utilização dos atributos considerados identificadores naturais das tabelas, acrescidos"
+Nomenclatura de Objetos,Coluna,3.3.2 Chaves Primárias (pk):
+Nomenclatura de Objetos,Coluna,"Se o campo for um identificador, deve-se colocar na segunda posição a letra “i” em"
+Nomenclatura de Objetos,Coluna,"char, varchar s"
+Nomenclatura de Objetos,Coluna,"float, real, double precision"
+Nomenclatura de Objetos,Coluna,"numeric, int, smallint, n"
+Nomenclatura de Objetos,Coluna,"money, smallmoney m"
+Nomenclatura de Objetos,Coluna,"text, image, binary, long I"
+Nomenclatura de Objetos,Coluna,"smalldatetime,bigdatetime,"
+Nomenclatura de Objetos,Coluna,Tipo do Dado Sigla do Tipo
+Nomenclatura de Objetos,Coluna,3.3.1 Tipo de Dado:
+Nomenclatura de Objetos,Coluna,Usuario(nCpf) ➡ LogUsuario(nCpf)
+Nomenclatura de Objetos,Coluna,deverá seguir o padrão já existente.
+Nomenclatura de Objetos,Coluna,das colunas que não existam na tabela do sistema a nomenclatura dessas colunas
+Nomenclatura de Objetos,Coluna,constituição dos nomes das suas colunas idênticas aos da tabela já existente. No caso
+Nomenclatura de Objetos,Coluna,As tabelas de Log que são uma réplica de uma tabela do sistema já existente terão a
+Nomenclatura de Objetos,Coluna,colunas que serão usadas como passagem de parâmetros deverão iniciar seu nome
+Nomenclatura de Objetos,Coluna,No caso das tabelas que possuem procedures ligadas a elas (external procedure) as
+Nomenclatura de Objetos,Coluna,sChassi (Sistemas em Bancos Novos)
+Nomenclatura de Objetos,Coluna,"entanto, todas as outras regras de padronização devem ser seguidas conforme o"
+Nomenclatura de Objetos,Coluna,"necessidade de desenvolver um sistema que use um novo banco de dados), no"
+Nomenclatura de Objetos,Coluna,não utilizarão o tipo do dado na frente do nome da coluna (exceto se houver a
+Nomenclatura de Objetos,Coluna,Os sistemas de Veículos e os sistemas da equipe de Infrações referentes a veículos
+Nomenclatura de Objetos,Coluna,primeira letra maiúscula e as demais minúsculas.
+Nomenclatura de Objetos,Coluna,"Siglas como IPVA, CNPJ, CNH, FEBRABAN obedecerá a mesma regra sendo a"
+Nomenclatura de Objetos,Coluna,O nome da coluna deve ser o mais próximo possível do seu objetivo / significado.
+Nomenclatura de Objetos,Coluna,nome identificador da coluna com o 1º caracter de cada termo em maiúsculo;
+Nomenclatura de Objetos,Coluna,"Na primeira posição deve-se utilizar, em letra minúscula, o tipo do dado, seguido pelo"
+Nomenclatura de Objetos,Coluna,tabela de maneira clara e descritiva.
+Nomenclatura de Objetos,Coluna,"Seguindo o mesmo padrão utilizado para tabelas, deve-se identificar a coluna da"
+Nomenclatura de Objetos,Tabela,px<Origem><NomeDoObjeto>
+Nomenclatura de Objetos,Tabela,estivessem no banco local. Sua nomenclatura deverá ser composta por
+Nomenclatura de Objetos,Tabela,"permite acessar dados que estão em outro banco de dados ou servidor, como se"
+Nomenclatura de Objetos,Tabela,Tabela do tipo Proxy: As Proxy tables são tabelas “espelho” ou de referência que
+Nomenclatura de Objetos,Tabela,procedure não afeta apenas uma tabela)
+Nomenclatura de Objetos,Tabela,"procedure (não podemos colocar o nome da tabela, pois normalmente esse tipo de"
+Nomenclatura de Objetos,Tabela,O nome da procedure deve ser composto da seguinte forma: z + login + objetivo da
+Nomenclatura de Objetos,Tabela,nomenclatura deverá ser composta com a letra “z” no início + login do criador + nome
+Nomenclatura de Objetos,Tabela,Tabela do tipo “z”: São tabelas que serão excluídas do banco de dados. Sua
+Nomenclatura de Objetos,Tabela,será excluído pela própria aplicação.
+Nomenclatura de Objetos,Tabela,"Tabela temporária(tmp): É uma tabela que é usada de forma auxiliar, cujo conteúdo"
+Nomenclatura de Objetos,Tabela,Obs.: Tabelas de Log não terão chave estrangeira (fk) no entanto terão chave
+Nomenclatura de Objetos,Tabela,"Quando a tabela for de Log, deve-se usar o nome da tabela antecedida do termo"
+Nomenclatura de Objetos,Tabela,da letra maiúscula no início de cada elemento do nome.
+Nomenclatura de Objetos,Tabela,nomenclatura vamos utilizar uma versão adaptada desta notação que é o uso
+Nomenclatura de Objetos,Tabela,sua origem na codificação de programas. Para o nosso padrão de
+Nomenclatura de Objetos,Tabela,nomenclatura através do uso de letras maiúsculas e letras minúsculas. Tem a
+Nomenclatura de Objetos,Tabela,Obs.: Notação Húngara é a diferenciação dos elementos de uma dada
+Nomenclatura de Objetos,Tabela,primeira letra maiúscula e as demais minúsculas.
+Nomenclatura de Objetos,Tabela,"Siglas como IPVA, CNPJ, CNH, FEBRABAN obedecerá a mesma regra sendo a"
+Nomenclatura de Objetos,Tabela,"maiúscula, notação húngara;"
+Nomenclatura de Objetos,Tabela,"maiúscula, demais em minúsculas. Para cada palavra interna, primeira letra em"
+Nomenclatura de Objetos,Tabela,"Utilização do 1º caracter de cada termo em maiúsculo, ou seja, primeira letra em"
+Nomenclatura de Objetos,Tabela,"Obs.: Não utilizar id, cod ou semelhante na chave identificadora."
+Nomenclatura de Objetos,Tabela,O campo identificador / Chave-Primária deve ser referente ao nome da tabela;
+Nomenclatura de Objetos,Tabela,composto pelos nomes das entidades relacionadas;
+Nomenclatura de Objetos,Tabela,"Quando a tabela for derivada de relacionamento N:N, o seu nome deverá ser"
+Nomenclatura de Objetos,Tabela,deve estar sempre no singular;
+Nomenclatura de Objetos,Tabela,"conteúdo, isto significa que seu nome então deverá ser Feriado; O nome da tabela"
+Nomenclatura de Objetos,Tabela,"uma tabela de feriados, esta tabela deve ser nomeada identificando claramente seu"
+Nomenclatura de Objetos,Tabela,"orientado a objeto, por exemplo: se no departamento financeiro for necessário manter"
+Nomenclatura de Objetos,Tabela,O nome de uma tabela deverá ser sugestivo. Deve-se fazer o uso de nomenclatura
+Nomenclatura de Objetos,Tabela,ControleLicencaBiometriaCreden
+Nomenclatura de Objetos,Tabela,ControleLicencaBioCredenciado
+Nomenclatura de Objetos,Tabela,abreviados sem perder a coerência do entendimento;
+Nomenclatura de Objetos,Tabela,"caracteres que o SGBD impõe (30 caracteres). Neste caso, os termos devem ser"
+Nomenclatura de Objetos,Tabela,excetuando-se quando isto não for possível devido à limitação da quantidade de
+Nomenclatura de Objetos,Tabela,"Utilização dos nomes completos dos termos que compõem o nome da tabela,"
+Nomenclatura de Objetos,Banco,nn define um seqüencial.
+Nomenclatura de Objetos,Banco,"aaaaa define a área, o negócio (até 5 posições);"
+Nomenclatura de Objetos,Banco,Onde: db define que é uma database;
+Nomenclatura de Objetos,Banco,"Nome do banco: dbaaaaann,"
+Nomenclatura de Objetos,Banco,ou deverá refletir a sigla da aplicação.
+Nomenclatura de Objetos,Banco,O nome do banco de dados deverá identificar o negócio que está sendo automatizado
+Regras Gerais,Geral/Nenhum,"Siglas oficiais: primeira letra maiúscula e demais minúsculas (Ex.: Ipva, Cnh)."
+Regras Gerais,Geral/Nenhum,"Máximo de 30 caracteres (se ultrapassar, usar abreviações coerentes)."
+Regras Gerais,Geral/Nenhum,"Evitar preposições (Ex.: “de”, “da”, “do”)."
+Regras Gerais,Geral/Nenhum,Primeira letra de cada palavra maiúscula (Ex.: ParcelaDebito).
+Regras Gerais,Geral/Nenhum,"Usar apenas letras (A–Z, a–z), números (0–9) e _ (underline)."
+Boas Práticas,Geral/Nenhum,"Evitar NOT EXISTS, NOT IN e NOT LIKE. Usar EXISTS, IN e LIKE."
+Boas Práticas,Geral/Nenhum,Evitar JOIN com mais de 4 tabelas (usar temporárias se necessário).
+Boas Práticas,Geral/Nenhum,Preferencialmente não utilizar cursor.
+Boas Práticas,Geral/Nenhum,"Integridade referencial deve ser via constraints (pk, Unique, pk)."
+Boas Práticas,Geral/Nenhum,Todo comando sql deve ser feito via Stored Procedure (exceto update/insert de text/image).
+NULL,Procedure,"Quando a procedure for de Habilitação e for executada em Veículo ou o contrário, deve-se colocar no início do nome da procedure a palavra “Rpc”."
+NULL,Procedure,As procedures usadas pela FISEPE (SEFAZ) irão iniciar com as letras “FI” (maiúsculo).
+NULL,Procedure,"Em se tratando de sistema de Veículos, os nomes dos procedimentos RENAVAM e RENAINF ficarão iguais aos já existentes. Caso sejam banco RENAVAM todos os padrões serão mantidos, mas caso sejam em outro banco, só se houver algum termo que indique que a procedure faz parte de um desses projetos."
+Nomenclatura de Objetos,Trigger,"Prefixo tg + tabela + sigla evento (I, A, E)."
+Nomenclatura de Objetos,Procedure,"Se acesso via internet, iniciar com i; as colunas irão iniciar com @."
+Nomenclatura de Objetos,Procedure,"Se executada via batch, iniciar com Batch."
+Nomenclatura de Objetos,Procedure,"Objetivo + Complemento + Operação (S, I, E, A, R)."
+Nomenclatura de Objetos,Índice,Nome da tabela seguido do nome da primeira coluna do índice.
+Nomenclatura de Objetos,View materializada,View que armazena dados fisicamente.
+Nomenclatura de Objetos,View comum,View para consultas (SELECT apenas).
+Nomenclatura de Objetos,Check,Restrição de checagem.
+Nomenclatura de Objetos,Unique,Restrição de unicidade.
+Nomenclatura de Objetos,fk (Foreign Key),Padrão para Foreign Key (FK): Usar o prefixo fk mais os nomes das tabelas filha e pai.
+Nomenclatura de Objetos,pk (Primary Key),Chave primária natural ou sequencial.
+Nomenclatura de Objetos,Coluna,Colunas usadas como parâmetro em procedures externas iniciam com underline.
+Nomenclatura de Objetos,Coluna,"Prefixo minúsculo indicando o tipo, seguido do nome em notação húngara."
+Nomenclatura de Objetos,Proxy Table,Tabelas espelho ou de referência externa.
+Nomenclatura de Objetos,"Tabela ""z""",Tabelas que serão excluídas do banco de dados.
+Nomenclatura de Objetos,Tabela Temp,Tabela temporária auxiliar.
+Nomenclatura de Objetos,Tabela Log,Tabelas de log devem ter o prefixo Log.
+Nomenclatura de Objetos,Tabela,"Nome no singular, claro, sem abreviação (exceto se >30 chars)."
+Nomenclatura de Objetos,Banco,O nome do banco deve identificar o negócio ou a sigla da aplicação.
+Regra especial,Geral/Nenhum,"Se acesso via internet, iniciar com ""i"", já as colunas serão nomeadas com ""@"" no início."
+Regra especial,Geral/Nenhum,"Quando a procedure for de Habilitação e for executada em Veículo ou o contrário, deve-se colocar no início do nome da procedure a palavra “Rpc”."
+Regra especial,Geral/Nenhum,As procedures usadas pela FISEPE (SEFAZ) irão iniciar com as letras “FI” (maiúsculo).
+Regra especial,Geral/Nenhum,"Se executada via batch, iniciar com Batch."
+Regra especial,Geral/Nenhum,"Em se tratando de sistema de Veículos, os nomes dos procedimentos RENAVAM e RENAINF ficarão iguais aos já existentes."
+Regras Gerais,Geral/Nenhum,Siglas oficiais: primeira letra maiúscula e demais minúsculas.
+Regras Gerais,Geral/Nenhum,"Não usar apenas números, verbos ou nomes próprios."
+Regras Gerais,Geral/Nenhum,"Não usar palavras reservadas (INSERT, DELETE, SELECT...)."
+Regras Gerais,Geral/Nenhum,"Tabelas devem ser nomeadas usando o máximo de 30 caracteres (se ultrapassar, usar abreviações coerentes)."
+Regras Gerais,Geral/Nenhum,Tabelas temporárias (Tabela Temp) vai seguir as mesmas regras de nomenclatura aplicadas às tabelas
+Regras Gerais,Geral/Nenhum,"Evitar preposições (Ex.: ""de"", ""da"", ""do"")."
+Regras Gerais,Geral/Nenhum,"Usar nomes curtos, claros e sem ambiguidade."
+Regras Gerais,Geral/Nenhum,Usar termos em português e no singular.
+Regras Gerais,Geral/Nenhum,"Uso de Iniciais Maiúsculas em cada palavra [notação húngara.]""."
+Regras Gerais,Geral/Nenhum,"Não usar caracteres especiais (#, @, %, $, !, *, +, -, /, =)."
+Regras Gerais,Geral/Nenhum,"Não usar acentos, cedilha (ç), espaços."
+Regras Gerais,Geral/Nenhum,"Usar apenas letras (A-Z, a-z), números (0-9) e _ (underline)."

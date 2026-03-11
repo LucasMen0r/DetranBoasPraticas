@@ -1,0 +1,109 @@
+========================================
+DATA: 11/03/2026 10:23:00
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "A procedure dbfisc01..EscalaS.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+**Resposta:** SIM, a procedure está de acordo com o padrão.
+
+**Justificativa:**  
+1. **Regra de Nomenclatura:** O nome da procedure segue o padrão **Objetivo[Complemento]Operação**, conforme especificado no contexto.  
+2. **Operação:** A parte final do nome é **S**, que é uma operação básica permitida (Selecionar), conforme listada na regra.  
+3. **Exemplo de Referência:** O exemplo `dbfisc01..EscalaA.scp` foi validado com a mesma estrutura, confirmando que operações básicas como **S** são aceitas.  
+
+**Conclusão:** O nome da procedure está alinhado às regras e exemplos fornecidos.
+========================================
+
+========================================
+DATA: 11/03/2026 10:29:48
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: " a table: CREATE TABLE dbhcen.alteracaopontoatendimento (nprocesso numeric(13) NOT NULL, npontoatendimentoantigo int4 NOT NULL, npontoatendimentonovo int4 NOT NULL, ddata timestamp NOT NULL, smotivo varchar(254) NOT NULL, CONSTRAINT pkalteracaopontoatendimento PRIMARY KEY (nprocesso, npontoatendimentoantigo, npontoatendimentonovo, ddata)); está de acordo com o padrão do Detran?"
+========================================
+RESPOSTA:
+Não, a tabela **não está de acordo** com o padrão do Detran.
+
+**Motivo:** A regra **2.5 Siglas** estabelece que os nomes devem utilizar siglas oficiais (ex.: `Ipva`, `Cnh`), com a primeira letra maiúscula e as demais minúsculas. O nome da tabela `alteracaopontoatendimento` não segue essa regra, pois não utiliza uma sigla oficial.
+========================================
+
+========================================
+DATA: 11/03/2026 11:07:51
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "A procedure dbfisc01..EscalaE.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+**Parecer do Auditor Gandalf**
+
+A procedure `dbfisc01..EscalaE.scp` **NÃO está de acordo com o padrão**.
+
+**Justificativa:**
+
+1. **Regra 1: Rigor ESTRUTURAL**  
+   O nome da procedure contém a extensão `.scp`, que é considerada uma violação da regra de nomenclatura. Conforme estabelecido, nomes com extensões (como `.scp`, `.sql`) são automaticamente reprovados, a menos que haja uma regra explícita permitindo.
+
+2. **Regra de Formatação de Nome**  
+   Mesmo que o sufixo `.scp` não fosse uma violação, o formato `EscalaE.scp` não seguiria o padrão `Objetivo[Complemento]Operação`, pois a extensão `.scp` não faz parte do esquema nomeado.
+
+**Conclusão:**  
+A procedure é reprovada por conter a extensão `.scp`, conforme a regra de rigor estrutural.
+========================================
+
+========================================
+DATA: 11/03/2026 11:16:25
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "A procedure dbfisc01..EscalaI.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+**APROVADO**
+
+**Motivo:**  
+A procedure `dbfisc01..EscalaI.scp` está de acordo com o padrão nomeado.  
+- **Objetivo:** "Escala" atua como substantivo, respondendo à pergunta "O que inserir?" (regra de nomenclatura).  
+- **Operação:** A terminação "I" corresponde à sigla para "Inserir" (operação básica permitida), conforme definido no modelo de aprovação dos exemplos.  
+- **Estrutura:** O formato `Objetivo[Complemento]Operacao` foi seguido, com "I" como operação válida.  
+
+**Regra embasadora:**  
+A regra de nomeação de procedures estabelece que a operação deve ser representada por uma letra maiúscula (S, I, E, A, R), conforme demonstrado nos exemplos aprovados.
+========================================
+
+========================================
+DATA: 11/03/2026 11:30:42
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "A procedure dbfisc01..Escalar.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+**Parecer do Auditor Gandalf**
+
+**Objeto analisado:** dbfisc01..Escalar.scp  
+**Resultado:** **REPROVADO**
+
+---
+
+**Justificativa:**  
+A procedure `dbfisc01..Escalar.scp` viola a regra de nomenclatura estabelecida no contexto normativo.  
+
+**Regra violada:**  
+De acordo com a regra de nomeação de procedures, o nome deve seguir o padrão **Objetivo[Complemento]Operação**, onde a **Operação** é uma sigla em letras maiúsculas das operações básicas (S, I, E, A, R).  
+
+**Exemplo de conformidade:**  
+- `dbfisc01..EscalaA.scp` → Conforme regra, a operação "Alterar" (A) está explicitamente no final do nome.  
+
+**Objeto analisado:**  
+- `dbfisc01..Escalar.scp` → **Não possui a sigla de operação** no final, violando a regra.  
+
+**Conclusão:**  
+O nome da procedure não atende ao padrão estabelecido, pois falta a indicação da operação no final do nome.  
+
+**Ação recomendada:**  
+O desenvolvedor deve renomear a procedure incluindo a sigla da operação no final, conforme o padrão **Objetivo[Complemento]Operação**.
+========================================
+
