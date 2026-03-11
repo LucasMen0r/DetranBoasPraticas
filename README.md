@@ -12,20 +12,43 @@ O sistema utiliza modelos de linguagem locais (Ollama) integrados a um banco de 
 * **LLM (Chat):** DeepSeek-r1:8b (via Ollama)
 * **Embedding:** nomic-embed-text:latest (via Ollama)
 
+## Arquitetura RAG: O Impacto de Regras Duplicadas na Base de Conhecimento
+Durante o desenvolvimento da base de conhecimento e do pipeline de ingestão de dados, estabeleceu-se a premissa de bloqueio estrito à entrada de registros duplicados na tabela de vetorização (`RegraNomenclatura`). 
+
+A redundância de texto em arquiteturas RAG introduz falhas severas de performance e precisão no sistema como um todo. A decisão de isolar duplicatas baseia-se nos seguintes fatores arquiteturais:
+
+* **Poluição da Janela de Contexto:** A busca vetorial (via `pgvector`) retorna os *Top K* resultados mais próximos semanticamente da pergunta do usuário. A existência de regras duplicadas faz com que um mesmo conteúdo ocupe múltiplas posições desse limite de retorno. Isso expulsa da janela de contexto outras regras complementares que seriam fundamentais para que o LLM formulasse uma resposta precisa.
+* **Viés de Atenção do Modelo (Frequency Bias):** Modelos de linguagem ponderam suas respostas com base na repetição de tokens no prompt. Injetar a mesma regra múltiplas vezes no contexto força o LLM a atribuir um peso matemático desproporcional àquela instrução específica, podendo gerar alucinações ou ignorar as demais diretrizes normativas do banco.
+* **Sobrecarga do Índice Vetorial (Consumo de RAM):** A busca por similaridade utiliza o algoritmo de indexação HNSW (Hierarchical Navigable Small World), que constrói grafos complexos mantidos ativamente na memória RAM do servidor. Vetores idênticos adicionam nós inúteis a essa estrutura, inchando o consumo de memória e degradando a performance matemática do cálculo de distância espacial.
+* **Desperdício Computacional na Injeção:** A geração do vetor de 768 dimensões consome processamento (CPU/GPU) do servidor local. Processar textos idênticos repetidas vezes durante a leitura dos manuais gera gargalos de tempo e recursos desnecessários na etapa de ingestão.
+
+**Implementação e Tratamento:**
+Para garantir a integridade da base e a eficiência do modelo, o banco de dados impõe uma restrição estrutural (`UNIQUE CONSTRAINT`) validando a combinação de Categoria, Objeto e Texto. O script de automação em Python interage com essa trava utilizando a instrução `ON CONFLICT DO NOTHING`, garantindo que apenas regras inéditas ou atualizadas sejam vetorizadas e persistidas, sem interromper o fluxo de leitura de novos documentos em lote.
+
 ## Estrutura do Projeto
 A base de código é dividida nos seguintes módulos principais:
-
 * `DetranNorma.sql`: Script DDL e DML para recriação estrutural do banco de dados, tabelas relacionais de regras, restrições e carga das normativas padrão.
 * `perguntar_ao_manual.py`: Script principal de interação. Recebe a requisição do usuário, classifica a intenção, busca os vetores de contexto no banco e interage com o LLM para retornar o diagnóstico da auditoria.
-* `adicionar_exemplo_interativo.py`: Interface de linha de comando (CLI) para manutenção da memória do Gandalf. Permite a inserção, atualização (via `UPSERT`) e remoção de casos de sucesso e falha aprovados pela Administração de Dados.
+* `adicionar_exemplo_interativo.py`: Interface de linha de comando (CLI) para manutenção da memória do sistema. Permite a inserção, atualização (via `UPSERT`) e remoção de casos de sucesso e falha aprovados pela Administração de Dados.
 * `treinar_gandalf.py`: Script responsável pelo processamento em lote e vetorização de arquivos `.txt` contendo histórico e manuais auxiliares, armazenando o conhecimento na tabela `ConhecimentoHistorico`.
 
 ## Configuração do Ambiente
 
-1. **Dependências Python:**
+**1. Dependências Python:**
 Instale as bibliotecas necessárias utilizando o gerenciador de pacotes:
+```pip install -r requirements.txt```
 
-`pip install -r requirements.txt`
+## Principais pacotes utilizados:
+
+ **requests: Comunicação HTTP com a API do Ollama.**
+
+ **psycopg2-binary: Conexão com o banco de dados PostgreSQL.**
+
+ **pgvector: Suporte aos embeddings e operações vetoriais no PostgreSQL.**
+
+ **python-dotenv: Leitura automática do arquivo .env.**
+
+ **PyPDF2: Implementação de ingestão automatizada em lote da nova versão do manual normativo.**
 
 python adicionar_exemplo_interativo.py
 Logs e Monitoramento
@@ -52,18 +75,17 @@ Execute o script principal passando a pergunta como argumento ou utilize o modo 
 Caso o sistema reprove um objeto válido, alimente a base de exemplos práticos para corrigir o comportamento do modelo na próxima execução:
   `python adicionar_exemplo_interativo.py`
 4. **Imports**
-# Comunicacao HTTP com a API do Ollama
+Comunicacao HTTP com a API do Ollama
 `requests`
 
-# Conexao com o banco de dados PostgreSQL
+Conexao com o banco de dados PostgreSQL
 `psycopg2-binary`
 
-# Suporte aos embeddings e operacoes vetoriais no PostgreSQL
+Suporte aos embeddings e operacoes vetoriais no PostgreSQL
 `pgvector`
 
-# TODO: Biblioteca mantida como dependencia para suporte futuro. 
- Será utilizada na implementacao da ingestao e processamento em lote de manuais normativos em formato PDF.
+Será utilizada na implementacao da ingestao e processamento em lote de manuais normativos em formato PDF.
 `PyPDF2`
 
-# Leitura automatica do arquivo .env
+Leitura automatica do arquivo .env
 `python-dotenv`
