@@ -29,26 +29,24 @@ Para garantir a integridade da base e a eficiência do modelo, o banco de dados 
 A base de código é dividida nos seguintes módulos principais:
 * `DetranNorma.sql`: Script DDL e DML para recriação estrutural do banco de dados, tabelas relacionais de regras, restrições e carga das normativas padrão.
 * `perguntar_ao_manual.py`: Script principal de interação. Recebe a requisição do usuário, classifica a intenção, busca os vetores de contexto no banco e interage com o LLM para retornar o diagnóstico da auditoria.
-* `adicionar_exemplo_interativo.py`: Interface de linha de comando (CLI) para manutenção da memória do sistema. Permite a inserção, atualização (via `UPSERT`) e remoção de casos de sucesso e falha aprovados pela Administração de Dados.
+* `adicionar_exemplo_interativo.py`: Interface de linha de comando (CLI) multifuncional. Permite a manutenção da memória do sistema (inserção e remoção de exemplos práticos) e a ingestão automatizada de novos manuais normativos em formato PDF.
 * `treinar_gandalf.py`: Script responsável pelo processamento em lote e vetorização de arquivos `.txt` contendo histórico e manuais auxiliares, armazenando o conhecimento na tabela `ConhecimentoHistorico`.
 
+## Principais pacotes utilizados:
+*requests: Comunicação HTTP com a API do Ollama.*
+
+*psycopg2-binary: Conexão com o banco de dados PostgreSQL.*
+
+*pgvector: Suporte aos embeddings e operações vetoriais no PostgreSQL.*
+
+*python-dotenv: Leitura automática do arquivo .env.*
+
+*pdfplumber: Leitura estruturada, extração semântica e ingestão automatizada em lote de manuais normativos em PDF.*
 ## Configuração do Ambiente
 
-**1. Dependências Python:**
+### 1. Dependências Python
 Instale as bibliotecas necessárias utilizando o gerenciador de pacotes:
 ```pip install -r requirements.txt```
-
-## Principais pacotes utilizados:
-
- **requests: Comunicação HTTP com a API do Ollama.**
-
- **psycopg2-binary: Conexão com o banco de dados PostgreSQL.**
-
- **pgvector: Suporte aos embeddings e operações vetoriais no PostgreSQL.**
-
- **python-dotenv: Leitura automática do arquivo .env.**
-
- **PyPDF2: Implementação de ingestão automatizada em lote da nova versão do manual normativo.**
 
 python adicionar_exemplo_interativo.py
 Logs e Monitoramento
