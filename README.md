@@ -75,18 +75,17 @@ Execute o script principal passando a pergunta como argumento ou utilize o modo 
 Caso o sistema reprove um objeto válido, alimente a base de exemplos práticos para corrigir o comportamento do modelo na próxima execução:
   `python adicionar_exemplo_interativo.py`
 4. **Imports**
-# Comunicacao HTTP com a API do Ollama
+Comunicacao HTTP com a API do Ollama
 `requests`
 
-# Conexao com o banco de dados PostgreSQL
+Conexao com o banco de dados PostgreSQL
 `psycopg2-binary`
 
-# Suporte aos embeddings e operacoes vetoriais no PostgreSQL
+Suporte aos embeddings e operacoes vetoriais no PostgreSQL
 `pgvector`
 
-# TODO: Biblioteca mantida como dependencia para suporte futuro. 
- Será utilizada na implementacao da ingestao e processamento em lote de manuais normativos em formato PDF.
+Será utilizada na implementacao da ingestao e processamento em lote de manuais normativos em formato PDF.
 `PyPDF2`
 
-# Leitura automatica do arquivo .env
+Leitura automatica do arquivo .env
 `python-dotenv`
