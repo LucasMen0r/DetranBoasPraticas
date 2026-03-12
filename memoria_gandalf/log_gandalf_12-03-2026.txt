@@ -107,3 +107,36 @@ O nome não contém preposições (violação da regra 1), nem caracteres invál
 O índice está de acordo com as normas do Detran. Qualquer dúvida sobre interpretação das regras, o usuário deve consultar o manual do Detran ou a equipe de Administração de Dados.
 ========================================
 
+========================================
+DATA: 12/03/2026 09:50:52
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "o índice: CREATE INDEX usuario_dcadastro ON dbhcen.usuario USING btree (dcadastro, npontocadastro); segue os padrões do detran?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Índice `usuario_dcadastro`
+**Conformidade:** REPROVADO
+**Justificativa:** "Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados."
+========================================
+
+========================================
+DATA: 12/03/2026 10:37:55
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "a procedure: dbvcen.arearodizioe segue os padrões do detran?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Procedure dbvcen.arearodizioe  
+**Conformidade:** REPROVADO  
+**Justificativa:**  
+1. **Regra de Nomeação:** O nome da procedure deve seguir o padrão "Objetivo[Complemento]Operação". O nome "arearodizioe" não atende a esse formato, pois não utiliza o padrão de operação (S, I, E, A, R) e não segue a estrutura verb-substantivo.  
+2. **Regra de Procedures Batch:** Procedures executadas via processamento batch devem ter "Batch" no início do nome. O nome "arearodizioe" não contém essa palavra.  
+3. **Exemplo de Referência:**  
+   - [REPROVADO]: PopulaVeiculoRoubadoSDS → Motivo: O nome não segue o padrão "Objetivo[Complemento]Operação" e a operação não está entre S, I, E, A, R.  
+   - [REPROVADO]: dbvcen..ConsumoServicoWebBatchI → Motivo: Procedures batch devem começar com "Batch", não terminar com ele.  
+**Recomendação:**  
+Recrie o nome da procedure seguindo o padrão "Objetivo[Complemento]Operação" e incluindo "Batch" no início se for uma procedure batch. Exemplo: "BatchAreaRodizioIE". Além disso, adicione a data de criação, o responsável e um objetivo claro no comentário da procedure.
+========================================
+

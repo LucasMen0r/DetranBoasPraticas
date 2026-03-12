@@ -173,3 +173,9 @@ FROM RegraNomenclatura r
 INNER JOIN ObjetoDb o ON r.pkObjetoDb = o.pkObjetoDb
 LEFT JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
 WHERE o.NomeObjeto = 'Índice';
+
+select * from exemplopratico;
+
+
+ALTER TABLE RegraNomenclatura 
+ADD COLUMN IF NOT EXISTS UltimaVerificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP;

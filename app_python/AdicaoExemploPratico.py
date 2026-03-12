@@ -5,6 +5,7 @@ import psycopg2
 import pgvector.psycopg2
 import pdfplumber
 from pathlib import Path
+from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -288,13 +289,16 @@ def main():
                 input("Pressione Enter para continuar...")
                 continue
 
-            print("\nProcessando o arquivo PDF, aguarde...")
+            print("\nExtraindo texto do arquivo PDF, aguarde...")
             regras_extraidas = processarpdf_semantico(arquivo_selecionado)
 
             if regras_extraidas:
-                print(f"\n[INFO] Foram extraídas {len(regras_extraidas)} regras. Iniciando vetorização e inserção...")
+                print(f"\n[INFO] Foram extraídas {len(regras_extraidas)} regras. Iniciando sincronização inteligente...")
                 inseridas = 0
-                ignoradas = 0
+                atualizadas = 0
+                
+                # Marca o momento exato em que a leitura começou
+                inicio_sincronizacao = datetime.now()
 
                 try:
                     for regra in regras_extraidas:
@@ -316,31 +320,55 @@ def main():
                             obj_result = cursor.fetchone()
                             pk_objeto = obj_result[0] if obj_result else None
 
-                        embedding = get_embedding(texto_regra)
+                        # Verifica se a regra já existe ANTES de chamar a IA (Economia de processamento)
+                        # O uso de IS NOT DISTINCT FROM é vital aqui porque pk_objeto pode ser NULL
+                        cursor.execute("""
+                            SELECT pkRegraNomenclatura FROM RegraNomenclatura 
+                            WHERE pkCategoriaRegra = %s 
+                            AND pkObjetoDb IS NOT DISTINCT FROM %s 
+                            AND DescricaoRegra = %s
+                        """, (pk_categoria, pk_objeto, texto_regra))
+                        
+                        regra_existente = cursor.fetchone()
 
-                        if embedding:
+                        if regra_existente:
+                            # A regra já existe. Apenas renova o carimbo de tempo. Não gasta processamento vetorial.
                             cursor.execute("""
-                                INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra, embedding)
-                                VALUES (%s, %s, %s, %s)
-                                ON CONFLICT ON CONSTRAINT ukRegraUnica DO NOTHING
-                            """, (pk_categoria, pk_objeto, texto_regra, embedding))
+                                UPDATE RegraNomenclatura 
+                                SET ultima_verificacao = %s 
+                                WHERE pkRegraNomenclatura = %s
+                            """, (inicio_sincronizacao, regra_existente[0]))
+                            atualizadas += 1
+                        else:
+                            # É uma regra inédita. Chama o Ollama para vetorizar e insere.
+                            embedding = get_embedding(texto_regra)
 
-                            if cursor.rowcount > 0:
+                            if embedding:
+                                cursor.execute("""
+                                    INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra, embedding, ultima_verificacao)
+                                    VALUES (%s, %s, %s, %s, %s)
+                                """, (pk_categoria, pk_objeto, texto_regra, embedding, inicio_sincronizacao))
                                 inseridas += 1
                             else:
-                                ignoradas += 1
-                        else:
-                            print(f"[ERRO IA] Falha ao vetorizar a regra: {texto_regra[:30]}.")
+                                print(f"[ERRO IA] Falha ao vetorizar a regra inédita: {texto_regra[:30]}.")
+
+                    # Rotina de Limpeza: Remove tudo que não foi lido neste PDF (Regras obsoletas/removidas do manual)
+                    cursor.execute("""
+                        DELETE FROM RegraNomenclatura 
+                        WHERE ultima_verificacao < %s OR ultima_verificacao IS NULL
+                    """, (inicio_sincronizacao,))
+                    
+                    removidas = cursor.rowcount
 
                     conn.commit()
-                    print(f"\n[SUCESSO] Processamento de PDF concluído.")
-                    print(f"Novas regras registradas no banco: {inseridas}")
-                    print(f"Regras ignoradas (já existiam): {ignoradas}")
+                    print(f"\n[SUCESSO] Sincronização do manual concluída.")
+                    print(f"Novas regras registradas: {inseridas}")
+                    print(f"Regras mantidas (sem alteração): {atualizadas}")
+                    print(f"Regras antigas removidas (obsoletas): {removidas}")
 
                 except Exception as e:
-                    # Rollback caso ocorra uma falha estrutural no banco durante o loop
                     conn.rollback()
-                    print(f"\n[ERRO BANCO] Transação interrompida. Falha geral na inserção: {e}")
+                    print(f"\n[ERRO BANCO] Transação interrompida. Falha geral na sincronização: {e}")
 
             else:
                 print("\n[ERRO] Nenhuma regra extraída. Verifique a formatação do PDF.")

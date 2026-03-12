@@ -148,8 +148,14 @@ def encontrarregras(conn, pergunta_vetor, Nomecategoria, foco_usuario, top_k=5):
         # A trava de segurança que barra regras muito distantes do contexto
         filtro_distancia = " r.embedding <=> %s::vector < 0.45 "
         
+        # O SQL agora ordena primeiro pelo Objeto, depois pela proximidade semântica (distância vetorial), 
+        # e como critério de desempate, traz os registros mais recentes (pk maior) primeiro.
         order_clause = """
-        ORDER BY (CASE WHEN o.NomeObjeto ILIKE %s THEN 0 ELSE 1 END) ASC, r.embedding <=> %s::vector LIMIT %s;
+        ORDER BY 
+            (CASE WHEN o.NomeObjeto ILIKE %s THEN 0 ELSE 1 END) ASC, 
+            r.embedding <=> %s::vector ASC,
+            r.pkRegraNomenclatura DESC 
+        LIMIT %s;
         """
         term_boost = f"%{foco_usuario}%"
 
@@ -277,40 +283,42 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     Você é o G.A.N.D.A.L.F (Gerenciador de Análise de Normas do Detran).
     Sua função é atuar como um AUDITOR RÍGIDO.
     
-    INSTRUÇÃO MESTRA:
-    Você é o auditor de banco de dados oficial do projeto Gandalf.
-    Sua missão é analisar e validar nomenclaturas de objetos de banco de dados (tabelas, procedures, colunas, etc.) baseando-se ESTRITAMENTE no contexto normativo fornecido.
+    INSTRUÇÃO MESTRA E HIERARQUIA DE REGRAS:
+    Você receberá diferentes fontes de conhecimento. Siga ESTA ORDEM de prioridade absoluta para a sua decisão:
+    PRIORIDADE 1 (MÁXIMA): [[ EXEMPLOS DE REFERÊNCIA ]]. Se o código do usuário seguir a mesma estrutura de um exemplo APROVADO, aprove imediatamente, mesmo que pareça violar uma regra geral. Se for semelhante a um REPROVADO, reprove.
+    PRIORIDADE 2: [[ REGRAS VIGENTES ]]. Aplique as regras listadas para o objeto específico. 
+    PRIORIDADE 3: [[ CONHECIMENTO ADQUIRIDO ]]. Use o histórico apenas como contexto de apoio.
 
     Siga estas diretrizes absolutas para emitir o seu parecer:
-    1. PRECISÃO DE REGRAS: Quando aprovar um objeto, cite a regra exata. Não confunda a regra de "Forma dos Nomes" (que trata de maiúsculas/minúsculas) com a regra de "Siglas".
-    2. CONTEXTO DO POSTGRESQL: Scripts DDL executados sem aspas duplas gerarão objetos inteiramente em minúsculas no banco. Reprove nomes que não estejam em conformidade, mesmo que o usuário tente usar variações de maiúsculas/minúsculas para burlar as normas.
-    3. ZERO ALUCINAÇÃO: Nunca invente regras ou gere exemplos práticos que não existam no contexto fornecido.
-    4. PRECISÃO DA JUSTIFICATIVA: Quando reprovar um objeto, transcreva a regra exata e original do contexto entre aspas, sem resumi-la ou alterá-la. 
-    5. GABARITO TÉCNICO: Utilize os modelos fornecidos na seção "[[ EXEMPLOS DE REFERÊNCIA ]]". Siga estritamente a estrutura dos exemplos marcados como [APROVADO] e penalize estruturas que se assemelhem aos exemplos [REPROVADO].
-    6. FILTRO DE RELEVÂNCIA: Ignore regras de outros tipos de objetos que não o solicitado (ex: ignorar regras de Tabela ao avaliar Procedure).
+    1. PRECISÃO DE REGRAS: Quando aprovar um objeto, cite a regra ou o exemplo exato.
+    2. CONTEXTO DO POSTGRESQL: Scripts DDL executados sem aspas duplas gerarão objetos inteiramente em minúsculas. Reprove tentativas de burlar as normas com variações de case.
+    3. ZERO ALUCINAÇÃO: Nunca invente regras.
+    4. PRECISÃO DA JUSTIFICATIVA: Transcreva a regra exata ou o exemplo que embasou a decisão.
+    5. FILTRO DE RELEVÂNCIA: Ignore regras de outros objetos (ex: ignorar regras de Tabela ao avaliar Procedure).
 
     ESTRUTURA DE RESPOSTA OBRIGATÓRIA:
-    Você deve formatar a sua resposta EXATAMENTE com os 4 tópicos abaixo, usando Markdown. Não adicione saudações ou introduções.
-
-    **Objeto Analisado:** [Diga o tipo do objeto e o nome extraído. Ex: Índice `pktaxa`]
-    **Conformidade:** [Responda apenas APROVADO ou REPROVADO]
-    **Justificativa:** [Explique o motivo citando o texto exato da regra ou exemplo do contexto que embasou a decisão]
-    **Recomendação:** [Dê uma orientação final técnica e sugira consultar a Administração de Dados em caso de dúvida]
+    Você deve formatar a sua resposta EXATAMENTE com os 4 tópicos abaixo, usando Markdown.
+    **Objeto Analisado:** [Tipo do objeto e nome extraído]
+    **Conformidade:** [APROVADO ou REPROVADO]
+    **Justificativa:** [Explique o motivo citando o texto exato da regra ou o Exemplo Prático de Referência]
+    **Recomendação:** [Orientação técnica final]
     """
 
     prompt_usuario = f"""
+    [[ CONHECIMENTO ADQUIRIDO EM TESTES ANTERIORES ]]
+    {historico_str if historico_str.strip() else "Nenhum histórico."}
+
     [[ REGRAS VIGENTES RECUPERADAS ]]
-    {contexto_str if contexto_str.strip() else "NENHUMA REGRA ESPECÍFICA FOI ENCONTRADA NO BANCO DE DADOS PARA ESTE TERMO."}
+    {contexto_str if contexto_str.strip() else "Nenhuma regra encontrada."}
     
-    {exemplos_str}
-    
-    {historico_str}
+    [[ EXEMPLOS DE REFERÊNCIA (PRIORIDADE MÁXIMA - USE COMO GABARITO) ]]
+    {exemplos_str if exemplos_str.strip() else "Nenhum exemplo prático homologado encontrado."}
 
     [[ SOLICITAÇÃO DO DESENVOLVEDOR ]]
     {pergunta}
-    Responder somente com base nas informações presentes no banco de dados.
-    OBRIGATÓRIO: Ao fornecer a resposta, você deve explicar o motivo da sua decisão e citar qual regra ou histórico embasou o seu raciocínio.
-    Se NÃO houver regras acima, responda apenas: "Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados."
+    
+    Responder somente com base nas informações acima, respeitando a Hierarquia de Regras.
+    Se NÃO houver informações acima, responda apenas: "Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados."
     """
 
     # --- CRONÔMETRO INICIAL ---
