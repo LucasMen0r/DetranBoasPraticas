@@ -140,3 +140,20 @@ RESPOSTA:
 Recrie o nome da procedure seguindo o padrão "Objetivo[Complemento]Operação" e incluindo "Batch" no início se for uma procedure batch. Exemplo: "BatchAreaRodizioIE". Além disso, adicione a data de criação, o responsável e um objetivo claro no comentário da procedure.
 ========================================
 
+========================================
+DATA: 12/03/2026 11:01:43
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "a tabela: dbhcen.cnh foi nomeada corretamente de acordo com o padrão do detran?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Tabela `dbhcen.cnh`  
+**Conformidade:** APROVADO  
+**Justificativa:**  
+A regra 2.5 (Siglas) estabelece que siglas oficiais devem ser usadas com a primeira letra maiúscula e as demais minúsculas. O nome `cnh` segue essa regra, pois é uma sigla (Carteira Nacional de Habilitação) e está no singular. Além disso, a regra 2.3 (Limite de tamanho) é respeitada, pois o nome tem 3 caracteres, abaixo do máximo permitido (30).  
+
+**Recomendação:**  
+O nome da tabela está de acordo com as regras do Detran. Mantenha a consistência no uso de siglas e evite alterações que possam violar as regras de nomenclatura.
+========================================
+
