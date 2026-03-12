@@ -4,6 +4,7 @@ import requests
 import psycopg2
 import pgvector.psycopg2
 import pdfplumber
+from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -33,17 +34,21 @@ def limpar_tela():
 
 def processarpdf_semantico(caminho_pdf):
     """Extrai texto estruturado do PDF utilizando PDFPlumber, Regex e Buffer de Parágrafos."""
-    if not os.path.exists(caminho_pdf):
-        print(f"[ERRO] Arquivo não encontrado: {caminho_pdf}")
+    caminho = Path(caminho_pdf)
+    
+    if not caminho.is_file():
+        print(f"[ERRO] Arquivo não encontrado ou caminho inválido: {caminho}")
         return []
 
     try:
-        texto_completo = ""
-        with pdfplumber.open(caminho_pdf) as pdf:
+        paginas_extraidas = []
+        with pdfplumber.open(caminho) as pdf:
             for page in pdf.pages:
                 texto_extraido = page.extract_text()
                 if texto_extraido:
-                    texto_completo += texto_extraido + "\n"
+                    paginas_extraidas.append(texto_extraido)
+        
+        texto_completo = "\n".join(paginas_extraidas)
         
         regras_extraidas = []
         categoria_atual = None
@@ -60,7 +65,7 @@ def processarpdf_semantico(caminho_pdf):
         regex_procedures = re.compile(r'^3\.7\s*Procedures', re.IGNORECASE)
         regex_boas_praticas = re.compile(r'^5\.\s*Recomendações', re.IGNORECASE)
         regex_manual_bolso = re.compile(r'^2\.6\s*Padrão\s*de\s*nomes', re.IGNORECASE)
-        regex_dicionario = re.compile(r'^6\.\s*Dicionário\s*de\s*Termos', re.IGNORECASE) # Ponto de parada
+        regex_dicionario = re.compile(r'^6\.\s*Dicionário\s*de\s*Termos', re.IGNORECASE)
 
         def salvar_buffer():
             nonlocal buffer_texto, regras_extraidas, categoria_atual, objeto_atual
@@ -68,10 +73,8 @@ def processarpdf_semantico(caminho_pdf):
             
             if texto_limpo and categoria_atual and categoria_atual != 'Ignorar':
                 if categoria_atual == 'Regras Gerais':
-                    # Limpa o caractere de checkbox ou marcadores residuais
                     texto_limpo = re.sub(r'^[\W_]\s*', '', texto_limpo).strip()
                 
-                # Filtro final para evitar frases soltas ou exemplos
                 if len(texto_limpo) > 15 and not texto_limpo.lower().startswith('exemplo'):
                     regras_extraidas.append({
                         'categoria': categoria_atual,
@@ -79,13 +82,12 @@ def processarpdf_semantico(caminho_pdf):
                         'texto': texto_limpo
                     })
             buffer_texto = ""
-
+            
         for linha in linhas:
             linha = linha.strip()
             if not linha:
                 continue
 
-            # 1. Máquina de Estados (Identificação de Seções)
             if regex_regras_gerais.match(linha):
                 salvar_buffer()
                 categoria_atual = 'Regras Gerais'
@@ -122,34 +124,28 @@ def processarpdf_semantico(caminho_pdf):
                 continue
             elif regex_dicionario.match(linha):
                 salvar_buffer()
-                categoria_atual = 'Ignorar' # Bloqueia a leitura das tabelas do final do PDF
+                categoria_atual = 'Ignorar'
                 continue
 
-            # 2. Acúmulo no Buffer
             if categoria_atual == 'Ignorar' or not categoria_atual:
                 continue
 
-            # Ignora cabeçalhos e rodapés de página
             if linha.startswith('DETRAN-PE') or linha.startswith('Página'):
                 continue
                 
-            # Filtro Semântico: Ignora linhas de código de exemplo e comentários SQL do PDF
             regex_sql = r'^(CREATE\s|DECLARE\s|SELECT\s|FROM\s|WHERE\s|EXEC\s|IF\s|DROP\s|BEGIN\b|END\b|AS$|GO$|@|//|/\*)'
             if re.match(regex_sql, linha, re.IGNORECASE):
                 continue
 
-            # Adiciona a linha atual ao buffer, garantindo o espaçamento correto
             buffer_texto = buffer_texto + " " + linha if buffer_texto else linha
 
-            # Se a linha encerrar com pontuação final, consideramos a regra completa e limpamos o buffer
             if linha.endswith('.') or linha.endswith(';') or linha.endswith(':'):
                 salvar_buffer()
 
-        # Garante que a última regra do documento seja salva caso não tenha terminador
         salvar_buffer()
-
         return regras_extraidas
 
+    # O except deve estar alinhado com o try principal
     except Exception as e:
         print(f"[ERRO PDF] Falha ao processar arquivo: {e}")
         return []
@@ -260,41 +256,69 @@ def main():
 
         elif opcao == '3':
             print("\n--- Inserir PDF com Novas Regras ---")
-            caminho_pdf = input("Digite o caminho completo do arquivo PDF: ").strip()
-            regras_extraidas = processarpdf_semantico(caminho_pdf)
+            
+            diretorio_manuais = Path('Manual')
+            diretorio_manuais.mkdir(exist_ok=True) 
+            
+            arquivos_pdf = list(diretorio_manuais.glob('*.pdf'))
+            
+            if not arquivos_pdf:
+                print(f"\n[AVISO] Nenhum arquivo PDF encontrado na pasta '{diretorio_manuais.resolve()}'.")
+                input("\nPressione Enter para retornar ao menu...")
+                continue
+            
+            print("Arquivos encontrados:\n")
+            for i, pdf in enumerate(arquivos_pdf):
+                print(f"{i + 1}. {pdf.name}")
+            print("0. Cancelar")
+
+            escolha = input("\nEscolha o numero do arquivo PDF para processar: ").strip()
+            
+            if escolha == '0':
+                continue
+                
+            try:
+                indice = int(escolha) - 1
+                if indice < 0 or indice >= len(arquivos_pdf):
+                    raise ValueError
+                
+                arquivo_selecionado = arquivos_pdf[indice]
+            except ValueError:
+                print("\n[ERRO] Opção inválida.")
+                input("Pressione Enter para continuar...")
+                continue
+
+            print("\nProcessando o arquivo PDF, aguarde...")
+            regras_extraidas = processarpdf_semantico(arquivo_selecionado)
 
             if regras_extraidas:
                 print(f"\n[INFO] Foram extraídas {len(regras_extraidas)} regras. Iniciando vetorização e inserção...")
                 inseridas = 0
                 ignoradas = 0
 
-                for regra in regras_extraidas:
-                    nome_categoria = regra.get('categoria')
-                    nome_objeto = regra.get('objeto')
-                    texto_regra = regra.get('texto')
+                try:
+                    for regra in regras_extraidas:
+                        nome_categoria = regra.get('categoria')
+                        nome_objeto = regra.get('objeto')
+                        texto_regra = regra.get('texto')
 
-                    # 1. Resolução da Chave Estrangeira da Categoria
-                    cursor.execute("SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = %s", (nome_categoria,))
-                    cat_result = cursor.fetchone()
-                    pk_categoria = cat_result[0] if cat_result else None
+                        cursor.execute("SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = %s", (nome_categoria,))
+                        cat_result = cursor.fetchone()
+                        pk_categoria = cat_result[0] if cat_result else None
 
-                    if not pk_categoria:
-                        print(f"[AVISO] Categoria '{nome_categoria}' não encontrada no banco. Regra ignorada.")
-                        continue
+                        if not pk_categoria:
+                            print(f"[AVISO] Categoria '{nome_categoria}' não encontrada. Regra ignorada.")
+                            continue
 
-                    # 2. Resolução da Chave Estrangeira do Objeto (Aceita NULL)
-                    pk_objeto = None
-                    if nome_objeto:
-                        cursor.execute("SELECT pkObjetoDb FROM ObjetoDb WHERE NomeObjeto = %s", (nome_objeto,))
-                        obj_result = cursor.fetchone()
-                        pk_objeto = obj_result[0] if obj_result else None
+                        pk_objeto = None
+                        if nome_objeto:
+                            cursor.execute("SELECT pkObjetoDb FROM ObjetoDb WHERE NomeObjeto = %s", (nome_objeto,))
+                            obj_result = cursor.fetchone()
+                            pk_objeto = obj_result[0] if obj_result else None
 
-                    # 3. Gerar Embedding
-                    embedding = get_embedding(texto_regra)
+                        embedding = get_embedding(texto_regra)
 
-                    if embedding:
-                        try:
-                            # 4. Inserção Segura com Controle de Duplicatas
+                        if embedding:
                             cursor.execute("""
                                 INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra, embedding)
                                 VALUES (%s, %s, %s, %s)
@@ -305,20 +329,21 @@ def main():
                                 inseridas += 1
                             else:
                                 ignoradas += 1
-                                
-                            conn.commit()
-                        except Exception as e:
-                            conn.rollback()
-                            print(f"[ERRO BANCO] Falha na regra '{texto_regra[:30]}...': {e}")
-                    else:
-                        print(f"[ERRO IA] Falha ao vetorizar a regra: {texto_regra[:30]}...")
+                        else:
+                            print(f"[ERRO IA] Falha ao vetorizar a regra: {texto_regra[:30]}.")
 
-                print(f"\n[SUCESSO] Processamento de PDF concluído.")
-                print(f"Novas regras registradas: {inseridas}")
-                print(f"Regras ignoradas (duplicatas): {ignoradas}")
+                    conn.commit()
+                    print(f"\n[SUCESSO] Processamento de PDF concluído.")
+                    print(f"Novas regras registradas no banco: {inseridas}")
+                    print(f"Regras ignoradas (já existiam): {ignoradas}")
+
+                except Exception as e:
+                    # Rollback caso ocorra uma falha estrutural no banco durante o loop
+                    conn.rollback()
+                    print(f"\n[ERRO BANCO] Transação interrompida. Falha geral na inserção: {e}")
 
             else:
-                print("\n[ERRO] Nenhuma regra extraída. Verifique o caminho e a formatação do PDF.")
+                print("\n[ERRO] Nenhuma regra extraída. Verifique a formatação do PDF.")
 
             input("\nPressione Enter para retornar ao menu.")
         

@@ -1,0 +1,109 @@
+========================================
+DATA: 12/03/2026 08:37:31
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: " a procedure: PROCEDURE dbvcen.agenciai está de acordo com o padrão do detran?"
+========================================
+RESPOSTA:
+**Parecer do Auditor Gandalf**  
+**Objeto:** dbvcen.agenciai  
+**Status:** **REPROVADO**  
+
+**Justificativa:**  
+A procedure `dbvcen.agenciai` viola a regra de nomenclatura para procedures executadas via processamento batch, conforme especificado no contexto normativo:  
+*"Quando a procedure for executada via processamento batch, deve-se colocar no início do nome da procedure a palavra “Batch”."*  
+
+O nome da procedure não inicia com a palavra "Batch", conforme exigido para objetos do tipo batch. Além disso, a estrutura do nome (`agenciai`) não segue o padrão estabelecido para procedures, que deve incluir a notação `Objetivo[Complemento]Operação`, conforme detalhado em exemplos aprovados como `BatchConsumoServicoWebMover`.  
+
+**Recomendação:**  
+O desenvolvedor deve renomear a procedure para iniciar com "Batch" e ajustar a estrutura de acordo com as regras de nomenclatura. Consulte o manual do Detran ou a equipe de Administração de Dados para obter orientações detalhadas.
+========================================
+
+========================================
+DATA: 12/03/2026 08:46:57
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "a table: CREATE TABLE dbhcen.cnh (nusuario numeric(12) NOT NULL, 	nsequencia int4 NOT NULL, nformulariocnh numeric(11) NOT NULL, demissaocnh timestamp NOT NULL, sufemissaocnh bpchar(2) NOT NULL, dvalidadecnh timestamp NOT NULL, scategoriamoto bpchar(2) NULL, scategoriaauto bpchar(2) NULL, isituacaocnh bpchar(1) NOT NULL, iprovisorio int4 NULL,  nobservacaocnh int4 NOT NULL,	srequerimento1 bpchar(1) NOT NULL, srequerimento2 bpchar(1) NULL, srequerimento3 bpchar(1) NULL, srequerimento4 bpchar(1) NULL, sformulariorenach bpchar(11) NULL, nlote int4 NULL, drequerimento timestamp NULL, nevento int4 NULL,	irecebimentoponto int4 DEFAULT 0 NOT NULL, iemailusuario int4 DEFAULT 0 NOT NULL, spais bpchar(5) NULL, ientregue int4 DEFAULT 0 NOT NULL,	dentrega timestamp NULL, ddatadownloadcnhe timestamp NULL, ncodseguranca numeric(13) NULL,	dimpressaocnh timestamp NULL, dprazorealizacaotoxicologico timestamp NULL, sar varchar(20) NULL, CONSTRAINT pkcnh PRIMARY KEY (nusuario, nsequencia)); segue os padrões do detran?"
+========================================
+RESPOSTA:
+Aprovado. Motivo: O nome da tabela "dbhcen.cnh" segue o padrão de utilizar nomes completos ou siglas técnicas quando não é possível utilizar palavras completas devido à limitação de caracteres do SGBD, conforme orientação de regra não explicitamente contradita no contexto.
+========================================
+
+========================================
+DATA: 12/03/2026 08:53:47
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "os índices:CREATE UNIQUE INDEX consulta_key ON renavam.consulta USING btree (spid); e CREATE UNIQUE INDEX estado_key ON renavam.estado USING btree (uf DESC, pais DESC); estão de acordo com o padrão do detran?"
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 12/03/2026 09:18:52
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: " o índice: CREATE INDEX envio_placa ON renavam.envio USING btree (placa DESC, codconsulta DESC); segue o padrão do detran?"
+========================================
+RESPOSTA:
+**Parecer do Auditor Gandalf**  
+Objeto analisado: Índice `envio_placa`  
+Resultado: **NÃO CONFORME**  
+
+---
+
+### **Justificativa**  
+1. **Regra violada: 2.2 Forma dos nomes**  
+   - A regra estabelece que o nome deve ter a primeira letra de cada palavra em maiúscula (ex.: `ParcelaDebito`).  
+   - O nome do índice `envio_placa` utiliza sublinhete (`_`) para separar palavras, mas não segue essa formatação. O correto seria usar `Envio_Placa` ou similar, conforme o padrão de PascalCase.  
+
+2. **Regra violada: 2.5 Siglas**  
+   - A regra define que siglas devem ser escritas com a primeira letra maiúscula e as demais minúsculas (ex.: `Ipva`, `Cnh`).  
+   - O nome `envio_placa` não segue essa regra, pois:  
+     - `envio` começa com letra minúscula (`e`), violando a regra de siglas.  
+     - `placa` está em minúsculas, não atendendo ao padrão de primeira letra maiúscula.  
+
+---
+
+### **Conclusão**  
+O nome do índice `envio_placa` não está alinhado com as regras de nomenclatura do DETRAN, especificamente com a **Regra 2.2** e a **Regra 2.5**.  
+
+**Sugestão:**  
+Consulte o manual do DETRAN ou entre em contato com a equipe de Administração de Dados para validar a estruturação correta do nome do índice.
+========================================
+
+========================================
+DATA: 12/03/2026 09:35:56
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "o índice: CREATE UNIQUE INDEX pktaxa ON dbhcen.taxa USING btree (ntaxa); segue os padrões do detran?"
+========================================
+RESPOSTA:
+**Parecer de Auditoria - Índice `pktaxa`**
+
+**Objeto analisado:** Índice `pktaxa` criado na tabela `dbhcen.taxa`.  
+**Script DDL:**  
+```sql
+CREATE UNIQUE INDEX pktaxa ON dbhcen.taxa USING btree (ntaxa);
+```
+
+**Conformidade:** APROVADO.
+
+**Justificativa:**  
+O nome do índice `pktaxa` segue o padrão estabelecido para nomes compostos por sigla (`pk`) mais o nome da tabela ou coluna (`taxa`), conforme regra de **Forma dos Nomes** (regra 2.2):  
+> *“Primeira letra de cada palavra maiúscula” (Ex.: ParcelaDebito).*  
+
+Além disso, o uso da sigla `pk` (indicando chave primária) está alinhado à regra de **Siglas** (regra 2.5):  
+> *“Siglas oficiais: primeira letra maiúscula e demais minúsculas (Ex.: Ipva, Cnh).”*  
+
+O nome não contém preposições (violação da regra 1), nem caracteres inválidos ou palavras reservadas (regras 2.1 e 2.4). A estrutura do nome (`pktaxa`) é equivalente aos exemplos aprovados de índices, como `pkquestao` e `pkobjetoapi`.  
+
+**Recomendação:**  
+O índice está de acordo com as normas do Detran. Qualquer dúvida sobre interpretação das regras, o usuário deve consultar o manual do Detran ou a equipe de Administração de Dados.
+========================================
+

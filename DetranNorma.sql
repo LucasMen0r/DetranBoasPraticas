@@ -5,7 +5,8 @@ CREATE EXTENSION IF NOT EXISTS vector;
 -- Categorias e Objetos
 CREATE TABLE IF NOT EXISTS CategoriaRegra (
     pkCategoriaRegra SERIAL PRIMARY KEY,
-    NomeCategoria VARCHAR(100) NOT NULL UNIQUE
+    NomeCategoria VARCHAR(100) NOT NULL UNIQUE,
+    DescricaoRegra TEXT 
 );
 CREATE TABLE IF NOT EXISTS ObjetoDb (
     pkObjetoDb SERIAL PRIMARY KEY,
@@ -27,7 +28,7 @@ ADD CONSTRAINT ukRegraUnica UNIQUE NULLS NOT DISTINCT (pkCategoriaRegra, pkObjet
 CREATE TABLE IF NOT EXISTS TipoDado (
     pkTipoDado SERIAL PRIMARY KEY,
     TipoDadoSybase VARCHAR(50) NOT NULL,
-    SiglaColuna VARCHAR(10) UNIQUE,
+    SiglaColuna VARCHAR(100) UNIQUE, 
     FaixaValor VARCHAR(255),
     EspacoOcupado VARCHAR(50)
 );
@@ -117,6 +118,7 @@ create table if not exists ExemploPratico (
     embedding vector(768)
 );
 CREATE INDEX ON ExemploPratico USING hnsw (embedding vector_cosine_ops);
+ALTER TABLE ExemploPratico ADD CONSTRAINT ukObjetoExemplo UNIQUE (ObjetoFoco, ExemploTexto);
 
 -- 4. DADOS AUXILIARES (Tipos e Atributos)
 TRUNCATE TABLE TipoDado RESTART IDENTITY CASCADE;
@@ -161,23 +163,13 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO Ollama_trainer;
 -- 6. CRIAÇÃO DE ÍNDICES VETORIAIS (Este comando estava no seu script)
 CREATE INDEX ON RegraNomenclatura USING hnsw (embedding vector_cosine_ops);
 
-ALTER TABLE ExemploPratico ADD CONSTRAINT ukObjetoExemplo UNIQUE (ObjetoFoco, ExemploTexto);
-
-ALTER TABLE CategoriaRegra 
-ADD COLUMN IF NOT EXISTS DescricaoRegra TEXT;
-
-
-select * from exemplopratico;
-select * from regranomenclatura;
-
 
 SELECT 
-    c.NomeCategoria, 
-    COALESCE(o.NomeObjeto, 'Geral/Nenhum') AS ObjetoFoco, 
+    r.pkRegraNomenclatura,
+    c.NomeCategoria,
+    o.NomeObjeto,
     r.DescricaoRegra
 FROM RegraNomenclatura r
+INNER JOIN ObjetoDb o ON r.pkObjetoDb = o.pkObjetoDb
 LEFT JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
-LEFT JOIN ObjetoDb o ON r.pkObjetoDb = o.pkObjetoDb
-ORDER BY r.pkRegraNomenclatura DESC;
-
-
+WHERE o.NomeObjeto = 'Índice';
