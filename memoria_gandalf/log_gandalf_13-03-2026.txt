@@ -1,0 +1,42 @@
+========================================
+DATA: 13/03/2026 08:31:16
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  source /home/lucas/projeto_gandalf/venv/bin/activate"posso nomear uma table com caractere especial no início?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Table (com nome começando com caractere especial)  
+**Conformidade:** REPROVADO  
+**Justificativa:** Os exemplos aprovados de tabelas, como `dbhlog.logalunodisciplina` e `dbhcen.alunodisciplina`, começam com letras e não utilizam caracteres especiais, conforme estabelecido na [[ EXEMPLOS DE REFERÊNCIA ]]. Portanto, um nome de tabela começando com caractere especial não é conforme com os padrões de nomenclatura.  
+**Recomendação:** Utilize nomes de tabela que começam com letras, siga a notação Húngara com letra maiúscula no início, e evite caracteres especiais para garantir conformidade com as regras vigentes.
+========================================
+
+========================================
+DATA: 13/03/2026 08:44:41
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: "como escrever uma tabela log?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Tabela de Log (exemplo: dbhlog.logalunodisciplina)  
+**Conformidade:** APROVADO  
+**Justificativa:** O exemplo de tabela log fornecido (CREATE TABLE dbhlog.logalunodisciplina ...) segue a regra de nomenclatura para tabelas de log, especificamente: "Quando a tabela for de Log, deve-se usar o nome da tabela antecedida do termo “Log”." (Exemplo Prático de Referência). Além disso, o nome da tabela está no singular, conforme regra: "O nome da tabela deve estar sempre no singular."  
+**Recomendação:** Para criar uma tabela de log, siga o padrão de nomenclatura: antecipe o nome da tabela com "Log" (ex: dbhlog.lognome_da_tabela). Use colunas para auditoria, como timestamp e usuário, e garantir chave primária, conforme exemplo. Consulte o DBA se necessário para otimizações.
+========================================
+
+========================================
+DATA: 13/03/2026 09:17:24
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: " a procedure: dbfisc01..TipoCredenciamentoS.scp está de acordo com o padrão do detran?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Procedure dbfisc01..TipoCredenciamentoS.scp  
+**Conformidade:** APROVADO  
+**Justificativa:** O nome da procedure segue o padrão **Objetivo[Complemento]Operação**, conforme regra e exemplos de referência. O objetivo "TipoCredenciamento" está bem definido, a operação "S" (Selecionar) está em maiúsculas e o complemento é opcional.  
+**Recomendação:** Mantenha o padrão de nomeação e documente a função da procedure conforme as regras estabelecidas.
+========================================
+

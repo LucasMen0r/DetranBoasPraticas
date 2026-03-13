@@ -206,31 +206,26 @@ def main():
 
             if embedding:
                 try:
-                    cursor.execute("SELECT 1 FROM ExemploPratico WHERE ObjetoFoco = %s AND ExemploTexto = %s", (foco, texto))
-                    existe = cursor.fetchone()
-
-                    if existe:
-                        cursor.execute("""
-                            UPDATE ExemploPratico 
-                            SET is_BomExemplo = %s, Explicacao = %s, embedding = %s
-                            WHERE ObjetoFoco = %s AND ExemploTexto = %s
-                        """, (is_bom, explicacao, embedding, foco, texto))
-                        print("\n[SUCESSO] Exemplo atualizado com sucesso na memória do Gandalf!")
-                    else:
-                        cursor.execute("""
-                            INSERT INTO ExemploPratico (ObjetoFoco, ExemploTexto, is_BomExemplo, Explicacao, embedding)
-                            VALUES (%s, %s, %s, %s, %s)
-                        """, (foco, texto, is_bom, explicacao, embedding))
-                        print("\n[SUCESSO] Exemplo gravado com sucesso na memória do Gandalf!")
-                    
+                    # Instrução UPSERT: Tenta inserir, se houver conflito, atualiza.
+                    comando_sql = """
+                        INSERT INTO ExemploPratico (ObjetoFoco, ExemploTexto, is_BomExemplo, Explicacao, embedding)
+                        VALUES (%s, %s, %s, %s, %s)
+                        ON CONFLICT (ObjetoFoco, ExemploTexto) 
+                        DO UPDATE SET 
+                            is_BomExemplo = EXCLUDED.is_BomExemplo,
+                            Explicacao = EXCLUDED.Explicacao,
+                            embedding = EXCLUDED.embedding;
+                    """
+                    cursor.execute(comando_sql, (foco, texto, is_bom, explicacao, embedding))
                     conn.commit()
+                    
+                    print("\n[SUCESSO] Exemplo processado e sincronizado com sucesso na memória do Gandalf!")
+                    
                 except Exception as e:
                     conn.rollback()
-                    print(f"\n[ERRO BANCO] Falha ao gravar no banco de dados: {e}")
+                    print(f"\n[ERRO BANCO] Falha ao processar o registro no banco de dados: {e}")
             else:
                 print("\n[ERRO IA] Falha ao gerar embedding. O exemplo não foi gravado.")
-            
-            input("\nPressione Enter para retornar ao menu...")
 
         elif opcao == '2':
             print("\n--- Remover Exemplo ---")
@@ -387,3 +382,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    
+    #De acordo com a regra de nomeação de procedures, o nome deve seguir o padrão **Objetivo[Complemento]Operação**, onde a **Operação** é uma sigla em letras maiúsculas das operações básicas (S, I, E, A, R).

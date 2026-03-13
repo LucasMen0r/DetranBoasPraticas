@@ -179,3 +179,6 @@ select * from exemplopratico;
 
 ALTER TABLE RegraNomenclatura 
 ADD COLUMN IF NOT EXISTS UltimaVerificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+
+select * from regranomenclatura;
