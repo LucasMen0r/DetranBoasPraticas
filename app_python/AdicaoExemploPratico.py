@@ -18,7 +18,7 @@ db_port = os.getenv('DB_PORT', '5435')
 ollama_url = os.getenv('OLLAMA_HOST', f"http://{db_host}:11436") 
 ollama_api_embed = f"{ollama_url}/api/embeddings"
 
-def get_embedding(texto):
+def embeddingtexto(texto):
     try:
         resposta = requests.post(
             ollama_api_embed,
@@ -184,7 +184,7 @@ def main():
             texto = input(f"Exemplo de nome para '{foco}' (ex: dbhcen.alunodisciplina): ").strip()
             if not texto:
                 print("O texto não pode ser vazio. Tente novamente.\n")
-                input("Pressione Enter para continuar...")
+                input("Pressione Enter para continuar.")
                 continue
 
             while True:
@@ -202,7 +202,7 @@ def main():
 
             print("\nProcessando vetorização. Aguarde.")
             prompt_composto = f"{foco} : {texto}"
-            embedding = get_embedding(prompt_composto)
+            embedding = embeddingtexto(prompt_composto)
 
             if embedding:
                 try:
@@ -336,7 +336,7 @@ def main():
                             atualizadas += 1
                         else:
                             # É uma regra inédita. Chama o Ollama para vetorizar e insere.
-                            embedding = get_embedding(texto_regra)
+                            embedding = embeddingtexto(texto_regra)
 
                             if embedding:
                                 cursor.execute("""

@@ -3,6 +3,8 @@ import psycopg2
 from datetime import datetime
 import os
 import requests
+import time
+import shutil
 from dotenv import load_dotenv
 import pgvector.psycopg2
 
@@ -19,6 +21,7 @@ ollama_base_url = f"http://{db_host}:11436"
 ollama_api_embed = f"{ollama_base_url}/api/embeddings"
 
 DIRETORIO_TESTES = "arquivos_teste"
+DIRETORIO_PROCESSADOS = "arquivos_processados"
 
 def conectadb():
     try:
@@ -63,13 +66,14 @@ def sanitizartexto(texto_bruto):
     linhas_limpas = [linha.strip() for linha in linhas if linha.strip()]
     return " ".join(linhas_limpas)
 
-def processar_diretorio(conn):
-    """Lê, limpa, vetoriza e salva todos os arquivos .txt do diretorio."""
+def processardiretorio(conn):
+    """Lê, limpa, vetoriza, salva todos os arquivos .txt do diretorio e os move ao finalizar."""
     os.makedirs(DIRETORIO_TESTES, exist_ok=True)
+    os.makedirs(DIRETORIO_PROCESSADOS, exist_ok=True)
     
     arquivos = [f for f in os.listdir(DIRETORIO_TESTES) if f.endswith('.txt')]
     if not arquivos:
-        print(f"[INFO] Nenhum arquivo .txt encontrado em '{DIRETORIO_TESTES}'.")
+        registrar_log(f"[INFO] Nenhum arquivo .txt encontrado em '{DIRETORIO_TESTES}'.")
         return
 
     cursor = conn.cursor()
@@ -77,7 +81,8 @@ def processar_diretorio(conn):
 
     for arquivo in arquivos:
         caminho_completo = os.path.join(DIRETORIO_TESTES, arquivo)
-        print(f"Processando arquivo: {arquivo}...")
+        caminho_destino = os.path.join(DIRETORIO_PROCESSADOS, arquivo)
+        registrar_log(f"Processando arquivo: {arquivo}...")
         
         try:
             with open(caminho_completo, 'r', encoding='utf-8') as f:
@@ -85,6 +90,7 @@ def processar_diretorio(conn):
                 
             texto_limpo = sanitizartexto(conteudo_bruto)
             if not texto_limpo:
+                shutil.move(caminho_completo, caminho_destino)
                 continue
 
             chunks = criar_chunks(texto_limpo, tamanho_maximo=400, sobreposicao=50)
@@ -100,15 +106,17 @@ def processar_diretorio(conn):
                     total_inseridos += 1
                     
             conn.commit()
-            print(f"  -> Sucesso. Chunks inseridos: {len(chunks)}")
+            
+            shutil.move(caminho_completo, caminho_destino)
+            registrar_log(f"  -> Sucesso. Chunks inseridos: {len(chunks)}. Arquivo movido para processados.")
             
         except Exception as e:
             conn.rollback()
-            print(f"  -> [ERRO] Falha ao processar o arquivo {arquivo}: {e}")
+            registrar_log(f"  -> [ERRO] Falha ao processar o arquivo {arquivo}: {e}")
 
     cursor.close()
-    print(f"Processamento concluido. Total inserido: {total_inseridos}")
-
+    registrar_log(f"Processamento concluido. Total inserido: {total_inseridos}")  
+    
 def autotreinar(conn):
     """Verifica dados sem memoria e corrige automaticamente."""
     cursor = conn.cursor()
@@ -118,13 +126,13 @@ def autotreinar(conn):
         regras_pendentes = cursor.fetchall()
         
         if regras_pendentes:
-            print(f"\n[AUTO-TREINO] Processando {len(regras_pendentes)} regras pendentes...")
+            registrar_log(f"[AUTO-TREINO] Processando {len(regras_pendentes)} regras pendentes...")
             for pk, texto in regras_pendentes:
                 vetor = embedtext(texto)
                 if vetor:
                     cursor.execute("UPDATE RegraNomenclatura SET embedding = %s WHERE pkRegraNomenclatura = %s", (vetor, pk))
             conn.commit()
-            print("[AUTO-TREINO] Regras atualizadas.")
+            registrar_log("[AUTO-TREINO] Regras atualizadas.")
 
         cursor.execute("SELECT to_regclass('public.ExemploPratico');")
         if cursor.fetchone()[0]:
@@ -132,19 +140,32 @@ def autotreinar(conn):
             exemplos_pendentes = cursor.fetchall()
             
             if exemplos_pendentes:
-                print(f"[AUTO-TREINO] Processando {len(exemplos_pendentes)} exemplos pendentes...")
+                registrar_log(f"[AUTO-TREINO] Processando {len(exemplos_pendentes)} exemplos pendentes...")
                 for pk, texto, explicacao in exemplos_pendentes:
                     texto_completo = f"Exemplo: {texto}. Explicacao: {explicacao}"
                     vetor = embedtext(texto_completo)
                     if vetor:
                         cursor.execute("UPDATE ExemploPratico SET embedding = %s WHERE pkExemploPratico = %s", (vetor, pk))
                 conn.commit()
-                print("[AUTO-TREINO] Exemplos atualizados.")
+                registrar_log("[AUTO-TREINO] Exemplos atualizados.")
     except Exception as e:
         conn.rollback()
-        print(f"[ERRO] Falha no auto-treino: {e}")
+        registrar_log(f"[ERRO] Falha no auto-treino: {e}")
     finally:
-        cursor.close()
+        cursor.close()     
+        
+def registrar_log(mensagem):
+    """Grava o status da execucao no diretorio de testes nao supervisionados."""
+    diretorio = "memoria_teste_n_supervisionado"
+    caminho_arquivo = os.path.join(diretorio, "log_fim_de_semana.txt")
+    timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    
+    linha_log = f"[{timestamp}] {mensagem}\n"
+    
+    with open(caminho_arquivo, "a", encoding="utf-8") as f:
+        f.write(linha_log)
+    
+    print(mensagem)
 
 def salvarrespostas(pergunta, categoria, resposta):
     timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -191,15 +212,19 @@ def salvarrespostas(pergunta, categoria, resposta):
             print(f"[ERRO CRITICO] Falha total ao tentar salvar log no fallback: {ex}")
             
 def main():
-    print("Iniciando rotina de manutencao da base de conhecimento do Gandalf.")
-    conn = conectadb()
-    if not conn: return
+    registrar_log("Iniciando rotina de manutencao continua da base de conhecimento do Gandalf.")
     
-    autotreinar(conn)
-    processar_diretorio(conn)
-    
-    conn.close()
-    print("Rotina finalizada.")
-
+    while True:
+        conn = conectadb()
+        if conn:
+            autotreinar(conn)
+            processardiretorio(conn)
+            conn.close()
+            registrar_log("Ciclo de processamento concluido com sucesso.")
+        else:
+            registrar_log("[ERRO] Nao foi possivel conectar ao banco neste ciclo.")
+            
+        registrar_log("Aguardando meia hora para a proxima verificacao.")
+        time.sleep(1800)
 if __name__ == "__main__":
     main()
