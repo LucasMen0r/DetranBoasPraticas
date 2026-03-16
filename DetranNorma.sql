@@ -1,42 +1,106 @@
--- 1. PREPARAÇÃO DO AMBIENTE
--- Habilita a extensão para vetores (ESSENCIAL PARA O RAG)
+-- 1. EXCLUSÃO DE TABELAS (Ordem reversa de dependência)
+--DROP TABLE IF EXISTS ExemploPratico CASCADE;
+--DROP TABLE IF EXISTS RegraNomenclatura CASCADE;
+--DROP TABLE IF EXISTS CategoriaRegra CASCADE;
+--DROP TABLE IF EXISTS ObjetoDb CASCADE;
+--DROP TABLE IF EXISTS AtributoComum CASCADE;
+--DROP TABLE IF EXISTS TipoDado CASCADE;
+
+-- 2. EXTENSÃO VETORIAL
 CREATE EXTENSION IF NOT EXISTS vector;
--- 2. CRIAÇÃO DAS TABELAS (SCHEMA)
--- Categorias e Objetos
-CREATE TABLE IF NOT EXISTS CategoriaRegra (
-    pkCategoriaRegra SERIAL PRIMARY KEY,
-    NomeCategoria VARCHAR(100) NOT NULL UNIQUE,
-    DescricaoRegra TEXT 
-);
-CREATE TABLE IF NOT EXISTS ObjetoDb (
+
+-- 2.1. CRIAÇÃO DE TABELAS (DDL Estrutural Completo)
+CREATE TABLE ObjetoDb (
     pkObjetoDb SERIAL PRIMARY KEY,
     NomeObjeto VARCHAR(100) NOT NULL UNIQUE
 );
--- Tabela Principal de Regras
-CREATE TABLE IF NOT EXISTS RegraNomenclatura (
-    pkRegraNomenclatura SERIAL PRIMARY KEY,
-    pkCategoriaRegra INT REFERENCES CategoriaRegra(pkCategoriaRegra),
-    pkObjetoDb INT REFERENCES ObjetoDb(pkObjetoDb),
+CREATE TABLE CategoriaRegra (
+    pkCategoriaRegra SERIAL PRIMARY KEY,
+    NomeCategoria VARCHAR(100) NOT NULL UNIQUE,
+    DescricaoRegra TEXT
+);
+CREATE TABLE RegraNomenclatura (
+    pkRegraNomenclatura SERIAL,
+    pkCategoriaRegra INT NOT NULL,
+    pkObjetoDb INT, 
     DescricaoRegra TEXT NOT NULL,
-    embedding vector(768)
+    embedding vector(768),
+    UltimaVerificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pkRegraNomenclatura PRIMARY KEY (pkRegraNomenclatura),
+    CONSTRAINT fkRegraNomenclaturaCategoriaRegra FOREIGN KEY (pkCategoriaRegra) REFERENCES CategoriaRegra(pkCategoriaRegra),
+    CONSTRAINT fkRegraNomenclaturaObjetoDb FOREIGN KEY (pkObjetoDb) REFERENCES ObjetoDb(pkObjetoDb),
+    CONSTRAINT ukRegraNomenclaturaUnica UNIQUE NULLS NOT DISTINCT (pkCategoriaRegra, pkObjetoDb, DescricaoRegra)
 );
 
-ALTER TABLE RegraNomenclatura 
-ADD CONSTRAINT ukRegraUnica UNIQUE NULLS NOT DISTINCT (pkCategoriaRegra, pkObjetoDb, DescricaoRegra);
-
--- Tabelas Auxiliares
-CREATE TABLE IF NOT EXISTS TipoDado (
-    pkTipoDado SERIAL PRIMARY KEY,
-    TipoDadoSybase VARCHAR(50) NOT NULL,
-    SiglaColuna VARCHAR(100) UNIQUE, 
-    FaixaValor VARCHAR(255),
-    EspacoOcupado VARCHAR(50)
+CREATE TABLE ExemploPratico (
+    pkExemploPratico SERIAL,
+    ObjetoFoco VARCHAR(100) NOT NULL,
+    ExemploTexto TEXT NOT NULL,
+    is_BomExemplo BOOLEAN NOT NULL,
+    Explicacao TEXT NOT NULL,
+    embedding vector(768),
+    CONSTRAINT pkExemploPratico PRIMARY KEY (pkExemploPratico),
+    CONSTRAINT ukExemploPraticoFocoTexto UNIQUE (ObjetoFoco, ExemploTexto)
 );
-CREATE TABLE IF NOT EXISTS AtributoComum (
-    pkAtributoComum SERIAL PRIMARY KEY,
+
+CREATE TABLE AtributoComum (
+    pkAtributoComum SERIAL,
     Atributo VARCHAR(100) NOT NULL,
-    TipoDadoRecomendado VARCHAR(100)
+    TipoDadoRecomendado VARCHAR(100),
+    CONSTRAINT pkAtributoComum PRIMARY KEY (pkAtributoComum)
 );
+
+CREATE TABLE TipoDado (
+    pkTipoDado SERIAL,
+    TipoDadoSybase VARCHAR(50) NOT NULL,
+    SiglaColuna VARCHAR(100), 
+    FaixaValor VARCHAR(255),
+    EspacoOcupado VARCHAR(50),
+    CONSTRAINT pkTipoDado PRIMARY KEY (pkTipoDado),
+    CONSTRAINT ukTipoDadoSiglaColuna UNIQUE (SiglaColuna)
+);
+
+-- 2.2. CARGA DE DOMÍNIOS BÁSICOS
+INSERT INTO CategoriaRegra (NomeCategoria, DescricaoRegra) VALUES 
+    ('Regras Gerais', 'Regras aplicáveis a todos os objetos'),
+    ('Nomenclatura de Objetos', 'Padronização de nomes'),
+    ('Boas Práticas', 'Diretrizes de desenvolvimento'),
+    ('Tipos de Dados', 'Padrões de tipos'),
+    ('Atributos Comuns', 'Campos recorrentes'),
+    ('Regra especial', 'Regras específicas de sistemas (RENAVAM, etc)') 
+ON CONFLICT DO NOTHING;
+
+INSERT INTO ObjetoDb (NomeObjeto) VALUES 
+    ('Banco'), ('Tabela'), ('Tabela Log'), ('Tabela Temp'), 
+    ('Tabela "z"'), ('Proxy Table'), ('Coluna'), ('pk (Primary Key)'), 
+    ('fk (Foreign Key)'), ('Unique'), ('Check'), ('View comum'), 
+    ('View materializada'), ('Índice'), ('Procedure'), ('Trigger') 
+ON CONFLICT DO NOTHING;
+
+INSERT INTO TipoDado (TipoDadoSybase, SiglaColuna, FaixaValor, EspacoOcupado) VALUES
+    ('bit', 'b', '0 ou 1', '1 byte'),
+    ('datetime, smalldatetime, bigdatetime', 'd', 'Data e hora', '8 ou 4 bytes'),
+    ('text, image, binary, long', 'I', 'Binários ou texto longo', 'Variável'),
+    ('money, smallmoney', 'm', 'Monetário', '8 ou 4 bytes'),
+    ('numeric, int, smallint, tinyint, float', 'n', 'Numéricos', 'Variável'),
+    ('char, varchar', 'S', 'Texto (String)', 'N bytes'),
+    ('Time', 'T', 'Hora apenas', '-'),
+    ('Booleano', 'bo', 'Lógico', '-');
+
+INSERT INTO AtributoComum (Atributo, TipoDadoRecomendado) VALUES
+    ('Pessoas', 'Varchar(50)'),
+    ('E-mail', 'Varchar(60)'),
+    ('Telefone', 'Varchar(10)'),
+    ('Fax', 'Varchar(10)'),
+    ('Logradouro', 'Varchar(60)'),
+    ('Complemento', 'Varchar(65)'),
+    ('CEP', 'Numeric(8)'),
+    ('Bairro', 'Varchar(60)'),
+    ('Município', 'Varchar(60)'),
+    ('País', 'Varchar(60)'),
+    ('CGC', 'Char(14)'),
+    ('CPF', 'Char(11)'),
+    ('Login', 'Varchar(30)');
 -- 3. INSERÇÃO DOS DADOS (POPULAÇÃO)
 -- Inserindo Categorias e Objetos Básicos
 INSERT INTO CategoriaRegra (NomeCategoria, DescricaoRegra) VALUES 
@@ -47,6 +111,7 @@ INSERT INTO CategoriaRegra (NomeCategoria, DescricaoRegra) VALUES
     ('Atributos Comuns', 'Campos recorrentes'),
     ('Regra especial', 'Regras específicas de sistemas (RENAVAM, etc)') 
 ON CONFLICT DO NOTHING;
+
 INSERT INTO ObjetoDb (NomeObjeto) VALUES ('Banco'), ('Tabela'), ('Tabela Log'), ('Tabela Temp'), ('Tabela "z"'), ('Proxy Table'), ('Coluna'), ('pk (Primary Key)'), ('fk (Foreign Key)'), ('Unique'), ('Check'), ('View comum'), ('View materializada'), ('Índice'), ('Procedure'), ('Trigger') ON CONFLICT DO NOTHING;
 -- Limpeza preventiva
 TRUNCATE TABLE RegraNomenclatura RESTART IDENTITY CASCADE;
@@ -106,20 +171,6 @@ INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra) VAL
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Boas Práticas'), NULL, 'Evitar JOIN com mais de 4 tabelas (usar temporárias se necessário).'),
 ( (SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = 'Boas Práticas'), NULL, 'Evitar NOT EXISTS, NOT IN e NOT LIKE. Usar EXISTS, IN e LIKE.');
 
--- 3.1 Criação da tabela de exemplos práticos
-DROP TABLE IF EXISTS ExemploPratico;
-
-create table if not exists ExemploPratico (
-    pkExemploPratico SERIAL PRIMARY KEY,
-    ObjetoFoco VARCHAR(50),  
-    ExemploTexto TEXT,       
-    is_BomExemplo BOOLEAN,  
-    Explicacao TEXT,
-    embedding vector(768)
-);
-CREATE INDEX ON ExemploPratico USING hnsw (embedding vector_cosine_ops);
-ALTER TABLE ExemploPratico ADD CONSTRAINT ukObjetoExemplo UNIQUE (ObjetoFoco, ExemploTexto);
-
 -- 4. DADOS AUXILIARES (Tipos e Atributos)
 TRUNCATE TABLE TipoDado RESTART IDENTITY CASCADE;
 INSERT INTO TipoDado (TipoDadoSybase, SiglaColuna, Faixavalor, EspacoOcupado) VALUES
@@ -146,7 +197,8 @@ INSERT INTO AtributoComum (atributo, TipoDadoRecomendado) VALUES
 ('CGC', 'Char(14)'),
 ('CPF', 'Char(11)'),
 ('Login', 'Varchar(30)');
--- 5. CRIAÇÃO DE USUÁRIO E PRIVILÉGIOS
+
+-- 5. SEGURANÇA E PERMISSÕES
 DO
 $do$
 BEGIN
@@ -157,28 +209,25 @@ BEGIN
    END IF;
 END
 $do$;
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO Ollama_trainer;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO Ollama_trainer;
 
--- 6. CRIAÇÃO DE ÍNDICES VETORIAIS (Este comando estava no seu script)
-CREATE INDEX ON RegraNomenclatura USING hnsw (embedding vector_cosine_ops);
+-- 6. CRIAÇÃO DE ÍNDICES VETORIAIS (Nomenclatura Tabela_Coluna)
+CREATE INDEX RegraNomenclatura_embedding ON RegraNomenclatura USING hnsw (embedding vector_cosine_ops);
+CREATE INDEX ExemploPratico_embedding ON ExemploPratico USING hnsw (embedding vector_cosine_ops);
 
 
-SELECT 
-    r.pkRegraNomenclatura,
-    c.NomeCategoria,
-    o.NomeObjeto,
-    r.DescricaoRegra
-FROM RegraNomenclatura r
-INNER JOIN ObjetoDb o ON r.pkObjetoDb = o.pkObjetoDb
-LEFT JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
-WHERE o.NomeObjeto = 'Índice';
 
-select * from exemplopratico;
+DELETE FROM ExemploPratico a 
+USING ExemploPratico b 
+WHERE a.pkExemploPratico < b.pkExemploPratico 
+  AND LOWER(a.ObjetoFoco) = LOWER(b.ObjetoFoco) 
+  AND a.ExemploTexto = b.ExemploTexto;
+
+UPDATE ExemploPratico SET ObjetoFoco = INITCAP(ObjetoFoco);
 
 
-ALTER TABLE RegraNomenclatura 
-ADD COLUMN IF NOT EXISTS UltimaVerificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 
-select * from regranomenclatura;
+SELECT * FROM ExemploPratico;

@@ -1,9 +1,7 @@
-[13/03/2026 10:26:59] Iniciando rotina de manutencao continua da base de conhecimento do Gandalf.
-[13/03/2026 10:26:59] [AUTO-TREINO] Processando 44 regras pendentes...
-[13/03/2026 10:27:01] [AUTO-TREINO] Regras atualizadas.
-[13/03/2026 10:27:01] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
-[13/03/2026 10:27:01] Ciclo de processamento concluido com sucesso.
-[13/03/2026 10:27:01] Aguardando meia hora para a proxima verificacao.
-[13/03/2026 10:57:01] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
-[13/03/2026 10:57:01] Ciclo de processamento concluido com sucesso.
-[13/03/2026 10:57:01] Aguardando meia hora para a proxima verificacao.
+[16/03/2026 11:27:02] [AUTO-TREINO] Processando 17 regras pendentes...
+[16/03/2026 11:27:03] [AUTO-TREINO] Regras atualizadas.
+[16/03/2026 11:27:03] Processando arquivo: consolidado_memoria_20260316_112358.txt...
+[16/03/2026 11:27:43]   -> Sucesso. Chunks inseridos: 21. Arquivo movido para processados.
+[16/03/2026 11:27:43] Processamento concluido. Total inserido: 21
+[16/03/2026 11:27:43] Ciclo de processamento concluido com sucesso.
+[16/03/2026 11:27:43] Aguardando meia hora para a proxima verificacao.
