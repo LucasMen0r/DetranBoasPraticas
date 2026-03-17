@@ -303,7 +303,7 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
     5. FILTRO DE RELEVÂNCIA: Ignore regras de outros objetos (ex: ignorar regras de Tabela ao avaliar Procedure).
 
     ESTRUTURA DE RESPOSTA OBRIGATÓRIA:
-    Você deve formatar a sua resposta EXATAMENTE com os 4 tópicos abaixo, usando Markdown.
+    Você deve SEMPRE formatar a sua resposta EXATAMENTE com os 4 tópicos abaixo, usando Markdown.
     **Objeto Analisado:** [Tipo do objeto e nome extraído]
     **Conformidade:** [APROVADO ou REPROVADO]
     **Justificativa:** [Explique o motivo citando o texto exato da regra ou o Exemplo Prático de Referência]

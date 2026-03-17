@@ -1,0 +1,20 @@
+[
+    {
+        "data_hora": "17/03/2026 10:44:08",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "\"a procedure dbfisc01..EscalaS.scp está de acordo com o padrão?\"",
+        "resposta": "**Resposta:** SIM, a procedure está de acordo com o padrão."
+    },
+    {
+        "data_hora": "17/03/2026 10:55:33",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "\"a procedure dbfisc01..EscalaR.scp está de acordo com o padrão?\"",
+        "resposta": "**Parecer do Auditor Gandalf**  \n**Objeto analisado:** `dbfisc01..EscalaR.scp`  \n**Resultado:** **REPROVADO**  \n\n**Justificativa:**  \n1. **Regra de prefixo obrigatório:** O nome da procedure não segue o padrão estabelecido, que exige o uso de prefixos como `Batch` ou `i` (ex.: `BatchNomeProcedure`, `iNomeProcedure`).  \n2. **Regra de PascalCase:** O termo `EscalaR` não está formatado conforme a notação húngara, pois contém um número (`R`) que não segue a regra de maiúsculas em cada palavra.  \n3. **Regra de operação válida:** Embora a operação `R` (Relatório) seja permitida, o nome da procedure não atende ao padrão **Objetivo[Complemento]Operação**, pois falta um verbo no infinitivo ou um substantivo descritivo.  \n\n**Conclusão:**  \nA procedure `dbfisc01..EscalaR.scp` não está de acordo com as regras do DETRAN-PE, conforme evidências históricas de que procedures com prefixo `Escala` foram rejeitadas por ausência de prefixos obrigatórios e desalinhamento com o formato estabelecido."
+    },
+    {
+        "data_hora": "17/03/2026 11:50:11",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "\"a Procedure: dbfisc01..FolhaPontoEscalaS.scp é válida?\"",
+        "resposta": "**dbfisc01..FolhaPontoEscalaS.scp** está **DE ACORDO** com o padrão nomeado.\n\n**Justificativa:**\n\n1.  **Estrutura do Nome:** O nome da procedure segue o modelo **Objetivo[Complemento]Operação**:\n    *   **Objetivo/Complemento:** \"FolhaPontoEscala\" (Parece descrever a função, relacionada a folha de ponto e escalas).\n    *   **Operação:** \"S\" (Selecionar), que é uma operação básica permitida pelo Detran.\n\n2.  **Operação Correta:** A sigla \"S\" corresponde corretamente à operação \"Selecionar\".\n\n3.  **Consistência com Exemplos:** O modelo de nomenclatura utilizado é o mesmo demonstrado nos exemplos aprovados fornecidos, como `dbfisc01..ConsultaHistoricoEscalaS.scp` e `dbfisc01..EscalaA.scp`."
+    }
+]
