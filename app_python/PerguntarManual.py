@@ -409,36 +409,43 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
 def salvarrespostas(pergunta, categoria, resposta):
     timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     data_arquivo = datetime.now().strftime("%d-%m-%Y")
-    nome_arquivo = f"log_gandalf_{data_arquivo}.txt"
+    nome_arquivo = f"log_gandalf_{data_arquivo}.json"
     
-    # Define o diretório alvo
     diretorio_destino = "memoria_gandalf"
-    
-    # Prática de segurança: cria o diretório automaticamente caso ele não exista
     os.makedirs(diretorio_destino, exist_ok=True)
-    
-    # Constrói o caminho completo de forma segura para qualquer sistema operacional
     caminho_completo = os.path.join(diretorio_destino, nome_arquivo)
     
-    conteudo = (
-        f"========================================\n"
-        f"DATA: {timestamp}\n"
-        f"========================================\n"
-        f"CATEGORIA: {categoria}\n"
-        f"========================================\n"
-        f"PERGUNTA: {pergunta}\n"
-        f"========================================\n"
-        f"RESPOSTA:\n{resposta}\n"
-        f"========================================\n\n"
-    )
+    novo_registro = {
+        "data_hora": timestamp,
+        "categoria": categoria,
+        "pergunta": pergunta,
+        "resposta": resposta
+    }
+    
+    registros = []
+    
+    # Lê o arquivo existente para manter a estrutura do array JSON válida
+    if os.path.exists(caminho_completo):
+        try:
+            with open(caminho_completo, "r", encoding="utf-8") as f:
+                # Se o arquivo estiver vazio, json.load lançará uma exceção
+                conteudo = f.read()
+                if conteudo.strip():
+                    registros = json.loads(conteudo)
+        except json.JSONDecodeError as e:
+            print(f"\n[AVISO] Falha ao ler o JSON existente ({e}). Iniciando um novo array.")
+            # Dependendo do nível de criticidade, você poderia fazer um backup do arquivo corrompido aqui
+    
+    registros.append(novo_registro)
     
     try:
-        with open(caminho_completo, "a", encoding="utf-8") as f:
-            f.write(conteudo)
+        with open(caminho_completo, "w", encoding="utf-8") as f:
+            # indent=4 formata o JSON para ser legível por humanos
+            # ensure_ascii=False garante que acentos fiquem corretos (ex: "Aprovação" ao invés de "Aprova\u00e7\u00e3o")
+            json.dump(registros, f, ensure_ascii=False, indent=4)
         print(f"\n[INFO] Resposta salva no log diário em: '{caminho_completo}'")
     except Exception as e:
         print(f"\n[ERRO] Não foi possível salvar o arquivo de log: {e}")
-
 def main():
     if len(sys.argv) < 2:
         print('\nExemplo de uso: Pergunta: "Posso usar o nome "Cliente" para uma tabela?"')
