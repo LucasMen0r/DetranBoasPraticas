@@ -9,13 +9,19 @@ from datetime import datetime
 import re
 from dotenv import load_dotenv
 
-# Configurações com fallback para variáveis de ambiente (Segurança)
-load_dotenv()
+# Identifica a pasta exata onde este script Python está localizado
+diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+caminho_env = os.path.join(diretorio_atual, '.env')
+
+# Carrega o .env passando o caminho absoluto
+load_dotenv(caminho_env)
+
+# Restante do seu código (usando o método com fallback das imagens)
 db_name = os.getenv('DB_NAME', 'DetranNorma')
 db_user = os.getenv('DB_USER', 'postgres')
-db_pass = os.getenv('DB_PASS', 'abc321')        
-db_host = os.getenv('DB_HOST', 'localhost')     
-db_port = os.getenv('DB_PORT', '5435')    
+db_pass = os.getenv('DB_PASS', 'abc321')
+db_host = os.getenv('DB_HOST', 'localhost')
+db_port = os.getenv('DB_PORT', '5435')
 DIRETORIO_TESTES = "arquivos_teste" 
 
 ollama_chat_model = "deepseek-r1:8b" ##o modelo anterior, o 14b, foi removido por ser muito pesado; o 8b pode fazer as suas funções sem muitos problemas.

@@ -1,0 +1,1019 @@
+--- FONTE: log_gandalf_05-03-2026.txt ---
+========================================
+DATA: 05/03/2026 11:32:36
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "o Script: dbfisc01..NovoCampoTblTipoOperacao.scp é válido?"
+========================================
+RESPOSTA:
+Erro técnico ao consultar LLM: 404 Client Error: Not Found for url: http://localhost:11436/api/chat
+========================================
+
+========================================
+DATA: 05/03/2026 11:40:00
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "o Script: dbfisc01..NovoCampoTblTipoOperacao.scp é válido?"
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 05/03/2026 11:48:51
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "o Script: dbfisc01..NovoCampoTblTipoOperacao.scp é válido?"
+========================================
+RESPOSTA:
+O script **dbfisc01..NovoCampoTblTipoOperacao.scp** **NÃO É VÁLIDO**.
+
+**Justificativa:**  
+1. **Regra de Nomenclatura de Arquivos:** As regras estabelecidas não permitem a extensão `.scp` para scripts.  
+2. **Regra de Tabelas:** Embora o nome da tabela `TblTipoOperacao` siga a convenção (iniciando com `Tbl`), a extensão `.scp` não está alinhada com os padrões de nomenclatura permitidos.  
+3. **Falta de Referência:** Não há regras ou exemplos no contexto que validem a utilização de arquivos com a extensão `.scp`.  
+
+**Ação Recomendada:**  
+Consulte a equipe de Administração de Dados para obter orientações sobre a nomenclatura adequada de scripts.
+========================================
+
+
+
+--- FONTE: log_gandalf_12-03-2026.txt ---
+========================================
+DATA: 12/03/2026 08:37:31
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: " a procedure: PROCEDURE dbvcen.agenciai está de acordo com o padrão do detran?"
+========================================
+RESPOSTA:
+**Parecer do Auditor Gandalf**  
+**Objeto:** dbvcen.agenciai  
+**Status:** **REPROVADO**  
+
+**Justificativa:**  
+A procedure `dbvcen.agenciai` viola a regra de nomenclatura para procedures executadas via processamento batch, conforme especificado no contexto normativo:  
+*"Quando a procedure for executada via processamento batch, deve-se colocar no início do nome da procedure a palavra “Batch”."*  
+
+O nome da procedure não inicia com a palavra "Batch", conforme exigido para objetos do tipo batch. Além disso, a estrutura do nome (`agenciai`) não segue o padrão estabelecido para procedures, que deve incluir a notação `Objetivo[Complemento]Operação`, conforme detalhado em exemplos aprovados como `BatchConsumoServicoWebMover`.  
+
+**Recomendação:**  
+O desenvolvedor deve renomear a procedure para iniciar com "Batch" e ajustar a estrutura de acordo com as regras de nomenclatura. Consulte o manual do Detran ou a equipe de Administração de Dados para obter orientações detalhadas.
+========================================
+
+========================================
+DATA: 12/03/2026 08:46:57
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "a table: CREATE TABLE dbhcen.cnh (nusuario numeric(12) NOT NULL, 	nsequencia int4 NOT NULL, nformulariocnh numeric(11) NOT NULL, demissaocnh timestamp NOT NULL, sufemissaocnh bpchar(2) NOT NULL, dvalidadecnh timestamp NOT NULL, scategoriamoto bpchar(2) NULL, scategoriaauto bpchar(2) NULL, isituacaocnh bpchar(1) NOT NULL, iprovisorio int4 NULL,  nobservacaocnh int4 NOT NULL,	srequerimento1 bpchar(1) NOT NULL, srequerimento2 bpchar(1) NULL, srequerimento3 bpchar(1) NULL, srequerimento4 bpchar(1) NULL, sformulariorenach bpchar(11) NULL, nlote int4 NULL, drequerimento timestamp NULL, nevento int4 NULL,	irecebimentoponto int4 DEFAULT 0 NOT NULL, iemailusuario int4 DEFAULT 0 NOT NULL, spais bpchar(5) NULL, ientregue int4 DEFAULT 0 NOT NULL,	dentrega timestamp NULL, ddatadownloadcnhe timestamp NULL, ncodseguranca numeric(13) NULL,	dimpressaocnh timestamp NULL, dprazorealizacaotoxicologico timestamp NULL, sar varchar(20) NULL, CONSTRAINT pkcnh PRIMARY KEY (nusuario, nsequencia)); segue os padrões do detran?"
+========================================
+RESPOSTA:
+Aprovado. Motivo: O nome da tabela "dbhcen.cnh" segue o padrão de utilizar nomes completos ou siglas técnicas quando não é possível utilizar palavras completas devido à limitação de caracteres do SGBD, conforme orientação de regra não explicitamente contradita no contexto.
+========================================
+
+========================================
+DATA: 12/03/2026 08:53:47
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "os índices:CREATE UNIQUE INDEX consulta_key ON renavam.consulta USING btree (spid); e CREATE UNIQUE INDEX estado_key ON renavam.estado USING btree (uf DESC, pais DESC); estão de acordo com o padrão do detran?"
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 12/03/2026 09:18:52
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: " o índice: CREATE INDEX envio_placa ON renavam.envio USING btree (placa DESC, codconsulta DESC); segue o padrão do detran?"
+========================================
+RESPOSTA:
+**Parecer do Auditor Gandalf**  
+Objeto analisado: Índice `envio_placa`  
+Resultado: **NÃO CONFORME**  
+
+---
+
+### **Justificativa**  
+1. **Regra violada: 2.2 Forma dos nomes**  
+   - A regra estabelece que o nome deve ter a primeira letra de cada palavra em maiúscula (ex.: `ParcelaDebito`).  
+   - O nome do índice `envio_placa` utiliza sublinhete (`_`) para separar palavras, mas não segue essa formatação. O correto seria usar `Envio_Placa` ou similar, conforme o padrão de PascalCase.  
+
+2. **Regra violada: 2.5 Siglas**  
+   - A regra define que siglas devem ser escritas com a primeira letra maiúscula e as demais minúsculas (ex.: `Ipva`, `Cnh`).  
+   - O nome `envio_placa` não segue essa regra, pois:  
+     - `envio` começa com letra minúscula (`e`), violando a regra de siglas.  
+     - `placa` está em minúsculas, não atendendo ao padrão de primeira letra maiúscula.  
+
+---
+
+### **Conclusão**  
+O nome do índice `envio_placa` não está alinhado com as regras de nomenclatura do DETRAN, especificamente com a **Regra 2.2** e a **Regra 2.5**.  
+
+**Sugestão:**  
+Consulte o manual do DETRAN ou entre em contato com a equipe de Administração de Dados para validar a estruturação correta do nome do índice.
+========================================
+
+========================================
+DATA: 12/03/2026 09:35:56
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "o índice: CREATE UNIQUE INDEX pktaxa ON dbhcen.taxa USING btree (ntaxa); segue os padrões do detran?"
+========================================
+RESPOSTA:
+**Parecer de Auditoria - Índice `pktaxa`**
+
+**Objeto analisado:** Índice `pktaxa` criado na tabela `dbhcen.taxa`.  
+**Script DDL:**  
+```sql
+CREATE UNIQUE INDEX pktaxa ON dbhcen.taxa USING btree (ntaxa);
+```
+
+**Conformidade:** APROVADO.
+
+**Justificativa:**  
+O nome do índice `pktaxa` segue o padrão estabelecido para nomes compostos por sigla (`pk`) mais o nome da tabela ou coluna (`taxa`), conforme regra de **Forma dos Nomes** (regra 2.2):  
+> *“Primeira letra de cada palavra maiúscula” (Ex.: ParcelaDebito).*  
+
+Além disso, o uso da sigla `pk` (indicando chave primária) está alinhado à regra de **Siglas** (regra 2.5):  
+> *“Siglas oficiais: primeira letra maiúscula e demais minúsculas (Ex.: Ipva, Cnh).”*  
+
+O nome não contém preposições (violação da regra 1), nem caracteres inválidos ou palavras reservadas (regras 2.1 e 2.4). A estrutura do nome (`pktaxa`) é equivalente aos exemplos aprovados de índices, como `pkquestao` e `pkobjetoapi`.  
+
+**Recomendação:**  
+O índice está de acordo com as normas do Detran. Qualquer dúvida sobre interpretação das regras, o usuário deve consultar o manual do Detran ou a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 12/03/2026 09:50:52
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "o índice: CREATE INDEX usuario_dcadastro ON dbhcen.usuario USING btree (dcadastro, npontocadastro); segue os padrões do detran?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Índice `usuario_dcadastro`
+**Conformidade:** REPROVADO
+**Justificativa:** "Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados."
+========================================
+
+========================================
+DATA: 12/03/2026 10:37:55
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "a procedure: dbvcen.arearodizioe segue os padrões do detran?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Procedure dbvcen.arearodizioe  
+**Conformidade:** REPROVADO  
+**Justificativa:**  
+1. **Regra de Nomeação:** O nome da procedure deve seguir o padrão "Objetivo[Complemento]Operação". O nome "arearodizioe" não atende a esse formato, pois não utiliza o padrão de operação (S, I, E, A, R) e não segue a estrutura verb-substantivo.  
+2. **Regra de Procedures Batch:** Procedures executadas via processamento batch devem ter "Batch" no início do nome. O nome "arearodizioe" não contém essa palavra.  
+3. **Exemplo de Referência:**  
+   - [REPROVADO]: PopulaVeiculoRoubadoSDS → Motivo: O nome não segue o padrão "Objetivo[Complemento]Operação" e a operação não está entre S, I, E, A, R.  
+   - [REPROVADO]: dbvcen..ConsumoServicoWebBatchI → Motivo: Procedures batch devem começar com "Batch", não terminar com ele.  
+**Recomendação:**  
+Recrie o nome da procedure seguindo o padrão "Objetivo[Complemento]Operação" e incluindo "Batch" no início se for uma procedure batch. Exemplo: "BatchAreaRodizioIE". Além disso, adicione a data de criação, o responsável e um objetivo claro no comentário da procedure.
+========================================
+
+========================================
+DATA: 12/03/2026 11:01:43
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "a tabela: dbhcen.cnh foi nomeada corretamente de acordo com o padrão do detran?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Tabela `dbhcen.cnh`  
+**Conformidade:** APROVADO  
+**Justificativa:**  
+A regra 2.5 (Siglas) estabelece que siglas oficiais devem ser usadas com a primeira letra maiúscula e as demais minúsculas. O nome `cnh` segue essa regra, pois é uma sigla (Carteira Nacional de Habilitação) e está no singular. Além disso, a regra 2.3 (Limite de tamanho) é respeitada, pois o nome tem 3 caracteres, abaixo do máximo permitido (30).  
+
+**Recomendação:**  
+O nome da tabela está de acordo com as regras do Detran. Mantenha a consistência no uso de siglas e evite alterações que possam violar as regras de nomenclatura.
+========================================
+
+
+
+--- FONTE: log_gandalf_02-03-2026.txt ---
+========================================
+DATA: 02/03/2026 08:31:33
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: a Procedure: dbfisc01..FolhaPontoEscalaS.scp é válida?
+========================================
+RESPOSTA:
+A procedure **dbfisc01..FolhaPontoEscalaS.scp** é válida.
+
+**Motivo:**  
+1. **Regra de Nomenclatura:** O nome da procedure segue o padrão **Objetivo[Complemento]Operação**, onde:  
+   - `FolhaPontoEscala` atua como objetivo ou complemento.  
+   - `S` corresponde à operação **Selecionar** (sigla permitida).  
+2. **Prefixo e Formato:**  
+   - Não há prefixo "Rpc" (indicativo de chamada cruzada), o que é válido para procedures locais.  
+   - O sufixo `.scp` está conforme o padrão estabelecido.  
+3. **Histórico de Referência:**  
+   - O exemplo `RegistroCfcCategoriaA` (Objetivo + Complemento + Operação) segue o mesmo padrão, reforçando a validade.  
+
+**Regra aplicada:** *Regra: Nome de procedure: Objetivo[Complemento]Operacao. Operação deve usar sigla: S (Selecionar).*
+========================================
+
+========================================
+DATA: 02/03/2026 09:02:12
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Posso nomear uma table iniciando com um caractere especial?
+========================================
+RESPOSTA:
+REPROVADO  
+**Motivo:** O nome da tabela não segue o padrão estabelecido. A regra de nomenclatura exige que o nome da tabela seja composto pelo nome da tabela seguido do nome da primeira coluna do índice. O exemplo 'tmpVeiculoI' foi aprovado porque o prefixo 'tmp' indica tabela temporária e segue o padrão geral. No entanto, a solicitação atual não especifica qual caractere especial será utilizado ou qual a finalidade dele, o que viola a regra de nomenclatura. Além disso, os exemplos históricos mostram que nomes como 'RENAVAMcadastro' foram rejeitados por não seguir o padrão estabelecido.
+========================================
+
+========================================
+DATA: 02/03/2026 09:12:27
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  as procedure dbfisc01..EscalaA.scp, dbfisc01..EscalaI.scp e dbfisc01..EscalaS.scp estão de acordo com o padrão?  
+========================================
+RESPOSTA:
+[APROVADO (Seguir este modelo)]: EscalaA.scp -> Motivo: **Rejeitado**. A procedure não segue o padrão estabelecido pelo DETRAN-PE. **Regras violadas:**  
+1. **Formato de Nomenclatura:** A regra principal exige que o nome da procedure siga o padrão **Objetivo[Complemento]Operação**. O prefixo "Escala" não está alinhado com nenhuma das regras conhecidas (ex.: Batch, Rpc).  
+2. **Sufixos não permitidos:** O sufixo ".A" viola a regra de nomenclatura, conforme visto em exemplos anteriores (ex.: BatchConsumoServicoWebA.scp foi rejeitado por conter sufixos como ".A").  
+**Fonte:** Histórico de validação DETRAN-PE (04/12/2025) - Rejeição de procedimentos com sufixos não convencionais.  
+
+[APROVADO (Seguir este modelo)]: EscalaI.scp -> Motivo: **Rejeitado**. **Regras violadas:**  
+1. **Formato de Nomenclatura:** Ausência de prefixo reconhecido (Batch, Rpc) e não atende ao padrão **Objetivo[Complemento]Operação**.  
+2. **Sufixo indesejável:** O sufixo ".I" não é permitido, conforme regras de nomenclatura aplicadas a procedimentos similares.  
+**Fonte:** Manual DETRAN-PE - Regra: Procedures Batch (Prefixo Batch) e exemplos de rejeição de sufixos não padrão.  
+
+[APROVADO (Seguir este modelo)]: EscalaS.scp -> Motivo: **Rejeitado**. **Regras violadas:**  
+1. **Formato de Nomenclatura:** Não possui prefixo válido e o sufixo ".S" viola a regra de nomenclatura, conforme histórico de validação.  
+2. **Regra de PascalCase:** O nome "EscalaS" não segue o padrão de PascalCase, conforme regras aplicadas a outros procedimentos.  
+**Fonte:** Histórico DETRAN-PE (04/12/2025) - Rejeição de procedimentos com sufixos como ".S" e ausência de prefixos.  
+
+**Conclusão:** Todas as três procedures **não estão de acordo** com o manual DETRAN-PE. O motivo é a ausência de prefixos válidos (Batch, Rpc) e o uso de sufixos não permitidos (ex.: .A, .I, .S), conforme regras e exemplos consolidados no histórico de validação.
+========================================
+
+========================================
+DATA: 02/03/2026 09:34:16
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  a procedure dbfisc01..EscalaA.scp está de acordo com o padrão?  
+========================================
+RESPOSTA:
+[NÃO APROVADO]  
+**Motivo:** A procedure `dbfisc01..EscalaA.scp` viola a regra de nomenclatura estabelecida pelo DETRAN-PE.  
+**Regra violada:**  
+1. **Regra de prefixo obrigatório:** As procedures devem seguir o padrão `Objetivo[Complemento]Operacao`, conforme definido no manual. O prefixo `dbfisc01..` não está alinhado com os exemplos válidos, como `BatchConsumoServicoWebMover.scp`, que inicia com `Batch`.  
+2. **Regra de PascalCase:** O nome `EscalaA` não segue o padrão de PascalCase, pois contém um número (`A`) que não está formatado corretamente.  
+3. **Regra de extensão:** Embora a extensão `.scp` seja permitida, o nome da procedure não atende ao padrão estabelecido, que exige um prefixo descritivo como `Batch` ou `AutoS_`.  
+
+**Evidência:**  
+- No histórico de testes, procedures sem o prefixo `Batch` foram rejeitadas (ex.: `PopulaVeiculoRoubadoSDS`).  
+- Os exemplos válidos sempre começam com um prefixo descritivo (ex.: `Batch`, `AutoS_`).  
+
+**Conclusão:** A procedure não está de acordo com as regras do DETRAN-PE.
+========================================
+
+========================================
+DATA: 02/03/2026 10:21:27
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  as procedure dbfisc01..EscalaA.scp, dbfisc01..EscalaI.scp e dbfisc01..EscalaS.scp estão de acordo com o padrão?
+========================================
+RESPOSTA:
+Não, as procedures **dbfisc01..EscalaA.scp**, **dbfisc01..EscalaI.scp** e **dbfisc01..EscalaS.scp** **não estão de acordo** com o padrão estabelecido.
+
+**Motivo:** As regras e exemplos fornecidos exigem que os nomes das procedures sigam um padrão específico, como o uso do prefixo "Batch" para procedures em lote ou "i" para procedures de internet (exemplos: `BatchNomeprocedure`, `iNomeprocedure`). As procedures em questão (`EscalaA.scp`, `EscalaI.scp`, `EscalaS.scp`) não possuem nenhum desses prefixos obrigatórios e não seguem o formato estabelecido de `Objetivo[Complemento]Operacao`. Além disso, não há regras ou exemplos no contexto que permitam considerar o uso de prefixos como "Escala" como válido.
+
+**Regra aplicada:**  
+- **Regra de PascalCase e Prefixos Obrigatórios:** As procedures devem começar com prefixos específicos como "Batch" ou "i", conforme demonstrado nos exemplos válidos. A ausência desses prefixos invalida os nomes.
+========================================
+
+========================================
+DATA: 02/03/2026 10:36:48
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  as procedure dbfisc01..EscalaA.scp, dbfisc01..EscalaI.scp e dbfisc01..EscalaS.scp estão de acordo com o padrão?
+========================================
+RESPOSTA:
+**REPROVADO**: As procedures **`dbfisc01..EscalaA.scp`**, **`dbfisc01..EscalaI.scp`** e **`dbfisc01..EscalaS.scp`** **não estão de acordo** com o manual do DETRAN-PE.
+
+**Motivo:**  
+1. **Regra de Nomenclatura para Procedures Batch (Prefixo Batch):** Embora a regra não defina explicitamente o padrão para procedures sem o prefixo "Batch", os exemplos de referência (como `BatchConsumoServicoWebS.scp`) demonstram que sufixos como `.S`, `.A` ou `.I` são considerados violações, pois não seguem o padrão estabelecido de terminar com a sigla da operação (ex.: `.S` para Select, conforme exemplo `VerificaAdvertenciaS`).  
+2. **Histórico de Validação:** No dia 04/12/2025, foi verificado que procedures com sufixos não convencionais (como `.S`) foram reprovadas (ex.: `BatchConsumoServicoWebS.scp`). O mesmo critério se aplica a `EscalaS.scp`, `.A` e `.I`, pois não correspondem aos padrões de sigla de operação estabelecidos.  
+
+**Regra/Origem:**  
+- Histórico DETRAN-PE: 04/12/2025 (exemplos de rejeição por sufixos não padrão).  
+- Regra implícita de nomenclatura: procedures devem terminar com sigla de operação (ex.: `.S`, `.I`, `.E`, `.A`, `.R`), conforme validação em exemplos como `VerificaAdvertenciaS`.
+========================================
+
+
+
+--- FONTE: log_gandalf_13-03-2026.txt ---
+========================================
+DATA: 13/03/2026 08:31:16
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  source /home/lucas/projeto_gandalf/venv/bin/activate
+"posso nomear uma table com caractere especial no início?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Table (com nome começando com caractere especial)  
+**Conformidade:** REPROVADO  
+**Justificativa:** Os exemplos aprovados de tabelas, como `dbhlog.logalunodisciplina` e `dbhcen.alunodisciplina`, começam com letras e não utilizam caracteres especiais, conforme estabelecido na [[ EXEMPLOS DE REFERÊNCIA ]]. Portanto, um nome de tabela começando com caractere especial não é conforme com os padrões de nomenclatura.  
+**Recomendação:** Utilize nomes de tabela que começam com letras, siga a notação Húngara com letra maiúscula no início, e evite caracteres especiais para garantir conformidade com as regras vigentes.
+========================================
+
+========================================
+DATA: 13/03/2026 08:44:41
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: "como escrever uma tabela log?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Tabela de Log (exemplo: dbhlog.logalunodisciplina)  
+**Conformidade:** APROVADO  
+**Justificativa:** O exemplo de tabela log fornecido (CREATE TABLE dbhlog.logalunodisciplina ...) segue a regra de nomenclatura para tabelas de log, especificamente: "Quando a tabela for de Log, deve-se usar o nome da tabela antecedida do termo “Log”." (Exemplo Prático de Referência). Além disso, o nome da tabela está no singular, conforme regra: "O nome da tabela deve estar sempre no singular."  
+**Recomendação:** Para criar uma tabela de log, siga o padrão de nomenclatura: antecipe o nome da tabela com "Log" (ex: dbhlog.lognome_da_tabela). Use colunas para auditoria, como timestamp e usuário, e garantir chave primária, conforme exemplo. Consulte o DBA se necessário para otimizações.
+========================================
+
+========================================
+DATA: 13/03/2026 09:17:24
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: " a procedure: dbfisc01..TipoCredenciamentoS.scp está de acordo com o padrão do detran?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Procedure dbfisc01..TipoCredenciamentoS.scp  
+**Conformidade:** APROVADO  
+**Justificativa:** O nome da procedure segue o padrão **Objetivo[Complemento]Operação**, conforme regra e exemplos de referência. O objetivo "TipoCredenciamento" está bem definido, a operação "S" (Selecionar) está em maiúsculas e o complemento é opcional.  
+**Recomendação:** Mantenha o padrão de nomeação e documente a função da procedure conforme as regras estabelecidas.
+========================================
+
+
+
+--- FONTE: log_gandalf_04-03-2026.txt ---
+========================================
+DATA: 04/03/2026 08:54:03
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "o Script: dbfisc01..NovoCampoTblTipoOperacao.scp segue as diretrizes de padronização do Detran?"
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 04/03/2026 10:47:58
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: " a procedure 'tmpParcelarDebitoD' está de acordo com os padrões do detran?"
+========================================
+RESPOSTA:
+**Resposta:** Não, a procedure **'tmpParcelarDebitoD'** **não está de acordo** com o manual do DETRAN-PE.
+
+**Regras violadas:**
+
+1.  **Prefixo não convencional**: O prefixo "tmp" (provavelmente significando "temporário") não é um padrão estabelecido para procedures. Os exemplos válidos como `BatchConsumoServicoWebA.scp` usam o prefixo "Batch" para indicar processamento em lote. O prefixo "tmp" não foi verificado como aceito e provavelmente não atende ao princípio de ser um substantivo descritivo no início do nome.
+2.  **Sufixo não convencional**: O sufixo "D" no final não segue o padrão observado. Nos exemplos válidos, como `BatchConsumoServicoWebA.scp`, o sufixo após o objetivo (ou o nome principal) é um substantivo descritivo (como "A" para Alterar, "S" para Selecionar/Relatório, "Mover" para a operação). O "D" seria aceitável apenas se significasse um substantivo bem definido (como "Debito" - mas mesmo assim, a regra exige o objetivo no nome, não uma simples letra). Além disso, a regra estabelece que o nome deve terminar com a sigla da operação (S, I, E, A, R) ou, em casos específicos, com o verbo completo. "D" não é uma sigla padrão para nenhuma operação conhecida (selecionar, inserir, excluir, alterar, relatório) e não foi verificado como aceito.
+3.  **Formatação e PascalCase**: Embora não tenha sido explicitamente verificado a formatação completa, o uso de "tmp" e "D" no final pode não seguir o padrão de PascalCase para o nome completo, especialmente considerando que o objetivo deve ser um substantivo. O exemplo `PopulaVeiculoRoubadoSDS` foi rejeitado por não seguir a formatação PascalCase e conter sigla inadequada.
+
+**Recomendação:** O nome deve ser refeito seguindo o padrão `Batch + NomeObjetivo + SiglaOperacao` (se for Batch) ou `NomeObjetivo + SiglaOperacao` (se não for Batch), com o objetivo sendo um substantivo e a operação sendo uma das siglas padrão (S, I, E, A, R). O prefixo "tmp" não é padrão e deve ser substituído por um nome descritivo ou verificado como aceito.
+========================================
+
+
+
+--- FONTE: log_gandalf_27-02-2026.txt ---
+========================================
+DATA: 27/02/2026 10:15:07
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  a procedure dbfisc01..EscalaA.scp está de acordo com o padrão? 
+========================================
+RESPOSTA:
+A procedure **`dbfisc01..EscalaA.scp`** **não está de acordo** com o manual do DETRAN-PE.
+
+**Regras violadas:**
+
+1. **Regra de PascalCase (Uso obrigatório de PascalCase):**
+   * O nome `EscalaA` não segue o padrão PascalCase. A palavra `Escala` está no gerúndio (deveria ser o infinitivo "Escalar") e `A` é um sufixo não convencional que não descreve a ação.
+
+2. **Regra de prefixo "Batch":**
+   * Procedures externas devem ter o prefixo "Batch". O nome `EscalaA.scp` não possui o prefixo obrigatório "Batch".
+
+3. **Regra de nomenclatura para procedures batch:**
+   * O padrão estabelecido é `Batch + Nome`. O nome `EscalaA.scp` não atende a esse padrão, pois falta o prefixo "Batch" e o sufixo "A" não descreve a funcionalidade.
+
+**Histórico de referência:**
+* O histórico DETRAN-04-12-2025 (07:43:17) menciona que procedures sem o prefixo "Batch" violam a regra.
+* O histórico DETRAN-04-12-2025 (08:17:58) confirma que o prefixo "Batch" é obrigatório para procedures externas.
+
+**Conclusão:** A procedure viola explicitamente a regra de prefixo "Batch" e a regra de PascalCase, conforme demonstrado em exemplos anteriores de violações no histórico de validação.
+========================================
+
+========================================
+DATA: 27/02/2026 10:48:55
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  a procedure dbfisc01..EscalaA.scp está de acordo com o padrão? 
+========================================
+RESPOSTA:
+[NÃO APROVADO] A procedure **`dbfisc01..EscalaA.scp`** **não está de acordo** com o manual do DETRAN-PE.
+
+**Motivo:**
+1. **Regra de Prefixo Batch**: Procedures externas devem ter o prefixo "Batch". A procedure `EscalaA.scp` não possui o prefixo obrigatório "Batch".
+2. **Regra de Padrão para Procedures Batch**: O padrão estabelecido é `Batch + Nome`. A procedure `EscalaA.scp` não segue esse padrão, pois falta o prefixo "Batch".
+
+**Regras violadas:**
+- **Regra: Procedures Batch (Prefixo Batch)** (explicitamente mencionada nos testes anteriores como sendo um requisito obrigatório para procedures externas).
+========================================
+
+========================================
+DATA: 27/02/2026 10:57:51
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA:  a procedure dbfisc01..EscalaS.scp está de acordo com o padrão? 
+========================================
+RESPOSTA:
+[Não Aprovado] A procedure **`dbfisc01..EscalaS.scp`** **não está de acordo** com o manual do DETRAN-PE.
+
+**Motivo:** A regra estabelecida para procedures do tipo Batch exige que o nome comece obrigatoriamente com o prefixo "Batch", conforme demonstrado em exemplos como `BatchProcessarMultas` e regras aplicadas em validações anteriores (ex.: `BatchConsumoServicoWebA.scp`). A procedure `EscalaS.scp` não possui o prefixo "Batch", violando essa regra fundamental.
+========================================
+
+========================================
+DATA: 27/02/2026 11:15:30
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA:  a procedure dbfisc01..EscalaS.scp está de acordo com o padrão? 
+========================================
+RESPOSTA:
+[NÃO APROVADO] A procedure **dbfisc01..EscalaS.scp** **não está de acordo** com o manual do DETRAN-PE.
+
+**Motivo:** Viola a regra de **PascalCase**. O nome da procedure deve estar em PascalCase, ou seja, com a primeira letra de cada palavra no formato maiúsculo. O nome "EscalaS" apresenta a palavra "Escala" com a primeira letra minúscula ("e"), o que é considerado uma violação. Além disso, a palavra "S" no final não segue o padrão estabelecido para nomes de procedures.
+
+**Regra embasadora:** As regras de nomenclatura para procedures exigem o uso de PascalCase, conforme demonstrado em exemplos de validação e violações no histórico de testes.
+========================================
+
+========================================
+DATA: 27/02/2026 11:27:48
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA:  a procedure dbfisc01..EscalaA.scp está de acordo com o padrão? 
+========================================
+RESPOSTA:
+[NÃO] A procedure `dbfisc01..EscalaA.scp` **não está de acordo** com o manual do DETRAN-PE.
+
+**Motivo:**  
+1. **Regra de PascalCase e Formato:**  
+   - A palavra `EscalaA` utiliza o gerúndio (`Escala`) em vez do infinitivo correto (`Escalar`), violando a regra de nomenclatura estabelecida.  
+   - O sufixo `.A.scp` não é permitido, conforme observado em casos anteriores (ex.: `BatchConsumoServicoWebA.scp` foi rejeitado por conter sufixos como `.A.scp`).  
+
+2. **Regra de Complemento Opcional:**  
+   - O complemento `.A.scp` é considerado um sufixo indesejável, pois a regra estabelece que o nome da procedure deve seguir o padrão `Objetivo[Complemento]Operacao`, sem adicionar sufixos desnecessários.  
+
+**Regras Embasamento:**  
+- Regra: "No nome da procedure, o Complemento é opcional e serve para descrever melhor a função caso o objetivo não seja suficiente."  
+- Exemplos históricos: `BatchConsumoServicoWebA.scp` foi rejeitado por conter sufixos como `.A.scp`.
+========================================
+
+========================================
+DATA: 27/02/2026 11:42:45
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA:  a procedure dbfisc01..EscalaS.scp está de acordo com o padrão? 
+========================================
+RESPOSTA:
+A procedure **`dbfisc01..EscalaS.scp`** **NÃO está de acordo** com o manual do DETRAN-PE.
+
+**Regras violadas:**
+
+1.  **Prefixo Batch obrigatório para rotinas em lote:** A procedure não possui o prefixo `Batch`, sendo executada via processamento em lote (como é sugerido pelo esquema `dbfisc01..`). Conforme regra: *"APENAS procedures executadas via processamento em lote (batch) devem iniciar com o prefixo "Batch". Procedures comuns de sistema NÃO recebem esse prefixo, devendo iniciar diretamente pelo Objetivo."* e *"Regra: Procedures Batch (Prefixo Batch)."*
+2.  **Objetivo deve ser um substantivo no singular:** O nome da procedure `EscalaS` não segue o padrão estabelecido. O objetivo (`Escala`) não é um substantivo no singular (a forma correta seria `Escala` ou `Escalas`, dependendo do contexto). Conforme regra: *"Regra: O nome da procedure deve seguir o formato: Objetivo[Complemento]Operacao."* e *"Regra: No nome da procedure, o Objetivo deve ser um substantivo que responda o que será selecionado ou inserido, muitas vezes coincidindo com o nome da tabela."*
+
+**Histórico de referência:** Embora não haja um histórico específico para este nome exato, as inconsistências verificadas em procedimentos similares (`BatchConsumoServicoWebA.scp`, `BatchConsumoServicoWebS.scp`) demonstram que o uso de sufixos como `.scp` ou palavras terminando em `S` no final do nome (quando deveriam ser o objetivo principal) não é permitido, violando a regra básica do formato `Objetivo[Complemento]Operacao`.
+========================================
+
+========================================
+DATA: 27/02/2026 11:53:26
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA:  a procedure dbfisc01..EscalaS.scp está de acordo com o padrão? 
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..EscalaS.scp -> Motivo: **Regra aplicada:** * **Regra: Procedures Batch (Prefixo Batch).** * A procedure `dbfisc01..EscalaS.scp` não possui o prefixo `Batch`, portanto não está sujeita à regra de prefixo obrigatório para procedures Batch. * **Regra: No sistema de Habilitação, procedures de envio do RENACH ficarão iguais às procedures já existentes do RENACH.** * A procedure não se enquadra no sistema de Habilitação ou RENACH, portanto a regra não se aplica. * **Regra: No sistema de Veículos, nomes de procedures RENAVAM e RENAINF mantêm o padrão existente.** * A procedure não se enquadra no sistema de Veículos, portanto a regra não se aplica. * **Regra: Objetivo[Complemento]Operacao.** * A regra define o formato para procedures em geral, mas não há conflito com o nome `EscalaS.scp`. **Conclusão:** A procedure está de acordo com as regras do manual do DETRAN-PE, pois não há regras específicas que a invalidem.
+========================================
+
+
+
+--- FONTE: log_gandalf_09-03-2026.txt ---
+========================================
+DATA: 09/03/2026 08:54:43
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: NotificarToxicologicoA.sql está de acordo com o padrão?"
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 09/03/2026 09:00:32
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: NotificarToxicologicoA.sql está de acordo com o padrão?"
+========================================
+RESPOSTA:
+[APROVADO]: NotificarToxicologicoA.sql está de acordo com o padrão.  
+**Motivo**: O nome da procedure termina com a sigla da operação 'A', conforme regra de nomenclatura estabelecida e validada nos exemplos de referência (NotificarToxicologicoA.sq e NotificarToxicologicoA.sql).  
+**Regra aplicada**: "Procedimentos externos devem terminar com a sigla da operação (A, I, S)".
+========================================
+
+========================================
+DATA: 09/03/2026 09:10:15
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "a procedure dbfisc01..ConsultaTurnoEscalaS.scp está de acordo com o padrão do banco de dados?"
+========================================
+RESPOSTA:
+**REPROVADO**: dbfisc01..ConsultaTurnoEscalaS.scp  
+**Motivo**:  
+1. **Regra de Uso de Iniciais Maiúsculas**: O nome da procedure contém "TurnoEscala", que não segue a notação húngara exigindo iniciais maiúsculas em cada palavra (ex.: "TurnoEscala" deveria ser "TurnoEscala" ou "TurnoEscala", mas a regra exige separação por espaço ou underline).  
+2. **Regra de Termos em Português e Singular**: O sufixo "S" no final do nome não está devidamente singularizado conforme o padrão (ex.: "S" deve ser substituído por um termo singular, como "Seleção" ou "Sistema").  
+3. **Regra de Extensão**: A extensão ".scp" não foi validada como permitida no padrão de nomenclatura, conforme os exemplos aprovados (ex.: ".sq" foi utilizado em "NotificarToxicologicoS.sq").  
+
+**Fonte**:  
+- Regra: Uso de Iniciais Maiúsculas em cada palavra [notação húngara].  
+- Regra: Usar termos em português e no singular.  
+- Exemplo Aprovado: "NotificarToxicologicoS.sq" (extensão válida).  
+
+Caso necessite de mais detalhes, consulte o manual do Detran ou entre em contato com a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 09/03/2026 10:09:49
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..EscalaS.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+[APROVADO (Seguir este modelo)]: dbfisc01..EscalaS.scp -> **NÃO APROVADO**  
+**Motivo**: O nome da procedure não atende à regra de nomenclatura. A regra estabelecida é que colunas usadas como parâmetro em procedures externas devem iniciar com underline (ex.: `_EscalaS.scp`). O exemplo `EscalaI` demonstra que o padrão inclui o underline antes da sigla da operação. O nome `EscalaS.scp` não possui o underline, violando a regra.
+========================================
+
+========================================
+DATA: 09/03/2026 10:59:12
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..EscalaI.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..EscalaI.scp está de acordo com o padrão.
+
+**Motivo:**  
+O nome da procedure segue o padrão estabelecido pela regra **Objetivo + Complemento + Operação**, terminando com a sigla da operação. Neste caso, a terminação **'I'** é válida, conforme regramos e exemplos como **EscalaI** (aprovado no histórico de referências).
+========================================
+
+========================================
+DATA: 09/03/2026 11:03:03
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..EscalaS.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..EscalaS.scp está de acordo com o padrão.
+
+**Motivo:**  
+1. **Regra 3**: O padrão é Objetivo + Complemento + Operação (S, I, E, A, R). O nome da procedure termina com a sigla da operação 'S', que é um tipo de operação válido.  
+2. **Exemplo de Referência**: O exemplo de EscalaS foi validado como correto, terminando com a sigla da operação 'S'.  
+3. **Regra 4**: Tabelas de log devem ter o prefixo Log, mas essa regra não se aplica diretamente a procedures.  
+4. **Regra 5**: A letra maiúscula isolada no final do nome (como 'S') é um padrão válido para representar o tipo de operação.  
+
+**Conclusão:** O nome da procedure segue o padrão estabelecido pelo Detran, conforme as regras e exemplos fornecidos.
+========================================
+
+========================================
+DATA: 09/03/2026 11:11:38
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: " a procedure dbvcen..ConsultaTotalDiasFeriasS.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+[APROVADO]: dbvcen..ConsultaTotalDiasFeriasS.scp
+
+**Motivo:**  
+O nome da procedure segue o padrão **Objetivo + Operação**, conforme regra de nomenclatura:  
+- **Objetivo:** "ConsultaTotalDiasFerias" (corresponde a uma operação de consulta/edição).  
+- **Operação:** "S" (operador de Seleção/Consulta válido, conforme exemplo de EscalaS).  
+
+Além disso, a terminação com a sigla da operação "S" é um padrão válido, como demonstrado nos exemplos de referência.
+========================================
+
+========================================
+DATA: 09/03/2026 11:18:07
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..CadastroMotivoAlteracaoEscalaS.scp está dentro dos padrões do Detran?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..CadastroMotivoAlteracaoEscalaS.scp -> Motivo: Correto: Termina com a sigla da operação 'S', conforme exemplo de EscalaS.
+========================================
+
+========================================
+DATA: 09/03/2026 11:24:35
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "a procedure dbfisc01..CadastroMotivoAlteracaoEscalaA.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+Não, a procedure **dbfisc01..CadastroMotivoAlteracaoEscalaA.scp** NÃO está de acordo com o padrão.
+
+**Justificativa:**
+
+1.  **Regra de Nomenclatura:** O padrão exige que o nome da procedure termine com a sigla da operação (um único letra maiúscula no final do nome, conforme visto nos exemplos: `EscalaS`, `NotificarToxicologicoA`, `EscalaI`, `CadastroMotivoAlteracaoEscalaA` - embora este último exemplo termine com 'A', seguindo o padrão).
+2.  **Análise do Nome:** O nome `dbfisc01..CadastroMotivoAlteracaoEscalaA.scp` termina com a extensão `.scp`. A extensão `.scp` não é uma sigla de operação no formato exigido (letra única maiúscula no final). A letra `p` do `.scp` está presente, mas não é a única letra maiúscula no final do nome prático (`CadastroMotivoAlteracaoEscalaA` termina com 'A', não com 'P' isolado).
+
+Portanto, a procedure não segue o padrão de terminar com a sigla da operação (letra única maiúscula no final).
+
+Caso precise de mais informações, recomendo consultar a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 09/03/2026 11:29:44
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "a procedure dbfisc01..CadastroMotivoAlteracaoEscalaS.scp segue o padrão do detran?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..CadastroMotivoAlteracaoEscalaS.scp -> Motivo: O nome da procedure termina com a sigla da operação 'S', conforme regra de validação de terminação com sigla de operação estabelecida em exemplos como EscalaS.
+========================================
+
+========================================
+DATA: 09/03/2026 11:37:07
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..CadastroMotivoAlteracaoEscalaS.scp está de acordo com o padrão do detran?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..CadastroMotivoAlteracaoEscalaS.scp -> Motivo: O nome da procedure termina com a sigla da operação 'S', conforme regra de nomenclatura e exemplos de referência (EscalaS, NotificarToxicologicoA). A extensão '.scp' não foi objeto de restrição específica no contexto.
+========================================
+
+
+
+--- FONTE: log_gandalf_10-03-2026.txt ---
+========================================
+DATA: 10/03/2026 08:39:14
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "a procedure: ValidarEnvio575S está de acordo com o padrão do banco de dados?"
+========================================
+RESPOSTA:
+[APROVADO]: dbfisc01..ValidarEnvio575S.scp -> Motivo: Nome de procedure está de acordo com o padrão do Detran.  
+- **Validar**: Primeira letra maiúscula (conforme regra de notação húngara).  
+- **Envio**: Primeira letra maiúscula (conforme regra de notação húngula).  
+- **575**: Número sem regras de formatação.  
+- **S**: Sufixo válido, pois representa uma operação (como visto nos exemplos aprovados, como "EscalaS" e "NotificarToxicologicoA").  
+
+**Regras aplicadas:**  
+1. Uso de Iniciais Maiúsculas em cada palavra (notação húngara).  
+2. Não usar acentos, cedilha ou espaços.  
+3. Sufixo com letra maiúscula isolada no final é válido (ex.: "S").  
+
+**Observação:** O nome segue todas as regras do Detran, incluindo a terminação com a sigla da operação.
+========================================
+
+========================================
+DATA: 10/03/2026 08:43:39
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: Operacao..VeiculoRoubadoAtualizarSds.scp está de acordo com o manual?"
+========================================
+RESPOSTA:
+[REPROVADO]: Operacao..VeiculoRoubadoAtualizarSds.scp não está de acordo com o manual.  
+**Motivo**: O nome da procedure termina com 'sds.scp', onde a sigla da operação deve ser um único caractere maiúsculo isolado no final (como 'S', 'I', 'A'). No entanto, 'sds' contém letras minúsculas, violando a regra de terminação com a sigla da operação em maiúsculo conforme os exemplos válidos (EscalaS, NotificarToxicologicoA) e a regra geral de nomenclatura.
+========================================
+
+========================================
+DATA: 10/03/2026 08:56:38
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "a procedure: ControleIndicePresidenciaA.scp está de acordo com o padrão de nomenclatura do banco de dados?"
+========================================
+RESPOSTA:
+Não, a procedure **ControleIndicePresidenciaA.scp** não está de acordo com o padrão de nomenclatura do banco de dados.
+
+**Justificativa:**
+
+1.  **Comprimento excessivo:** A regra estabelecida exige o uso de "nomes curtos, claros e sem ambiguidade". O nome "ControleIndicePresidenciaA" é excessivamente longo, violando essa regra de concisidade.
+2.  **Forma verbal/plural:** Embora a regra exija o uso de substantivos (respondendo a "O que selecionar? O que inserir?") e não mencione explicitamente a forma verbal, a complexidade do nome sugere uma descrição muito detalhada, o que vai contra a busca por um nome curto. Além disso, a palavra "Presidencia" no nome parece estar no plural, embora isso não seja uma violação direta regras explícitas, a regra de usar substantivos claros e curtos é claramente desafiada por um nome tão extenso.
+
+Portanto, a procedure não segue o padrão devido ao seu comprimento excessivo, violando a regra de uso de nomes curtos.
+========================================
+
+========================================
+DATA: 10/03/2026 09:05:03
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: ControleIndicePresidenciaE.scp está de acordo com o padrão de nomenclatura do banco de dados?"
+========================================
+RESPOSTA:
+Sim, a procedure **ControleIndicePresidenciaE.scp** está de acordo com o padrão de nomenclatura do banco de dados.
+
+**Justificativa:**
+De acordo com a regra de nomenclatura para procedures, o sufixo que representa a operação deve ser uma letra maiúscula isolada no final do nome (como S, I, E, A, R). Neste caso, o sufixo **'E'** é válido, pois representa uma operação básica permitida pelo Detran. Além disso, o modelo de nomenclatura **Objetivo[Complemento]Operacao** foi seguido, conforme demonstrado nos exemplos aprovados como **ControleIndicePresidenciaS.scp**.
+========================================
+
+========================================
+DATA: 10/03/2026 09:29:17
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: " a tabela: create table EventoCdt ( nCpf                 numeric(11)                    not null, nSequencia           smallint                       not null, sNome                char(44)                       not null, sEmail               char(60)                       not null, sTelefone            char(15)                       not null, sTipoEvento          varchar(1)                     not null, sCodigoEvento        varchar(2)                     not null, sEvento              varchar(255)                   not null, constraint pkEventoCdt primary key (nCpf, nSequencia)) está de acordo com o padrão do Detran?"
+========================================
+RESPOSTA:
+[AUTORIZADO (Com observações)]  
+**EventoCdt** está **parcialmente** de acordo com o padrão do Detran, conforme análise das regras aplicáveis:  
+
+1. **Nome da tabela**:  
+   - **Não está de acordo** com a regra *"Nome no singular, claro, sem abreviação"* (Regra: Nome no singular, claro, sem abreviação (exceto se >30 chars)).  
+   - O nome **EventoCdt** é considerado **plural** (etimologicamente, "evento" no masculino plural termina em "os"), enquanto o padrão exige o **singular**.  
+
+2. **Índice e PK**:  
+   - **Está de acordo** com a regra *"Nome da tabela seguido do nome da primeira coluna do índice"* (Regra: Nome da tabela seguido do nome da primeira coluna do índice).  
+   - O índice `pkEventoCdt` está correto, pois segue o padrão `Tabela + primeira coluna da PK` (`EventoCdt + nCpf`).  
+
+3. **Outras verificações**:  
+   - **Não há violação** das regras de integridade referencial, JOINs, ou padrão de FK, pois a estrutura é uma tabela simples sem referências externas.  
+   - Os tipos de dados (`numeric`, `smallint`, `char`, `varchar`) não possuem restrições de conformidade no contexto.  
+
+**Justificativa**:  
+A violação no nome da tabela é a única irregularidade detectada. O Detran exige nomes no singular para garantir consistência nos metadados e facilitar auditorias. O nome `EventoCdt` deve ser reestruturado para singularizar (ex.: `EventoCdt` → `Evento` ou `EventoCd`), conforme orientação da equipe de Administração de Dados.  
+
+**Recomendação**:  
+Reestruturar o nome da tabela para singular, mantendo o prefixo `Cdt` se for um acrônimo válido (ver regra de limitação de caracteres >30).
+========================================
+
+========================================
+DATA: 10/03/2026 09:46:10
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: iFormularioServicoS.sql (DBHCEN). está de acordo com o padrão?"
+========================================
+RESPOSTA:
+A procedure: iFormularioServicoS.sql está **DE ACORDO** com o padrão.
+
+**Justificativa:**
+
+1.  **Regra de Acesso:** A regra estabelecida é: "Se acesso via internet, iniciar com i". A procedure em questão inicia com "i", atendendo a essa regra.
+2.  **Regra de Operação:** A regra estabelecida é: "Objetivo + Complemento + Operação (S, I, E, A, R)". Embora o nome completo não possa ser totalmente descomposto aqui, a parte final "S" é um exemplo válido de sigla de operação conforme demonstrado nos exemplos de referência (EscalaS, NotificarToxicologicoA). A validade da operação é suficiente para considerar o nome conforme ao padrão estabelecido.
+========================================
+
+========================================
+DATA: 10/03/2026 09:51:37
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "a nomenclatura das procedures: tmpParcelaDebitoSefazD.scp / tmpParcelaDebitoSefazI.scp está válida?"
+========================================
+RESPOSTA:
+A nomenclatura das procedures tmpParcelaDebitoSefazD.scp e tmpParcelaDebitoSefazI.scp **não é válida**.
+
+**Justificativa:**
+
+De acordo com a regra para nomenclatura de procedures, o final do nome deve representar a operação realizada, utilizando um acrônimo em letras maiúsculas (como S, I, E, A, R) conforme padrão estabelecido. As siglas "D" e "I" utilizadas nos nomes das procedures não correspondem a um acrônimo de operação básico definido como padrão (selecionar, inserir, etc.). Portanto, estas siglas não são consideradas válidas para representar a operação no final do nome da procedure.
+========================================
+
+========================================
+DATA: 10/03/2026 10:08:48
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure: NotificarToxicologicoS.sql está de acordo com o padrão?"
+========================================
+RESPOSTA:
+Sim, a procedure **NotificarToxicologicoS.sql** está de acordo com o padrão. 
+
+**Justificativa:**  
+- O nome da procedure segue o padrão **Objetivo[Complemento]Operação**, onde:  
+  - **Objetivo**: "NotificarToxicologico" (responde a "O que selecionar? O que inserir?").  
+  - **Operação**: "S" (operador válido conforme a regra: "Objetivo + Complemento + Operação (S, I, E, A, R)").  
+- O sufixo "S" é válido, conforme a regra que define os tipos de operação.  
+
+**Observação:** O formato do arquivo (".sql") não interfere na validação do padrão de nomeação, que é baseado no nome do objeto.
+========================================
+
+========================================
+DATA: 10/03/2026 10:13:49
+========================================
+CATEGORIA: GERAL
+========================================
+PERGUNTA: "Verifique se script: DadosVeiculoValidar.sql esta de acordo com o padrão do detran"
+========================================
+RESPOSTA:
+[APROVADO (Seguir este modelo)]: DadosVeiculoValidar.sql -> Motivo: Correto: Termina com a sigla da operacao 'Validar'. 
+
+**Justificativa:**  
+1. **Regra de Nomeação:** O nome do script termina com "Validar", que é considerado uma sigla de operação válida conforme padrão estabelecido (ex.: EscalaI, EscalaS, NotificarToxicologicoA).  
+2. **Regra de Comando SQL:** O script é um comando SQL, mas não há informações suficientes para verificar se ele segue a regra de uso exclusivo de Stored Procedures (exceto para update/insert de text/image).  
+
+**Observação:**  
+- Para verificar se o script está sendo utilizado como Stored Procedure, é necessário consultar o manual do Detran ou a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 10/03/2026 10:46:58
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: "posso usar um caractere especial no início de uma chave primária?"
+========================================
+RESPOSTA:
+Não localizei regras específicas no meu banco de conhecimento para validar este objeto, entre em contato com a equipe de Administração de Dados.
+========================================
+
+========================================
+DATA: 10/03/2026 11:18:58
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: "o índice:   CREATE UNIQUE INDEX pkaberturadialacresonline ON dbvcen.aberturadialacresonline USING btree (dataabertura, setor); segue o pdrão do detran?"
+========================================
+RESPOSTA:
+[NÃO APROVADO] O índice não segue o padrão do Detran. 
+
+**Justificativa:**  
+1. O nome da tabela contém letras maiúsculas (ex: "aberturadialacresonline"), violando a regra de nomenclatura que estabelece que os nomes devem ser compostos por termos completos ou abreviados sem perder a coerência do entendimento, conforme demonstrado no exemplo aprovado:  
+   `CREATE TABLE dbhcen.alunodisciplina ...` (todos os termos em minúsculas).  
+
+2. O padrão exige que o nome da tabela seja composto por termos completos quando possível, conforme mencionado no exemplo:  
+   `CREATE TABLE dbhcen.alunodisciplina ...` (termos completos como "alunodisciplina").  
+
+**Regras violadas:**  
+- Nome da tabela com letras maiúsculas (contrario ao padrão de usar termos completos em minúsculas).  
+
+**Sugestão:**  
+O nome da tabela deve ser reescrito em minúsculas, conforme o padrão estabelecido. Exemplo:  
+`CREATE UNIQUE INDEX pkaberturadialacresonline ON dbvcen.aberturadialacresonline USING btree (dataabertura, setor);`  
+deveria ser renomeado para:  
+`CREATE UNIQUE INDEX pkaberturadialacresonline ON dbvcen.aberturadialacresonline USING btree (dataabertura, setor);`  
+com o nome da tabela em minúsculas.  
+
+Caso deseje confirmar, consulte o manual do Detran ou entre em contato com a equipe de Administração de Dados.
+========================================
+
+
+
+--- FONTE: log_gandalf_11-03-2026.txt ---
+========================================
+DATA: 11/03/2026 10:23:00
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "A procedure dbfisc01..EscalaS.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+**Resposta:** SIM, a procedure está de acordo com o padrão.
+
+**Justificativa:**  
+1. **Regra de Nomenclatura:** O nome da procedure segue o padrão **Objetivo[Complemento]Operação**, conforme especificado no contexto.  
+2. **Operação:** A parte final do nome é **S**, que é uma operação básica permitida (Selecionar), conforme listada na regra.  
+3. **Exemplo de Referência:** O exemplo `dbfisc01..EscalaA.scp` foi validado com a mesma estrutura, confirmando que operações básicas como **S** são aceitas.  
+
+**Conclusão:** O nome da procedure está alinhado às regras e exemplos fornecidos.
+========================================
+
+========================================
+DATA: 11/03/2026 10:29:48
+========================================
+CATEGORIA: Regras Gerais
+========================================
+PERGUNTA: " a table: CREATE TABLE dbhcen.alteracaopontoatendimento (nprocesso numeric(13) NOT NULL, npontoatendimentoantigo int4 NOT NULL, npontoatendimentonovo int4 NOT NULL, ddata timestamp NOT NULL, smotivo varchar(254) NOT NULL, CONSTRAINT pkalteracaopontoatendimento PRIMARY KEY (nprocesso, npontoatendimentoantigo, npontoatendimentonovo, ddata)); está de acordo com o padrão do Detran?"
+========================================
+RESPOSTA:
+Não, a tabela **não está de acordo** com o padrão do Detran.
+
+**Motivo:** A regra **2.5 Siglas** estabelece que os nomes devem utilizar siglas oficiais (ex.: `Ipva`, `Cnh`), com a primeira letra maiúscula e as demais minúsculas. O nome da tabela `alteracaopontoatendimento` não segue essa regra, pois não utiliza uma sigla oficial.
+========================================
+
+========================================
+DATA: 11/03/2026 11:07:51
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "A procedure dbfisc01..EscalaE.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+**Parecer do Auditor Gandalf**
+
+A procedure `dbfisc01..EscalaE.scp` **NÃO está de acordo com o padrão**.
+
+**Justificativa:**
+
+1. **Regra 1: Rigor ESTRUTURAL**  
+   O nome da procedure contém a extensão `.scp`, que é considerada uma violação da regra de nomenclatura. Conforme estabelecido, nomes com extensões (como `.scp`, `.sql`) são automaticamente reprovados, a menos que haja uma regra explícita permitindo.
+
+2. **Regra de Formatação de Nome**  
+   Mesmo que o sufixo `.scp` não fosse uma violação, o formato `EscalaE.scp` não seguiria o padrão `Objetivo[Complemento]Operação`, pois a extensão `.scp` não faz parte do esquema nomeado.
+
+**Conclusão:**  
+A procedure é reprovada por conter a extensão `.scp`, conforme a regra de rigor estrutural.
+========================================
+
+========================================
+DATA: 11/03/2026 11:16:25
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "A procedure dbfisc01..EscalaI.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+**APROVADO**
+
+**Motivo:**  
+A procedure `dbfisc01..EscalaI.scp` está de acordo com o padrão nomeado.  
+- **Objetivo:** "Escala" atua como substantivo, respondendo à pergunta "O que inserir?" (regra de nomenclatura).  
+- **Operação:** A terminação "I" corresponde à sigla para "Inserir" (operação básica permitida), conforme definido no modelo de aprovação dos exemplos.  
+- **Estrutura:** O formato `Objetivo[Complemento]Operacao` foi seguido, com "I" como operação válida.  
+
+**Regra embasadora:**  
+A regra de nomeação de procedures estabelece que a operação deve ser representada por uma letra maiúscula (S, I, E, A, R), conforme demonstrado nos exemplos aprovados.
+========================================
+
+========================================
+DATA: 11/03/2026 11:30:42
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "A procedure dbfisc01..Escalar.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+**Parecer do Auditor Gandalf**
+
+**Objeto analisado:** dbfisc01..Escalar.scp  
+**Resultado:** **REPROVADO**
+
+---
+
+**Justificativa:**  
+A procedure `dbfisc01..Escalar.scp` viola a regra de nomenclatura estabelecida no contexto normativo.  
+
+**Regra violada:**  
+De acordo com a regra de nomeação de procedures, o nome deve seguir o padrão **Objetivo[Complemento]Operação**, onde a **Operação** é uma sigla em letras maiúsculas das operações básicas (S, I, E, A, R).  
+
+**Exemplo de conformidade:**  
+- `dbfisc01..EscalaA.scp` → Conforme regra, a operação "Alterar" (A) está explicitamente no final do nome.  
+
+**Objeto analisado:**  
+- `dbfisc01..Escalar.scp` → **Não possui a sigla de operação** no final, violando a regra.  
+
+**Conclusão:**  
+O nome da procedure não atende ao padrão estabelecido, pois falta a indicação da operação no final do nome.  
+
+**Ação recomendada:**  
+O desenvolvedor deve renomear a procedure incluindo a sigla da operação no final, conforme o padrão **Objetivo[Complemento]Operação**.
+========================================
+
+

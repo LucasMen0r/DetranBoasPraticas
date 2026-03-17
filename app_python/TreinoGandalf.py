@@ -7,11 +7,16 @@ import os
 import requests
 import time
 import shutil
+import os
 from dotenv import load_dotenv
 import pgvector.psycopg2
 
-# Configurações estritas via variáveis de ambiente
-load_dotenv()
+# Calcula o caminho absoluto para o arquivo .env que está na pasta raiz (um nível acima de app_python)
+diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+caminho_env = os.path.abspath(os.path.join(diretorio_atual, '..', '.env'))
+
+# Força o carregamento do .env a partir do caminho exato
+load_dotenv(dotenv_path=caminho_env)
 
 def get_env_or_raise(var_name):
     value = os.getenv(var_name)
@@ -20,11 +25,11 @@ def get_env_or_raise(var_name):
     return value
 
 try:
-    DB_NAME = get_env_or_raise('DB_NAME')
-    DB_USER = get_env_or_raise('DB_USER')
-    DB_PASS = get_env_or_raise('DB_PASS')
-    DB_HOST = get_env_or_raise('DB_HOST')
-    DB_PORT = get_env_or_raise('DB_PORT')
+    DB_NAME = os.getenv('DB_NAME', 'DetranNorma')
+    DB_USER = os.getenv('DB_USER', 'ollama_trainer')
+    DB_PASS = os.getenv('DB_PASS', '123456')
+    DB_HOST = os.getenv('DB_HOST', 'localhost')
+    DB_PORT = os.getenv('DB_PORT', '5435')
 except EnvironmentError as e:
     print(e)
     exit(1)

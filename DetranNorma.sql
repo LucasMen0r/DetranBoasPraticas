@@ -60,6 +60,14 @@ CREATE TABLE TipoDado (
     CONSTRAINT ukTipoDadoSiglaColuna UNIQUE (SiglaColuna)
 );
 
+CREATE TABLE ConhecimentoHistorico (
+    pkConhecimentoHistorico SERIAL,
+    nome_arquivo VARCHAR(255) NOT NULL,
+    conteudo_texto TEXT NOT NULL,
+    embedding vector(768),
+    CONSTRAINT pkConhecimentoHistorico PRIMARY KEY (pkConhecimentoHistorico)
+);
+
 -- 2.2. CARGA DE DOMÍNIOS BÁSICOS
 INSERT INTO CategoriaRegra (NomeCategoria, DescricaoRegra) VALUES 
     ('Regras Gerais', 'Regras aplicáveis a todos os objetos'),
@@ -198,36 +206,30 @@ INSERT INTO AtributoComum (atributo, TipoDadoRecomendado) VALUES
 ('CPF', 'Char(11)'),
 ('Login', 'Varchar(30)');
 
--- 5. SEGURANÇA E PERMISSÕES
 DO
 $do$
 BEGIN
+   -- Verificação robusta usando letras minúsculas (padrão do catálogo)
    IF NOT EXISTS (
       SELECT FROM pg_catalog.pg_roles
-      WHERE  rolname = 'Ollama_trainer') THEN
-      CREATE USER Ollama_trainer WITH PASSWORD '123456';
+      WHERE  rolname = 'ollama_trainer') THEN
+      CREATE USER ollama_trainer WITH PASSWORD '123456';
+   ELSE
+      -- Opcional: Garante que a senha esteja correta caso o usuário já exista
+      ALTER USER ollama_trainer WITH PASSWORD '123456';
    END IF;
 END
 $do$;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO Ollama_trainer;
-GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO Ollama_trainer;
+-- Garante permissões em todas as tabelas atuais e futuras do schema public
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO ollama_trainer;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO ollama_trainer;
+
+-- Configura permissões padrão para tabelas criadas futuramente pelo usuário postgres/admin
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO ollama_trainer;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO ollama_trainer;
 
 -- 6. CRIAÇÃO DE ÍNDICES VETORIAIS (Nomenclatura Tabela_Coluna)
 CREATE INDEX RegraNomenclatura_embedding ON RegraNomenclatura USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX ExemploPratico_embedding ON ExemploPratico USING hnsw (embedding vector_cosine_ops);
-
-
-
-DELETE FROM ExemploPratico a 
-USING ExemploPratico b 
-WHERE a.pkExemploPratico < b.pkExemploPratico 
-  AND LOWER(a.ObjetoFoco) = LOWER(b.ObjetoFoco) 
-  AND a.ExemploTexto = b.ExemploTexto;
-
-UPDATE ExemploPratico SET ObjetoFoco = INITCAP(ObjetoFoco);
-
-
-
-
-SELECT * FROM ExemploPratico;
+CREATE INDEX ConhecimentoHistorico_embedding ON ConhecimentoHistorico USING hnsw (embedding vector_cosine_ops);
