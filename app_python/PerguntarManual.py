@@ -446,6 +446,7 @@ def salvarrespostas(pergunta, categoria, resposta):
         print(f"\n[INFO] Resposta salva no log diário em: '{caminho_completo}'")
     except Exception as e:
         print(f"\n[ERRO] Não foi possível salvar o arquivo de log: {e}")
+        
 def main():
     if len(sys.argv) < 2:
         print('\nExemplo de uso: Pergunta: "Posso usar o nome "Cliente" para uma tabela?"')
@@ -456,37 +457,32 @@ def main():
     conn = conectadb()
     if not conn: return
 
-    categoria = classificarpergunta(pergunta)
-    foco = extrairfoco(pergunta) 
-    vetor = embedtext(pergunta)
-    
-    if vetor:
-        # 1. Busca Principal (O que o usuário pediu)
-        regras_principais = encontrarregras(conn, vetor, categoria, foco)
-        # 2. REDE DE SEGURANÇA:
-        # Se o assunto for Tabela ou Coluna, SEMPRE traga as regras de Tipos de Dados e Nomenclatura
-        # Isso impede que a categoria "Boas Práticas" cegue o modelo.
-        regras_extras = []
-        if foco in ['Tabela', 'Coluna', 'Table', 'Column']:
-            print("[INFO] Ativando busca cruzada para validação de estrutura...")
-            regras_extras = encontrarregras(conn, vetor, "Tipos de Dados", foco)
-            regras_extras += encontrarregras(conn, vetor, "Nomenclatura de Objetos", foco)
-        # 3. Unir tudo e remover duplicatas
-        # A sintaxe set() remove repetições se a mesma regra vier de dois lugares
-        todas_regras = list(dict.fromkeys(regras_principais + regras_extras))
-        # Se mesmo com a rede de segurança não vier nada, tenta o GERAL
-        if not todas_regras:
-            todas_regras = encontrarregras(conn, vetor, "GERAL", foco)
-
-        ExemploPratico = buscarexemplos(conn, vetor, foco)
-
-        historico_testes = buscar_historico(conn, vetor)
-
-        resposta_final = perguntaollama(pergunta, todas_regras, ExemploPratico, historico_testes)
+    try:
+        categoria = classificarpergunta(pergunta)
+        foco = extrairfoco(pergunta) 
+        vetor = embedtext(pergunta)
         
-        salvarrespostas(pergunta, categoria, resposta_final)
-    
-    conn.close()
+        if vetor:
+            regras_principais = encontrarregras(conn, vetor, categoria, foco)
+            regras_extras = []
+            if foco in ['Tabela', 'Coluna', 'Table', 'Column']:
+                print("[INFO] Ativando busca cruzada para validação de estrutura...")
+                regras_extras = encontrarregras(conn, vetor, "Tipos de Dados", foco)
+                regras_extras += encontrarregras(conn, vetor, "Nomenclatura de Objetos", foco)
+            
+            todas_regras = list(dict.fromkeys(regras_principais + regras_extras))
+            if not todas_regras:
+                todas_regras = encontrarregras(conn, vetor, "GERAL", foco)
+
+            ExemploPratico = buscarexemplos(conn, vetor, foco)
+            historico_testes = buscar_historico(conn, vetor)
+
+            resposta_final = perguntaollama(pergunta, todas_regras, ExemploPratico, historico_testes)
+            
+            salvarrespostas(pergunta, categoria, resposta_final)
+    finally:
+        # Garante o fechamento independente do que acontecer no try
+        conn.close()
 
 if __name__ == "__main__":
     main()
