@@ -148,3 +148,6 @@
 [17/03/2026 10:04:34] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
 [17/03/2026 10:04:34] Ciclo concluído com sucesso.
 [17/03/2026 10:04:34] Aguardando 30 minutos...
+[17/03/2026 10:28:23] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[17/03/2026 10:28:23] Ciclo de processamento concluido com sucesso.
+[17/03/2026 10:28:23] Aguardando meia hora para a proxima verificacao.

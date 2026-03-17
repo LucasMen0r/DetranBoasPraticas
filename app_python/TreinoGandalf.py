@@ -1,21 +1,17 @@
 import pgvector
 import psycopg2
 from psycopg2 import pool
-import hashlib
 from datetime import datetime
 import os
 import requests
 import time
 import shutil
-import os
 from dotenv import load_dotenv
 import pgvector.psycopg2
 
-# Calcula o caminho absoluto para o arquivo .env que está na pasta raiz (um nível acima de app_python)
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 caminho_env = os.path.abspath(os.path.join(diretorio_atual, '..', '.env'))
 
-# Força o carregamento do .env a partir do caminho exato
 load_dotenv(dotenv_path=caminho_env)
 
 def get_env_or_raise(var_name):
@@ -34,7 +30,6 @@ except EnvironmentError as e:
     print(e)
     exit(1)
 
-# Configurações de IA
 ollama_embed_model = "nomic-embed-text:latest"
 ollama_base_url = f"http://{DB_HOST}:11436" 
 ollama_api_embed = f"{ollama_base_url}/api/embeddings"
@@ -42,7 +37,6 @@ ollama_api_embed = f"{ollama_base_url}/api/embeddings"
 DIRETORIO_TESTES = "arquivos_teste"
 DIRETORIO_PROCESSADOS = "arquivos_processados"
 
-# Inicialização do Pool de Conexões para maior resiliência [cite: 1]
 try:
     db_pool = psycopg2.pool.SimpleConnectionPool(
         1, 10,
@@ -51,14 +45,6 @@ try:
 except psycopg2.Error as e:
     print(f"[ERRO] Falha ao criar pool de conexões: {e}")
     exit(1)
-
-def calcular_hash_arquivo(caminho):
-    """Gera um hash SHA256 para evitar reprocessamento de arquivos idênticos."""
-    sha256_hash = hashlib.sha256()
-    with open(caminho, "rb") as f:
-        for byte_block in iter(lambda: f.read(4096), b""):
-            sha256_hash.update(byte_block)
-    return sha256_hash.hexdigest()
 
 def embedtext(text): 
     try: 
@@ -108,8 +94,6 @@ def processardiretorio(conn):
         caminho_origem = os.path.join(DIRETORIO_TESTES, arquivo)
         caminho_destino = os.path.join(DIRETORIO_PROCESSADOS, arquivo)
         
-        # Lógica de Hash para evitar duplicidade [cite: 1]
-        hash_arquivo = calcular_hash_arquivo(caminho_origem)
         cursor.execute("SELECT 1 FROM ConhecimentoHistorico WHERE nome_arquivo = %s LIMIT 1", (arquivo,))
         
         if cursor.fetchone():
@@ -149,10 +133,8 @@ def processardiretorio(conn):
     registrar_log(f"Processamento concluído. Inserções: {total_inseridos}")
 
 def autotreinar(conn):
-    """Processa regras e exemplos pendentes (sem embedding). [cite: 1]"""
     cursor = conn.cursor()
     try:
-        # Regras de Nomenclatura
         cursor.execute("SELECT pkRegraNomenclatura, DescricaoRegra FROM RegraNomenclatura WHERE embedding IS NULL")
         regras = cursor.fetchall()
         if regras:
@@ -163,7 +145,6 @@ def autotreinar(conn):
                     cursor.execute("UPDATE RegraNomenclatura SET embedding = %s WHERE pkRegraNomenclatura = %s", (vetor, pk))
             conn.commit()
 
-        # Exemplos Práticos
         cursor.execute("SELECT to_regclass('public.ExemploPratico');")
         if cursor.fetchone()[0]:
             cursor.execute("SELECT pkExemploPratico, ExemploTexto, Explicacao FROM ExemploPratico WHERE embedding IS NULL")
@@ -197,7 +178,7 @@ def main():
     while True:
         conn = None
         try:
-            conn = db_pool.getconn() # Obtém conexão do pool [cite: 1]
+            conn = db_pool.getconn()
             pgvector.psycopg2.register_vector(conn)
             
             autotreinar(conn)
@@ -208,9 +189,9 @@ def main():
             registrar_log(f"[ERRO CRÍTICO NO LOOP]: {e}")
         finally:
             if conn:
-                db_pool.putconn(conn) # Devolve a conexão ao pool
+                db_pool.putconn(conn)
             
-        registrar_log("Aguardando 30 minutos...")
+        registrar_log("Aguardando 30 minutos.")
         time.sleep(1800)
 
 if __name__ == "__main__":

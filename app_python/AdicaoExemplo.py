@@ -34,7 +34,6 @@ def limpar_tela():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def processarpdf_semantico(caminho_pdf):
-    """Extrai texto estruturado do PDF utilizando PDFPlumber, Regex e Buffer de Parágrafos."""
     caminho = Path(caminho_pdf)
     
     if not caminho.is_file():
@@ -58,7 +57,6 @@ def processarpdf_semantico(caminho_pdf):
 
         linhas = texto_completo.split('\n')
 
-        # Expressões Regulares de navegação
         regex_regras_gerais = re.compile(r'^2\.\s*Regras\s*Gerais', re.IGNORECASE)
         regex_banco = re.compile(r'^3\.1\s*Banco\s*de\s*Dados', re.IGNORECASE)
         regex_tabelas = re.compile(r'^3\.2\s*Tabelas', re.IGNORECASE)
@@ -146,7 +144,6 @@ def processarpdf_semantico(caminho_pdf):
         salvar_buffer()
         return regras_extraidas
 
-    # O except deve estar alinhado com o try principal
     except Exception as e:
         print(f"[ERRO PDF] Falha ao processar arquivo: {e}")
         return []
@@ -162,226 +159,222 @@ def main():
         print(f"Erro de Conexão com o Banco: {e}")
         return
 
-    while True:
-        limpar_tela()
-        print("=====================================================")
-        print("   G.A.N.D.A.L.F - ALIMENTACAO DE BASE DE CONHECIMENTO")
-        print("=====================================================")
-        print("1. Adicionar ou Atualizar Exemplo")
-        print("2. Remover Exemplo Existente")
-        print("3. Inserir PDF com novas regras\n")
-        print("0. Sair")
+    try:
+        while True:
+            limpar_tela()
+            print("=====================================================")
+            print("   G.A.N.D.A.L.F - ALIMENTACAO DE BASE DE CONHECIMENTO")
+            print("=====================================================")
+            print("1. Adicionar ou Atualizar Exemplo")
+            print("2. Remover Exemplo Existente")
+            print("3. Inserir PDF com novas regras\n")
+            print("0. Sair")
 
-        opcao = input("Escolha uma opcao: ").strip()
+            opcao = input("Escolha uma opcao: ").strip()
 
-        if opcao == '1':
-            foco = input("Objeto Foco (ex: Tabela, Procedure, PK, Coluna, etc.): ").strip()
-            if not foco:
-                print("O foco não pode ser vazio. Tente novamente.\n")
-                input("Pressione Enter para continuar.")
-                continue
+            if opcao == '1':
+                foco = input("Objeto Foco (ex: Tabela, Procedure, PK, Coluna, etc.): ").strip()
+                if not foco:
+                    print("O foco não pode ser vazio. Tente novamente.\n")
+                    input("Pressione Enter para continuar.")
+                    continue
 
-            texto = input(f"Exemplo de nome para '{foco}' (ex: dbhcen.alunodisciplina): ").strip()
-            if not texto:
-                print("O texto não pode ser vazio. Tente novamente.\n")
-                input("Pressione Enter para continuar.")
-                continue
+                texto = input(f"Exemplo de nome para '{foco}' (ex: dbhcen.alunodisciplina): ").strip()
+                if not texto:
+                    print("O texto não pode ser vazio. Tente novamente.\n")
+                    input("Pressione Enter para continuar.")
+                    continue
 
-            while True:
-                is_bom_input = input("Este é um BOM exemplo a ser seguido? (S/N): ").strip().upper()
-                if is_bom_input in ['S', 'N']:
-                    is_bom = True if is_bom_input == 'S' else False
-                    break
-                print("Por favor, digite apenas 'S' para Sim ou 'N' para Não.")
+                while True:
+                    is_bom_input = input("Este é um BOM exemplo a ser seguido? (S/N): ").strip().upper()
+                    if is_bom_input in ['S', 'N']:
+                        is_bom = True if is_bom_input == 'S' else False
+                        break
+                    print("Por favor, digite apenas 'S' para Sim ou 'N' para Não.")
 
-            explicacao = input("Explicação técnica do motivo (regra aplicada): ").strip()
-            if not explicacao:
-                print("A explicação é obrigatória. Tente novamente.\n")
-                input("Pressione Enter para continuar.")
-                continue
+                explicacao = input("Explicação técnica do motivo (regra aplicada): ").strip()
+                if not explicacao:
+                    print("A explicação é obrigatória. Tente novamente.\n")
+                    input("Pressione Enter para continuar.")
+                    continue
 
-            print("\nProcessando vetorização. Aguarde.")
-            prompt_composto = f"{foco} : {texto}"
-            embedding = embeddingtexto(prompt_composto)
+                print("\nProcessando vetorização. Aguarde.")
+                prompt_composto = f"{foco} : {texto}"
+                embedding = embeddingtexto(prompt_composto)
 
-            if embedding:
-                try:
-                    # Instrução UPSERT: Tenta inserir, se houver conflito, atualiza.
-                    comando_sql = """
-                        INSERT INTO ExemploPratico (ObjetoFoco, ExemploTexto, is_BomExemplo, Explicacao, embedding)
-                        VALUES (%s, %s, %s, %s, %s)
-                        ON CONFLICT (ObjetoFoco, ExemploTexto) 
-                        DO UPDATE SET 
-                            is_BomExemplo = EXCLUDED.is_BomExemplo,
-                            Explicacao = EXCLUDED.Explicacao,
-                            embedding = EXCLUDED.embedding;
-                    """
-                    cursor.execute(comando_sql, (foco, texto, is_bom, explicacao, embedding))
-                    conn.commit()
-                    
-                    print("\n[SUCESSO] Exemplo processado e sincronizado com sucesso na memória do Gandalf!")
-                    
-                except Exception as e:
-                    conn.rollback()
-                    print(f"\n[ERRO BANCO] Falha ao processar o registro no banco de dados: {e}")
-            else:
-                print("\n[ERRO IA] Falha ao gerar embedding. O exemplo não foi gravado.")
-
-        elif opcao == '2':
-            print("\n--- Remover Exemplo ---")
-            foco = input("Objeto Foco do exemplo a remover: ").strip()
-            texto = input("Texto do exemplo a remover: ").strip()
-
-            if not foco or not texto:
-                print("Foco e texto são obrigatórios para a remoção.\n")
-                input("Pressione Enter para continuar...")
-                continue
-
-            try:
-                cursor.execute("DELETE FROM ExemploPratico WHERE ObjetoFoco = %s AND ExemploTexto = %s", (foco, texto))
-                if cursor.rowcount > 0:
-                    conn.commit()
-                    print(f"\n[SUCESSO] Foram removidos {cursor.rowcount} registro(s) da memória.")
-                else:
-                    print("\n[AVISO] Nenhum registro encontrado com esses dados.")
-            except Exception as e:
-                conn.rollback()
-                print(f"\n[ERRO BANCO] Falha ao remover do banco de dados: {e}")
-
-            input("\nPressione Enter para retornar ao menu...")
-
-        elif opcao == '3':
-            print("\n--- Inserir PDF com Novas Regras ---")
-            
-            diretorio_manuais = Path('Manual')
-            diretorio_manuais.mkdir(exist_ok=True) 
-            
-            arquivos_pdf = list(diretorio_manuais.glob('*.pdf'))
-            
-            if not arquivos_pdf:
-                print(f"\n[AVISO] Nenhum arquivo PDF encontrado na pasta '{diretorio_manuais.resolve()}'.")
-                input("\nPressione Enter para retornar ao menu...")
-                continue
-            
-            print("Arquivos encontrados:\n")
-            for i, pdf in enumerate(arquivos_pdf):
-                print(f"{i + 1}. {pdf.name}")
-            print("0. Cancelar")
-
-            escolha = input("\nEscolha o numero do arquivo PDF para processar: ").strip()
-            
-            if escolha == '0':
-                continue
-                
-            try:
-                indice = int(escolha) - 1
-                if indice < 0 or indice >= len(arquivos_pdf):
-                    raise ValueError
-                
-                arquivo_selecionado = arquivos_pdf[indice]
-            except ValueError:
-                print("\n[ERRO] Opção inválida.")
-                input("Pressione Enter para continuar...")
-                continue
-
-            print("\nExtraindo texto do arquivo PDF, aguarde...")
-            regras_extraidas = processarpdf_semantico(arquivo_selecionado)
-
-            if regras_extraidas:
-                print(f"\n[INFO] Foram extraídas {len(regras_extraidas)} regras. Iniciando sincronização inteligente...")
-                inseridas = 0
-                atualizadas = 0
-                
-                # Marca o momento exato em que a leitura começou
-                inicio_sincronizacao = datetime.now()
-
-                try:
-                    for regra in regras_extraidas:
-                        nome_categoria = regra.get('categoria')
-                        nome_objeto = regra.get('objeto')
-                        texto_regra = regra.get('texto')
-
-                        cursor.execute("SELECT pkCategoriaRegra FROM CategoriaRegra WHERE NomeCategoria = %s", (nome_categoria,))
-                        cat_result = cursor.fetchone()
-                        pk_categoria = cat_result[0] if cat_result else None
-
-                        if not pk_categoria:
-                            print(f"[AVISO] Categoria '{nome_categoria}' não encontrada. Regra ignorada.")
-                            continue
-
-                        pk_objeto = None
-                        if nome_objeto:
-                            cursor.execute("SELECT pkObjetoDb FROM ObjetoDb WHERE NomeObjeto = %s", (nome_objeto,))
-                            obj_result = cursor.fetchone()
-                            pk_objeto = obj_result[0] if obj_result else None
-
-                        # Verifica se a regra já existe ANTES de chamar a IA (Economia de processamento)
-                        # O uso de IS NOT DISTINCT FROM é vital aqui porque pk_objeto pode ser NULL
-                        cursor.execute("""
-                            SELECT pkRegraNomenclatura FROM RegraNomenclatura 
-                            WHERE pkCategoriaRegra = %s 
-                            AND pkObjetoDb IS NOT DISTINCT FROM %s 
-                            AND DescricaoRegra = %s
-                        """, (pk_categoria, pk_objeto, texto_regra))
+                if embedding:
+                    try:
+                        comando_sql = """
+                            INSERT INTO ExemploPratico (ObjetoFoco, ExemploTexto, is_BomExemplo, Explicacao, embedding)
+                            VALUES (%s, %s, %s, %s, %s)
+                            ON CONFLICT (ObjetoFoco, ExemploTexto) 
+                            DO UPDATE SET 
+                                is_BomExemplo = EXCLUDED.is_BomExemplo,
+                                Explicacao = EXCLUDED.Explicacao,
+                                embedding = EXCLUDED.embedding;
+                        """
+                        cursor.execute(comando_sql, (foco, texto, is_bom, explicacao, embedding))
+                        conn.commit()
                         
-                        regra_existente = cursor.fetchone()
+                        print("\n[SUCESSO] Exemplo processado e sincronizado com sucesso na memória do Gandalf!")
+                        
+                    except Exception as e:
+                        conn.rollback()
+                        print(f"\n[ERRO BANCO] Falha ao processar o registro no banco de dados: {e}")
+                else:
+                    print("\n[ERRO IA] Falha ao gerar embedding. O exemplo não foi gravado.")
+                
+                input("\nPressione Enter para retornar ao menu...")
 
-                        if regra_existente:
-                            # A regra já existe. Apenas renova o carimbo de tempo. Não gasta processamento vetorial.
-                            cursor.execute("""
-                                UPDATE RegraNomenclatura 
-                                SET ultima_verificacao = %s 
-                                WHERE pkRegraNomenclatura = %s
-                            """, (inicio_sincronizacao, regra_existente[0]))
-                            atualizadas += 1
-                        else:
-                            # É uma regra inédita. Chama o Ollama para vetorizar e insere.
-                            embedding = embeddingtexto(texto_regra)
+            elif opcao == '2':
+                print("\n--- Remover Exemplo ---")
+                foco = input("Objeto Foco do exemplo a remover: ").strip()
+                texto = input("Texto do exemplo a remover: ").strip()
 
-                            if embedding:
-                                cursor.execute("""
-                                    INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra, embedding, ultima_verificacao)
-                                    VALUES (%s, %s, %s, %s, %s)
-                                """, (pk_categoria, pk_objeto, texto_regra, embedding, inicio_sincronizacao))
-                                inseridas += 1
-                            else:
-                                print(f"[ERRO IA] Falha ao vetorizar a regra inédita: {texto_regra[:30]}.")
+                if not foco or not texto:
+                    print("Foco e texto são obrigatórios para a remoção.\n")
+                    input("Pressione Enter para continuar...")
+                    continue
 
-                    # Rotina de Limpeza: Remove tudo que não foi lido neste PDF (Regras obsoletas/removidas do manual)
-                    cursor.execute("""
-                        DELETE FROM RegraNomenclatura 
-                        WHERE ultima_verificacao < %s OR ultima_verificacao IS NULL
-                    """, (inicio_sincronizacao,))
-                    
-                    removidas = cursor.rowcount
-
-                    conn.commit()
-                    print(f"\n[SUCESSO] Sincronização do manual concluída.")
-                    print(f"Novas regras registradas: {inseridas}")
-                    print(f"Regras mantidas (sem alteração): {atualizadas}")
-                    print(f"Regras antigas removidas (obsoletas): {removidas}")
-
+                try:
+                    cursor.execute("DELETE FROM ExemploPratico WHERE ObjetoFoco = %s AND ExemploTexto = %s", (foco, texto))
+                    if cursor.rowcount > 0:
+                        conn.commit()
+                        print(f"\n[SUCESSO] Foram removidos {cursor.rowcount} registro(s) da memória.")
+                    else:
+                        print("\n[AVISO] Nenhum registro encontrado com esses dados.")
                 except Exception as e:
                     conn.rollback()
-                    print(f"\n[ERRO BANCO] Transação interrompida. Falha geral na sincronização: {e}")
+                    print(f"\n[ERRO BANCO] Falha ao remover do banco de dados: {e}")
 
+                input("\nPressione Enter para retornar ao menu...")
+
+            elif opcao == '3':
+                print("\n--- Inserir PDF com Novas Regras ---")
+                
+                diretorio_manuais = Path('Manual')
+                diretorio_manuais.mkdir(exist_ok=True) 
+                
+                arquivos_pdf = list(diretorio_manuais.glob('*.pdf'))
+                
+                if not arquivos_pdf:
+                    print(f"\n[AVISO] Nenhum arquivo PDF encontrado na pasta '{diretorio_manuais.resolve()}'.")
+                    input("\nPressione Enter para retornar ao menu...")
+                    continue
+                
+                print("Arquivos encontrados:\n")
+                for i, pdf in enumerate(arquivos_pdf):
+                    print(f"{i + 1}. {pdf.name}")
+                print("0. Cancelar")
+
+                escolha = input("\nEscolha o numero do arquivo PDF para processar: ").strip()
+                
+                if escolha == '0':
+                    continue
+                    
+                try:
+                    indice = int(escolha) - 1
+                    if indice < 0 or indice >= len(arquivos_pdf):
+                        raise ValueError
+                    arquivo_selecionado = arquivos_pdf[indice]
+                except ValueError:
+                    print("\n[ERRO] Opção inválida.")
+                    input("Pressione Enter para continuar...")
+                    continue
+
+                print("\nExtraindo texto do arquivo PDF, aguarde...")
+                regras_extraidas = processarpdf_semantico(arquivo_selecionado)
+
+                if regras_extraidas:
+                    print(f"\n[INFO] Foram extraídas {len(regras_extraidas)} regras. Iniciando sincronização inteligente...")
+                    inseridas = 0
+                    atualizadas = 0
+                    inicio_sincronizacao = datetime.now()
+
+                    try:
+                        # OTIMIZAÇÃO N+1: Carrega dicionários em memória
+                        cursor.execute("SELECT NomeCategoria, pkCategoriaRegra FROM CategoriaRegra")
+                        mapa_categorias = {row[0].lower(): row[1] for row in cursor.fetchall()}
+
+                        cursor.execute("SELECT NomeObjeto, pkObjetoDb FROM ObjetoDb")
+                        mapa_objetos = {row[0].lower(): row[1] for row in cursor.fetchall()}
+
+                        for regra in regras_extraidas:
+                            nome_categoria = regra.get('categoria', '').lower()
+                            nome_objeto = regra.get('objeto', '').lower() if regra.get('objeto') else None
+                            texto_regra = regra.get('texto')
+
+                            # Busca otimizada via dicionário (O(1))
+                            pk_categoria = mapa_categorias.get(nome_categoria)
+                            
+                            if not pk_categoria:
+                                print(f"[AVISO] Categoria '{regra.get('categoria')}' não encontrada. Regra ignorada.")
+                                continue
+
+                            pk_objeto = mapa_objetos.get(nome_objeto) if nome_objeto else None
+
+                            cursor.execute("""
+                                SELECT pkRegraNomenclatura FROM RegraNomenclatura 
+                                WHERE pkCategoriaRegra = %s 
+                                AND pkObjetoDb IS NOT DISTINCT FROM %s 
+                                AND DescricaoRegra = %s
+                            """, (pk_categoria, pk_objeto, texto_regra))
+                            
+                            regra_existente = cursor.fetchone()
+
+                            if regra_existente:
+                                cursor.execute("""
+                                    UPDATE RegraNomenclatura 
+                                    SET ultima_verificacao = %s 
+                                    WHERE pkRegraNomenclatura = %s
+                                """, (inicio_sincronizacao, regra_existente[0]))
+                                atualizadas += 1
+                            else:
+                                embedding = embeddingtexto(texto_regra)
+                                if embedding:
+                                    cursor.execute("""
+                                        INSERT INTO RegraNomenclatura (pkCategoriaRegra, pkObjetoDb, DescricaoRegra, embedding, ultima_verificacao)
+                                        VALUES (%s, %s, %s, %s, %s)
+                                    """, (pk_categoria, pk_objeto, texto_regra, embedding, inicio_sincronizacao))
+                                    inseridas += 1
+                                else:
+                                    print(f"[ERRO IA] Falha ao vetorizar a regra inédita: {texto_regra[:30]}.")
+
+                        cursor.execute("""
+                            DELETE FROM RegraNomenclatura 
+                            WHERE ultima_verificacao < %s OR ultima_verificacao IS NULL
+                        """, (inicio_sincronizacao,))
+                        
+                        removidas = cursor.rowcount
+
+                        conn.commit()
+                        print(f"\n[SUCESSO] Sincronização do manual concluída.")
+                        print(f"Novas regras registradas: {inseridas}")
+                        print(f"Regras mantidas (sem alteração): {atualizadas}")
+                        print(f"Regras antigas removidas (obsoletas): {removidas}")
+
+                    except Exception as e:
+                        conn.rollback()
+                        print(f"\n[ERRO BANCO] Transação interrompida. Falha geral na sincronização: {e}")
+
+                else:
+                    print("\n[ERRO] Nenhuma regra extraída. Verifique a formatação do PDF.")
+
+                input("\nPressione Enter para retornar ao menu.")
+            
+            elif opcao == '0':
+                break
             else:
-                print("\n[ERRO] Nenhuma regra extraída. Verifique a formatação do PDF.")
+                print("Opção inválida.")
+                input("Pressione Enter para continuar...")
 
-            input("\nPressione Enter para retornar ao menu.")
-        
-        elif opcao == '0':
-            break
-        else:
-            print("Opção inválida.")
-            input("Pressione Enter para continuar...")
-
-    cursor.close()
-    conn.close()
-    print("\nSessão encerrada.")
+    finally:
+        # Garante o encerramento seguro da conexão e do cursor
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+        print("\nSessão e conexão com o banco encerradas de forma segura.")
 
 if __name__ == "__main__":
     main()
-    
-    
-    #De acordo com a regra de nomeação de procedures, o nome deve seguir o padrão **Objetivo[Complemento]Operação**, onde a **Operação** é uma sigla em letras maiúsculas das operações básicas (S, I, E, A, R).
