@@ -1,0 +1,5 @@
+A procedure **dbfisc01..FolhaPontoEscalaS.scp** é válida porque segue o padrão **Objetivo[Complemento]Operação**, com o prefixo "dbfisc01" considerado válido para procedures locais e o sufixo `.scp` conforme o padrão estabelecido. O motivo é o cumprimento da regra de nomenclatura, reforçado por exemplos históricos.
+
+A solicitação de nomear uma tabela com caractere especial foi reprovada porque viola a regra de nomenclatura, que exige que o nome da tabela seja composto pelo nome da tabela seguido do nome da primeira coluna do índice. A ausência de detalhes sobre o caractere especial e sua finalidade também contribuiu para a rejeição.
+
+As procedures **dbfisc01..EscalaA.scp**, **dbfisc01..EscalaI.scp** e **dbfisc01..EscalaS.scp** foram reprovadas porque não seguem o padrão **Objetivo[Complemento]Operação**, não possuem prefixos válidos (como "Batch" ou "Rpc") e usam sufixos não permitidos (como ".A", ".I" e ".S"). A regra exige também o uso de PascalCase no nome, conforme regras do DETRAN-PE e exemplos históricos.

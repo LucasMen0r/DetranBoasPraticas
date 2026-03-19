@@ -1,0 +1,8 @@
+[
+    {
+        "data_hora": "19/03/2026 09:12:53",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "\"a Procedure: dbfisc01..FolhaPontoEscalaD.scp é válida?\"",
+        "resposta": "**Objeto Analisado:** Procedure `dbfisc01..FolhaPontoEscalaD.scp`  \n**Conformidade:** REPROVADO  \n**Justificativa:**  \nA procedure viola a regra de nomenclatura do DETRAN-PE, conforme estabelecido nos exemplos de referência. O padrão exige que o sufixo seja uma sigla em letras maiúsculas correspondente a uma operação básica: Selecionar (S), Inserir (I), Excluir (E), Alterar (A), Relatório (R). O sufixo `D` não está listado como uma operação válida. Além disso, o exemplo `dbfisc01..FolhaPontoEscalaS.scp` foi aprovado por seguir o padrão com a sigla `S` (Selecionar), enquanto `D` não é um código operacional permitido.  \n\n**Recomendação:**  \nRecrie o nome da procedure seguindo o padrão estabelecido: `[Objetivo][Complemento][Operação]`, utilizando apenas as siglas permitidas (S, I, E, A, R). Consulte as regras vigentes para validar a operação pretendida."
+    }
+]

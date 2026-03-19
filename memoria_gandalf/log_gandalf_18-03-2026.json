@@ -1,0 +1,14 @@
+[
+    {
+        "data_hora": "18/03/2026 10:11:51",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "\"a procedure dbfisc01..EscalaR.scp está de acordo com o padrão?\"",
+        "resposta": "**Parecer do Auditor Gandalf**  \n**Objeto analisado:** `dbfisc01..EscalaR.scp`  \n**Resultado:** **REPROVADO**  \n\n**Justificativa:**  \n1. **Regra de prefixo obrigatório:** O nome da procedure não segue o padrão estabelecido, que exige o uso de prefixos como `Batch` ou `i` (ex.: `BatchNomeProcedure`, `iNomeProcedure`).  \n2. **Regra de PascalCase:** O termo `EscalaR` não está formatado conforme a notação húngara, pois contém um número (`R`) que não segue a regra de maiúsculas em cada palavra.  \n3. **Regra de operação válida:** Embora a operação `R` (Relatório) seja permitida, o nome da procedure não atende ao padrão **Objetivo[Complemento]Operação**, pois falta um verbo no infinitivo ou um substantivo descritivo.  \n\n**Conclusão:**  \nA procedure `dbfisc01..EscalaR.scp` não está de acordo com as regras do DETRAN-PE, conforme evidências históricas de que procedures com prefixo `Escala` foram rejeitadas por ausência de prefixos obrigatórios e desalinhamento com o formato estabelecido."
+    },
+    {
+        "data_hora": "18/03/2026 10:48:42",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "\"a procedure dbfisc01..EscalaS.scp está de acordo com o padrão?\"",
+        "resposta": "**Resposta:** SIM, a procedure está de acordo com o padrão."
+    }
+]

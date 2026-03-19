@@ -1,0 +1,11 @@
+**1. Nomenclatura de Objetos (Tabela com caractere especial):**
+*   **Problema:** Tabela nomeada com caractere especial no início do nome.
+*   **Resolução:** Usar nomes de tabela que começam com letras para garantir conformidade.
+
+**2. Boas Práticas (Tabela de Log):**
+*   **Problema:** Verificação da conformidade de uma tabela de log.
+*   **Resolução:** Tabelas de log devem começar com "Log" e ter nomes no singular para seguir o padrão estabelecido.
+
+**3. Nomenclatura de Objetos (Procedure):**
+*   **Problema:** Verificação da conformidade de uma procedure.
+*   **Resolução:** Procedures devem seguir o padrão **Objetivo[Complemento]Operação** para garantir conformidade.

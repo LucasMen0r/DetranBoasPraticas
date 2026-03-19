@@ -1,0 +1,7 @@
+**Problema/Contexto:**  
+1. Script "dbfisc01..NovoCampoTblTipoOperacao.scp" não foi verificado no banco de conhecimento como seguindo as diretrizes de padronização do Detran.  
+2. Procedure "tmpParcelarDebitoD" viola padrões de nomenclatura do DETRAN-PE, conforme detalhado nas regras de prefixo, sufixo e formatação.  
+
+**Ação/Resolução:**  
+1. Contatar a equipe de Administração de Dados para validação do script.  
+2. Recriar o nome da procedure seguindo o padrão estabelecido: `Batch + NomeObjetivo + SiglaOperacao` (ou `NomeObjetivo + SiglaOperacao`), substituindo o prefixo "tmp" por um nome descritivo e ajustando o sufixo conforme as siglas padrão (S, I, E, A, R).

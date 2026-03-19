@@ -236,7 +236,7 @@ def buscarexemplos(conn, pergunta_vetor, foco_usuario, top_k=4):
     finally:
         cursor.close()
 
-def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
+def perguntaollama(pergunta, contexto_regras, ExemploPratico, ConhecimentoHistorico):
     """
     Gera a resposta final com Streaming, usando Regras + Exemplos Práticos.
     Versão ajustada para estrutura enxuta do banco (apenas Regra, sem contexto/sintaxe na tupla).
@@ -276,10 +276,10 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
 
     # 3. Montagem do Contexto Histórico
     historico_str = ""
-    if historico_testes:
-        historico_str = "\n[[ CONHECIMENTO ADQUIRIDO EM TESTES ANTERIORES ]]\n"
-        for nome_arquivo, texto in historico_testes:
-            historico_str += f"- (Referência: {nome_arquivo}): {texto}\n"
+    if ConhecimentoHistorico:
+        ConhecimentoHistorico_str = "\n[[ CONHECIMENTO ADQUIRIDO EM TESTES ANTERIORES ]]\n"
+        for nome_arquivo, texto in ConhecimentoHistorico:
+            ConhecimentoHistorico_str += f"- (Referência: {nome_arquivo}): {texto}\n"
 
     print(" RESPOSTA DO G.A.N.D.A.L.F:") 
     print("#"*15)
@@ -312,7 +312,7 @@ def perguntaollama(pergunta, contexto_regras, ExemploPratico, historico_testes):
 
     prompt_usuario = f"""
     [[ CONHECIMENTO ADQUIRIDO EM TESTES ANTERIORES ]]
-    {historico_str if historico_str.strip() else "Nenhum histórico."}
+    {ConhecimentoHistorico_str if ConhecimentoHistorico_str.strip() else "Nenhum histórico."}
 
     [[ REGRAS VIGENTES RECUPERADAS ]]
     {contexto_str if contexto_str.strip() else "Nenhuma regra encontrada."}
@@ -475,9 +475,9 @@ def main():
                 todas_regras = encontrarregras(conn, vetor, "GERAL", foco)
 
             ExemploPratico = buscarexemplos(conn, vetor, foco)
-            historico_testes = buscar_historico(conn, vetor)
+            ConhecimentoHistorico = buscar_historico(conn, vetor)
 
-            resposta_final = perguntaollama(pergunta, todas_regras, ExemploPratico, historico_testes)
+            resposta_final = perguntaollama(pergunta, todas_regras, ExemploPratico, ConhecimentoHistorico)
             
             salvarrespostas(pergunta, categoria, resposta_final)
     finally:

@@ -1,0 +1,7 @@
+Problema/Contexto:  
+Procedimentos e índices violam regras de nomenclatura do Detran, conforme auditoria realizada pelo Auditor Gandalf.  
+
+Ações/Resoluções:  
+1. Renomear a procedure `dbvcen.agenciai` para iniciar com "Batch" e seguir a estrutura `Objetivo[Complemento]Operação`.  
+2. Renomear a procedure `dbvcen.arearodizioe` para incluir "Batch" no início e adotar o padrão `Objetivo[Complemento]Operação`, como exemplo `BatchAreaRodizioIE`.  
+3. Consultar o manual do Detran ou a equipe de Administração de Dados para validar a estruturação correta de objetos (tabelas, índices, procedures) conforme as regras de nomenclatura.

@@ -34,7 +34,7 @@ ollama_embed_model = "nomic-embed-text:latest"
 ollama_base_url = f"http://{DB_HOST}:11436" 
 ollama_api_embed = f"{ollama_base_url}/api/embeddings"
 
-DIRETORIO_TESTES = "arquivos_teste"
+DIRETORIO_TESTES = "arquivos_teste/testes"
 DIRETORIO_PROCESSADOS = "arquivos_processados"
 
 try:

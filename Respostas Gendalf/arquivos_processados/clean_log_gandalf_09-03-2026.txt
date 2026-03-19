@@ -1,0 +1,12 @@
+Problema/Contexto:  
+- Verificação de conformidade de nomes de procedures com regras de nomenclatura estabelecidas, incluindo:  
+  - Uso de notação húngara (iniciais maiúsculas em cada palavra).  
+  - Termos em português e no singular.  
+  - Extensões permitidas (ex.: `.sq`, `.sql`).  
+  - Nome terminar com sigla de operação única (ex.: `A`, `I`, `S`).  
+  - Ausência de underline antes da sigla de operação.  
+
+Ações/Resoluções:  
+- Procedures com nomes não conformes foram reprovadas com detalhes de justificativas específicas (ex.: ausência de notação húngara, uso de termo não singularizado, extensão inválida).  
+- Procedures com nomes conformes foram aprovadas, com referência a regras e exemplos validados (ex.: terminação com sigla de operação, seguimento do padrão "Objetivo + Complemento + Operação").  
+- Recomendações para contato com a equipe de Administração de Dados em casos de dúvidas ou violações não resolvidas.

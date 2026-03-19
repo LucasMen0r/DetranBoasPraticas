@@ -1,0 +1,18 @@
+Problema/Contexto:  
+1. **Nomenclatura de Objetos:**  
+   - Procedures com extensão `.scp` violam a regra de nomenclatura, conforme regra de rigor estrutural.  
+   - Nome da procedure deve seguir padrão **Objetivo[Complemento]Operação**, com operação representada por sigla em letras maiúsculas (S, I, E, A, R).  
+   - Tabelas devem utilizar siglas oficiais (ex.: `Ipva`, `Cnh`) com primeira letra maiúscula e demais minúsculas.  
+
+**Ações/Resoluções:**  
+1. **Procedures:**  
+   - Remover extensão `.scp` no nome da procedure.  
+   - Incluir a sigla da operação no final do nome (ex.: `S` para Selecionar, `I` para Inserir).  
+   - Renomear procedures que não seguem o padrão.  
+
+2. **Tabelas:**  
+   - Utilizar siglas oficiais no nome da tabela, seguindo regra de formatação estabelecida.  
+
+Exemplos de conformidade:  
+- `dbfisc01..EscalaI.scp` (Objetivo: Escala, Operação: I - Inserir).  
+- `dbfisc01..EscalaA.scp` (Objetivo: Escala, Operação: A - Alterar).

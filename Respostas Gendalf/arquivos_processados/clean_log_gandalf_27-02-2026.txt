@@ -1,0 +1,9 @@
+Problema:  
+Duas procedures, `dbfisc01..EscalaA.scp` e `dbfisc01..EscalaS.scp`, violam regras de nomenclatura do manual DETRAN-PE. As violações incluem:  
+1. Falta de prefixo "Batch" (obrigatório para procedures externas/batch).  
+2. Uso incorreto do PascalCase (formato de nomes).  
+3. Sufixos não permitidos (ex.: `.A.scp` ou palavras terminais como `S`).  
+4. Nome do objetivo não sendo um substantivo no singular (ex.: `EscalaS` inválido).  
+
+Resolução:  
+A procedure `dbfisc01..EscalaA.scp` foi rejeitada por múltiplas violações. A procedure `dbfisc01..EscalaS.scp` foi aprovada porque não se enquadrava em regras específicas aplicáveis (não era um procedimento batch, nem pertencente a sistemas como Habilitação/RENACH ou Veículos/RENAVAM).
