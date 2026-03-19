@@ -1,8 +1,8 @@
-# G.A.N.D.A.L.F.
-**Gerenciador de Análise de Normas do Detran**
+# G.E.N.D.A.L.F.
+*Gestor Automatizado de Normas do Detran por meio de LLM para Fiscalização de código**
 
 ## Visão Geral
-O G.A.N.D.A.L.F. é um sistema automatizado de governança e auditoria de banco de dados baseado em Inteligência Artificial. Utilizando arquitetura RAG (Retrieval-Augmented Generation), o sistema atua como um revisor estrito de nomenclaturas e boas práticas para objetos de banco de dados (Tabelas, Procedures, Índices, Views, etc.), validando scripts DDL de desenvolvedores contra o manual normativo oficial da Administração de Dados (AD).
+O G.E.N.D.A.L.F. é um sistema automatizado de governança e auditoria de banco de dados baseado em Inteligência Artificial. Utilizando arquitetura RAG (Retrieval-Augmented Generation), o sistema atua como um revisor estrito de nomenclaturas e boas práticas para objetos de banco de dados (Tabelas, Procedures, Índices, Views, etc.), validando scripts DDL de desenvolvedores contra o manual normativo oficial da Administração de Dados (AD).
 
 ## Arquitetura e Tecnologias
 O projeto foi desenhado para operar localmente com foco em segurança de dados e alta performance vetorial.
