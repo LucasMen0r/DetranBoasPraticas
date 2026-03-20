@@ -76,7 +76,7 @@ def embedtext(text: str):
         resposta = requests.post(
             ollama_api_embed,
             json={"model": ollama_embed_model, "prompt": text},
-            timeout=90
+            timeout=30
         )
         resposta.raise_for_status()
         return resposta.json()['embedding']
@@ -176,7 +176,7 @@ def gerar_perguntas_ollama(exemplos: list[dict]) -> list[dict]:
                     "num_predict": 2048,
                 }
             },
-            timeout=2400  # deepseek pode demorar mais que modelos menores
+            timeout=2400  # timeout generoso para perguntas complexas
         )
         resposta.raise_for_status()
         conteudo = resposta.json().get("response", "")

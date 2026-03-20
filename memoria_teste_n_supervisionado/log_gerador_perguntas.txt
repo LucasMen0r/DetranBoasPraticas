@@ -1,0 +1,59 @@
+[20/03/2026 08:36:49] === Gerador Automático de Perguntas Gandalf ===
+[20/03/2026 08:36:49] Fonte de contexto: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[20/03/2026 08:36:49] ── Iniciando ciclo de geração de perguntas ──
+[20/03/2026 08:36:49] [DB] 20 exemplos carregados de ExemploPratico.
+[20/03/2026 08:36:49] [ERRO] ANTHROPIC_API_KEY não configurada no .env
+[20/03/2026 08:36:49] [AVISO] Nenhum par gerado neste ciclo.
+[20/03/2026 08:36:49] Aguardando 60 minutos para o próximo ciclo.
+[20/03/2026 08:49:12] === Gerador Automático de Perguntas Gandalf ===
+[20/03/2026 08:49:12] Fonte de contexto: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[20/03/2026 08:49:12] ── Iniciando ciclo de geração de perguntas ──
+[20/03/2026 08:49:12] [DB] 20 exemplos carregados de ExemploPratico.
+[20/03/2026 08:49:12] [ERRO API] Falha na chamada ao Claude: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[20/03/2026 08:49:12] [AVISO] Nenhum par gerado neste ciclo.
+[20/03/2026 08:49:12] Aguardando 60 minutos para o próximo ciclo.
+[20/03/2026 08:50:50] === Gerador Automático de Perguntas Gandalf ===
+[20/03/2026 08:50:50] Fonte de contexto: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[20/03/2026 08:50:50] ── Iniciando ciclo de geração de perguntas ──
+[20/03/2026 08:50:50] [DB] 20 exemplos carregados de ExemploPratico.
+[20/03/2026 08:50:50] [ERRO API] Falha na chamada ao Claude: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages | Detalhe: {"type":"error","error":{"type":"invalid_request_error","message":"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits."},"request_id":"req_011CZEHMVodYr5rRHwT7v81k"}
+[20/03/2026 08:50:50] [AVISO] Nenhum par gerado neste ciclo.
+[20/03/2026 08:50:50] Aguardando 60 minutos para o próximo ciclo.
+[20/03/2026 08:52:48] === Gerador Automático de Perguntas Gandalf ===
+[20/03/2026 08:52:48] Fonte de contexto: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[20/03/2026 08:52:48] ── Iniciando ciclo de geração de perguntas ──
+[20/03/2026 08:52:48] [DB] 20 exemplos carregados de ExemploPratico.
+[20/03/2026 08:52:49] [ERRO API] Falha na chamada ao Claude: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages | Detalhe: {"type":"error","error":{"type":"invalid_request_error","message":"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits."},"request_id":"req_011CZEHWFzRZS7wzz2QZnqHX"}
+[20/03/2026 08:52:49] [AVISO] Nenhum par gerado neste ciclo.
+[20/03/2026 08:52:49] Aguardando 60 minutos para o próximo ciclo.
+[20/03/2026 09:00:11] === Gerador Automatico de Perguntas Gandalf ===
+[20/03/2026 09:00:11] Modelo: deepseek-r1:8b | Fonte: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[20/03/2026 09:00:11] ── Iniciando ciclo de geracao de perguntas ──
+[20/03/2026 09:00:11] [DB] 20 exemplos carregados de ExemploPratico.
+[20/03/2026 09:00:11] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[20/03/2026 09:03:39] [OLLAMA] 5 pares gerados com sucesso.
+[20/03/2026 09:03:39] [OK] 5 pares gerados.
+[20/03/2026 09:03:39] [SALVO TXT] 5 pares em: perguntas_geradas/perguntas_geradas_20-03-2026_09-03-39.txt
+[20/03/2026 09:03:39] [SALVO JSON] perguntas_geradas/perguntas_geradas_20-03-2026_09-03-39.json
+[20/03/2026 09:03:40] [DB] 5 pares inseridos em ConhecimentoHistorico.
+[20/03/2026 09:03:40] Aguardando 60 minutos para o proximo ciclo.
+[20/03/2026 10:03:40] ── Iniciando ciclo de geracao de perguntas ──
+[20/03/2026 10:03:40] [DB] 20 exemplos carregados de ExemploPratico.
+[20/03/2026 10:03:40] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[20/03/2026 10:06:33] [OLLAMA] 5 pares gerados com sucesso.
+[20/03/2026 10:06:33] [OK] 5 pares gerados.
+[20/03/2026 10:06:33] [SALVO TXT] 5 pares em: perguntas_geradas/perguntas_geradas_20-03-2026_10-06-33.txt
+[20/03/2026 10:06:33] [SALVO JSON] perguntas_geradas/perguntas_geradas_20-03-2026_10-06-33.json
+[20/03/2026 10:06:33] [DB] 5 pares inseridos em ConhecimentoHistorico.
+[20/03/2026 10:06:33] Aguardando 60 minutos para o proximo ciclo.
+[20/03/2026 11:00:13] === Gerador Automatico de Perguntas Gandalf ===
+[20/03/2026 11:00:13] Modelo: deepseek-r1:8b | Fonte: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[20/03/2026 11:00:13] ── Iniciando ciclo de geracao de perguntas ──
+[20/03/2026 11:00:13] [DB] 20 exemplos carregados de ExemploPratico.
+[20/03/2026 11:00:13] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[20/03/2026 11:04:19] [OLLAMA] 5 pares gerados com sucesso.
+[20/03/2026 11:04:19] [OK] 5 pares gerados.
+[20/03/2026 11:04:19] [SALVO TXT] 5 pares em: perguntas_geradas/perguntas_geradas_20-03-2026_11-04-19.txt
+[20/03/2026 11:04:19] [SALVO JSON] perguntas_geradas/perguntas_geradas_20-03-2026_11-04-19.json
+[20/03/2026 11:04:20] [DB] 5 pares inseridos em ConhecimentoHistorico.
+[20/03/2026 11:04:20] Aguardando 60 minutos para o proximo ciclo.

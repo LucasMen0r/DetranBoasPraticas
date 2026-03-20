@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "20/03/2026 10:06:33",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual é o propósito do sufixo 'S' em um nome de procedure no DETRAN-PE?",
+        "resposta": "O sufixo 'S' representa Selecionar, conforme o exemplo de EscalaA, que termina com 'A' para operação de Selecionar.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 10:06:33",
+        "categoria": "Stored Procedures",
+        "pergunta": "Como deve ser estruturado o nome de um procedure SCP no DETRAN-PE?",
+        "resposta": "De acordo com o padrão, o nome deve seguir o formato dbfisc01..Objetivo[Complemento]Operacao.scp, como no exemplo de ControleIndicePresidenciaS.scp.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 10:06:33",
+        "categoria": "Boas Práticas",
+        "pergunta": "Posso usar 'tmp' como prefixo para procedures temporários?",
+        "resposta": "Não. O prefixo 'tmp' é exclusivo para tabelas temporárias, como visto no exemplo tmpParcelaDebitoSefazD que é considerado erro, conforme mencionado.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 10:06:33",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Por que o procedure 'tgProvimentoCetranI' utiliza o prefixo 'tg'?",
+        "resposta": "O prefixo 'tg' é usado para disparadores (triggers) em tabelas, como especificado no exemplo tgProvimentoCetranI, que segue o padrão de nomear triggers.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 10:06:33",
+        "categoria": "Integridade Referencial",
+        "pergunta": "O que indica o sufixo 'E' em um nome de procedure?",
+        "resposta": "O sufixo 'E' representa Excluir, como no exemplo ControleIndicePresidenciaE.scp, seguindo as operações básicas permitidas.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

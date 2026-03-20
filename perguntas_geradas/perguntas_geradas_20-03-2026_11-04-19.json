@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "20/03/2026 11:04:19",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual é o padrão correto para nomear procedures no DETRAN-PE? Por exemplo, posso usar 'dbfisc01..EscalaA.scp' para um procedure de atualização de escala?",
+        "resposta": "O padrão é **Objetivo[Complemento]Operacao**. No exemplo, 'EscalaA' é aceito pois termina com a sigla da operação 'A', seguindo a regra estabelecida em exemplos como 'EscalaA' e 'NotificarToxicologicoA' (veja a explicação de 'dbfisc01..EscalaA.scp').",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 11:04:19",
+        "categoria": "Boas Práticas",
+        "pergunta": "É permitido usar o prefixo 'tmp' para tabelas temporárias e também para procedures? Se não, qual é o limite para o uso do prefixo 'tmp'?",
+        "resposta": "O prefixo 'tmp' é **exclusivo para tabelas temporárias**, conforme regra em 'tmpParcelaDebitoSefazD' e 'tmpParcelaDebitoSefazI' (ambos incorretos). Procedures devem seguir a estrutura estabelecida sem esse prefixo.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 11:04:19",
+        "categoria": "Stored Procedures",
+        "pergunta": "Se eu preciso criar um procedure para atualizar o status de veículos roubados, qual seria o nome correto? Deveria ser 'AtualizarVeiculoRoubadoI' ou algo diferente?",
+        "resposta": "O nome correto deve ser **Objetivo[Complemento]Operacao**. No caso, 'Operacao..VeiculoRoubadoAtualizarSds.scp' é um exemplo válido, pois a operação é de atualização (I) e segue o padrão com o verbo completo no infinitivo (atualizar) no complemento (veja a explicação de 'Operacao..VeiculoRoubadoAtualizarSds.scp').",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 11:04:19",
+        "categoria": "Integridade Referencial",
+        "pergunta": "Em um procedure que seleciona dados de uma tabela de veículos, qual seria o nome mais adequado? Por exemplo, 'ConsultarVeiculoS' ou 'SelecionarVeiculoS' é melhor?",
+        "resposta": "O nome deve usar um **substantivo no objetivo** que responda a 'O que selecionar?'. 'ConsultarVeiculoS' é aceito (como em 'ConsultaTurnoHorarioS'), pois 'Veiculo' é o substantivo e 'S' o sufixo de operação (selecionar).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 11:04:19",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Posso usar o mesmo objetivo para diferentes operações? Por exemplo, 'EmitirDocumentoA' para inserção e 'EmitirDocumentoS' para seleção, ou devo mudar o substantivo?",
+        "resposta": "O **objetivo permanece o mesmo**, pois é um substantivo genérico (como em 'EscalaA', 'EscalaI', 'EscalaS'). A operação varia conforme o sufixo (A/I/S/E/R).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

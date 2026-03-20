@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "20/03/2026 09:03:39",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual a regra correta para nomear procedures no DETRAN-PE? Por exemplo, EscalaA é aceito?",
+        "resposta": "Correto. De acordo com a regra, o nome da procedure deve seguir o padrão Objetivo[Complemento]Operacao, onde a Operacao é uma sigla maiúscula (A, I, S, E, R). O exemplo EscalaA segue essa regra terminando com a sigla da operação 'A'.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 09:03:39",
+        "categoria": "Boas Práticas",
+        "pergunta": "Posso usar o prefixo 'tmp' para nomear procedures temporárias no DETRAN-PE?",
+        "resposta": "Não. O prefixo 'tmp' é exclusivo para tabelas temporárias. Procedures devem ser nomeadas com o padrão dbfisc01..NomeProcedure.scp. Exemplo válido seria tmpParcelaDebitoSefaz, que é aceito apenas para tabelas temporárias.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 09:03:39",
+        "categoria": "Stored Procedures",
+        "pergunta": "Como devo nomear uma procedure que atualiza dados de veículos no DETRAN-PE?",
+        "resposta": "Para atualizar dados de veículos, siga o padrão Objetivo[Complemento]Operacao. Exemplo: VeiculoAtualizarS.scp (Operacao 'S'), seguindo a regra da tabela Veiculo como objetivo e a operação de Selecionar/Alterar. O exemplo VeiculoRoubadoAtualizarSds.scp é válido, pois usa o verbo completo no infinitivo (Roubar não é, mas atualizar sim) no final.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 09:03:39",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual é o significado do sufixo 'E' em um nome de procedure, como em 'EmissaoDocumentoE.scp'?",
+        "resposta": "O sufixo 'E' no final do nome da procedure indica a operação 'Excluir' (E). Segue a regra das operações básicas (S para Selecionar, I para Inserir, E para Excluir, A para Alterar, R para Relatório). O exemplo 'ControleIndicePresidenciaE.scp' ilustra essa regra terminando com a sigla da operação 'E'.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 09:03:39",
+        "categoria": "Performance",
+        "pergunta": "O nome 'tmpParcelaDebitoSefazI' está correto para uma procedure temporária no DETRAN-PE?",
+        "resposta": "Incorreto. O prefixo 'tmp' é reservado exclusivamente para tabelas temporárias. Procedures temporárias devem usar um outro prefixo ou nome diferente. O exemplo 'tmpParcelaDebitoSefazD' é inválido por esse mesmo motivo, assim como o 'tmpParcelaDebitoSefazI'.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

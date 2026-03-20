@@ -1,0 +1,18 @@
+[20/03/2026 10:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 10:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 10:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 10:46:10] Iniciando rotina profissional de manutenção do Gandalf.
+[20/03/2026 10:46:10] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste/testes'.
+[20/03/2026 10:46:10] Ciclo concluído com sucesso.
+[20/03/2026 10:46:10] Aguardando 30 minutos.
+[20/03/2026 10:46:48] Iniciando rotina profissional de manutenção do Gandalf.
+[20/03/2026 10:46:48] Processando arquivo: perguntas_geradas_20-03-2026_09-03-39.txt...
+[20/03/2026 10:46:51]   -> Sucesso. Chunks: 1.
+[20/03/2026 10:46:51] Processando arquivo: perguntas_geradas_20-03-2026_10-06-33.txt...
+[20/03/2026 10:46:52]   -> Sucesso. Chunks: 1.
+[20/03/2026 10:46:52] Processamento concluído. Inserções: 2
+[20/03/2026 10:46:52] Ciclo concluído com sucesso.
+[20/03/2026 10:46:52] Aguardando 30 minutos.
+[20/03/2026 10:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 10:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 10:58:24] Aguardando meia hora para a proxima verificacao.
