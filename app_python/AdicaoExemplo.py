@@ -340,18 +340,50 @@ def main():
                                 else:
                                     print(f"[ERRO IA] Falha ao vetorizar a regra inédita: {texto_regra[:30]}.")
 
-                        cursor.execute("""
-                            DELETE FROM RegraNomenclatura 
-                            WHERE ultima_verificacao < %s OR ultima_verificacao IS NULL
-                        """, (inicio_sincronizacao,))
-                        
-                        removidas = cursor.rowcount
+                        # Identifica regras obsoletas APENAS nas categorias cobertas
+                        # pelo PDF atual — evita apagar regras de outras fontes
+                        # (manuais, TreinoGendalf, AlimentarExemploPratico).
+                        categorias_no_pdf = list({
+                            mapa_categorias.get(r.get('categoria', '').lower())
+                            for r in regras_extraidas
+                            if mapa_categorias.get(r.get('categoria', '').lower())
+                        })
+
+                        removidas = 0
+                        if categorias_no_pdf:
+                            cursor.execute("""
+                                SELECT pkRegraNomenclatura, DescricaoRegra
+                                FROM RegraNomenclatura
+                                WHERE pkCategoriaRegra = ANY(%s)
+                                AND (ultima_verificacao < %s OR ultima_verificacao IS NULL)
+                            """, (categorias_no_pdf, inicio_sincronizacao))
+                            obsoletas = cursor.fetchall()
+
+                            if obsoletas:
+                                print(f"\n[AVISO] {len(obsoletas)} regra(s) obsoleta(s) encontrada(s) nas")
+                                print("categorias cobertas por este PDF (nao constam na versao atual do manual):")
+                                for pk, desc in obsoletas[:5]:
+                                    print(f"  - [{pk}] {desc[:80]}")
+                                if len(obsoletas) > 5:
+                                    print(f"  ... e mais {len(obsoletas) - 5} regra(s).")
+
+                                confirmar = input("\nDeseja remover essas regras obsoletas? (S/N): ").strip().upper()
+                                if confirmar == 'S':
+                                    pks_obsoletas = [row[0] for row in obsoletas]
+                                    cursor.execute("""
+                                        DELETE FROM RegraNomenclatura
+                                        WHERE pkRegraNomenclatura = ANY(%s)
+                                    """, (pks_obsoletas,))
+                                    removidas = cursor.rowcount
+                                    print(f"[INFO] {removidas} regra(s) obsoleta(s) removida(s).")
+                                else:
+                                    print("[INFO] Regras obsoletas mantidas conforme solicitado.")
 
                         conn.commit()
-                        print(f"\n[SUCESSO] Sincronização do manual concluída.")
-                        print(f"Novas regras registradas: {inseridas}")
-                        print(f"Regras mantidas (sem alteração): {atualizadas}")
-                        print(f"Regras antigas removidas (obsoletas): {removidas}")
+                        print(f"\n[SUCESSO] Sincronizacao do manual concluida.")
+                        print(f"Novas regras registradas  : {inseridas}")
+                        print(f"Regras mantidas           : {atualizadas}")
+                        print(f"Regras obsoletas removidas: {removidas}")
 
                     except Exception as e:
                         conn.rollback()
