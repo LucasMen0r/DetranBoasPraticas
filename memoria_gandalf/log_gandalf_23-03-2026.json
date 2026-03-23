@@ -1,0 +1,8 @@
+[
+    {
+        "data_hora": "23/03/2026 11:56:28",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "\"a procedure dbfisc01..EscalaD.scp está de acordo com o padrão?\"",
+        "resposta": "**Objeto Analisado:** Procedure `dbfisc01..EscalaD.scp`  \n**Conformidade:** REPROVADO  \n**Justificativa:**  \nA procedure viola a regra de nomenclatura estabelecida, pois a operação no nome (`D`) não corresponde a nenhuma das siglas permitidas (S, I, E, A, R). Conforme o padrão **Objetivo[Complemento]Operação**, a operação deve ser uma sigla em letras maiúsculas das operações básicas. Além disso, o exemplo `dbfisc01..EscalaA.scp` foi aprovado porque a operação `A` (Alterar) está permitida, mas não há referência ou regra que inclua `D` como operação válida.  \n**Recomendação:**  \nRecrie o nome da procedure seguindo o padrão **Objetivo[Complemento]Operação**, utilizando apenas as siglas permitidas (S, I, E, A, R) para a operação. Exemplo: `dbfisc01..EscalaAlterarA.scp`."
+    }
+]

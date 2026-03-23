@@ -1,0 +1,20 @@
+========================================
+DATA: 23/03/2026 11:43:42
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: "a procedure dbfisc01..EscalaI.scp está de acordo com o padrão?"
+========================================
+RESPOSTA:
+**Objeto Analisado:** Procedure `dbfisc01..EscalaI.scp`  
+**Conformidade:** APROVADO  
+**Justificativa:**  
+O nome da procedure segue o padrão **Objetivo[Complemento]Operação**, conforme regramentos de referência:  
+- `Escala` é o **Objetivo** (substantivo singular, sem acentos ou espaços).  
+- `I` é a **Operação** (sigla para Inserir, em letras maiúsculas conforme regra de operações).  
+Além disso, não há violação das regras de PascalCase ou uso de termos em português, conforme validado nos exemplos de referência como `dbfisc01..EscalaA.scp`.  
+
+**Recomendação:**  
+Manter o padrão de nomenclatura **Objetivo[Complemento]Operação** e garantir que a operação esteja sempre em letras maiúsculas (ex.: `I`, `S`, `A`).
+========================================
+

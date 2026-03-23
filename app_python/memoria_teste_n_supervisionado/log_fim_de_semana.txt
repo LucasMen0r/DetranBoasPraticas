@@ -10,3 +10,11 @@
 [23/03/2026 13:38:30] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
 [23/03/2026 13:38:30] Ciclo concluído com sucesso.
 [23/03/2026 13:38:30] Aguardando 30 minutos.
+[23/03/2026 14:08:30] Processando arquivo: perguntas_geradas_23-03-2026_13-45-52.txt...
+[23/03/2026 14:08:34]   -> Sucesso. Chunks: 1.
+[23/03/2026 14:08:34] Processamento concluído. Inserções: 1
+[23/03/2026 14:08:34] Ciclo concluído com sucesso.
+[23/03/2026 14:08:34] Aguardando 30 minutos.
+[23/03/2026 14:38:34] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 14:38:34] Ciclo concluído com sucesso.
+[23/03/2026 14:38:34] Aguardando 30 minutos.

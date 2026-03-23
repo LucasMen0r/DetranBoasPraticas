@@ -1,0 +1,8 @@
+[
+    {
+        "hora": "2026-03-23T11:26:53.128969",
+        "cat": "Nomenclatura de Objetos",
+        "perg": "a procedure dbfisc01..EscalaA.scp está de acordo com o padrão?",
+        "resp": "[BOM]: dbfisc01..EscalaA.scp -> Correto: Termina com a sigla da operacao 'A'."
+    }
+]

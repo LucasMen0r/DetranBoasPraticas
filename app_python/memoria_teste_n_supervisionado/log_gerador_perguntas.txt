@@ -24,3 +24,10 @@
 [23/03/2026 13:45:52] [SALVO TXT] 5 pares em: perguntas_geradas/perguntas_geradas_23-03-2026_13-45-52.txt
 [23/03/2026 13:45:52] [SALVO JSON] perguntas_geradas/perguntas_geradas_23-03-2026_13-45-52.json
 [23/03/2026 13:45:52] Aguardando 60 minutos para o proximo ciclo.
+[23/03/2026 14:45:52] ── Iniciando ciclo de geracao de perguntas ──
+[23/03/2026 14:45:52] [DB] 20 exemplos carregados de ExemploPratico.
+[23/03/2026 14:45:52] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[23/03/2026 14:52:02] [AVISO] Nenhum array JSON encontrado na resposta.
+Conteudo: 
+[23/03/2026 14:52:02] [AVISO] Nenhum par gerado neste ciclo.
+[23/03/2026 14:52:02] Aguardando 60 minutos para o proximo ciclo.

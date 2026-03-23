@@ -67,3 +67,18 @@
 [23/03/2026 11:08:15] ── Iniciando ciclo de geracao de perguntas ──
 [23/03/2026 11:08:15] [DB] 20 exemplos carregados de ExemploPratico.
 [23/03/2026 11:08:15] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[23/03/2026 11:09:07] === Gerador Automatico de Perguntas Gandalf ===
+[23/03/2026 11:09:07] Modelo: deepseek-r1:8b | Fonte: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[23/03/2026 11:09:07] ── Iniciando ciclo de geracao de perguntas ──
+[23/03/2026 11:09:07] [DB] 20 exemplos carregados de ExemploPratico.
+[23/03/2026 11:09:07] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[23/03/2026 11:12:31] === Gerador Automatico de Perguntas Gandalf ===
+[23/03/2026 11:12:31] Modelo: deepseek-r1:8b | Fonte: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[23/03/2026 11:12:31] ── Iniciando ciclo de geracao de perguntas ──
+[23/03/2026 11:12:31] [DB] 20 exemplos carregados de ExemploPratico.
+[23/03/2026 11:12:31] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[23/03/2026 11:13:31] === Gerador Automatico de Perguntas Gandalf ===
+[23/03/2026 11:13:31] Modelo: deepseek-r1:8b | Fonte: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[23/03/2026 11:13:31] ── Iniciando ciclo de geracao de perguntas ──
+[23/03/2026 11:13:31] [DB] 20 exemplos carregados de ExemploPratico.
+[23/03/2026 11:13:31] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
