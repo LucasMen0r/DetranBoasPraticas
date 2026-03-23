@@ -23,9 +23,9 @@ services:
     networks:
       - app_network
 
-  app_python:
+  gendalf_treinador:
     build: ./app_python
-    container_name: gandalf_interface
+    container_name: gendalf_treinador
     depends_on:
       - db
       - ollama
@@ -38,11 +38,29 @@ services:
       OLLAMA_HOST: http://ollama:11434
     volumes:
       - ./app_python:/app
-    ports:
-      - "8000:8000"
     networks:
       - app_network
-    command: tail -f /dev/null
+    command: python /app/TreinoGendalf.py
+
+  gendalf_gerador:
+    build: ./app_python
+    container_name: gendalf_gerador
+    depends_on:
+      - db
+      - ollama
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: DetranNorma
+      DB_USER: postgres
+      DB_PASS: abc321
+      OLLAMA_HOST: http://ollama:11434
+      GERADOR_INTERVALO_MIN: "60"
+    volumes:
+      - ./app_python:/app
+    networks:
+      - app_network
+    command: python /app/GerarPerguntasGendalf.py
 
 networks:
   app_network:

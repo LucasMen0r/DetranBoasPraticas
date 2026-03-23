@@ -23,7 +23,7 @@ DB_PASS = os.getenv('DB_PASS', '123456')
 DB_HOST = os.getenv('DB_HOST', 'localhost')
 DB_PORT = os.getenv('DB_PORT', '5435')
 
-ollama_base_url     = f"http://{DB_HOST}:11436"
+ollama_base_url = os.getenv('OLLAMA_HOST', 'http://localhost:11436')
 ollama_embed_model  = "nomic-embed-text:latest"
 ollama_gen_model    = "deepseek-r1:8b"
 ollama_api_embed    = f"{ollama_base_url}/api/embeddings"
@@ -42,7 +42,6 @@ CATEGORIAS_VALIDAS = [
     "Stored Procedures",
     "Performance",
 ]
-
 # ─────────────────────────────────────────────
 # Pool de conexões
 # ─────────────────────────────────────────────
@@ -56,7 +55,6 @@ except psycopg2.Error as e:
     print(f"[ERRO] Falha ao criar pool de conexões: {e}")
     exit(1)
 
-
 # ─────────────────────────────────────────────
 # Logging
 # ─────────────────────────────────────────────
@@ -66,7 +64,6 @@ def registrar_log(mensagem: str):
     with open(ARQUIVO_LOG, "a", encoding="utf-8") as f:
         f.write(f"[{timestamp}] {mensagem}\n")
     print(mensagem)
-
 
 # ─────────────────────────────────────────────
 # Embedding (Ollama)
@@ -83,7 +80,6 @@ def embedtext(text: str):
     except requests.RequestException as e:
         registrar_log(f"[ERRO OLLAMA] Falha ao vetorizar: {e}")
         return None
-
 
 # ─────────────────────────────────────────────
 # Buscar contexto do banco (ExemploPratico)
@@ -110,7 +106,6 @@ def buscar_exemplos(conn, limite: int = 20) -> list[dict]:
         return []
     finally:
         cursor.close()
-
 
 # ─────────────────────────────────────────────
 # Geração de perguntas via Ollama (deepseek-r1:8b)
@@ -153,7 +148,6 @@ Responda APENAS com um array JSON valido, sem texto antes ou depois, sem blocos 
     "resposta": "..."
   }}
 ]"""
-
 
 def gerar_perguntas_ollama(exemplos: list[dict]) -> list[dict]:
     """Chama o Ollama local (deepseek-r1:8b) para gerar pares pergunta/resposta."""
@@ -209,7 +203,6 @@ def gerar_perguntas_ollama(exemplos: list[dict]) -> list[dict]:
         registrar_log(f"[ERRO JSON] Falha ao parsear resposta: {e}\nConteudo: {conteudo_limpo[:300]}")
         return []
 
-
 # ─────────────────────────────────────────────
 # Salvar perguntas geradas
 # ─────────────────────────────────────────────
@@ -235,7 +228,6 @@ def salvar_como_historico(pares: list[dict]):
     registrar_log(f"[SALVO TXT] {len(pares)} pares em: {caminho}")
     return caminho
 
-
 def salvar_como_json(pares: list[dict]):
     """Salva em JSON no mesmo formato dos logs do Gandalf."""
     os.makedirs(DIRETORIO_SAIDA, exist_ok=True)
@@ -260,31 +252,6 @@ def salvar_como_json(pares: list[dict]):
     registrar_log(f"[SALVO JSON] {caminho}")
     return caminho
 
-
-def inserir_no_banco(conn, pares: list[dict]):
-    """Vetoriza e insere os pares diretamente em ConhecimentoHistorico."""
-    cursor = conn.cursor()
-    total = 0
-    nome_arquivo = f"gerado_automaticamente_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
-    try:
-        for par in pares:
-            texto = f"PERGUNTA: {par['pergunta']}\nRESPOSTA: {par['resposta']}"
-            vetor = embedtext(texto)
-            if vetor:
-                cursor.execute("""
-                    INSERT INTO ConhecimentoHistorico (nome_arquivo, conteudo_texto, embedding)
-                    VALUES (%s, %s, %s)
-                """, (nome_arquivo, texto, vetor))
-                total += 1
-        conn.commit()
-        registrar_log(f"[DB] {total} pares inseridos em ConhecimentoHistorico.")
-    except Exception as e:
-        conn.rollback()
-        registrar_log(f"[ERRO DB] Falha ao inserir pares: {e}")
-    finally:
-        cursor.close()
-
-
 # ─────────────────────────────────────────────
 # Loop principal
 # ─────────────────────────────────────────────
@@ -306,8 +273,6 @@ def ciclo_geracao(conn):
     registrar_log(f"[OK] {len(pares)} pares gerados.")
     salvar_como_historico(pares)
     salvar_como_json(pares)
-    inserir_no_banco(conn, pares)
-
 
 def main():
     INTERVALO_MINUTOS = int(os.getenv('GERADOR_INTERVALO_MIN', '60'))
@@ -329,7 +294,6 @@ def main():
 
         registrar_log(f"Aguardando {INTERVALO_MINUTOS} minutos para o proximo ciclo.")
         time.sleep(INTERVALO_MINUTOS * 60)
-
 
 if __name__ == "__main__":
     main()

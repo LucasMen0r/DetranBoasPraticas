@@ -43,7 +43,7 @@ CATEGORIAS_VALIDAS = [
     "Performance",
 ]
 
-# ─────────────────────────────────────────────
+# ────────────-────────────────────────────────
 # Pool de conexões
 # ─────────────────────────────────────────────
 try:
@@ -67,7 +67,6 @@ def registrar_log(mensagem: str):
         f.write(f"[{timestamp}] {mensagem}\n")
     print(mensagem)
 
-
 # ─────────────────────────────────────────────
 # Embedding (Ollama)
 # ─────────────────────────────────────────────
@@ -83,7 +82,6 @@ def embedtext(text: str):
     except requests.RequestException as e:
         registrar_log(f"[ERRO OLLAMA] Falha ao vetorizar: {e}")
         return None
-
 
 # ─────────────────────────────────────────────
 # Buscar contexto do banco (ExemploPratico)
@@ -110,7 +108,6 @@ def buscar_exemplos(conn, limite: int = 20) -> list[dict]:
         return []
     finally:
         cursor.close()
-
 
 # ─────────────────────────────────────────────
 # Geração de perguntas via Ollama (deepseek-r1:8b)
@@ -209,7 +206,6 @@ def gerar_perguntas_ollama(exemplos: list[dict]) -> list[dict]:
         registrar_log(f"[ERRO JSON] Falha ao parsear resposta: {e}\nConteudo: {conteudo_limpo[:300]}")
         return []
 
-
 # ─────────────────────────────────────────────
 # Salvar perguntas geradas
 # ─────────────────────────────────────────────
@@ -234,7 +230,9 @@ def salvar_como_historico(pares: list[dict]):
 
     registrar_log(f"[SALVO TXT] {len(pares)} pares em: {caminho}")
     return caminho
-
+# ─────────────────────────────────────────────
+# Salvar perguntas geradas em arquivo json
+# ─────────────────────────────────────────────
 
 def salvar_como_json(pares: list[dict]):
     """Salva em JSON no mesmo formato dos logs do Gandalf."""
@@ -260,7 +258,9 @@ def salvar_como_json(pares: list[dict]):
     registrar_log(f"[SALVO JSON] {caminho}")
     return caminho
 
-
+# ─────────────────────────────────────────────
+# Insere as perguntas e respostas no banco de dados
+# ─────────────────────────────────────────────
 def inserir_no_banco(conn, pares: list[dict]):
     """Vetoriza e insere os pares diretamente em ConhecimentoHistorico."""
     cursor = conn.cursor()
@@ -308,7 +308,9 @@ def ciclo_geracao(conn):
     salvar_como_json(pares)
     inserir_no_banco(conn, pares)
 
-
+# ─────────────────────────────────────────────
+# Função main
+# ─────────────────────────────────────────────
 def main():
     INTERVALO_MINUTOS = int(os.getenv('GERADOR_INTERVALO_MIN', '60'))
 

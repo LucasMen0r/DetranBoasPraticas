@@ -68,6 +68,11 @@ CREATE TABLE ConhecimentoHistorico (
     CONSTRAINT pkConhecimentoHistorico PRIMARY KEY (pkConhecimentoHistorico)
 );
 
+SELECT * FROM conhecimentohistorico;
+
+ALTER TABLE ConhecimentoHistorico 
+ADD COLUMN DataInsercao TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
 -- 2.2. CARGA DE DOMÍNIOS BÁSICOS
 INSERT INTO CategoriaRegra (NomeCategoria, DescricaoRegra) VALUES 
     ('Regras Gerais', 'Regras aplicáveis a todos os objetos'),
@@ -233,3 +238,11 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO ol
 CREATE INDEX RegraNomenclatura_embedding ON RegraNomenclatura USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX ExemploPratico_embedding ON ExemploPratico USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX ConhecimentoHistorico_embedding ON ConhecimentoHistorico USING hnsw (embedding vector_cosine_ops);
+
+-- 7. Configuração de fuso horário de Recife (GMT -3).
+SHOW timezone;
+ALTER DATABASE "DetranNorma" SET timezone TO 'America/Recife';
+
+-- 7.1 Alteração geral do sistema para o fuso de recife.
+SET timezone TO 'America/Recife';
+SELECT pg_reload_conf();

@@ -1,0 +1,26 @@
+[23/03/2026 12:35:36] === Gerador Automatico de Perguntas Gandalf ===
+[23/03/2026 12:35:36] Modelo: deepseek-r1:8b | Fonte: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[23/03/2026 12:35:36] ── Iniciando ciclo de geracao de perguntas ──
+[23/03/2026 12:35:36] [DB] 20 exemplos carregados de ExemploPratico.
+[23/03/2026 12:35:36] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[23/03/2026 12:35:36] [ERRO OLLAMA] Falha na chamada de geracao: HTTPConnectionPool(host='db', port=11436): Max retries exceeded with url: /api/generate (Caused by NewConnectionError("HTTPConnection(host='db', port=11436): Failed to establish a new connection: [Errno 111] Connection refused"))
+[23/03/2026 12:35:36] [AVISO] Nenhum par gerado neste ciclo.
+[23/03/2026 12:35:36] Aguardando 60 minutos para o proximo ciclo.
+[23/03/2026 12:38:38] === Gerador Automatico de Perguntas Gandalf ===
+[23/03/2026 12:38:38] Modelo: deepseek-r1:8b | Fonte: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[23/03/2026 12:38:38] ── Iniciando ciclo de geracao de perguntas ──
+[23/03/2026 12:38:38] [DB] 20 exemplos carregados de ExemploPratico.
+[23/03/2026 12:38:38] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[23/03/2026 12:42:10] [OLLAMA] 5 pares gerados com sucesso.
+[23/03/2026 12:42:10] [OK] 5 pares gerados.
+[23/03/2026 12:42:10] [SALVO TXT] 5 pares em: perguntas_geradas/perguntas_geradas_23-03-2026_12-42-10.txt
+[23/03/2026 12:42:10] [SALVO JSON] perguntas_geradas/perguntas_geradas_23-03-2026_12-42-10.json
+[23/03/2026 12:42:10] Aguardando 60 minutos para o proximo ciclo.
+[23/03/2026 13:42:10] ── Iniciando ciclo de geracao de perguntas ──
+[23/03/2026 13:42:10] [DB] 20 exemplos carregados de ExemploPratico.
+[23/03/2026 13:42:10] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[23/03/2026 13:45:52] [OLLAMA] 5 pares gerados com sucesso.
+[23/03/2026 13:45:52] [OK] 5 pares gerados.
+[23/03/2026 13:45:52] [SALVO TXT] 5 pares em: perguntas_geradas/perguntas_geradas_23-03-2026_13-45-52.txt
+[23/03/2026 13:45:52] [SALVO JSON] perguntas_geradas/perguntas_geradas_23-03-2026_13-45-52.json
+[23/03/2026 13:45:52] Aguardando 60 minutos para o proximo ciclo.

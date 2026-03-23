@@ -57,3 +57,13 @@
 [20/03/2026 11:04:19] [SALVO JSON] perguntas_geradas/perguntas_geradas_20-03-2026_11-04-19.json
 [20/03/2026 11:04:20] [DB] 5 pares inseridos em ConhecimentoHistorico.
 [20/03/2026 11:04:20] Aguardando 60 minutos para o proximo ciclo.
+[23/03/2026 11:08:06] === Gerador Automatico de Perguntas Gandalf ===
+[23/03/2026 11:08:06] Modelo: deepseek-r1:8b | Fonte: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[23/03/2026 11:08:06] ── Iniciando ciclo de geracao de perguntas ──
+[23/03/2026 11:08:06] [DB] 20 exemplos carregados de ExemploPratico.
+[23/03/2026 11:08:06] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[23/03/2026 11:08:15] === Gerador Automatico de Perguntas Gandalf ===
+[23/03/2026 11:08:15] Modelo: deepseek-r1:8b | Fonte: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: 60 min
+[23/03/2026 11:08:15] ── Iniciando ciclo de geracao de perguntas ──
+[23/03/2026 11:08:15] [DB] 20 exemplos carregados de ExemploPratico.
+[23/03/2026 11:08:15] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...

@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "23/03/2026 13:45:52",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "O nome 'AtualizarDocumentoS' é válido para um procedure no DETRAN-PE?",
+        "resposta": "Correto. Procede-se a atualização (Operacao 'A') e o sufixo 'S' está permitido para Alterar, conforme exemplo 'ControleIndicePresidenciaS.scp'.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 13:45:52",
+        "categoria": "Boas Práticas",
+        "pergunta": "Posso usar o prefixo 'tmp' para uma procedure temporária no Sybase?",
+        "resposta": "Não. O prefixo 'tmp' é exclusivo para tabelas temporárias. Use 'tmp' apenas para tabelas, conforme exemplo 'tmpParcelaDebitoSefaz.scp'.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 13:45:52",
+        "categoria": "Stored Procedures",
+        "pergunta": "Como devo nomear um procedure que consulta dados de veículos e insere registros?",
+        "resposta": "Siga a estrutura Objetivo[Complemento]Operacao. Exemplo: dbfisc01..VeiculoConsultaInserirA.scp, conforme orientação do manual.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 13:45:52",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual o significado do sufixo 'E' nos nomes de procedures?",
+        "resposta": "O sufixo 'E' indica operação de Excluir, conforme definido no padrão (ex: 'ControleIndicePresidenciaE.scp') e substitui operações não listadas.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 13:45:52",
+        "categoria": "Integridade Referencial",
+        "pergunta": "O nome 'ValidarRegistroSefazI' segue as regras DETRAN-PE?",
+        "resposta": "Incorreto. Suffixo 'I' (Inserir) não é permitido sem operação específica. Use Objetivo[Complemento]Operacao com siglas validadas.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

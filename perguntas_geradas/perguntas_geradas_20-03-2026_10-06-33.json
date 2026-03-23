@@ -3,7 +3,7 @@
         "data_hora": "20/03/2026 10:06:33",
         "categoria": "Nomenclatura de Objetos",
         "pergunta": "Qual é o propósito do sufixo 'S' em um nome de procedure no DETRAN-PE?",
-        "resposta": "O sufixo 'S' representa Selecionar, conforme o exemplo de EscalaA, que termina com 'A' para operação de Selecionar.",
+        "resposta": "O sufixo 'S' representa Selecionar, conforme o exemplo de EscalaA, que termina com 'S' para operação de Selecionar.",
         "gerado_automaticamente": true,
         "modelo": "deepseek-r1:8b"
     },

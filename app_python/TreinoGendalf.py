@@ -3,6 +3,7 @@ import psycopg2
 from psycopg2 import pool
 from datetime import datetime
 import os
+import re
 import requests
 import time
 import shutil
@@ -31,7 +32,7 @@ except EnvironmentError as e:
     exit(1)
 
 ollama_embed_model = "nomic-embed-text:latest"
-ollama_base_url = f"http://{DB_HOST}:11436" 
+ollama_base_url = os.getenv('OLLAMA_HOST', 'http://localhost:11436')
 ollama_api_embed = f"{ollama_base_url}/api/embeddings"
 
 DIRETORIO_TESTES = "perguntas_geradas"
@@ -59,16 +60,29 @@ def embedtext(text):
         registrar_log(f"[ERRO OLLAMA] Falha ao vetorizar: {e}") 
         return None
 
-def criar_chunks(texto, tamanho_maximo=400, sobreposicao=50):
-    if sobreposicao >= tamanho_maximo:
-        raise ValueError("A sobreposição deve ser menor que o tamanho máximo do chunk.")
-    palavras = texto.split()
+def criar_chunks(texto_bruto):
+    """
+    Fatia o texto de forma semântica. 
+    Se o arquivo seguir o padrão do gerador, extrai blocos exatos de Q&A.
+    Caso contrário, aplica um fallback genérico.
+    """
+    # Procura pelo padrão: Categoria, Pergunta e Resposta delimitados no seu .txt
+    padrao = r"CATEGORIA:\s*(.*?)\n={40}\nPERGUNTA:\s*(.*?)\n={40}\nRESPOSTA:\n(.*?)\n={40}"
+    matches = re.findall(padrao, texto_bruto, re.DOTALL)
+    
     chunks = []
-    i = 0
-    while i < len(palavras):
-        chunk = " ".join(palavras[i:i + tamanho_maximo])
-        chunks.append(chunk)
-        i += (tamanho_maximo - sobreposicao)
+    
+    # Se encontrou o formato esperado, cria os chunks lógicos
+    if matches:
+        for categoria, pergunta, resposta in matches:
+            chunk = f"CATEGORIA: {categoria.strip()}\nPERGUNTA: {pergunta.strip()}\nRESPOSTA: {resposta.strip()}"
+            chunks.append(chunk)
+    else:
+        # Fallback: Se for um texto solto, faz um fatiamento mais suave por parágrafos longos
+        palavras = texto_bruto.split()
+        if len(palavras) > 0:
+            chunks = [" ".join(palavras[i:i + 350]) for i in range(0, len(palavras), 300)]
+            
     return chunks
 
 def sanitizartexto(texto_bruto):
@@ -112,6 +126,8 @@ def processardiretorio(conn):
                 continue
 
             chunks = criar_chunks(texto_limpo)
+            falha_no_embedding = False
+            
             for chunk in chunks:
                 vetor = embedtext(chunk)
                 if vetor:
@@ -120,10 +136,17 @@ def processardiretorio(conn):
                         VALUES (%s, %s, %s)
                     """, (arquivo, chunk, vetor))
                     total_inseridos += 1
+                else:
+                    falha_no_embedding = True
+                    break # Interrompe os chunks se a API do Ollama falhar
             
-            conn.commit()
-            shutil.move(caminho_origem, caminho_destino)
-            registrar_log(f"  -> Sucesso. Chunks: {len(chunks)}.")
+            if falha_no_embedding:
+                conn.rollback()
+                registrar_log(f"  -> [ERRO] Falha ao vetorizar um chunk de {arquivo}. Arquivo preservado para retentativa.")
+            else:
+                conn.commit()
+                shutil.move(caminho_origem, caminho_destino)
+                registrar_log(f"  -> Sucesso. Chunks: {len(chunks)}.")
             
         except Exception as e:
             conn.rollback()

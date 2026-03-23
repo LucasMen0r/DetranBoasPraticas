@@ -1,0 +1,12 @@
+[23/03/2026 12:38:28] Iniciando rotina profissional de manutenção do Gandalf.
+[23/03/2026 12:38:28] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 12:38:28] Ciclo concluído com sucesso.
+[23/03/2026 12:38:28] Aguardando 30 minutos.
+[23/03/2026 13:08:28] Processando arquivo: perguntas_geradas_23-03-2026_12-42-10.txt...
+[23/03/2026 13:08:30]   -> Sucesso. Chunks: 1.
+[23/03/2026 13:08:30] Processamento concluído. Inserções: 1
+[23/03/2026 13:08:30] Ciclo concluído com sucesso.
+[23/03/2026 13:08:30] Aguardando 30 minutos.
+[23/03/2026 13:38:30] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 13:38:30] Ciclo concluído com sucesso.
+[23/03/2026 13:38:30] Aguardando 30 minutos.

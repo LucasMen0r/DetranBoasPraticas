@@ -19,3 +19,423 @@
 [20/03/2026 11:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
 [20/03/2026 11:28:24] Ciclo de processamento concluido com sucesso.
 [20/03/2026 11:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 11:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 11:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 11:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 12:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 12:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 12:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 12:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 12:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 12:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 13:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 13:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 13:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 13:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 13:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 13:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 14:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 14:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 14:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 14:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 14:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 14:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 15:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 15:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 15:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 15:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 15:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 15:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 16:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 16:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 16:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 16:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 16:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 16:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 17:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 17:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 17:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 17:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 17:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 17:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 18:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 18:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 18:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 18:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 18:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 18:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 19:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 19:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 19:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 19:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 19:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 19:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 20:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 20:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 20:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 20:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 20:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 20:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 21:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 21:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 21:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 21:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 21:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 21:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 22:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 22:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 22:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 22:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 22:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 22:58:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 23:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 23:28:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 23:28:24] Aguardando meia hora para a proxima verificacao.
+[20/03/2026 23:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[20/03/2026 23:58:24] Ciclo de processamento concluido com sucesso.
+[20/03/2026 23:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 00:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 00:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 00:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 00:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 00:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 00:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 01:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 01:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 01:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 01:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 01:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 01:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 02:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 02:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 02:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 02:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 02:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 02:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 03:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 03:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 03:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 03:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 03:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 03:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 04:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 04:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 04:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 04:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 04:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 04:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 05:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 05:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 05:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 05:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 05:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 05:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 06:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 06:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 06:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 06:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 06:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 06:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 07:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 07:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 07:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 07:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 07:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 07:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 08:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 08:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 08:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 08:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 08:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 08:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 09:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 09:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 09:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 09:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 09:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 09:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 10:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 10:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 10:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 10:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 10:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 10:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 11:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 11:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 11:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 11:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 11:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 11:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 12:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 12:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 12:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 12:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 12:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 12:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 13:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 13:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 13:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 13:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 13:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 13:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 14:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 14:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 14:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 14:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 14:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 14:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 15:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 15:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 15:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 15:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 15:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 15:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 16:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 16:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 16:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 16:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 16:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 16:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 17:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 17:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 17:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 17:58:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 17:58:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 17:58:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 18:28:24] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 18:28:24] Ciclo de processamento concluido com sucesso.
+[21/03/2026 18:28:24] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 18:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 18:58:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 18:58:25] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 19:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 19:28:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 19:28:25] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 19:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 19:58:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 19:58:25] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 20:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 20:28:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 20:28:25] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 20:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 20:58:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 20:58:25] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 21:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 21:28:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 21:28:25] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 21:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 21:58:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 21:58:25] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 22:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 22:28:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 22:28:25] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 22:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 22:58:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 22:58:25] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 23:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 23:28:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 23:28:25] Aguardando meia hora para a proxima verificacao.
+[21/03/2026 23:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[21/03/2026 23:58:25] Ciclo de processamento concluido com sucesso.
+[21/03/2026 23:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 00:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 00:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 00:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 00:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 00:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 00:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 01:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 01:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 01:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 01:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 01:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 01:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 02:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 02:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 02:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 02:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 02:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 02:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 03:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 03:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 03:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 03:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 03:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 03:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 04:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 04:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 04:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 04:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 04:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 04:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 05:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 05:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 05:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 05:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 05:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 05:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 06:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 06:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 06:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 06:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 06:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 06:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 07:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 07:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 07:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 07:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 07:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 07:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 08:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 08:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 08:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 08:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 08:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 08:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 09:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 09:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 09:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 09:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 09:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 09:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 10:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 10:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 10:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 10:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 10:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 10:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 11:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 11:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 11:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 11:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 11:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 11:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 12:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 12:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 12:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 12:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 12:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 12:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 13:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 13:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 13:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 13:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 13:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 13:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 14:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 14:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 14:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 14:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 14:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 14:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 15:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 15:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 15:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 15:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 15:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 15:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 16:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 16:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 16:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 16:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 16:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 16:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 17:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 17:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 17:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 17:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 17:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 17:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 18:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 18:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 18:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 18:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 18:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 18:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 19:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 19:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 19:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 19:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 19:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 19:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 20:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 20:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 20:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 20:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 20:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 20:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 21:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 21:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 21:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 21:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 21:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 21:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 22:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 22:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 22:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 22:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 22:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 22:58:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 23:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 23:28:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 23:28:25] Aguardando meia hora para a proxima verificacao.
+[22/03/2026 23:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[22/03/2026 23:58:25] Ciclo de processamento concluido com sucesso.
+[22/03/2026 23:58:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 00:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 00:28:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 00:28:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 00:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 00:58:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 00:58:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 01:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 01:28:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 01:28:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 01:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 01:58:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 01:58:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 02:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 02:28:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 02:28:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 02:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 02:58:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 02:58:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 03:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 03:28:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 03:28:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 03:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 03:58:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 03:58:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 04:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 04:28:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 04:28:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 04:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 04:58:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 04:58:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 05:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 05:28:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 05:28:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 05:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 05:58:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 05:58:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 06:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 06:28:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 06:28:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 06:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 06:58:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 06:58:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 07:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 07:28:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 07:28:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 07:58:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 07:58:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 07:58:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 08:28:25] [INFO] Nenhum arquivo .txt encontrado em 'arquivos_teste'.
+[23/03/2026 08:28:25] Ciclo de processamento concluido com sucesso.
+[23/03/2026 08:28:25] Aguardando meia hora para a proxima verificacao.
+[23/03/2026 08:55:49] Iniciando rotina profissional de manutenção do Gandalf.
+[23/03/2026 08:55:49] Processando arquivo: perguntas_geradas_20-03-2026_11-04-19.txt...
+[23/03/2026 08:55:52]   -> Sucesso. Chunks: 1.
+[23/03/2026 08:55:52] Processamento concluído. Inserções: 1
+[23/03/2026 08:55:52] Ciclo concluído com sucesso.
+[23/03/2026 08:55:52] Aguardando 30 minutos.
