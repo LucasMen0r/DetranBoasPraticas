@@ -1,5 +1,5 @@
 # G.E.N.D.A.L.F.
-*Gestor Automatizado de Normas do Detran por meio de LLM para Fiscalização de código**
+**Gestor Automatizado de Normas do Detran por meio de LLM para Fiscalização de Código**
 
 ## Visão Geral
 O G.E.N.D.A.L.F. é um sistema automatizado de governança e auditoria de banco de dados baseado em Inteligência Artificial. Utilizando arquitetura RAG (Retrieval-Augmented Generation), o sistema atua como um revisor estrito de nomenclaturas e boas práticas para objetos de banco de dados (Tabelas, Procedures, Índices, Views, etc.), validando scripts DDL de desenvolvedores contra o manual normativo oficial da Administração de Dados (AD).
@@ -10,13 +10,13 @@ O projeto foi desenhado para operar localmente com foco em segurança de dados e
 * **Motor LLM:** Ollama rodando localmente.
   * **Modelo de Linguagem:** `deepseek-r1:8b` (Raciocínio lógico e extração estruturada).
   * **Modelo de Embedding:** `nomic-embed-text:latest` (Vetorização de contexto).
-* **Linguagem:** Python 3.12+ (psycopg2, requests, pdfplumber).
+* **Linguagem:** Python 3.12+ 
 
 ## Mecânica de Inteligência (RAG Hierárquico)
 O motor de decisão do G.A.N.D.A.L.F. não opera com prompts estáticos. Ele constrói o contexto dinamicamente com base em uma hierarquia estrita de obediência:
 1. **Exemplos Práticos Homologados (Prioridade Máxima):** Scripts validados previamente pela AD têm peso absoluto. Se um script submetido possuir estrutura semântica idêntica a um caso aprovado, ele herda a aprovação.
 2. **Normas do Manual Vigente (Prioridade Média):** Extração dinâmica de regras gerais e específicas baseadas no PDF normativo atualizado.
-3. **Memória de Testes (Prioridade de Apoio):** Histórico de interações anteriores para refinamento de contexto e prevenção de alucinações.
+3. **Memória de Testes (Prioridade de Apoio):** Histórico de interações e dados sintéticos validados para refinamento de contexto e prevenção de alucinações.
 
 ## Componentes Principais
 
@@ -35,11 +35,14 @@ Módulo administrativo para a equipe de AD.
   * **Upsert Inteligente:** Identifica quais regras já existem no banco e apenas renova o carimbo de tempo, vetorizando apenas textos inéditos.
   * **Soft Delete Seguro:** Remove automaticamente regras que se tornaram obsoletas ou foram retiradas da versão mais recente do manual, sem gerar inatividade do sistema.
 
-### 3. `DetranNorma.sql` (Schema e Deploy)
-Script de inicialização do ambiente de dados. Contém a modelagem relacional, aplicação da extensão `vector`, criação de chaves exclusivas complexas (`UNIQUE NULLS NOT DISTINCT`) para prevenção de duplicatas lógicas e inserção dos dados semente.
+### 3. Esteira Automática de Dados Sintéticos (Data Augmentation)
+Pipeline autônomo (Batch Processing) que expande a base de conhecimento estruturada do sistema, gerando, validando e ingerindo novos contextos sem supervisão manual constante.
+* **`GerarPerguntasGendalf.py` (O Orquestrador):** Roda em loop baseado em timer (ex: 12 horas). Consulta a tabela de `ExemploPratico` e utiliza o modelo LLM para gerar pares complexos de Pergunta/Resposta. Ao atingir o limite de tempo, aciona os scripts subsequentes da esteira.
+* **`LimpezaJson.py` (O Filtro Determinístico):** Atua como uma vacina contra alucinações do LLM. Varre os JSONs gerados *in-place* e aplica expressões regulares e regras de negócio estritas para identificar contradições (ex: sufixos trocados, regras de views aplicadas a tabelas). Atribui uma flag booleana (`valido: true/false`) a cada registro, mantendo o histórico de erros intacto para futuras análises.
+* **`TreinoGendalf.py` (O Ingestor Vetorial):** Etapa final da esteira. Lê os JSONs classificados, ignora sumariamente os itens marcados como inválidos, converte os pares aprovados em embeddings e consolida a carga na tabela `ConhecimentoHistorico` do PostgreSQL.
 
-### 4. `TreinoGandalf.py` e `AdicaoExemploTeorico.py` (Módulos de Manutenção)
-Scripts auxiliares para carga inicial em lote e sanitização de memória não supervisionada.
+### 4. `DetranNorma.sql` (Schema e Deploy)
+Script de inicialização do ambiente de dados. Contém a modelagem relacional, aplicação da extensão `vector`, criação de chaves exclusivas complexas (`UNIQUE NULLS NOT DISTINCT`) para prevenção de duplicatas lógicas e inserção dos dados semente.
 
 ## Instalação e Configuração
 
@@ -50,17 +53,23 @@ Scripts auxiliares para carga inicial em lote e sanitização de memória não s
 2. **Configuração do Ollama**
    * Garanta que o serviço do Ollama esteja rodando no host configurado.
    * Execute o pull dos modelos necessários:
-     `ollama pull deepseek-r1:8b`
-     `ollama pull nomic-embed-text`
+     ```bash
+     ollama pull deepseek-r1:8b
+     ollama pull nomic-embed-text
+     ```
 
 3. **Variáveis de Ambiente (.env)**
-   Crie um arquivo `.env` na raiz do projeto contendo as credenciais de operação:
-   ```env
+   Crie um arquivo `.env` na raiz do projeto contendo as credenciais de operação e configurações da esteira:
+   ```
    DB_NAME=DetranNorma
    DB_USER=seu_usuario
    DB_PASS=sua_senha
    DB_HOST=ip_do_banco
    DB_PORT=5435
+   OLLAMA_HOST=http://localhost:11436
+   GERADOR_INTERVALO_MIN=60
+   GERADOR_DURACAO_HORAS=12
+   
 
 4. **Dependências Python**
 ```pip install -r requirements.txt```
