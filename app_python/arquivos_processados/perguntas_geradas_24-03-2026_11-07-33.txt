@@ -1,0 +1,55 @@
+========================================
+DATA: 24/03/2026 11:07:33
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: Quando devo usar a estrutura NomeObjetivoComplementoOperacao para nomes de procedures no DETRAN-PE?
+========================================
+RESPOSTA:
+Segundo o manual, a estrutura é NomeObjetivo[Complemento]Operacao. O objetivo deve ser um substantivo (ex.: dbfisc01..EscalaA.scp) e a operacao a sigla em maiúsculas das operações básicas.
+========================================
+
+========================================
+DATA: 24/03/2026 11:07:33
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Posso usar o prefixo 'tmp' para nomear procedures no DETRAN-PE?
+========================================
+RESPOSTA:
+Não, o prefixo 'tmp' é exclusivo para tabelas temporárias (ex.: tmpParcelaDebitoSefaz). Procedures devem usar outros nomes ou siglas específicas.
+========================================
+
+========================================
+DATA: 24/03/2026 11:07:33
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual é o padrão correto para nomear procedures de atualização no DETRAN-PE?
+========================================
+RESPOSTA:
+Procedures de atualização devem terminar com 'I' (ex.: ControleIndicePresidenciaI.scp), conforme a regra de terminação com sigla de operação.
+========================================
+
+========================================
+DATA: 24/03/2026 11:07:33
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: É permitido usar um verbo completo no final do nome da procedure se a operação básica não for suficiente?
+========================================
+RESPOSTA:
+Sim, quando a operação não for uma das básicas (S, I, E, A, R), deve-se usar o nome do verbo no infinitivo (ex.: Operacao..VeiculoRoubadoAtualizarSds.scp).
+========================================
+
+========================================
+DATA: 24/03/2026 11:07:33
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Como devo nomear uma tabela temporária específica para débitos fiscais no DETRAN-PE?
+========================================
+RESPOSTA:
+Tabelas temporárias devem usar prefixo 'tmp' seguido do nome e da operação (ex.: tmpParcelaDebitoSefazS).
+========================================
+

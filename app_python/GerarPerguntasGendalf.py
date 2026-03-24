@@ -8,6 +8,9 @@ import requests
 import re
 import pgvector
 import pgvector.psycopg2
+import sys
+import subprocess
+import time
 from dotenv import load_dotenv
 
 # ─────────────────────────────────────────────
@@ -276,11 +279,17 @@ def ciclo_geracao(conn):
 
 def main():
     INTERVALO_MINUTOS = int(os.getenv('GERADOR_INTERVALO_MIN', '60'))
+    # Define a duração em horas (pode colocar no .env também, padrão 12h)
+    DURACAO_HORAS = float(os.getenv('GERADOR_DURACAO_HORAS', '12'))
+    DURACAO_SEGUNDOS = DURACAO_HORAS * 3600
 
     registrar_log("=== Gerador Automatico de Perguntas Gandalf ===")
-    registrar_log(f"Modelo: {ollama_gen_model} | Fonte: ExemploPratico | Destino: ConhecimentoHistorico | Intervalo: {INTERVALO_MINUTOS} min")
+    registrar_log(f"Modelo: {ollama_gen_model} | Duracao Maxima: {DURACAO_HORAS}h | Intervalo: {INTERVALO_MINUTOS} min")
 
-    while True:
+    start_time = time.time()
+
+    # Loop condicionado ao tempo decorrido
+    while (time.time() - start_time) < DURACAO_SEGUNDOS:
         conn = None
         try:
             conn = db_pool.getconn()
@@ -292,8 +301,36 @@ def main():
             if conn:
                 db_pool.putconn(conn)
 
-        registrar_log(f"Aguardando {INTERVALO_MINUTOS} minutos para o proximo ciclo.")
-        time.sleep(INTERVALO_MINUTOS * 60)
+        tempo_passado = time.time() - start_time
+        tempo_restante = DURACAO_SEGUNDOS - tempo_passado
+
+        # Se ainda houver tempo, aguarda para o próximo ciclo
+        if tempo_restante > 0:
+            # Espera o intervalo padrão ou o tempo que resta, o que for menor
+            tempo_espera = min(INTERVALO_MINUTOS * 60, tempo_restante)
+            horas_restantes = tempo_restante / 3600
+            registrar_log(f"Aguardando {tempo_espera/60:.1f} min. Faltam {horas_restantes:.2f} horas para concluir a fase de geracao.")
+            time.sleep(tempo_espera)
+
+    registrar_log("=== Tempo limite atingido. Encerrando geracao. ===")
+    registrar_log("Acionando rotina de limpeza de dados.")
+
+    try:
+        # 1. Chama a limpeza
+        caminho_limpeza = os.path.join(diretorio_atual, "perguntas_geradas", "LimpezaJson.py")
+        subprocess.run([sys.executable, caminho_limpeza], check=True)
+        registrar_log("Limpeza de JSON executada e flags atribuidas com sucesso.")
+        
+        # 2. Chama o treinamento
+        registrar_log("Acionando a esteira de treinamento (TreinoGendalf.py)...")
+        caminho_treino = os.path.join(diretorio_atual, "TreinoGendalf.py")
+        subprocess.run([sys.executable, caminho_treino], check=True)
+        registrar_log("Treinamento acionado e concluido com sucesso.")
+        
+    except subprocess.CalledProcessError as e:
+        registrar_log(f"[ERRO CRITICO] Falha na execucao da esteira (Subprocesso): {e}")
+    except Exception as e:
+        registrar_log(f"[ERRO CRITICO] Erro inesperado ao orquestrar scripts: {e}")
 
 if __name__ == "__main__":
     main()

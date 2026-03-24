@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "24/03/2026 11:07:33",
+        "categoria": "Stored Procedures",
+        "pergunta": "Quando devo usar a estrutura NomeObjetivoComplementoOperacao para nomes de procedures no DETRAN-PE?",
+        "resposta": "Segundo o manual, a estrutura é NomeObjetivo[Complemento]Operacao. O objetivo deve ser um substantivo (ex.: dbfisc01..EscalaA.scp) e a operacao a sigla em maiúsculas das operações básicas.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 11:07:33",
+        "categoria": "Boas Práticas",
+        "pergunta": "Posso usar o prefixo 'tmp' para nomear procedures no DETRAN-PE?",
+        "resposta": "Não, o prefixo 'tmp' é exclusivo para tabelas temporárias (ex.: tmpParcelaDebitoSefaz). Procedures devem usar outros nomes ou siglas específicas.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 11:07:33",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual é o padrão correto para nomear procedures de atualização no DETRAN-PE?",
+        "resposta": "Procedures de atualização devem terminar com 'I' (ex.: ControleIndicePresidenciaI.scp), conforme a regra de terminação com sigla de operação.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 11:07:33",
+        "categoria": "Stored Procedures",
+        "pergunta": "É permitido usar um verbo completo no final do nome da procedure se a operação básica não for suficiente?",
+        "resposta": "Sim, quando a operação não for uma das básicas (S, I, E, A, R), deve-se usar o nome do verbo no infinitivo (ex.: Operacao..VeiculoRoubadoAtualizarSds.scp).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 11:07:33",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Como devo nomear uma tabela temporária específica para débitos fiscais no DETRAN-PE?",
+        "resposta": "Tabelas temporárias devem usar prefixo 'tmp' seguido do nome e da operação (ex.: tmpParcelaDebitoSefazS).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

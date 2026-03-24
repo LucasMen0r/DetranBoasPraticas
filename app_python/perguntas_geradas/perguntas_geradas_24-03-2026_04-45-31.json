@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "24/03/2026 04:45:31",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Como devo estruturar o nome de uma procedure para atualizar o status de um veículo roubado no banco de dados do DETRAN-PE?",
+        "resposta": "O nome da procedure deve seguir a estrutura 'Objetivo[Complemento]Operacao'. No exemplo 'Operacao..VeiculoRoubadoAtualizarSds.scp', o objetivo é 'VeiculoRoubadoAtualizar', o complemento é opcional, e a operação é 'S' para Selecionar, conforme especificado no manual. O sufixo deve ser maiúsculo e corresponder a uma operação básica.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 04:45:31",
+        "categoria": "Boas Práticas",
+        "pergunta": "Posso usar 'tmp' como prefixo para uma procedure temporária ou apenas para tabelas?",
+        "resposta": "De acordo com as boas práticas, o prefixo 'tmp' é exclusivo para tabelas temporárias, conforme mencionado no exemplo 'tmpParcelaDebitoSefazD' que é considerado um erro para procedure. Portanto, use 'tmp' apenas para tabelas e reserve outros nomes para procedures.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 04:45:31",
+        "categoria": "Stored Procedures",
+        "pergunta": "Qual é a regra básica para nomear uma procedure que insere dados de um processo administrativo?",
+        "resposta": "A regra básica é 'Objetivo[Complemento]Operacao'. Exemplos como 'ControleIndiceProcessoAdmI.scp' mostram que o objetivo ('ControleIndiceProcessoAdm') é seguido da operação 'I' (Inserir), que é um verbo no infinitivo representando a ação. O nome deve terminar com a sigla da operação em maiúsculas.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 04:45:31",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Como devo nomear uma tabela que armazena dados de toxicologico relacionados a condutores?",
+        "resposta": "Tabelas devem seguir a nomenclatura sem o sufixo de operação. Exemplo aceito: 'NotificarToxicologicoA' é válido como procedure. Para uma tabela, considere algo como 'NotificacaoToxicologica' (sem o sufixo de operação) para armazenar os dados, mantendo a clareza sobre a estrutura da tabela sem a operação específica.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 04:45:31",
+        "categoria": "Stored Procedures",
+        "pergunta": "Por que o exemplo 'tgProvimentoCetranI' utiliza 'tg' como prefixo?",
+        "resposta": "O prefixo 'tg' é usado para nomear gatilhos (triggers) no Sybase, conforme o exemplo. O nome completo 'tgProvimentoCetranI' indica que este é um trigger disparado na tabela 'ProvimentoCetran' durante uma operação de inserção ('I'). Este padrão ajuda na identificação rápida de objetos do tipo trigger.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

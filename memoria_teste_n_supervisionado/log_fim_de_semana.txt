@@ -439,3 +439,49 @@
 [23/03/2026 08:55:52] Processamento concluído. Inserções: 1
 [23/03/2026 08:55:52] Ciclo concluído com sucesso.
 [23/03/2026 08:55:52] Aguardando 30 minutos.
+[24/03/2026 08:36:42] Iniciando rotina profissional de manutenção do Gandalf.
+[24/03/2026 08:36:42] [ERRO CRÍTICO NO LOOP]: cannot access local variable 'arquivo' where it is not associated with a value
+[24/03/2026 08:36:42] Aguardando 30 minutos.
+[24/03/2026 08:37:08] Iniciando rotina profissional de manutenção do Gandalf.
+[24/03/2026 08:37:08] [ERRO CRÍTICO NO LOOP]: cannot access local variable 'arquivo' where it is not associated with a value
+[24/03/2026 08:37:08] Aguardando 30 minutos.
+[24/03/2026 08:39:24] Iniciando rotina profissional de manutenção do Gandalf.
+[24/03/2026 08:39:24] Processando arquivo: dados_limpos_gandalf.json...
+[24/03/2026 08:39:25]   -> [ERRO] Falha no arquivo dados_limpos_gandalf.json: column "texto" of relation "conhecimentohistorico" does not exist
+LINE 1: INSERT INTO ConhecimentoHistorico (nome_arquivo, texto, embe...
+                                                         ^
+
+[24/03/2026 08:39:25] Processando arquivo: perguntas_geradas_20-03-2026_11-04-19.json...
+[24/03/2026 08:39:25]   -> [ERRO] Falha no arquivo perguntas_geradas_20-03-2026_11-04-19.json: column "texto" of relation "conhecimentohistorico" does not exist
+LINE 1: INSERT INTO ConhecimentoHistorico (nome_arquivo, texto, embe...
+                                                         ^
+
+[24/03/2026 08:39:25] Processando arquivo: perguntas_geradas_20-03-2026_10-06-33.json...
+[24/03/2026 08:39:25]   -> [ERRO] Falha no arquivo perguntas_geradas_20-03-2026_10-06-33.json: column "texto" of relation "conhecimentohistorico" does not exist
+LINE 1: INSERT INTO ConhecimentoHistorico (nome_arquivo, texto, embe...
+                                                         ^
+
+[24/03/2026 08:39:25] Processando arquivo: perguntas_geradas_20-03-2026_09-03-39.json...
+[24/03/2026 08:39:25]   -> [ERRO] Falha no arquivo perguntas_geradas_20-03-2026_09-03-39.json: column "texto" of relation "conhecimentohistorico" does not exist
+LINE 1: INSERT INTO ConhecimentoHistorico (nome_arquivo, texto, embe...
+                                                         ^
+
+[24/03/2026 08:39:25] Ciclo concluído com sucesso.
+[24/03/2026 08:39:25] Aguardando 30 minutos.
+[24/03/2026 08:41:08] Iniciando rotina profissional de manutenção do Gandalf.
+[24/03/2026 08:41:08] Processando arquivo: dados_limpos_gandalf.json...
+[24/03/2026 08:41:09]   -> Sucesso. Chunks: 10.
+[24/03/2026 08:41:09] Processando arquivo: perguntas_geradas_20-03-2026_11-04-19.json...
+[24/03/2026 08:41:10]   -> Sucesso. Chunks: 5.
+[24/03/2026 08:41:10] Processando arquivo: perguntas_geradas_20-03-2026_10-06-33.json...
+[24/03/2026 08:41:10]   -> Sucesso. Chunks: 5.
+[24/03/2026 08:41:10] Processando arquivo: perguntas_geradas_20-03-2026_09-03-39.json...
+[24/03/2026 08:41:11]   -> Sucesso. Chunks: 5.
+[24/03/2026 08:41:11] Ciclo concluído com sucesso.
+[24/03/2026 08:41:11] Aguardando 30 minutos.
+[24/03/2026 09:00:44] Iniciando rotina profissional de manutenção do Gandalf (Modo Lote/Batch).
+[24/03/2026 09:00:44] Processando arquivo: perguntas_geradas_24-03-2026_08-54-48.txt...
+[24/03/2026 09:00:46]   -> Sucesso. Chunks: 1.
+[24/03/2026 09:00:46] Processando arquivo: perguntas_geradas_24-03-2026_08-54-48.json...
+[24/03/2026 09:00:46]   -> Sucesso. Chunks: 5.
+[24/03/2026 09:00:46] Processamento concluído com sucesso. Encerrando execução.

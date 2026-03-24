@@ -1,0 +1,55 @@
+========================================
+DATA: 24/03/2026 01:32:29
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual é a regra para nomear procedures no DETRAN-PE? Por exemplo, é aceitável chamar uma procedure de 'ConsultarVeiculoS' ou 'VeiculoConsultarS'?
+========================================
+RESPOSTA:
+Procedimentos devem seguir o padrão NomeObjetivo[Complemento]Operacao. Exemplo correto: 'ConsultarVeiculoS' (Objetivo: substantivo que responde 'O que selecionar?'; Operacao: sigla maiúscula S).
+========================================
+
+========================================
+DATA: 24/03/2026 01:32:29
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Em um ambiente Sybase, qual é o padrão aceito para nomes de tabelas temporárias? Existe alguma restrição específica para procedimentos?
+========================================
+RESPOSTA:
+Tabelas temporárias devem usar prefixo 'tmp', como em 'tmpParcelaDebitoSefaz'. Procedures não devem usar este prefixo, pois ele é exclusivo para tabelas temporárias.
+========================================
+
+========================================
+DATA: 24/03/2026 01:32:29
+========================================
+CATEGORIA: Integridade Referencial
+========================================
+PERGUNTA: Se uma procedure atualiza dados de uma tabela de veículo, qual seria o sufixo correto para indicar a operação de atualização? Deveria ser 'AtualizarVeiculoI' ou 'VeiculoAtualizarI'?
+========================================
+RESPOSTA:
+O sufixo deve ser a sigla da operação. Para atualização, use 'A' (Alterar). Exemplo: 'VeiculoAtualizarA' (Objetivo: Veiculo; Operacao: A).
+========================================
+
+========================================
+DATA: 24/03/2026 01:32:29
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: Em um sistema DETRAN-PE, uma procedure que insere dados deve terminar com qual sigla? E como deve ser estruturado o nome completo?
+========================================
+RESPOSTA:
+Procedures de inserção terminam com 'I' (Inserir). Nome completo: dbfisc01..NomeObjetivoI.scp. Exemplo: dbfisc01..VeiculoInserirI.scp.
+========================================
+
+========================================
+DATA: 24/03/2026 01:32:29
+========================================
+CATEGORIA: Performance
+========================================
+PERGUNTA: Considerando a legibilidade e manutenção, qual seria o nome ideal para uma procedure que seleciona o último número de protocolo da tabela de protocolos?
+========================================
+RESPOSTA:
+O ideal é usar o padrão NomeObjetivoOperacao. Exemplo: 'ObterUltimoProtocoloS' (Objetivo: substantivo que responde 'O que selecionar?'; Operacao: S).
+========================================
+

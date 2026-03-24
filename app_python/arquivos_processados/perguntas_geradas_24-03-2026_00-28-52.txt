@@ -1,0 +1,55 @@
+========================================
+DATA: 24/03/2026 00:28:52
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual é o sufixo correto para uma procedure que altera dados de uma tabela no DETRAN-PE?
+========================================
+RESPOSTA:
+O sufixo correto é 'A', conforme regra de nomenclatura. Exemplo: CadastrarTurnoHorarioI.scp, que usa 'I' para Inserir.
+========================================
+
+========================================
+DATA: 24/03/2026 00:28:52
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Posso usar o prefixo 'tmp' para nomes de procedures temporárias no banco de dados Sybase?
+========================================
+RESPOSTA:
+Não. O prefixo 'tmp' é exclusivo para tabelas temporárias. Procedures devem seguir a estrutura dbfisc01..NomeProcedure.scp, conforme exemplo tmpParcelaDebitoSefaz.scp, que é aceito como tabela temporária.
+========================================
+
+========================================
+DATA: 24/03/2026 00:28:52
+========================================
+CATEGORIA: Integridade Referencial
+========================================
+PERGUNTA: Como devo nomear uma procedure que atualiza registros de uma tabela de veículos, mantendo a integridade referencial?
+========================================
+RESPOSTA:
+O nome deve seguir a estrutura Objetivo[Complemento]Operacao. Exemplo: AtualizarVeiculoS.scp, onde 'S' indica Selecionar/Atualizar, conforme regra para operações básicas.
+========================================
+
+========================================
+DATA: 24/03/2026 00:28:52
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: Qual é a estrutura correta para nomear uma procedure que insere dados de uma tabela específica?
+========================================
+RESPOSTA:
+Deve ser NomeTabela[Complemento]Operacao. Exemplo: CadastrarVeiculoI.scp, seguindo o padrão dbfisc01..EscalaA.scp, onde 'I' é para Inserir.
+========================================
+
+========================================
+DATA: 24/03/2026 00:28:52
+========================================
+CATEGORIA: Performance
+========================================
+PERGUNTA: O sufixo 'S' em uma procedure indica apenas uma operação de Selecionar, ou pode afetar a performance?
+========================================
+RESPOSTA:
+O sufixo 'S' indica operação de Selecionar. Para performance, procedures de Selecionar devem ser otimizadas, conforme exemplo ConsultarTurnoHorarioS.scp, que segue a regra de nomenclatura para operações básicas.
+========================================
+

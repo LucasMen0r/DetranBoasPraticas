@@ -4,6 +4,7 @@ from psycopg2 import pool
 from datetime import datetime
 import os
 import re
+import json
 import requests
 import time
 import shutil
@@ -14,12 +15,6 @@ diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 caminho_env = os.path.abspath(os.path.join(diretorio_atual, '..', '.env'))
 
 load_dotenv(dotenv_path=caminho_env)
-
-def get_env_or_raise(var_name):
-    value = os.getenv(var_name)
-    if not value:
-        raise EnvironmentError(f"[CRÍTICO] Variável de ambiente {var_name} não configurada.")
-    return value
 
 try:
     DB_NAME = os.getenv('DB_NAME', 'DetranNorma')
@@ -93,52 +88,66 @@ def sanitizartexto(texto_bruto):
     return " ".join(linhas_limpas)
 
 def processardiretorio(conn):
-    os.makedirs(DIRETORIO_TESTES, exist_ok=True)
-    os.makedirs(DIRETORIO_PROCESSADOS, exist_ok=True)
+    # 1. Primeiro mapeia os arquivos disponíveis no diretório
+    arquivos = [f for f in os.listdir(DIRETORIO_TESTES) if f.endswith('.txt') or f.endswith('.json')]
     
-    arquivos = [f for f in os.listdir(DIRETORIO_TESTES) if f.endswith('.txt')]
     if not arquivos:
-        registrar_log(f"[INFO] Nenhum arquivo .txt encontrado em '{DIRETORIO_TESTES}'.")
+        registrar_log(f"[INFO] Nenhum arquivo para processar em '{DIRETORIO_TESTES}'.")
         return
 
     cursor = conn.cursor()
     total_inseridos = 0
 
+    # 2. Inicia o loop sobre a lista correta
     for arquivo in arquivos:
         caminho_origem = os.path.join(DIRETORIO_TESTES, arquivo)
         caminho_destino = os.path.join(DIRETORIO_PROCESSADOS, arquivo)
         
+        # Checagem para evitar duplicidade de carga
         cursor.execute("SELECT 1 FROM ConhecimentoHistorico WHERE nome_arquivo = %s LIMIT 1", (arquivo,))
-        
         if cursor.fetchone():
             registrar_log(f"[PULADO] Arquivo '{arquivo}' já processado anteriormente.")
             shutil.move(caminho_origem, caminho_destino)
             continue
 
-        registrar_log(f"Processando arquivo: {arquivo}...")
+        registrar_log(f"Processando arquivo: {arquivo}.")
         try:
-            with open(caminho_origem, 'r', encoding='utf-8') as f:
-                conteudo_bruto = f.read()
-                
-            texto_limpo = sanitizartexto(conteudo_bruto)
-            if not texto_limpo:
-                shutil.move(caminho_origem, caminho_destino)
-                continue
+            chunks = []
+            
+            # 3. Todo o processamento agora ocorre dentro do escopo do arquivo atual
+            if arquivo.endswith('.json'):
+                with open(caminho_origem, 'r', encoding='utf-8') as f:
+                    dados_json = json.load(f)
+                    for item in dados_json:
+                        # Se a flag existir e for explicitamente False, pula a inserção
+                        if item.get("valido", True) == False:
+                            continue
+                            
+                        chunk = f"CATEGORIA: {item.get('categoria', '')}\nPERGUNTA: {item.get('pergunta', '')}\nRESPOSTA: {item.get('resposta', '')}"
+                        chunks.append(chunk)
+            
+            elif arquivo.endswith('.txt'):
+                with open(caminho_origem, 'r', encoding='utf-8') as f:
+                    conteudo_bruto = f.read()
+                texto_limpo = sanitizartexto(conteudo_bruto)
+                if not texto_limpo:
+                    shutil.move(caminho_origem, caminho_destino)
+                    continue
+                chunks = criar_chunks(texto_limpo)
 
-            chunks = criar_chunks(texto_limpo)
             falha_no_embedding = False
             
             for chunk in chunks:
                 vetor = embedtext(chunk)
                 if vetor:
-                    cursor.execute("""
-                        INSERT INTO ConhecimentoHistorico (nome_arquivo, conteudo_texto, embedding)
-                        VALUES (%s, %s, %s)
-                    """, (arquivo, chunk, vetor))
+                    cursor.execute(
+                        "INSERT INTO ConhecimentoHistorico (nome_arquivo, conteudo_texto, embedding) VALUES (%s, %s, %s)",
+                        (arquivo, chunk, vetor)
+                    )
                     total_inseridos += 1
                 else:
                     falha_no_embedding = True
-                    break # Interrompe os chunks se a API do Ollama falhar
+                    break
             
             if falha_no_embedding:
                 conn.rollback()
@@ -151,39 +160,8 @@ def processardiretorio(conn):
         except Exception as e:
             conn.rollback()
             registrar_log(f"  -> [ERRO] Falha no arquivo {arquivo}: {e}")
-
+            
     cursor.close()
-    registrar_log(f"Processamento concluído. Inserções: {total_inseridos}")
-
-def autotreinar(conn):
-    cursor = conn.cursor()
-    try:
-        cursor.execute("SELECT pkRegraNomenclatura, DescricaoRegra FROM RegraNomenclatura WHERE embedding IS NULL")
-        regras = cursor.fetchall()
-        if regras:
-            registrar_log(f"[AUTO-TREINO] Atualizando {len(regras)} regras...")
-            for pk, texto in regras:
-                vetor = embedtext(texto)
-                if vetor:
-                    cursor.execute("UPDATE RegraNomenclatura SET embedding = %s WHERE pkRegraNomenclatura = %s", (vetor, pk))
-            conn.commit()
-
-        cursor.execute("SELECT to_regclass('public.ExemploPratico');")
-        if cursor.fetchone()[0]:
-            cursor.execute("SELECT pkExemploPratico, ExemploTexto, Explicacao FROM ExemploPratico WHERE embedding IS NULL")
-            exemplos = cursor.fetchall()
-            if exemplos:
-                registrar_log(f"[AUTO-TREINO] Atualizando {len(exemplos)} exemplos...")
-                for pk, texto, explicacao in exemplos:
-                    vetor = embedtext(f"Exemplo: {texto}. Explicação: {explicacao}")
-                    if vetor:
-                        cursor.execute("UPDATE ExemploPratico SET embedding = %s WHERE pkExemploPratico = %s", (vetor, pk))
-                conn.commit()
-    except Exception as e:
-        conn.rollback()
-        registrar_log(f"[ERRO] Falha no auto-treino: {e}")
-    finally:
-        cursor.close()
 
 def registrar_log(mensagem):
     diretorio = "memoria_teste_n_supervisionado"
@@ -196,26 +174,21 @@ def registrar_log(mensagem):
     print(mensagem)
 
 def main():
-    registrar_log("Iniciando rotina profissional de manutenção do Gandalf.")
+    registrar_log("Iniciando rotina profissional de manutenção do Gandalf (Modo Lote/Batch).")
     
-    while True:
-        conn = None
-        try:
-            conn = db_pool.getconn()
-            pgvector.psycopg2.register_vector(conn)
-            
-            autotreinar(conn)
-            processardiretorio(conn)
-            
-            registrar_log("Ciclo concluído com sucesso.")
-        except Exception as e:
-            registrar_log(f"[ERRO CRÍTICO NO LOOP]: {e}")
-        finally:
-            if conn:
-                db_pool.putconn(conn)
-            
-        registrar_log("Aguardando 30 minutos.")
-        time.sleep(1800)
+    conn = None
+    try:
+        conn = db_pool.getconn()
+        pgvector.psycopg2.register_vector(conn)
+        
+        processardiretorio(conn)
+        
+        registrar_log("Processamento concluído com sucesso. Encerrando execução.")
+    except Exception as e:
+        registrar_log(f"[ERRO CRÍTICO NA EXECUÇÃO]: {e}")
+    finally:
+        if conn:
+            db_pool.putconn(conn)
 
 if __name__ == "__main__":
     main()

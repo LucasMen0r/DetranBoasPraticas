@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "24/03/2026 08:54:48",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual é o padrão correto para nomear procedures no DETRAN-PE?",
+        "resposta": "Os procedures devem seguir o padrão dbfisc01..NomeProcedure.scp, onde o NomeProcedure é composto por Objetivo[Complemento]Operacao, conforme exemplo: dbfisc01..EscalaA.scp.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 08:54:48",
+        "categoria": "Boas Práticas",
+        "pergunta": "É permitido usar a sigla 'I' no final de um nome de procedure para indicar inserção?",
+        "resposta": "Sim, é permitido conforme o exemplo: CadastrarTurnoHorarioI.scp, onde 'I' representa Inserir.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 08:54:48",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Como devo nomear uma procedure que consulta informações sobre veículos roubados?",
+        "resposta": "Deve ser nomeada como VeiculoRoubadoConsultarS.scp, terminando com 'S' para Selecionar, conforme exemplo: Operacao..VeiculoRoubadoAtualizarSds.scp.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 08:54:48",
+        "categoria": "Integridade Referencial",
+        "pergunta": "O que fazer se eu precisar de um nome de procedure que atualize dados com complemento?",
+        "resposta": "Adicione o complemento antes da operação, como no exemplo VeiculoRoubadoAtualizarSds.scp.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 08:54:48",
+        "categoria": "Stored Procedures",
+        "pergunta": "Posso usar o prefixo 'tmp' para uma procedure ou apenas para tabelas temporárias?",
+        "resposta": "Apenas para tabelas temporárias. Procedures devem seguir o padrão dbfisc01..NomeProcedure.scp, como exemplo: dbfisc01..EscalaA.scp.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

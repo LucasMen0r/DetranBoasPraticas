@@ -1,0 +1,82 @@
+[
+    {
+        "data_hora": "20/03/2026 11:04:19",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual é o padrão correto para nomear procedures no DETRAN-PE? Por exemplo, posso usar 'dbfisc01..EscalaA.scp' para um procedure de atualização de escala?",
+        "resposta": "O padrão é **Objetivo[Complemento]Operacao**. No exemplo, 'EscalaA' é aceito pois termina com a sigla da operação 'A', seguindo a regra estabelecida em exemplos como 'EscalaA' e 'NotificarToxicologicoA' (veja a explicação de 'dbfisc01..EscalaA.scp').",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 11:04:19",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Posso usar o mesmo objetivo para diferentes operações? Por exemplo, 'EmitirDocumentoA' para inserção e 'EmitirDocumentoS' para seleção, ou devo mudar o substantivo?",
+        "resposta": "O **objetivo permanece o mesmo**, pois é um substantivo genérico (como em 'EscalaA', 'EscalaI', 'EscalaS'). A operação varia conforme o sufixo (A/I/S/E/R).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 10:06:33",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual é o propósito do sufixo 'S' em um nome de procedure no DETRAN-PE?",
+        "resposta": "O sufixo 'S' representa Selecionar, conforme o exemplo de EscalaA, que termina com 'S' para operação de Selecionar.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 10:06:33",
+        "categoria": "Stored Procedures",
+        "pergunta": "Como deve ser estruturado o nome de um procedure SCP no DETRAN-PE?",
+        "resposta": "De acordo com o padrão, o nome deve seguir o formato dbfisc01..Objetivo[Complemento]Operacao.scp, como no exemplo de ControleIndicePresidenciaS.scp.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 10:06:33",
+        "categoria": "Boas Práticas",
+        "pergunta": "Posso usar 'tmp' como prefixo para procedures temporários?",
+        "resposta": "Não. O prefixo 'tmp' é exclusivo para tabelas temporárias, como visto no exemplo tmpParcelaDebitoSefazD que é considerado erro, conforme mencionado.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 10:06:33",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Por que o procedure 'tgProvimentoCetranI' utiliza o prefixo 'tg'?",
+        "resposta": "O prefixo 'tg' é usado para disparadores (triggers) em tabelas, como especificado no exemplo tgProvimentoCetranI, que segue o padrão de nomear triggers.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 10:06:33",
+        "categoria": "Integridade Referencial",
+        "pergunta": "O que indica o sufixo 'E' em um nome de procedure?",
+        "resposta": "O sufixo 'E' representa Excluir, como no exemplo ControleIndicePresidenciaE.scp, seguindo as operações básicas permitidas.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 09:03:39",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual a regra correta para nomear procedures no DETRAN-PE? Por exemplo, EscalaA é aceito?",
+        "resposta": "Correto. De acordo com a regra, o nome da procedure deve seguir o padrão Objetivo[Complemento]Operacao, onde a Operacao é uma sigla maiúscula (A, I, S, E, R). O exemplo EscalaA segue essa regra terminando com a sigla da operação 'A'.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 09:03:39",
+        "categoria": "Boas Práticas",
+        "pergunta": "Posso usar o prefixo 'tmp' para nomear procedures temporárias no DETRAN-PE?",
+        "resposta": "Não. O prefixo 'tmp' é exclusivo para tabelas temporárias. Procedures devem ser nomeadas com o padrão dbfisc01..NomeProcedure.scp. Exemplo válido seria tmpParcelaDebitoSefaz, que é aceito apenas para tabelas temporárias.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "20/03/2026 09:03:39",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual é o significado do sufixo 'E' em um nome de procedure, como em 'EmissaoDocumentoE.scp'?",
+        "resposta": "O sufixo 'E' no final do nome da procedure indica a operação 'Excluir' (E). Segue a regra das operações básicas (S para Selecionar, I para Inserir, E para Excluir, A para Alterar, R para Relatório). O exemplo 'ControleIndicePresidenciaE.scp' ilustra essa regra terminando com a sigla da operação 'E'.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

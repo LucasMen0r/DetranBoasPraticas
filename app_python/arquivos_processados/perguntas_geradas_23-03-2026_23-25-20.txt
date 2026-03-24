@@ -1,0 +1,55 @@
+========================================
+DATA: 23/03/2026 23:25:20
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Em um nome de tabela, qual seria a forma correta de representar um registro de infração de trânsito? Por exemplo, se eu quiser uma tabela para armazenar dados sobre multas.
+========================================
+RESPOSTA:
+De acordo com o padrão, o nome da tabela deve usar substantivos que respondam a 'O que selecionar? O que inserir?'. Neste caso, 'Infração' seria apropriado. O sufixo deve ser uma sigla em maiúsculas para a operação. Exemplo: MultaIncluirI ou MultaConsultarS.
+========================================
+
+========================================
+DATA: 23/03/2026 23:25:20
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: Preciso criar uma procedure para atualizar o status de um veículo. Qual o padrão correto de nomenclatura? Por exemplo, algo como 'AtualizarVeiculoStatus' está adequado?
+========================================
+RESPOSTA:
+O padrão é Nome do objetivo + Operação em sigla maiúscula. No seu exemplo, faltou a sigla da operação. Um exemplo correto seria: VeiculoStatusAtualizarA. A estrutura geral é: Objetivo[Complemento]Operação, como visto em exemplos como 'ControleIndicePresidenciaE.scp'.
+========================================
+
+========================================
+DATA: 23/03/2026 23:25:20
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: É permitido usar prefixos como 'tmp' em procedures ou apenas em tabelas temporárias?
+========================================
+RESPOSTA:
+Não, o prefixo 'tmp' é exclusivo para tabelas temporárias. Procedures devem usar o formato padrão sem este prefixo. Exemplo de uso incorreto: tmpParcelaDebitoSefazI. O correto seria usar o formato dbfisc01..NomeProcedure.scp.
+========================================
+
+========================================
+DATA: 23/03/2026 23:25:20
+========================================
+CATEGORIA: Integridade Referencial
+========================================
+PERGUNTA: Em uma tabela de 'ProprietarioVeiculo', qual o nome correto para uma coluna que referencia a tabela 'Veiculo'?
+========================================
+RESPOSTA:
+O nome da coluna deve ser substantivo respondendo a 'O que selecionar? O que inserir?'. Exemplo: 'VeiculoId'. Isso mantém a consistência com a tabela relacionada e segue o padrão de usar substantivos descritivos.
+========================================
+
+========================================
+DATA: 23/03/2026 23:25:20
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Para representar uma consulta sobre licenças de habilitação, qual seria o sufixo correto? Por exemplo, 'LicencaHabilitacao' sozinho está adequado?
+========================================
+RESPOSTA:
+Não, o nome deve terminar com a sigla da operação. Como é uma consulta, o sufixo deve ser 'S'. Exemplo correto: LicencaHabilitacaoConsultarS. A regra é clara nos exemplos, como 'ConsultaTurnoHorarioE' que termina com a sigla da operação.
+========================================
+

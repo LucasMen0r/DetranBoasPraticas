@@ -1,0 +1,55 @@
+========================================
+DATA: 24/03/2026 10:04:06
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Quando devo usar a sigla 'S' no final do nome de uma procedure? Exemplo: dbfisc01..EscalaA.scp
+========================================
+RESPOSTA:
+A sigla 'S' deve ser usada para indicar operações de Selecionar (SELECT), conforme regras de nomenclatura. Exemplo: dbfisc01..EscalaA.scp termina com 'S', indicando uma operação de seleção.
+========================================
+
+========================================
+DATA: 24/03/2026 10:04:06
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: É permitido usar nomes de procedures começando com 'tmp' para tabelas temporárias? Exemplo: tmpParcelaDebitoSefaz
+========================================
+RESPOSTA:
+O prefixo 'tmp' é permitido apenas para tabelas temporárias, conforme exemplo válido: tmpParcelaDebitoSefaz. No entanto, o uso de 'tmp' para procedures é incorreto, como no caso inválido: tmpParcelaDebitoSefazI.
+========================================
+
+========================================
+DATA: 24/03/2026 10:04:06
+========================================
+CATEGORIA: Integridade Referencial
+========================================
+PERGUNTA: Como devo nomear uma procedure que atualiza dados de uma tabela de veículos? Exemplo: dbfisc01..VeiculoRoubadoAtualizar.scp
+========================================
+RESPOSTA:
+Para atualização, use a sigla 'A' no final do nome da procedure. Exemplo: dbfisc01..VeiculoRoubadoAtualizarA.scp, conforme a regra das operações básicas (Alterar/A). O exemplo fornecido, dbfisc01..VeiculoRoubadoAtualizarSds.scp, segue essa estrutura.
+========================================
+
+========================================
+DATA: 24/03/2026 10:04:06
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: Qual é o padrão correto para nomear procedures que geram relatórios? Exemplo: dbfisc01..GeraçãoRelatorio.scp
+========================================
+RESPOSTA:
+Procedures de relatório devem terminar com a sigla 'R' no final. Exemplo: dbfisc01..GeraçãoRelatorioR.scp, seguindo a regra das operações básicas. Se necessário, o nome do verbo pode ser completo no infinitivo antes da operação.
+========================================
+
+========================================
+DATA: 24/03/2026 10:04:06
+========================================
+CATEGORIA: Performance
+========================================
+PERGUNTA: Por que dbfisc01..ObterUltimoIndicePresidenciaS.scp é considerado uma boa prática?
+========================================
+RESPOSTA:
+O nome da procedure segue a estrutura Objetivo[Complemento]Operação, terminando com a sigla 'S' para Selecionar. Isso facilita a manutenção e consulta, conforme regras de nomenclatura, como visto em exemplos similares como ControleIndiceProcessoAdmI.scp.
+========================================
+

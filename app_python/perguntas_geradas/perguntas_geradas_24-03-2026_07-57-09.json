@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "24/03/2026 07:57:09",
+        "categoria": "Stored Procedures",
+        "pergunta": "Como devo nomear uma procedure que atualiza dados de veículos roubados no DETRAN-PE?",
+        "resposta": "Procede com base no padrão Objetivo[Complemento]Operação. Use 'VeiculoRoubado' como objetivo e 'Atualizar' como complemento, terminando com o sufixo 'E' para Excluir. Exemplo: AtualizarVeiculoRoubadoExcluirE.scp (Regra: Operação E para exclusão).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 07:57:09",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Posso usar o prefixo 'tmp' para nomear uma procedure temporária no DETRAN-PE?",
+        "resposta": "Não. O prefixo 'tmp' é exclusivo para tabelas temporárias (ex: tmpParcelaDebitoSefaz). Procedures devem usar o padrão convencional (ex: dbfisc01..NomeProcedure.scp).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 07:57:09",
+        "categoria": "Boas Práticas",
+        "pergunta": "Qual a regra correta para usar operações como A, I, E, S em nomes de procedures do DETRAN-PE?",
+        "resposta": "Use siglas maiúsculas no final do nome: A (Alterar), I (Inserir), E (Excluir), S (Selecionar). Exemplo: ConsultarTurnoHorarioA.scp (alteração de turno por exemplo).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 07:57:09",
+        "categoria": "Stored Procedures",
+        "pergunta": "Devo incluir um complemento em um nome de procedure como 'ObterLicencaMoto'?",
+        "resposta": "Sim. Use substantivos que respondam a 'O que selecionar? O que inserir?'. Adicione um complemento se o objetivo for insuficiente (ex: ObterLicencaMotoComplementoS.scp para consulta).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 07:57:09",
+        "categoria": "Integridade Referencial",
+        "pergunta": "Por que um nome de procedure com sufixo 'R' para relatório é válido?",
+        "resposta": "A operação 'R' (Relatório) é permitida quando a função não se enquadra nas operações básicas (S, I, E, A). Exemplo: EmitirDocumentoR.scp, conforme manual de nomenclatura.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

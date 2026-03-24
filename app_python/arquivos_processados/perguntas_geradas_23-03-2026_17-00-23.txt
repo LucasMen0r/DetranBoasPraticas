@@ -1,0 +1,55 @@
+========================================
+DATA: 23/03/2026 17:00:23
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: Preciso criar uma procedure para atualizar dados de veículos no banco de dados. Qual seria o nome correto, considerando que a operação é de atualização?
+========================================
+RESPOSTA:
+O nome deve seguir a estrutura Objetivo[Complemento]Operacao. Para atualização, use 'Alterar' como operação (A). Exemplo: dbfisc01..VeiculoAtualizarA.scp. Segue a regra das operações básicas.
+========================================
+
+========================================
+DATA: 23/03/2026 17:00:23
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: É permitido usar o nome 'tmpSessaoUsuarioI' para uma procedure de inserção de dados temporários?
+========================================
+RESPOSTA:
+Não, conforme exemplo tmpParcelaDebitoSefazI. O prefixo 'tmp' é exclusivo para tabelas temporárias, não para procedures. Use a extensão '.scp' para procedures.
+========================================
+
+========================================
+DATA: 23/03/2026 17:00:23
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Quando devo usar um complemento no nome da procedure e qual é o exemplo dado no manual?
+========================================
+RESPOSTA:
+Use complemento quando o objetivo (parte inicial) não for suficiente para definir a função. Exemplo: ControleIndiceProcessoAdmI.scp, onde 'ProcessoAdm' é o objetivo e 'I' a operação de inserção.
+========================================
+
+========================================
+DATA: 23/03/2026 17:00:23
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: O nome 'EscalaS' está de acordo com as regras de nomenclatura?
+========================================
+RESPOSTA:
+Sim, conforme exemplo EscalaS. Termina com a sigla da operação 'S' (Selecionar). A estrutura básica deve responder 'O que selecionar? O que inserir?' e terminar com a operação.
+========================================
+
+========================================
+DATA: 23/03/2026 17:00:23
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: Preciso criar uma procedure para emitir relatório de multas. Qual operação devo usar e como nomeá-la?
+========================================
+RESPOSTA:
+Para relatório, use a operação 'R'. Exemplo: dbfisc01..RelatorioMultaEmitirR.scp. A estrutura deve ser Objetivo[Complemento]Operacao, terminando com 'R'.
+========================================
+

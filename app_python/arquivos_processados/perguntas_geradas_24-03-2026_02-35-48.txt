@@ -1,0 +1,55 @@
+========================================
+DATA: 24/03/2026 02:35:48
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual é a estrutura correta para nomear uma procedure no DETRAN-PE? Por exemplo, se eu quiser cadastrar um veículo, qual seria o formato ideal?
+========================================
+RESPOSTA:
+A estrutura recomendada é [Objetivo][Complemento]Operacao. No exemplo, usaríamos CadastroVeiculoCadastrarI, conforme a regra: objetivo ( substantivo respondendo 'O que inserir?'), complemento opcional, e a operação I (Inserir) em maiúscula.
+========================================
+
+========================================
+DATA: 24/03/2026 02:35:48
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Em um sistema de DETRAN-PE, é aceitável usar procedimentos armazenados que terminam com 'A' para atualizações? E qual seria um exemplo correto?
+========================================
+RESPOSTA:
+Sim, é aceitável. A sigla 'A' corresponde à operação Alterar. Exemplo: ManutencaoVeiculoAtualizarA, seguindo a regra de nomenclatura onde a operação é indicada por siglas maiúsculas (Alterar/A).
+========================================
+
+========================================
+DATA: 24/03/2026 02:35:48
+========================================
+CATEGORIA: Integridade Referencial
+========================================
+PERGUNTA: Se eu precisar inserir dados de uma tabela 'Frota', qual operação deve terminar meu procedure? Pode me dar um exemplo?
+========================================
+RESPOSTA:
+Para inserir dados, o sufixo deve ser 'I' (Inserir). Um exemplo correto seria: GerenciarFrotaIncluirVeiculoI.
+========================================
+
+========================================
+DATA: 24/03/2026 02:35:48
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: Posso usar o prefixo 'tmp' para uma procedure temporária no DETRAN-PE? E como seria seu nome?
+========================================
+RESPOSTA:
+Não, o prefixo 'tmp' é reservado para tabelas temporárias. Procedures devem usar formatos como 'dbfisc01..NomeProcedure.scp'. Exemplo: dbfisc01..tmpSessaoEspecialD, mas note que 'tmp' só serve para tabelas (segundo o exemplo dado).
+========================================
+
+========================================
+DATA: 24/03/2026 02:35:48
+========================================
+CATEGORIA: Performance
+========================================
+PERGUNTA: Qual é o impacto da escolha incorreta do sufixo (operação) em um nome de procedure no DETRAN-PE?
+========================================
+RESPOSTA:
+Pode levar a erros de compilação ou execução, pois o sistema espera uma operação específica (I, S, etc.). Exemplo de erro: Nomear uma procedure de atualização como 'AtualizarVeiculoS' invocaria um erro, conforme a regra que exige o uso do sufixo correto para a operação realizada.
+========================================
+

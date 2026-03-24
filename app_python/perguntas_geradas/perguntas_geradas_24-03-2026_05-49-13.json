@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "24/03/2026 05:49:13",
+        "categoria": "Stored Procedures",
+        "pergunta": "O nome da procedure 'ConsultarTurnoE' parece correto? Se sim, qual a justificativa?",
+        "resposta": "Incorreto. De acordo com o manual, a operação 'E' (Excluir) não é permitida no nome da procedure. As operações permitidas são Selecionar (S), Inserir (I), Excluir (E), Alterar (A) e Relatório (R). Consulte o exemplo: 'ControleIndicePresidenciaE.scp' que utiliza a operação 'E' corretamente.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 05:49:13",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Como devo nomear uma tabela que armazenará os logs de auditoria do sistema?",
+        "resposta": "O nome deve ser composto por 'Log' seguido da descrição. Exemplo: 'LogAuditoriaA.scp' (Operação: Alterar). Consulte o exemplo: 'tmpParcelaDebitoSefaz' que utiliza o prefixo especial 'Log/tmp/temp' para tabelas temporárias, mas note que 'tmp' é exclusivo para tabelas temporárias.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 05:49:13",
+        "categoria": "Boas Práticas",
+        "pergunta": "É permitido usar o sufixo 'D' em nomes de procedures no DETRAN-PE?",
+        "resposta": "Não é permitido. As operações básicas são fixas: Selecionar (S), Inserir (I), Excluir (E), Alterar (A), Relatório (R). O exemplo 'tgProvimentoCetranI' utiliza apenas os sufixos permitidos. Qualquer sigla diferente deve ser explicada por um complemento antes do sufixo.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 05:49:13",
+        "categoria": "Integridade Referencial",
+        "pergunta": "Qual a regra para nomear uma procedure que atualiza dados de veículos com base em processos?",
+        "resposta": "O nome deve seguir a estrutura Objetivo[Complemento]Operacao. Exemplo: 'AtualizarVeiculoProcessoS.scp'. O objetivo é 'Veiculo', o complemento é 'Processo', e a operação é 'S' (Selecionar/Atualizar). Consulte o exemplo: 'Operacao..VeiculoRoubadoAtualizarSds.scp' que utiliza um complemento antes da operação.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "24/03/2026 05:49:13",
+        "categoria": "Performance",
+        "pergunta": "O nome 'tmpRelatorioEstatisticaI.scp' está de acordo com as boas práticas?",
+        "resposta": "Incorreto. O prefixo 'tmp' é exclusivo para tabelas temporárias. Procedures devem usar o formato 'dbfisc01..NomeProcedure.scp'. Consulte o exemplo: 'tmpParcelaDebitoSefaz' que é aceito apenas como tabela temporária, não como procedure.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

@@ -1,0 +1,55 @@
+========================================
+DATA: 24/03/2026 06:53:16
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Qual é o formato correto para nomear procedures no DETRAN-PE? É possível usar nomes como 'EscalaA'?
+========================================
+RESPOSTA:
+Correto. O formato é Objetivo[Complemento]Operacao, conforme exemplo de EscalaA, que termina com a sigla da operacao 'A'.
+========================================
+
+========================================
+DATA: 24/03/2026 06:53:16
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Em uma procedure para atualizar um registro de veiculo, qual a regra para escolher o sufixo? Devo usar 'AtualizarS' ou 'AtualizarI'?
+========================================
+RESPOSTA:
+Use 'AtualizarI' (Inserir) se a operacao inclui inserir, ou 'AtualizarS' (Selecionar) se a operacao é de consulta, conforme exemplo de Operacao..VeiculoRoubadoAtualizarSds.scp.
+========================================
+
+========================================
+DATA: 24/03/2026 06:53:16
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: O nome 'tmpParcelaDebitoSefazD' é válido para uma procedure? Se não, qual a regra correta?
+========================================
+RESPOSTA:
+Incorreto. O prefixo 'tmp' é exclusivo para tabelas temporarias. Procedures devem usar o formato dbfisc01..NomeProcedure.scp, conforme exemplo de tmpParcelaDebitoSefaz (apenas temporarias).
+========================================
+
+========================================
+DATA: 24/03/2026 06:53:16
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Como devo nomear uma procedure que consulta o historico de multas de um veiculo? Exemplo: dbfisc01..VeiculoMultasHistoricoX.scp?
+========================================
+RESPOSTA:
+Correto. Use VeiculoMultasHistorico[Complemento]Operacao, preferindo sufixo S para Selecionar. Exemplo: dbfisc01..VeiculoMultasHistorico.scp para consulta simples.
+========================================
+
+========================================
+DATA: 24/03/2026 06:53:16
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Se uma procedure realiza uma exclusão com base em dados de outra tabela, qual a regra para o sufixo? Posso usar 'ExcluirR'?
+========================================
+RESPOSTA:
+Use 'Excluir' seguido da sigla da operacao. Para exclusao, o sufixo deve ser 'E' (Excluir), conforme exemplo ControleIndicePresidenciaE.scp, não sendo permitido 'R' (Relatorio).
+========================================
+

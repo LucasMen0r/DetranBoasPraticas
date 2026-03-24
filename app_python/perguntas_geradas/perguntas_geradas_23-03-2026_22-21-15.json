@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "23/03/2026 22:21:15",
+        "categoria": "Boas Praticas",
+        "pergunta": "Qual é a regra correta para usar o prefixo 'tmp' em tabelas temporárias no DETRAN-PE?",
+        "resposta": "O prefixo 'tmp' é exclusivo para tabelas temporárias, conforme mencionado no exemplo 'tmpParcelaDebitoSefazD' que é inválido, pois não deveria ser usado em procedures.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 22:21:15",
+        "categoria": "Stored Procedures",
+        "pergunta": "Como devo estruturar o nome de uma procedure para atualizar dados de tribunal, baseado no exemplo 'OperacaoAtualizarS'?",
+        "resposta": "De acordo com o padrão, use 'Objetivo[Complemento]Operacao'. No caso de atualização, a operação é 'A' e o objetivo deve ser um substantivo como 'Operacao' (exemplo: dbfisc01..OperacaoAtualizarA.scp).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 22:21:15",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "É permitido usar apenas siglas como 'S' no final dos nomes de objetos, ou preciso ter um substantivo antes?",
+        "resposta": "O nome deve responder 'o que selecionar/inserir/alterar/excluir' (Objetivo) seguido da operação (exemplo: ControleIndicePresidenciaS.scp). Apenas siglas são aceitas como operação no final.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 22:21:15",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Em um nome de procedure, qual ordem está correta: 'OperacaoAtualizarS' ou 'AtualizarOperacaoS'?",
+        "resposta": "O correto é 'AtualizarOperacaoS' pois o padrão é [Objetivo]Operacao, onde o substantivo responde à função (exemplo: ControleIndiceProcessoAdmI.scp).",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 22:21:15",
+        "categoria": "Integridade Referencial",
+        "pergunta": "Como nomear um trigger que será disparado na tabela 'Veiculo' para atualização de dados, considerando a regra de eventos (I/A/E/S)?",
+        "resposta": "Use o padrão 'tg' + nome da tabela + sigla do evento (exemplo: tgVeiculoAtualizarI). A sigla deve corresponder à operação: I para Inserir.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

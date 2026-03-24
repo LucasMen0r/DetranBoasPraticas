@@ -18,3 +18,166 @@
 [23/03/2026 14:38:34] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
 [23/03/2026 14:38:34] Ciclo concluído com sucesso.
 [23/03/2026 14:38:34] Aguardando 30 minutos.
+[23/03/2026 15:08:34] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 15:08:34] Ciclo concluído com sucesso.
+[23/03/2026 15:08:34] Aguardando 30 minutos.
+[23/03/2026 15:38:34] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 15:38:34] Ciclo concluído com sucesso.
+[23/03/2026 15:38:34] Aguardando 30 minutos.
+[23/03/2026 16:08:34] Processando arquivo: perguntas_geradas_23-03-2026_15-57-19.txt...
+[23/03/2026 16:08:36]   -> Sucesso. Chunks: 1.
+[23/03/2026 16:08:36] Processamento concluído. Inserções: 1
+[23/03/2026 16:08:36] Ciclo concluído com sucesso.
+[23/03/2026 16:08:36] Aguardando 30 minutos.
+[23/03/2026 16:38:36] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 16:38:36] Ciclo concluído com sucesso.
+[23/03/2026 16:38:36] Aguardando 30 minutos.
+[23/03/2026 17:08:36] Processando arquivo: perguntas_geradas_23-03-2026_17-00-23.txt...
+[23/03/2026 17:08:38]   -> Sucesso. Chunks: 1.
+[23/03/2026 17:08:38] Processamento concluído. Inserções: 1
+[23/03/2026 17:08:38] Ciclo concluído com sucesso.
+[23/03/2026 17:08:38] Aguardando 30 minutos.
+[23/03/2026 17:38:38] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 17:38:38] Ciclo concluído com sucesso.
+[23/03/2026 17:38:38] Aguardando 30 minutos.
+[23/03/2026 18:08:38] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 18:08:38] Ciclo concluído com sucesso.
+[23/03/2026 18:08:38] Aguardando 30 minutos.
+[23/03/2026 18:38:38] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 18:38:38] Ciclo concluído com sucesso.
+[23/03/2026 18:38:38] Aguardando 30 minutos.
+[23/03/2026 19:08:38] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 19:08:38] Ciclo concluído com sucesso.
+[23/03/2026 19:08:39] Aguardando 30 minutos.
+[23/03/2026 19:38:39] Processando arquivo: perguntas_geradas_23-03-2026_19-10-06.txt...
+[23/03/2026 19:38:41]   -> Sucesso. Chunks: 1.
+[23/03/2026 19:38:41] Processamento concluído. Inserções: 1
+[23/03/2026 19:38:41] Ciclo concluído com sucesso.
+[23/03/2026 19:38:41] Aguardando 30 minutos.
+[23/03/2026 20:08:41] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 20:08:41] Ciclo concluído com sucesso.
+[23/03/2026 20:08:41] Aguardando 30 minutos.
+[23/03/2026 20:38:41] Processando arquivo: perguntas_geradas_23-03-2026_20-14-16.txt...
+[23/03/2026 20:38:44]   -> Sucesso. Chunks: 2.
+[23/03/2026 20:38:44] Processamento concluído. Inserções: 2
+[23/03/2026 20:38:44] Ciclo concluído com sucesso.
+[23/03/2026 20:38:44] Aguardando 30 minutos.
+[23/03/2026 21:08:44] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 21:08:44] Ciclo concluído com sucesso.
+[23/03/2026 21:08:44] Aguardando 30 minutos.
+[23/03/2026 21:38:44] Processando arquivo: perguntas_geradas_23-03-2026_21-17-50.txt...
+[23/03/2026 21:38:46]   -> Sucesso. Chunks: 1.
+[23/03/2026 21:38:46] Processamento concluído. Inserções: 1
+[23/03/2026 21:38:46] Ciclo concluído com sucesso.
+[23/03/2026 21:38:46] Aguardando 30 minutos.
+[23/03/2026 22:08:46] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 22:08:46] Ciclo concluído com sucesso.
+[23/03/2026 22:08:46] Aguardando 30 minutos.
+[23/03/2026 22:38:46] Processando arquivo: perguntas_geradas_23-03-2026_22-21-15.txt...
+[23/03/2026 22:38:48]   -> Sucesso. Chunks: 1.
+[23/03/2026 22:38:48] Processamento concluído. Inserções: 1
+[23/03/2026 22:38:48] Ciclo concluído com sucesso.
+[23/03/2026 22:38:48] Aguardando 30 minutos.
+[23/03/2026 23:08:48] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[23/03/2026 23:08:48] Ciclo concluído com sucesso.
+[23/03/2026 23:08:48] Aguardando 30 minutos.
+[23/03/2026 23:38:48] Processando arquivo: perguntas_geradas_23-03-2026_23-25-20.txt...
+[23/03/2026 23:38:51]   -> Sucesso. Chunks: 2.
+[23/03/2026 23:38:51] Processamento concluído. Inserções: 2
+[23/03/2026 23:38:51] Ciclo concluído com sucesso.
+[23/03/2026 23:38:51] Aguardando 30 minutos.
+[24/03/2026 00:08:51] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 00:08:51] Ciclo concluído com sucesso.
+[24/03/2026 00:08:51] Aguardando 30 minutos.
+[24/03/2026 00:38:51] Processando arquivo: perguntas_geradas_24-03-2026_00-28-52.txt...
+[24/03/2026 00:38:53]   -> Sucesso. Chunks: 1.
+[24/03/2026 00:38:53] Processamento concluído. Inserções: 1
+[24/03/2026 00:38:53] Ciclo concluído com sucesso.
+[24/03/2026 00:38:53] Aguardando 30 minutos.
+[24/03/2026 01:08:53] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 01:08:53] Ciclo concluído com sucesso.
+[24/03/2026 01:08:53] Aguardando 30 minutos.
+[24/03/2026 01:38:53] Processando arquivo: perguntas_geradas_24-03-2026_01-32-29.txt...
+[24/03/2026 01:38:55]   -> Sucesso. Chunks: 1.
+[24/03/2026 01:38:55] Processamento concluído. Inserções: 1
+[24/03/2026 01:38:55] Ciclo concluído com sucesso.
+[24/03/2026 01:38:55] Aguardando 30 minutos.
+[24/03/2026 02:08:55] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 02:08:55] Ciclo concluído com sucesso.
+[24/03/2026 02:08:55] Aguardando 30 minutos.
+[24/03/2026 02:38:55] Processando arquivo: perguntas_geradas_24-03-2026_02-35-48.txt...
+[24/03/2026 02:38:58]   -> Sucesso. Chunks: 2.
+[24/03/2026 02:38:58] Processamento concluído. Inserções: 2
+[24/03/2026 02:38:58] Ciclo concluído com sucesso.
+[24/03/2026 02:38:58] Aguardando 30 minutos.
+[24/03/2026 03:08:58] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 03:08:58] Ciclo concluído com sucesso.
+[24/03/2026 03:08:58] Aguardando 30 minutos.
+[24/03/2026 03:38:58] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 03:38:58] Ciclo concluído com sucesso.
+[24/03/2026 03:38:58] Aguardando 30 minutos.
+[24/03/2026 04:08:58] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 04:08:58] Ciclo concluído com sucesso.
+[24/03/2026 04:08:58] Aguardando 30 minutos.
+[24/03/2026 04:38:58] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 04:38:58] Ciclo concluído com sucesso.
+[24/03/2026 04:38:58] Aguardando 30 minutos.
+[24/03/2026 05:08:58] Processando arquivo: perguntas_geradas_24-03-2026_04-45-31.txt...
+[24/03/2026 05:09:01]   -> Sucesso. Chunks: 2.
+[24/03/2026 05:09:01] Processamento concluído. Inserções: 2
+[24/03/2026 05:09:01] Ciclo concluído com sucesso.
+[24/03/2026 05:09:01] Aguardando 30 minutos.
+[24/03/2026 05:39:01] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 05:39:01] Ciclo concluído com sucesso.
+[24/03/2026 05:39:01] Aguardando 30 minutos.
+[24/03/2026 06:09:01] Processando arquivo: perguntas_geradas_24-03-2026_05-49-13.txt...
+[24/03/2026 06:09:03]   -> Sucesso. Chunks: 2.
+[24/03/2026 06:09:03] Processamento concluído. Inserções: 2
+[24/03/2026 06:09:03] Ciclo concluído com sucesso.
+[24/03/2026 06:09:03] Aguardando 30 minutos.
+[24/03/2026 06:39:03] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 06:39:03] Ciclo concluído com sucesso.
+[24/03/2026 06:39:03] Aguardando 30 minutos.
+[24/03/2026 07:09:03] Processando arquivo: perguntas_geradas_24-03-2026_06-53-16.txt...
+[24/03/2026 07:09:06]   -> Sucesso. Chunks: 1.
+[24/03/2026 07:09:06] Processamento concluído. Inserções: 1
+[24/03/2026 07:09:06] Ciclo concluído com sucesso.
+[24/03/2026 07:09:06] Aguardando 30 minutos.
+[24/03/2026 07:39:06] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 07:39:06] Ciclo concluído com sucesso.
+[24/03/2026 07:39:06] Aguardando 30 minutos.
+[24/03/2026 08:09:06] Processando arquivo: perguntas_geradas_24-03-2026_07-57-09.txt...
+[24/03/2026 08:09:08]   -> Sucesso. Chunks: 1.
+[24/03/2026 08:09:08] Processamento concluído. Inserções: 1
+[24/03/2026 08:09:08] Ciclo concluído com sucesso.
+[24/03/2026 08:09:08] Aguardando 30 minutos.
+[24/03/2026 08:39:08] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 08:39:08] Ciclo concluído com sucesso.
+[24/03/2026 08:39:08] Aguardando 30 minutos.
+[24/03/2026 09:09:08] Processando arquivo: perguntas_geradas_24-03-2026_09-00-35.txt...
+[24/03/2026 09:09:10]   -> Sucesso. Chunks: 1.
+[24/03/2026 09:09:10] Processamento concluído. Inserções: 1
+[24/03/2026 09:09:10] Ciclo concluído com sucesso.
+[24/03/2026 09:09:10] Aguardando 30 minutos.
+[24/03/2026 09:39:10] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 09:39:10] Ciclo concluído com sucesso.
+[24/03/2026 09:39:10] Aguardando 30 minutos.
+[24/03/2026 10:09:10] Processando arquivo: perguntas_geradas_24-03-2026_10-04-06.txt...
+[24/03/2026 10:09:13]   -> Sucesso. Chunks: 1.
+[24/03/2026 10:09:13] Processamento concluído. Inserções: 1
+[24/03/2026 10:09:13] Ciclo concluído com sucesso.
+[24/03/2026 10:09:13] Aguardando 30 minutos.
+[24/03/2026 10:39:13] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 10:39:13] Ciclo concluído com sucesso.
+[24/03/2026 10:39:13] Aguardando 30 minutos.
+[24/03/2026 11:09:13] Processando arquivo: perguntas_geradas_24-03-2026_11-07-33.txt...
+[24/03/2026 11:09:15]   -> Sucesso. Chunks: 1.
+[24/03/2026 11:09:15] Processamento concluído. Inserções: 1
+[24/03/2026 11:09:15] Ciclo concluído com sucesso.
+[24/03/2026 11:09:15] Aguardando 30 minutos.
+[24/03/2026 11:39:15] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 11:39:15] Ciclo concluído com sucesso.
+[24/03/2026 11:39:15] Aguardando 30 minutos.
+[24/03/2026 12:09:15] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 12:09:15] Ciclo concluído com sucesso.
+[24/03/2026 12:09:15] Aguardando 30 minutos.

@@ -1,0 +1,55 @@
+========================================
+DATA: 23/03/2026 15:57:19
+========================================
+CATEGORIA: Nomenclatura de Objetos
+========================================
+PERGUNTA: Em um sistema DETRAN-PE, é permitido que um nome de tabela termine com a sigla 'S' para indicar uma operação de seleção?
+========================================
+RESPOSTA:
+Sim, de acordo com as regras de nomenclatura, os objetos devem terminar com a sigla da operação, como 'S' para Selecionar. Exemplo: EscalaS, conforme explicação no exemplo.
+========================================
+
+========================================
+DATA: 23/03/2026 15:57:19
+========================================
+CATEGORIA: Boas Práticas
+========================================
+PERGUNTA: Posso usar o prefixo 'tmp' para nomear uma procedure de cadastro em Sybase?
+========================================
+RESPOSTA:
+Não, o prefixo 'tmp' é exclusivo para tabelas temporárias e não deve ser usado em procedures. Use padrões como dbfisc01..NomeProcedure.scp para procedures, conforme exemplo.
+========================================
+
+========================================
+DATA: 23/03/2026 15:57:19
+========================================
+CATEGORIA: Integridade Referencial
+========================================
+PERGUNTA: Como devo nomear um trigger para garantir integridade referencial ao inserir dados?
+========================================
+RESPOSTA:
+Os triggers devem ser nomeados com o prefixo 'tg' seguido do nome da tabela e da sigla da operação, como 'tgTableI' para Inserir. Exemplo: tgProvimentoCetranI, conforme explicação.
+========================================
+
+========================================
+DATA: 23/03/2026 15:57:19
+========================================
+CATEGORIA: Stored Procedures
+========================================
+PERGUNTA: Qual é o padrão correto para nomear uma procedure que consulta dados e atualiza registros?
+========================================
+RESPOSTA:
+O nome deve seguir a estrutura Objetivo[Complemento]Operacao, onde Operacao é a sigla da operação (ex: S para Selecionar, A para Alterar). Exemplo: dbfisc01..ConsultaTurnoHorarioE.scp, conforme explicação.
+========================================
+
+========================================
+DATA: 23/03/2026 15:57:19
+========================================
+CATEGORIA: Performance
+========================================
+PERGUNTA: Existem regras específicas de nomenclatura que possam impactar a performance das queries no banco de dados?
+========================================
+RESPOSTA:
+Evite nomes muito longos ou complexos para melhorar a performance; use as regras padrão como terminação com siglas de operação para facilitar o parsing. Exemplo: procedures com nomes como dbfisc01..EscalaA.scp são mais eficientes por seguir padrão.
+========================================
+

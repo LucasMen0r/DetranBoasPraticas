@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "23/03/2026 19:10:06",
+        "categoria": "Stored Procedures",
+        "pergunta": "Como devo nomear uma procedure que insere dados de multa no banco de dados, de acordo com a regra de nomenclatura do DETRAN-PE?",
+        "resposta": "O nome da procedure deve seguir a estrutura Objetivo[Complemento]Operacao. Exemplo: dbfisc01..InserirMultaSefazI.scp, onde 'InserirMultaSefaz' é o objetivo e 'I' a operação de inserir.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 19:10:06",
+        "categoria": "Boas Práticas",
+        "pergunta": "Posso usar o prefixo 'tmp' para nomear uma procedure no DETRAN-PE?",
+        "resposta": "Não, o prefixo 'tmp' é exclusivo para tabelas temporárias e procedures não devem utilizá-lo. Exemplo de uso correto: dbfisc01..tmpParcelaDebitoSefaz.scp para tabelas temporárias.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 19:10:06",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "O nome 'ConsultarSituacaoVeiculoRoubadoA' é válido segundo as regras do DETRAN-PE?",
+        "resposta": "Sim, é válido. Siga Objetivo[Complemento]Operacao, onde 'ConsultarSituacaoVeiculoRoubado' é o objetivo e 'A' a operação de alterar. Exemplo: dbfisc01..ConsultarSituacaoVeiculoRoubadoA.scp.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 19:10:06",
+        "categoria": "Stored Procedures",
+        "pergunta": "Qual é a estrutura correta para nomear uma procedure que seleciona relatórios de infrações no sistema DETRAN-PE?",
+        "resposta": "Use a estrutura Objetivo[Complemento]Operacao. Exemplo: dbfisc01..RelatorioInfracoesProcessoR.scp, onde 'RelatorioInfracoesProcesso' é o objetivo e 'R' a operação de relatório.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 19:10:06",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Como devo nomear uma procedure que exclui dados de veículos no DETRAN-PE?",
+        "resposta": "A procedure deve seguir Objetivo[Complemento]Operacao com a operação 'E'. Exemplo: dbfisc01..ExcluirVeiculoProcessoE.scp, onde 'ExcluirVeiculoProcesso' é o objetivo e 'E' a operação de excluir.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "23/03/2026 17:00:23",
+        "categoria": "Stored Procedures",
+        "pergunta": "Preciso criar uma procedure para atualizar dados de veículos no banco de dados. Qual seria o nome correto, considerando que a operação é de atualização?",
+        "resposta": "O nome deve seguir a estrutura Objetivo[Complemento]Operacao. Para atualização, use 'Alterar' como operação (A). Exemplo: dbfisc01..VeiculoAtualizarA.scp. Segue a regra das operações básicas.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 17:00:23",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "É permitido usar o nome 'tmpSessaoUsuarioI' para uma procedure de inserção de dados temporários?",
+        "resposta": "Não, conforme exemplo tmpParcelaDebitoSefazI. O prefixo 'tmp' é exclusivo para tabelas temporárias, não para procedures. Use a extensão '.scp' para procedures.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 17:00:23",
+        "categoria": "Boas Práticas",
+        "pergunta": "Quando devo usar um complemento no nome da procedure e qual é o exemplo dado no manual?",
+        "resposta": "Use complemento quando o objetivo (parte inicial) não for suficiente para definir a função. Exemplo: ControleIndiceProcessoAdmI.scp, onde 'ProcessoAdm' é o objetivo e 'I' a operação de inserção.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 17:00:23",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "O nome 'EscalaS' está de acordo com as regras de nomenclatura?",
+        "resposta": "Sim, conforme exemplo EscalaS. Termina com a sigla da operação 'S' (Selecionar). A estrutura básica deve responder 'O que selecionar? O que inserir?' e terminar com a operação.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "23/03/2026 17:00:23",
+        "categoria": "Stored Procedures",
+        "pergunta": "Preciso criar uma procedure para emitir relatório de multas. Qual operação devo usar e como nomeá-la?",
+        "resposta": "Para relatório, use a operação 'R'. Exemplo: dbfisc01..RelatorioMultaEmitirR.scp. A estrutura deve ser Objetivo[Complemento]Operacao, terminando com 'R'.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]
