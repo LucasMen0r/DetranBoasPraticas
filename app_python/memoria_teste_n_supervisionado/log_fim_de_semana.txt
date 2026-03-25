@@ -181,3 +181,6 @@
 [24/03/2026 12:09:15] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
 [24/03/2026 12:09:15] Ciclo concluído com sucesso.
 [24/03/2026 12:09:15] Aguardando 30 minutos.
+[24/03/2026 12:39:15] [INFO] Nenhum arquivo .txt encontrado em 'perguntas_geradas'.
+[24/03/2026 12:39:15] Ciclo concluído com sucesso.
+[24/03/2026 12:39:15] Aguardando 30 minutos.
