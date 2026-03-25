@@ -43,6 +43,8 @@ CREATE TABLE ExemploPratico (
     CONSTRAINT ukExemploPraticoFocoTexto UNIQUE (ObjetoFoco, ExemploTexto)
 );
 
+TRUNCATE TABLE public.ConhecimentoHistorico RESTART IDENTITY CASCADE;
+
 CREATE TABLE AtributoComum (
     pkAtributoComum SERIAL,
     Atributo VARCHAR(100) NOT NULL,

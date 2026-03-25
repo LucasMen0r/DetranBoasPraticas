@@ -6,15 +6,16 @@ import os
 import re
 import json
 import requests
-import time
+from pathlib import Path
 import shutil
 from dotenv import load_dotenv
 import pgvector.psycopg2
 
-diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-caminho_env = os.path.abspath(os.path.join(diretorio_atual, '..', '.env'))
+# Configuração de caminhos absolutos baseados no local do script
+DIRETORIO_BASE = Path(__file__).resolve().parent
+CAMINHO_ENV = (DIRETORIO_BASE / '..' / '.env').resolve()
 
-load_dotenv(dotenv_path=caminho_env)
+load_dotenv(dotenv_path=CAMINHO_ENV)
 
 try:
     DB_NAME = os.getenv('DB_NAME', 'DetranNorma')
@@ -30,8 +31,10 @@ ollama_embed_model = "nomic-embed-text:latest"
 ollama_base_url = os.getenv('OLLAMA_HOST', 'http://localhost:11436')
 ollama_api_embed = f"{ollama_base_url}/api/embeddings"
 
-DIRETORIO_TESTES = "perguntas_geradas"
-DIRETORIO_PROCESSADOS = "arquivos_processados"
+# Diretórios resolvidos de forma absoluta
+DIRETORIO_TESTES = DIRETORIO_BASE / "perguntas_geradas"
+DIRETORIO_PROCESSADOS = DIRETORIO_BASE / "arquivos_processados"
+DIRETORIO_LOGS = DIRETORIO_BASE / "memoria_teste_n_supervisionado"
 
 try:
     db_pool = psycopg2.pool.SimpleConnectionPool(
@@ -56,24 +59,16 @@ def embedtext(text):
         return None
 
 def criar_chunks(texto_bruto):
-    """
-    Fatia o texto de forma semântica. 
-    Se o arquivo seguir o padrão do gerador, extrai blocos exatos de Q&A.
-    Caso contrário, aplica um fallback genérico.
-    """
-    # Procura pelo padrão: Categoria, Pergunta e Resposta delimitados no seu .txt
     padrao = r"CATEGORIA:\s*(.*?)\n={40}\nPERGUNTA:\s*(.*?)\n={40}\nRESPOSTA:\n(.*?)\n={40}"
     matches = re.findall(padrao, texto_bruto, re.DOTALL)
     
     chunks = []
     
-    # Se encontrou o formato esperado, cria os chunks lógicos
     if matches:
         for categoria, pergunta, resposta in matches:
             chunk = f"CATEGORIA: {categoria.strip()}\nPERGUNTA: {pergunta.strip()}\nRESPOSTA: {resposta.strip()}"
             chunks.append(chunk)
     else:
-        # Fallback: Se for um texto solto, faz um fatiamento mais suave por parágrafos longos
         palavras = texto_bruto.split()
         if len(palavras) > 0:
             chunks = [" ".join(palavras[i:i + 350]) for i in range(0, len(palavras), 300)]
@@ -88,8 +83,11 @@ def sanitizartexto(texto_bruto):
     return " ".join(linhas_limpas)
 
 def processardiretorio(conn):
-    # 1. Primeiro mapeia os arquivos disponíveis no diretório
-    arquivos = [f for f in os.listdir(DIRETORIO_TESTES) if f.endswith('.txt') or f.endswith('.json')]
+    # Garante que os diretórios existam
+    DIRETORIO_TESTES.mkdir(parents=True, exist_ok=True)
+    DIRETORIO_PROCESSADOS.mkdir(parents=True, exist_ok=True)
+
+    arquivos = [f for f in DIRETORIO_TESTES.iterdir() if f.is_file() and f.suffix in ['.txt', '.json']]
     
     if not arquivos:
         registrar_log(f"[INFO] Nenhum arquivo para processar em '{DIRETORIO_TESTES}'.")
@@ -98,40 +96,35 @@ def processardiretorio(conn):
     cursor = conn.cursor()
     total_inseridos = 0
 
-    # 2. Inicia o loop sobre a lista correta
-    for arquivo in arquivos:
-        caminho_origem = os.path.join(DIRETORIO_TESTES, arquivo)
-        caminho_destino = os.path.join(DIRETORIO_PROCESSADOS, arquivo)
+    for arquivo_path in arquivos:
+        nome_arquivo = arquivo_path.name
+        caminho_destino = DIRETORIO_PROCESSADOS / nome_arquivo
         
-        # Checagem para evitar duplicidade de carga
-        cursor.execute("SELECT 1 FROM ConhecimentoHistorico WHERE nome_arquivo = %s LIMIT 1", (arquivo,))
+        cursor.execute("SELECT 1 FROM ConhecimentoHistorico WHERE nome_arquivo = %s LIMIT 1", (nome_arquivo,))
         if cursor.fetchone():
-            registrar_log(f"[PULADO] Arquivo '{arquivo}' já processado anteriormente.")
-            shutil.move(caminho_origem, caminho_destino)
+            registrar_log(f"[PULADO] Arquivo '{nome_arquivo}' já processado anteriormente.")
+            shutil.move(str(arquivo_path), str(caminho_destino))
             continue
 
-        registrar_log(f"Processando arquivo: {arquivo}.")
+        registrar_log(f"Processando arquivo: {nome_arquivo}.")
         try:
             chunks = []
             
-            # 3. Todo o processamento agora ocorre dentro do escopo do arquivo atual
-            if arquivo.endswith('.json'):
-                with open(caminho_origem, 'r', encoding='utf-8') as f:
+            if arquivo_path.suffix == '.json':
+                with open(arquivo_path, 'r', encoding='utf-8') as f:
                     dados_json = json.load(f)
                     for item in dados_json:
-                        # Se a flag existir e for explicitamente False, pula a inserção
                         if item.get("valido", True) == False:
                             continue
-                            
                         chunk = f"CATEGORIA: {item.get('categoria', '')}\nPERGUNTA: {item.get('pergunta', '')}\nRESPOSTA: {item.get('resposta', '')}"
                         chunks.append(chunk)
             
-            elif arquivo.endswith('.txt'):
-                with open(caminho_origem, 'r', encoding='utf-8') as f:
+            elif arquivo_path.suffix == '.txt':
+                with open(arquivo_path, 'r', encoding='utf-8') as f:
                     conteudo_bruto = f.read()
                 texto_limpo = sanitizartexto(conteudo_bruto)
                 if not texto_limpo:
-                    shutil.move(caminho_origem, caminho_destino)
+                    shutil.move(str(arquivo_path), str(caminho_destino))
                     continue
                 chunks = criar_chunks(texto_limpo)
 
@@ -142,7 +135,7 @@ def processardiretorio(conn):
                 if vetor:
                     cursor.execute(
                         "INSERT INTO ConhecimentoHistorico (nome_arquivo, conteudo_texto, embedding) VALUES (%s, %s, %s)",
-                        (arquivo, chunk, vetor)
+                        (nome_arquivo, chunk, vetor)
                     )
                     total_inseridos += 1
                 else:
@@ -151,28 +144,32 @@ def processardiretorio(conn):
             
             if falha_no_embedding:
                 conn.rollback()
-                registrar_log(f"  -> [ERRO] Falha ao vetorizar um chunk de {arquivo}. Arquivo preservado para retentativa.")
+                registrar_log(f"  -> [ERRO] Falha ao vetorizar um chunk de {nome_arquivo}. Arquivo preservado para retentativa.")
             else:
                 conn.commit()
-                shutil.move(caminho_origem, caminho_destino)
+                shutil.move(str(arquivo_path), str(caminho_destino))
                 registrar_log(f"  -> Sucesso. Chunks: {len(chunks)}.")
             
         except Exception as e:
             conn.rollback()
-            registrar_log(f"  -> [ERRO] Falha no arquivo {arquivo}: {e}")
+            registrar_log(f"  -> [ERRO] Falha no arquivo {nome_arquivo}: {e}")
             
     cursor.close()
 
 def registrar_log(mensagem):
-    diretorio = "memoria_teste_n_supervisionado"
-    os.makedirs(diretorio, exist_ok=True)
-    caminho_arquivo = os.path.join(diretorio, "log_fim_de_semana.txt")
+    DIRETORIO_LOGS.mkdir(parents=True, exist_ok=True)
+    
+    # Cria um arquivo de log dinâmico por dia de execução (ex: log_treino_2026-03-25.txt)
+    data_atual = datetime.now().strftime("%Y-%m-%d")
+    nome_arquivo_log = f"log_treino_{data_atual}.txt"
+    caminho_arquivo = DIRETORIO_LOGS / nome_arquivo_log
+    
     timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     
     with open(caminho_arquivo, "a", encoding="utf-8") as f:
         f.write(f"[{timestamp}] {mensagem}\n")
     print(mensagem)
-
+    
 def main():
     registrar_log("Iniciando rotina profissional de manutenção do Gandalf (Modo Lote/Batch).")
     

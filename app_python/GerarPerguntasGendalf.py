@@ -10,14 +10,11 @@ import pgvector
 import pgvector.psycopg2
 import sys
 import subprocess
-import time
+from pathlib import Path
 from dotenv import load_dotenv
 
-# ─────────────────────────────────────────────
-# Configuração de ambiente (igual ao TreinoGendalf)
-# ─────────────────────────────────────────────
-diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-caminho_env = os.path.abspath(os.path.join(diretorio_atual, '..', '.env'))
+diretorio_atual = Path(__file__).resolve().parent
+caminho_env = (diretorio_atual / '..' / '.env').resolve()
 load_dotenv(dotenv_path=caminho_env)
 
 DB_NAME = os.getenv('DB_NAME', 'DetranNorma')
@@ -32,11 +29,9 @@ ollama_gen_model    = "deepseek-r1:8b"
 ollama_api_embed    = f"{ollama_base_url}/api/embeddings"
 ollama_api_generate = f"{ollama_base_url}/api/generate"
 
-# Quantas perguntas gerar por ciclo
 PERGUNTAS_POR_LOTE = 5
-
-DIRETORIO_SAIDA = "perguntas_geradas"
-ARQUIVO_LOG     = "memoria_teste_n_supervisionado/log_gerador_perguntas.txt"
+DIRETORIO_SAIDA = diretorio_atual / "perguntas_geradas"
+ARQUIVO_LOG = diretorio_atual / "memoria_teste_n_supervisionado" / "log_gerador_perguntas.txt"
 
 CATEGORIAS_VALIDAS = [
     "Nomenclatura de Objetos",
@@ -45,64 +40,36 @@ CATEGORIAS_VALIDAS = [
     "Stored Procedures",
     "Performance",
 ]
-# ─────────────────────────────────────────────
-# Pool de conexões
-# ─────────────────────────────────────────────
+
 try:
     db_pool = psycopg2.pool.SimpleConnectionPool(
-        1, 5,
-        dbname=DB_NAME, user=DB_USER, password=DB_PASS,
-        host=DB_HOST, port=DB_PORT
+        1, 5, dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT
     )
 except psycopg2.Error as e:
-    print(f"[ERRO] Falha ao criar pool de conexões: {e}")
+    print(f"[ERRO] Falha ao criar pool de conexoes: {e}")
     exit(1)
 
-# ─────────────────────────────────────────────
-# Logging
-# ─────────────────────────────────────────────
 def registrar_log(mensagem: str):
-    os.makedirs(os.path.dirname(ARQUIVO_LOG), exist_ok=True)
+    ARQUIVO_LOG.parent.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     with open(ARQUIVO_LOG, "a", encoding="utf-8") as f:
         f.write(f"[{timestamp}] {mensagem}\n")
     print(mensagem)
 
-# ─────────────────────────────────────────────
-# Embedding (Ollama)
-# ─────────────────────────────────────────────
-def embedtext(text: str):
-    try:
-        resposta = requests.post(
-            ollama_api_embed,
-            json={"model": ollama_embed_model, "prompt": text},
-            timeout=30
-        )
-        resposta.raise_for_status()
-        return resposta.json()['embedding']
-    except requests.RequestException as e:
-        registrar_log(f"[ERRO OLLAMA] Falha ao vetorizar: {e}")
-        return None
-
-# ─────────────────────────────────────────────
-# Buscar contexto do banco (ExemploPratico)
-# ─────────────────────────────────────────────
-def buscar_exemplos(conn, limite: int = 20) -> list[dict]:
-    """Retorna exemplos práticos da tabela ExemploPratico como contexto para geração."""
+def buscar_exemplos(conn, limite: int = 5) -> list[dict]:
     cursor = conn.cursor()
     try:
         cursor.execute("SELECT to_regclass('public.ExemploPratico');")
         if not cursor.fetchone()[0]:
-            registrar_log("[AVISO] Tabela ExemploPratico não existe no banco.")
             return []
+        
         cursor.execute("""
             SELECT ExemploTexto, Explicacao
             FROM ExemploPratico
-            ORDER BY pkExemploPratico
+            ORDER BY RANDOM()
             LIMIT %s
         """, (limite,))
         rows = cursor.fetchall()
-        registrar_log(f"[DB] {len(rows)} exemplos carregados de ExemploPratico.")
         return [{"exemplo": row[0], "explicacao": row[1]} for row in rows]
     except psycopg2.Error as e:
         registrar_log(f"[ERRO DB] Falha ao buscar exemplos: {e}")
@@ -110,57 +77,32 @@ def buscar_exemplos(conn, limite: int = 20) -> list[dict]:
     finally:
         cursor.close()
 
-# ─────────────────────────────────────────────
-# Geração de perguntas via Ollama (deepseek-r1:8b)
-# ─────────────────────────────────────────────
 def montar_prompt(exemplos: list[dict]) -> str:
-    if exemplos:
-        exemplos_texto = "\n".join(
-            f"  - Exemplo: {e['exemplo']}\n    Explicacao: {e['explicacao']}"
-            for e in exemplos
-        )
-    else:
-        exemplos_texto = "  (nenhum exemplo disponivel na tabela ExemploPratico)"
-
+    exemplos_texto = "\n".join(f"- EXCECAO/REGRA: {e['exemplo']} | MOTIVO: {e['explicacao']}" for e in exemplos) if exemplos else ""
     categorias = ', '.join(CATEGORIAS_VALIDAS)
 
-    return f"""Voce e um especialista em banco de dados Sybase e padroes de nomenclatura do DETRAN-PE.
+    return f"""Voce atua como um gerador de dados estritos de treinamento para um sistema de validacao de banco de dados do DETRAN-PE.
+Baseie-se EXCLUSIVAMENTE nas regras fornecidas abaixo. NAO INVENTE NENHUMA REGRA OU SUFIXO.
 
-A seguir estao exemplos praticos reais extraidos da base de conhecimento do sistema,
-que ilustram as regras de nomenclatura e boas praticas vigentes:
-
+REGRAS VIGENTES E EXEMPLOS:
 {exemplos_texto}
 
----
+TAREFA: Gere exatamente {PERGUNTAS_POR_LOTE} perguntas tecnicas e suas respectivas respostas precisas sobre as regras acima.
+- As respostas devem ser diretas e citar a justificativa exata.
+- Formato OBRIGATORIO: Apenas um array JSON valido. Sem explicacoes adicionais. Sem tags de marcacao.
 
-Sua tarefa: com base EXCLUSIVAMENTE nesses exemplos, gerar exatamente {PERGUNTAS_POR_LOTE} pares
-de PERGUNTA e RESPOSTA para treinar um assistente RAG que valida nomenclaturas e boas praticas do DETRAN-PE.
-
-Diretrizes:
-1. Cada pergunta deve soar natural, como um desenvolvedor perguntaria ao assistente.
-2. Varie os tipos: validacao de nome especifico, pergunta conceitual, pedido de correcao, duvida sobre sufixos/prefixos/operacoes.
-3. Nomes de procedures inventados devem seguir o padrao dbfisc01..NomeProcedure.scp quando aplicavel.
-4. A resposta deve ser tecnica, citar o exemplo ou regra relevante e ser objetiva.
-5. Cada par deve ter uma CATEGORIA dentre: {categorias}.
-
-Responda APENAS com um array JSON valido, sem texto antes ou depois, sem blocos de codigo markdown:
 [
   {{
-    "categoria": "...",
+    "categoria": "escolha uma entre: {categorias}",
     "pergunta": "...",
     "resposta": "..."
   }}
 ]"""
 
 def gerar_perguntas_ollama(exemplos: list[dict]) -> list[dict]:
-    """Chama o Ollama local (deepseek-r1:8b) para gerar pares pergunta/resposta."""
-    if not exemplos:
-        registrar_log("[AVISO] Sem exemplos praticos para gerar perguntas. Abortando ciclo.")
-        return []
-
+    if not exemplos: return []
+    
     prompt = montar_prompt(exemplos)
-    registrar_log(f"[OLLAMA] Chamando {ollama_gen_model} para geracao (pode demorar alguns minutos)...")
-
     try:
         resposta = requests.post(
             ollama_api_generate,
@@ -169,73 +111,31 @@ def gerar_perguntas_ollama(exemplos: list[dict]) -> list[dict]:
                 "prompt": prompt,
                 "stream": False,
                 "options": {
-                    "temperature": 0.7,
+                    "temperature": 0.2, 
                     "num_predict": 2048,
                 }
             },
-            timeout=2400  # timeout generoso para perguntas complexas
+            timeout=2400
         )
         resposta.raise_for_status()
         conteudo = resposta.json().get("response", "")
-
-        # O deepseek-r1 usa tags <think>...</think> para raciocinio interno — removemos
         conteudo = re.sub(r"<think>.*?</think>", "", conteudo, flags=re.DOTALL).strip()
-
-        # Remove possiveis blocos markdown antes do parse
         conteudo_limpo = re.sub(r"```json|```", "", conteudo).strip()
 
-        # Extrai o primeiro array JSON encontrado na resposta
         match = re.search(r"\[.*\]", conteudo_limpo, re.DOTALL)
-        if not match:
-            registrar_log(f"[AVISO] Nenhum array JSON encontrado na resposta.\nConteudo: {conteudo_limpo[:300]}")
-            return []
-
+        if not match: return []
+        
         pares = json.loads(match.group())
+        return pares if isinstance(pares, list) else []
 
-        if not isinstance(pares, list):
-            registrar_log("[AVISO] Resposta parseada nao e uma lista JSON.")
-            return []
-
-        registrar_log(f"[OLLAMA] {len(pares)} pares gerados com sucesso.")
-        return pares
-
-    except requests.RequestException as e:
-        registrar_log(f"[ERRO OLLAMA] Falha na chamada de geracao: {e}")
+    except Exception as e:
+        registrar_log(f"[ERRO GERAL] Falha na geracao: {e}")
         return []
-    except json.JSONDecodeError as e:
-        registrar_log(f"[ERRO JSON] Falha ao parsear resposta: {e}\nConteudo: {conteudo_limpo[:300]}")
-        return []
-
-# ─────────────────────────────────────────────
-# Salvar perguntas geradas
-# ─────────────────────────────────────────────
-def salvar_como_historico(pares: list[dict]):
-    """Salva no formato .txt identico ao historico existente."""
-    os.makedirs(DIRETORIO_SAIDA, exist_ok=True)
-    timestamp_arquivo = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-    caminho = os.path.join(DIRETORIO_SAIDA, f"perguntas_geradas_{timestamp_arquivo}.txt")
-
-    with open(caminho, 'w', encoding='utf-8') as f:
-        for par in pares:
-            data_hora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-            f.write("========================================\n")
-            f.write(f"DATA: {data_hora}\n")
-            f.write("========================================\n")
-            f.write(f"CATEGORIA: {par.get('categoria', 'Geral')}\n")
-            f.write("========================================\n")
-            f.write(f"PERGUNTA: {par.get('pergunta', '')}\n")
-            f.write("========================================\n")
-            f.write(f"RESPOSTA:\n{par.get('resposta', '')}\n")
-            f.write("========================================\n\n")
-
-    registrar_log(f"[SALVO TXT] {len(pares)} pares em: {caminho}")
-    return caminho
 
 def salvar_como_json(pares: list[dict]):
-    """Salva em JSON no mesmo formato dos logs do Gandalf."""
-    os.makedirs(DIRETORIO_SAIDA, exist_ok=True)
+    DIRETORIO_SAIDA.mkdir(parents=True, exist_ok=True)
     timestamp_arquivo = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-    caminho = os.path.join(DIRETORIO_SAIDA, f"perguntas_geradas_{timestamp_arquivo}.json")
+    caminho = DIRETORIO_SAIDA / f"perguntas_geradas_{timestamp_arquivo}.json"
 
     registros = [
         {
@@ -245,50 +145,29 @@ def salvar_como_json(pares: list[dict]):
             "resposta": p.get("resposta", ""),
             "gerado_automaticamente": True,
             "modelo": ollama_gen_model
-        }
-        for p in pares
+        } for p in pares
     ]
 
     with open(caminho, 'w', encoding='utf-8') as f:
         json.dump(registros, f, ensure_ascii=False, indent=4)
+    registrar_log(f"[SALVO JSON] {caminho.name}")
 
-    registrar_log(f"[SALVO JSON] {caminho}")
-    return caminho
-
-# ─────────────────────────────────────────────
-# Loop principal
-# ─────────────────────────────────────────────
 def ciclo_geracao(conn):
-    registrar_log("── Iniciando ciclo de geracao de perguntas ──")
-
+    registrar_log("Iniciando ciclo de geracao de perguntas.")
     exemplos = buscar_exemplos(conn)
-
-    if not exemplos:
-        registrar_log("[AVISO] Tabela ExemploPratico vazia ou inexistente. Ciclo ignorado.")
-        return
-
     pares = gerar_perguntas_ollama(exemplos)
-
-    if not pares:
-        registrar_log("[AVISO] Nenhum par gerado neste ciclo.")
-        return
-
-    registrar_log(f"[OK] {len(pares)} pares gerados.")
-    salvar_como_historico(pares)
-    salvar_como_json(pares)
+    if pares:
+        registrar_log(f"[OK] {len(pares)} pares gerados.")
+        salvar_como_json(pares)
 
 def main():
     INTERVALO_MINUTOS = int(os.getenv('GERADOR_INTERVALO_MIN', '60'))
-    # Define a duração em horas (pode colocar no .env também, padrão 12h)
     DURACAO_HORAS = float(os.getenv('GERADOR_DURACAO_HORAS', '12'))
     DURACAO_SEGUNDOS = DURACAO_HORAS * 3600
 
     registrar_log("=== Gerador Automatico de Perguntas Gandalf ===")
-    registrar_log(f"Modelo: {ollama_gen_model} | Duracao Maxima: {DURACAO_HORAS}h | Intervalo: {INTERVALO_MINUTOS} min")
-
     start_time = time.time()
 
-    # Loop condicionado ao tempo decorrido
     while (time.time() - start_time) < DURACAO_SEGUNDOS:
         conn = None
         try:
@@ -298,39 +177,24 @@ def main():
         except Exception as e:
             registrar_log(f"[ERRO CRITICO] {e}")
         finally:
-            if conn:
-                db_pool.putconn(conn)
+            if conn: db_pool.putconn(conn)
 
-        tempo_passado = time.time() - start_time
-        tempo_restante = DURACAO_SEGUNDOS - tempo_passado
-
-        # Se ainda houver tempo, aguarda para o próximo ciclo
+        tempo_restante = DURACAO_SEGUNDOS - (time.time() - start_time)
         if tempo_restante > 0:
-            # Espera o intervalo padrão ou o tempo que resta, o que for menor
             tempo_espera = min(INTERVALO_MINUTOS * 60, tempo_restante)
-            horas_restantes = tempo_restante / 3600
-            registrar_log(f"Aguardando {tempo_espera/60:.1f} min. Faltam {horas_restantes:.2f} horas para concluir a fase de geracao.")
+            registrar_log(f"Aguardando proximo ciclo. Faltam {tempo_restante / 3600:.2f} horas.")
             time.sleep(tempo_espera)
 
-    registrar_log("=== Tempo limite atingido. Encerrando geracao. ===")
-    registrar_log("Acionando rotina de limpeza de dados.")
-
+    registrar_log("=== Fase de geracao concluida. Acionando pipeline downstream. ===")
     try:
-        # 1. Chama a limpeza
-        caminho_limpeza = os.path.join(diretorio_atual, "perguntas_geradas", "LimpezaJson.py")
-        subprocess.run([sys.executable, caminho_limpeza], check=True)
-        registrar_log("Limpeza de JSON executada e flags atribuidas com sucesso.")
+        caminho_limpeza = diretorio_atual / "LimpezaJson.py"
+        subprocess.run([sys.executable, str(caminho_limpeza)], check=True)
         
-        # 2. Chama o treinamento
-        registrar_log("Acionando a esteira de treinamento (TreinoGendalf.py)...")
-        caminho_treino = os.path.join(diretorio_atual, "TreinoGendalf.py")
-        subprocess.run([sys.executable, caminho_treino], check=True)
-        registrar_log("Treinamento acionado e concluido com sucesso.")
-        
-    except subprocess.CalledProcessError as e:
-        registrar_log(f"[ERRO CRITICO] Falha na execucao da esteira (Subprocesso): {e}")
+        caminho_treino = diretorio_atual / "TreinoGendalf.py"
+        subprocess.run([sys.executable, str(caminho_treino)], check=True)
+        registrar_log("Pipeline finalizado com sucesso.")
     except Exception as e:
-        registrar_log(f"[ERRO CRITICO] Erro inesperado ao orquestrar scripts: {e}")
+        registrar_log(f"[ERRO CRITICO] Falha na orquestracao: {e}")
 
 if __name__ == "__main__":
     main()

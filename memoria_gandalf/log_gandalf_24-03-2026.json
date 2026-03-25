@@ -1,0 +1,8 @@
+[
+    {
+        "data_hora": "24/03/2026 11:48:15",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": " source /home/lucas/projeto_gandalf/venv/bin/activate\r\" a procedure ProcAdmAptoRecursoS está de acordo com o padrão do detran?\"",
+        "resposta": "**Objeto Analisado:** Procedure SCP  \n**Conformidade:** REPROVADO  \n**Justificativa:** O nome da procedure \"ProcAdmAptoRecursoS\" não segue o padrão estabelecido pelo DETRAN-PE. De acordo com o manual, o nome deve seguir o formato **Objetivo[Complemento]Operação**, conforme exemplo de \"ControleIndicePresidenciaS.scp\". Além disso, a regra de uso de iniciais maiúsculas em cada palavra (notação húngara) não foi aplicada corretamente, e o prefixo \"Proc\" não está alinhado com os exemplos válidos, como \"BatchConsumoServicoWebMover\".  \n**Recomendação:** Renomear a procedure para remover o prefixo \"Proc\" e garantir que o nome siga o padrão **Objetivo[Complemento]Operação**, utilizando iniciais maiúsculas conforme a notação húngara."
+    }
+]

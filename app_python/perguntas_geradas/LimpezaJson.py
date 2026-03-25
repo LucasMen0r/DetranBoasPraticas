@@ -1,10 +1,10 @@
 import json
-import glob
 import re
-import os
+from pathlib import Path
+from typing import Dict, Any
 
-def validar_qa(item):
-    texto_completo = item.get("pergunta", "") + " " + item.get("resposta", "")
+def validar_qa(item: Dict[str, Any]) -> bool:
+    texto_completo = str(item.get("pergunta", "")) + " " + str(item.get("resposta", ""))
     
     # 1. Bloqueia caracteres especiais em nomes de arquivos/objetos
     if re.search(r'[áàâãéêíóôõúçÁÀÂÃÉÊÍÓÔÕÚÇ]\w*\.scp', texto_completo):
@@ -33,13 +33,15 @@ def validar_qa(item):
 
     return True
 
-def processar_arquivos():
-    diretorio = "perguntas_geradas"
-    padrao_busca = os.path.join(diretorio, "perguntas_geradas_*.json")
-    arquivos_entrada = glob.glob(padrao_busca)
+def processar_arquivos() -> None:
+    # Define o diretório base dinamicamente como a pasta onde este script está localizado
+    diretorio_base = Path(__file__).resolve().parent
+    
+    # Busca pelos arquivos JSON na mesma pasta do script
+    arquivos_entrada = list(diretorio_base.glob("perguntas_geradas_*.json"))
     
     if not arquivos_entrada:
-        print(f"Nenhum arquivo JSON encontrado no diretorio '{diretorio}'.")
+        print(f"Nenhum arquivo JSON encontrado no diretorio '{diretorio_base}'.")
         return
 
     total_arquivos = 0
@@ -48,7 +50,7 @@ def processar_arquivos():
 
     for arquivo in arquivos_entrada:
         # Ignora o arquivo consolidado antigo, caso ele ainda esteja na pasta
-        if "dados_limpos_gandalf.json" in arquivo:
+        if arquivo.name == "dados_limpos_gandalf.json":
             continue
 
         try:
@@ -71,8 +73,10 @@ def processar_arquivos():
             with open(arquivo, 'w', encoding='utf-8') as f:
                 json.dump(dados, f, ensure_ascii=False, indent=4)
                 
+        except json.JSONDecodeError:
+            print(f"Erro: O arquivo {arquivo.name} possui uma formatação JSON invalida.")
         except Exception as e:
-            print(f"Erro ao processar o arquivo {arquivo}: {e}")
+            print(f"Erro ao processar o arquivo {arquivo.name}: {e}")
 
     print("Processamento de Limpeza concluido.")
     print(f"Arquivos atualizados: {total_arquivos}")

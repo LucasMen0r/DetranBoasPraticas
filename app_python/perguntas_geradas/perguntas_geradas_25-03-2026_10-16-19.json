@@ -1,0 +1,42 @@
+[
+    {
+        "data_hora": "25/03/2026 10:16:19",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Qual é a regra para nomear tabelas no banco de dados do DETRAN-PE?",
+        "resposta": "As tabelas devem estar sempre no singular, conforme a regra de nomenclatura.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "25/03/2026 10:16:19",
+        "categoria": "Boas Práticas",
+        "pergunta": "Como deve ser nomeado um índice no banco de dados do DETRAN-PE?",
+        "resposta": "O nome do índice deve ser composto pelo nome da tabela seguido do nome da primeira coluna do índice.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "25/03/2026 10:16:19",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "Operações no banco de dados do DETRAN-PE devem terminar com sigla específica?",
+        "resposta": "Sim, as operações devem terminar com a sigla da operação, como 'A' para NotificarToxicologicoA.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "25/03/2026 10:16:19",
+        "categoria": "Integridade Referencial",
+        "pergunta": "Como deve ser nomeado um índice único no banco de dados do DETRAN-PE?",
+        "resposta": "O nome do índice deve ser composto pelo nome da tabela seguido da primeira coluna do índice, usando btree como método de indexação.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    },
+    {
+        "data_hora": "25/03/2026 10:16:19",
+        "categoria": "Stored Procedures",
+        "pergunta": "Qual o padrão de nomenclatura para procedures no banco de dados do DETRAN-PE?",
+        "resposta": "O nome da procedure deve seguir o padrão Objetivo[Complemento]Operacao, onde Objetivo é um substantivo e Complemento é opcional.",
+        "gerado_automaticamente": true,
+        "modelo": "deepseek-r1:8b"
+    }
+]

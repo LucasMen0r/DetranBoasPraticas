@@ -92,3 +92,13 @@
 [24/03/2026 08:54:48] [SALVO TXT] 5 pares em: perguntas_geradas/perguntas_geradas_24-03-2026_08-54-48.txt
 [24/03/2026 08:54:48] [SALVO JSON] perguntas_geradas/perguntas_geradas_24-03-2026_08-54-48.json
 [24/03/2026 08:54:48] Aguardando 60.0 min. Faltam 11.94 horas para concluir a fase de geracao.
+[25/03/2026 09:58:01] === Gerador Automatico de Perguntas Gandalf ===
+[25/03/2026 09:58:01] Modelo: deepseek-r1:8b | Duracao Maxima: 12.0h | Intervalo: 60 min
+[25/03/2026 09:58:01] ── Iniciando ciclo de geracao de perguntas ──
+[25/03/2026 09:58:01] [DB] 20 exemplos carregados de ExemploPratico.
+[25/03/2026 09:58:01] [OLLAMA] Chamando deepseek-r1:8b para geracao (pode demorar alguns minutos)...
+[25/03/2026 10:01:07] [OLLAMA] 5 pares gerados com sucesso.
+[25/03/2026 10:01:07] [OK] 5 pares gerados.
+[25/03/2026 10:01:07] [SALVO TXT] 5 pares em: perguntas_geradas/perguntas_geradas_25-03-2026_10-01-07.txt
+[25/03/2026 10:01:07] [SALVO JSON] perguntas_geradas/perguntas_geradas_25-03-2026_10-01-07.json
+[25/03/2026 10:01:07] Aguardando 60.0 min. Faltam 11.95 horas para concluir a fase de geracao.

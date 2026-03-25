@@ -485,3 +485,7 @@ LINE 1: INSERT INTO ConhecimentoHistorico (nome_arquivo, texto, embe...
 [24/03/2026 09:00:46] Processando arquivo: perguntas_geradas_24-03-2026_08-54-48.json...
 [24/03/2026 09:00:46]   -> Sucesso. Chunks: 5.
 [24/03/2026 09:00:46] Processamento concluído com sucesso. Encerrando execução.
+[25/03/2026 08:25:34] Iniciando rotina profissional de manutenção do Gandalf (Modo Lote/Batch).
+[25/03/2026 08:25:34] [ERRO CRÍTICO NA EXECUÇÃO]: [Errno 2] No such file or directory: 'perguntas_geradas'
+[25/03/2026 08:27:14] Iniciando rotina profissional de manutenção do Gandalf (Modo Lote/Batch).
+[25/03/2026 08:27:14] [ERRO CRÍTICO NA EXECUÇÃO]: [Errno 2] No such file or directory: 'perguntas_geradas'
