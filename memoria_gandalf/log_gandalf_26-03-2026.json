@@ -1,0 +1,20 @@
+[
+    {
+        "data_hora": "26/03/2026 10:48:25",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": " source /home/lucas/projeto_gandalf/venv/bin/activate\r\" a entidade -- dbvcen.caixa definição-- Drop table-- DROP TABLE dbvcen.caixa;CREATE TABLE dbvcen.caixa (\tsetor varchar(20) NOT NULL,\ttipocaixa int4 NOT NULL,\tcod int4 NOT NULL,\tqtedocumentos numeric(12, 3) NOT NULL,\tsituacao bpchar(1) NOT NULL,\t\"replica\" int4 NOT NULL,\tstipopermanenciacaixa bpchar(1) NOT NULL,\tCONSTRAINT caixa_key PRIMARY KEY (setor, tipocaixa, cod)); segue os padrões do detran?\"",
+        "resposta": "**Objeto Analisado:** Tabela `dbvcela.caixa`  \n**Conformidade:** REPROVADO  \n**Justificativa:**  \nNão foram encontradas regras, exemplos de referência ou conhecimento adquirido no sistema para validar a estrutura da tabela `dbvcen.caixa`. O Detran não possui definições técnicas ou padrões específicos documentados para análise de tabelas com este esquema.  \n**Recomendação:** Entre em contato com a equipe de Administração de Dados para validação adicional, conforme orientação do sistema."
+    },
+    {
+        "data_hora": "26/03/2026 10:56:21",
+        "categoria": "Nomenclatura de Objetos",
+        "pergunta": "\"a table -- dbinfracao.custoleilao definição-- Drop table-- DROP TABLE dbinfracao.custoleilao;CREATE TABLE dbinfracao.custoleilao (\tcustoleilao int4 NOT NULL,\tnomecustoleilao varchar(100) NOT NULL,\tisituacao bpchar(1) NOT NULL,\titaxasucata bpchar(1) NOT NULL,\titaxaunica bpchar(1) NOT NULL,\titaxanotificacao bpchar(1) NOT NULL,\titaxatodosveiculos bpchar(1) NULL,\titaxaselecionavel bpchar(1) NULL,\tCONSTRAINT pkcustoleilao PRIMARY KEY (custoleilao));CREATE INDEX custoleilao_isituacao ON dbinfracao.custoleilao USING btree (isituacao DESC);CREATE INDEX custoleilao_itaxanotificacao ON dbinfracao.custoleilao USING btree (itaxanotificacao DESC);CREATE INDEX custoleilao_itaxasucata ON dbinfracao.custoleilao USING btree (itaxasucata DESC);CREATE INDEX custoleilao_itaxaunica ON dbinfracao.custoleilao USING btree (itaxaunica DESC); obedece aos padrões do detran?\"",
+        "resposta": "**Objeto Analisado:** dbinfracao.custoleilao  \n**Conformidade:** REPROVADO  \n**Justificativa:** O nome da tabela \"custoleilao\" utiliza abreviação (\"custo\" em vez de \"custo de leilão\"), violando a regra de utilizar nomes completos dos termos que compõem o nome do objeto.  \n**Recomendacao:** Renomear a tabela para \"dbinfracao.custodavel_leilao\" ou similar, mantendo a completude semântica do nome."
+    },
+    {
+        "data_hora": "26/03/2026 11:00:28",
+        "categoria": "GERAL",
+        "pergunta": "\" a table -- dbinfracao.grupoinfracoes definição-- Drop table-- DROP TABLE dbinfracao.grupoinfracoes;CREATE TABLE dbinfracao.grupoinfracoes (\tcod int4 NOT NULL,\tdescricao varchar(50) NOT NULL,\tobservacao varchar(200) NOT NULL); atende ao padrão do detran?\"",
+        "resposta": "**Objeto Analisado:** dbinfracao.grupoinfracoes\n\n**Conformidade:** Não analisável\n\n**Justificativa:** Não localizei regras específicas no meu banco de conhecimento para validar este objeto. Os exemplos de referência mencionados tratam de tabelas de log e views, não de tabelas de grupo de infrações. Além disso, não há exemplos diretos que abordem a estrutura ou nomenclatura de tabelas relacionadas a grupos de infrações.\n\n**Recomendacao:** Entre em contato com a equipe de Administracao de Dados para uma analise mais detalhada."
+    }
+]

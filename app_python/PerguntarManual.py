@@ -151,7 +151,7 @@ def encontrarregras(conn, pergunta_vetor: List[float], Nomecategoria: str, foco_
         JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
         LEFT JOIN ObjetoDb o ON r.pkObjetoDb = o.pkObjetoDb
         """
-        filtro_distancia = " r.embedding <=> %s::vector < 0.32 "
+        filtro_distancia = " r.embedding <=> %s::vector < 0.5 "
         order_clause = """
         ORDER BY 
             (CASE WHEN o.NomeObjeto ILIKE %s THEN 0 ELSE 1 END) ASC, 
