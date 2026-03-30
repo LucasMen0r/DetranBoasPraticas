@@ -415,3 +415,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    
+    ##Acredito ter chegado no limite daquilo que posso fazer hoje, com o tempo e os recursos disponíveis, qualquer melhoria adicional exigiria uma reestruturação mais profunda do código e testes extensivos, o que não é viável no momento.
+    # O sistema já está funcional e atende aos requisitos principais. Quero continuar a melhorar o Gendalf até a sua 'forma final', mas meu último dia como estagiário é amanhã (31/3/2026), então eu deixo nas suas mãos, quem quer que seja que vá assumir o projeto, a missão de continuar evoluindo o Gendalf, corrigindo bugs, otimizando a performance e adicionando novas funcionalidades. O código está bem documentado e modularizado para permitir esse crescimento.
+    # acredito em seu potencial e espero que cuide desse projeto com amor e carinho, isso aqui é apenas a versão beta do Gendalf, o futuro é promissor e cheio de possibilidades para ele. Boa sorte, e que o Gendalf continue a ser um aliado poderoso para os desenvolvedores do Detran!
+    # assinado: Lucas "Barba" Menor.
