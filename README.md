@@ -18,6 +18,24 @@ O motor de decisão do G.A.N.D.A.L.F. não opera com prompts estáticos. Ele con
 2. **Normas do Manual Vigente (Prioridade Média):** Extração dinâmica de regras gerais e específicas baseadas no PDF normativo atualizado.
 3. **Memória de Testes (Prioridade de Apoio):** Histórico de interações e dados sintéticos validados para refinamento de contexto e prevenção de alucinações.
 
+## Roteamento Dinâmico de Modos (Novo)
+
+Para otimizar o consumo de tokens e garantir a precisão semântica, o módulo auditor (PerguntarManual.py) analisa o volume da requisição e aciona automaticamente um dos dois modos de avaliação:
+
+    Modo Precisão (Perguntas Curtas e Diretas): * Acionado para entradas curtas (até 800 caracteres).
+
+        Mantém a restrição de distância vetorial rígida (0.32) e o limite de contexto estreito (top_k = 5).
+
+        Ideal para dúvidas pontuais de desenvolvedores (ex: "Qual o padrão para nomear uma chave primária?").
+
+    Modo Generalista (Scripts DDL Massivos):
+
+        Acionado para blocos de código densos (> 800 caracteres).
+
+        Flexibiliza a distância de cosseno (0.48) e expande a janela de recuperação de regras (top_k = 15).
+
+        Permite que o LLM analise a criação de Tabelas, Índices, Chaves Estrangeiras e Triggers em uma única passagem de contexto contínuo, sem sofrer diluição semântica ou estourar os limites do modelo.
+
 ## Componentes Principais
 
 ### 1. `PerguntarManual.py` (O Auditor)
@@ -75,12 +93,18 @@ Script de inicialização do ambiente de dados. Contém a modelagem relacional, 
 ```pip install -r requirements.txt```
 
 5. **Uso Básico**
-Para submeter um script à auditoria:
-
-Bash
+Para submeter comandos ou dúvidas ao auditor, utilize o terminal:
+Exemplo de uso - Modo Precisão (Pergunta Direta):
+```
 python app_python/PerguntarManual.py "CREATE UNIQUE INDEX pk_processoadm ON dbhcen.processoadm USING btree (nusuario);"
+```
 
-6. **Para atualizar o manual ou inserir exemplos homologados:**
+Exemplo de uso - Modo Generalista (Avaliação de Script DDL):
+```
+python app_python/PerguntarManual.py "CREATE TABLE dbvcen.historico_frotas ( id_veiculo int4 NOT NULL, data_frota timestamp NULL ); CREATE INDEX idx_01 ON dbvcen.historico_frotas (id_veiculo);"
+```
+
+7. **Para atualizar o manual ou inserir exemplos homologados:**
 ```
 python app_python/AdicaoExemploPratico.py
 ```
