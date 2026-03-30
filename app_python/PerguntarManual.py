@@ -44,28 +44,6 @@ def conectadb() -> Optional[Any]:
         print(f"Erro de Conexão com o Banco: {e}")
         return None
 
-def fatiar_ddl_monstruosa(texto_sql: str) -> List[str]:
-    """Fatia uma DDL gigante em blocos semânticos puros (Tabela, Índices, Triggers)."""
-    chunks = []
-    
-    # 1. Extrai o corpo principal da tabela
-    match_table = re.search(r'(CREATE TABLE.*?\);)', texto_sql, re.IGNORECASE | re.DOTALL)
-    if match_table:
-        chunks.append(match_table.group(1))
-        
-    # 2. Agrupa todos os índices em um único bloco de contexto
-    indices = re.findall(r'(CREATE INDEX.*?;)', texto_sql, re.IGNORECASE | re.DOTALL)
-    if indices:
-        chunks.append("\n".join(indices))
-        
-    # 3. Agrupa todos os triggers em um único bloco de contexto
-    triggers = re.findall(r'(CREATE TRIGGER.*?;)', texto_sql, re.IGNORECASE | re.DOTALL)
-    if triggers:
-        chunks.append("\n".join(triggers))
-        
-    # Fallback de segurança: se a regex não capturar nada, devolve o texto original
-    return chunks if chunks else [texto_sql]
-    
 def embedtext(text: str) -> Optional[List[float]]: 
     try: 
         resposta = requests.post( 
@@ -142,7 +120,7 @@ def extrairfoco(pergunta: str) -> str:
     except:
         return ""
     
-def encontrarregras(conn, pergunta_vetor: List[float], Nomecategoria: str, foco_usuario: str, top_k: int = 5) -> List[Tuple]:
+def encontrarregras(conn, pergunta_vetor: List[float], Nomecategoria: str, foco_usuario: str, top_k: int = 5, limite_distancia: float = 0.5) -> List[Tuple]:
     cursor = conn.cursor()
     try:
         sql_base = """
@@ -151,7 +129,7 @@ def encontrarregras(conn, pergunta_vetor: List[float], Nomecategoria: str, foco_
         JOIN CategoriaRegra c ON r.pkCategoriaRegra = c.pkCategoriaRegra
         LEFT JOIN ObjetoDb o ON r.pkObjetoDb = o.pkObjetoDb
         """
-        filtro_distancia = " r.embedding <=> %s::vector < 0.5 "
+        filtro_distancia = " r.embedding <=> %s::vector < %s "
         order_clause = """
         ORDER BY 
             (CASE WHEN o.NomeObjeto ILIKE %s THEN 0 ELSE 1 END) ASC, 
@@ -162,10 +140,10 @@ def encontrarregras(conn, pergunta_vetor: List[float], Nomecategoria: str, foco_
 
         if "GERAL" in Nomecategoria.upper():
             sql = sql_base + " WHERE " + filtro_distancia + order_clause
-            parametros = (list(pergunta_vetor), term_boost, list(pergunta_vetor), top_k)
+            parametros = (list(pergunta_vetor), limite_distancia, term_boost, list(pergunta_vetor), top_k)
         else:
             sql = sql_base + " WHERE c.NomeCategoria ILIKE %s AND " + filtro_distancia + order_clause
-            parametros = (f"%{Nomecategoria}%", list(pergunta_vetor), term_boost, list(pergunta_vetor), top_k)
+            parametros = (f"%{Nomecategoria}%", list(pergunta_vetor), limite_distancia, term_boost, list(pergunta_vetor), top_k)
             
         cursor.execute(sql, parametros)
         return cursor.fetchall()
@@ -248,11 +226,11 @@ def perguntaollama(pergunta: str, contexto_regras: List, ExemploPratico: List, h
         for nome_arquivo, texto in historico_testes:
             historico_str += f"- (Referencia: {nome_arquivo}): {texto}\n"
 
-    print(" RESPOSTA DO G.A.N.D.A.L.F:") 
+    print(" RESPOSTA DO G.E.N.D.A.L.F:") 
     print("#"*15)
 
     prompt_sistema = """
-    Voce e o G.A.N.D.A.L.F (Gerenciador de Analise de Normas do Detran).
+    Voce e o G.E.N.D.A.L.F (Gestor de Analise de Normas do Detran).
     Sua funcao e atuar como um AUDITOR RIGIDO de banco de dados.
     
     INSTRUCAO MESTRA E HIERARQUIA DE REGRAS:
@@ -260,10 +238,24 @@ def perguntaollama(pergunta: str, contexto_regras: List, ExemploPratico: List, h
     PRIORIDADE 2: [[ REGRAS VIGENTES ]]. Aplique as regras listadas para o objeto especifico. 
     PRIORIDADE 3: [[ CONHECIMENTO ADQUIRIDO ]]. Use o historico como apoio.
 
-    DIRETRIZES:
+    DIRETRIZES E REGRAS DE AVALIACAO:
     1. PRECISAO: Cite a regra ou exemplo exato na justificativa.
-    2. ZERO ALUCINACAO: Nunca invente regras ou avalie regras de objetos nao solicitados.
-    3. Analise cada componente (Tabela, Indices, Triggers) que estiver presente na solicitacao do usuario.
+    2. ZERO ALUCINACAO E OBJETIVIDADE: Nunca invente regras ou avalie regras de objetos nao solicitados. Nao utilize emojis na formatacao da resposta.
+    3. COBERTURA: Analise cada componente (Tabela, Indices, Triggers) que estiver presente na solicitacao do usuario.
+    4. FORMATACAO ESTRITA (GABARITO OBRIGATORIO PARA RECOMENDACOES):
+       - Para corrigir nomes de tabelas e colunas, o formato exigido e a Notacao Hungara do Detran: Primeira letra de cada palavra maiuscula, demais minusculas, SEM ESPACOS e SEM UNDERLINES.
+       - CORRECAO PROIBIDA: data_entrega, tbl_documento, id_veiculo.
+       - CORRECAO EXIGIDA: DataEntrega, DocumentoVeiculo, Veiculo.
+       - Para corrigir indices, o formato exigido e: nomedatabela_primeiracoluna.
+       - CORRECAO PROIBIDA: idx_data, index_2.
+       - CORRECAO EXIGIDA: docveiculo_datainclusao.
+    5. ANTI-ALUCINACAO SQL: 
+       - NUNCA sugira o uso de espacos em branco em nomes de tabelas ou colunas.
+       - NUNCA recomende o formato snake_case (separacao_por_underline) a menos que uma regra recem-recuperada exija explicitamente.
+       - NUNCA recomende o uso de prefixos genericos como "tbl" ou "col" a menos que uma regra recem-recuperada exija explicitamente.
+    6. SUPOSICOES: Se a pergunta for vaga ou ambigua, responda com base nas regras mais proximas, mas deixe claro na justificativa quais suposicoes voce fez.
+    7. CONFLITOS: Caso haja conflito entre regras, priorize a regra mais especifica para o objeto em questao (ex: regra para "Tabela" tem prioridade sobre regra geral).
+    8. AVALIACAO PARCIAL: Caso um objeto esteja parcialmente correto, indique claramente quais partes estao corretas e quais precisam de ajuste.
 
     ESTRUTURA DE RESPOSTA OBRIGATORIA (em Markdown):
     **Objeto Analisado:** [O que esta sendo analisado]
@@ -381,53 +373,43 @@ def main():
     if not conn: return
 
     categoria = classificarpergunta(pergunta)
+    foco = extrairfoco(pergunta)
+    vetor_completo = embedtext(pergunta)
+    
+    if not vetor_completo:
+        conn.close()
+        return
+
     todas_regras = []
-
-    # --- O GATILHO DA MONSTRUOSIDADE ---
-    if len(pergunta) > 800 and "CREATE TABLE" in pergunta.upper():
-        print("\n[INFO] DDL Monstruosa detectada. Iniciando fatiamento tático (Chunking)...")
-        fatias = fatiar_ddl_monstruosa(pergunta)
-        
-        for i, chunk in enumerate(fatias):
-            if not chunk.strip(): continue
-            print(f"[INFO] Processando bloco semântico {i+1}/{len(fatias)}...")
-            
-            foco_chunk = extrairfoco(chunk)
-            vetor_chunk = embedtext(chunk)
-            
-            if vetor_chunk:
-                regras_chunk = encontrarregras(conn, vetor_chunk, categoria, foco_chunk)
-                if foco_chunk in ['Tabela', 'Coluna', 'Table', 'Column', 'Índice', 'Trigger']:
-                    regras_chunk += encontrarregras(conn, vetor_chunk, "Tipos de Dados", foco_chunk)
-                    regras_chunk += encontrarregras(conn, vetor_chunk, "Nomenclatura de Objetos", foco_chunk)
-                todas_regras.extend(regras_chunk)
-                
+    
+    if len(pergunta) > 800:
+        print("\n[INFO] Modo Generalista acionado (Script longo detectado).")
+        distancia = 0.48
+        limite_regras = 15
     else:
-        # Fluxo Normal (Perguntas curtas)
-        print("\n[INFO] Fluxo padrão acionado.")
-        foco = extrairfoco(pergunta)
-        vetor = embedtext(pergunta)
-        if vetor:
-            regras_principais = encontrarregras(conn, vetor, categoria, foco)
-            regras_extras = []
-            if foco in ['Tabela', 'Coluna', 'Table', 'Column']:
-                regras_extras = encontrarregras(conn, vetor, "Tipos de Dados", foco)
-                regras_extras += encontrarregras(conn, vetor, "Nomenclatura de Objetos", foco)
-            todas_regras.extend(regras_principais + regras_extras)
-            if not todas_regras:
-                todas_regras = encontrarregras(conn, vetor, "GERAL", foco)
+        print("\n[INFO] Modo Precisão acionado (Pergunta direta).")
+        distancia = 0.32
+        limite_regras = 5
 
-    # Remove regras duplicadas geradas pela busca múltipla
+    regras_principais = encontrarregras(conn, vetor_completo, categoria, foco, top_k=limite_regras, limite_distancia=distancia)
+    
+    regras_extras = []
+    if foco in ['Tabela', 'Coluna', 'Table', 'Column']:
+        regras_extras = encontrarregras(conn, vetor_completo, "Tipos de Dados", foco, top_k=limite_regras, limite_distancia=distancia)
+        regras_extras += encontrarregras(conn, vetor_completo, "Nomenclatura de Objetos", foco, top_k=limite_regras, limite_distancia=distancia)
+    
+    todas_regras.extend(regras_principais + regras_extras)
+    
+    if not todas_regras:
+        todas_regras = encontrarregras(conn, vetor_completo, "GERAL", foco, top_k=limite_regras, limite_distancia=distancia)
+
     todas_regras = list(dict.fromkeys(todas_regras))
     
-    # Busca Exemplos e Histórico usando o vetor da pergunta original
-    vetor_completo = embedtext(pergunta)
-    ExemploPratico = buscarexemplos(conn, vetor_completo, "Tabela") if vetor_completo else []
-    historico_testes = buscar_historico(conn, vetor_completo) if vetor_completo else []
+    ExemploPratico = buscarexemplos(conn, vetor_completo, foco)
+    historico_testes = buscar_historico(conn, vetor_completo)
 
-    if vetor_completo:
-        resposta_final = perguntaollama(pergunta, todas_regras, ExemploPratico, historico_testes)
-        salvarrespostas(pergunta, categoria, resposta_final)
+    resposta_final = perguntaollama(pergunta, todas_regras, ExemploPratico, historico_testes)
+    salvarrespostas(pergunta, categoria, resposta_final)
     
     conn.close()
 
