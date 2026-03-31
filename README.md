@@ -67,6 +67,7 @@ Script de inicialização do ambiente de dados. Contém a modelagem relacional, 
 1. **Configuração do Ambiente de Banco de Dados**
    * Instale o PostgreSQL e a extensão `pgvector`.
    * Execute o script `DetranNorma.sql` para construir o schema corporativo.
+   * Necessário ter o docker baixado para acessar o container do Gendalf. 
    
 2. **Configuração do Ollama**
    * Garanta que o serviço do Ollama esteja rodando no host configurado.
