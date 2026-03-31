@@ -90,7 +90,7 @@ Script de inicialização do ambiente de dados. Contém a modelagem relacional, 
    
 
 4. **Dependências Python**
-```pip install -r requirements.txt```
+```pip install -r app_python/requirements.txt```
 
 5. **Uso Básico**
 Para submeter comandos ou dúvidas ao auditor, utilize o terminal:
