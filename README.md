@@ -91,7 +91,7 @@ Script de inicialização do ambiente de dados. Contém a modelagem relacional, 
    
 
 4. **Dependências Python**
-```pip install -r app_python/requirements.txt```
+```pip install -r app_python/requirements.txt```.   
 Obs.: Como o Gendalf foi projetado em um ambiente Linux, alguns imports podem não funcionar corretamente, tendo em vista a diferença entre Linux e Windows. 
 
 5. **Uso Básico**
